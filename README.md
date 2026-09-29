@@ -47,3 +47,10 @@ The acceptance target is a real €-weighted EU order book where every blocked s
 
 ## Regulatory guardrail
 Setu is engineering assurance infrastructure, not legal certification. Regulatory methodologies and rules must be versioned, source-backed and reviewed when legislation/guidance changes.
+
+
+## Supplier evidence & remediation
+
+Setu now persists supplier identities, shipment/material links, reusable supplier evidence and evidence requests. A request only resolves against VERIFIED evidence belonging to the same supplier. Resolution recomputes supplier coverage and the blocking SUPPLIER_DATA requirement, creating an auditable blocker → supplier → evidence → readiness loop.
+
+Endpoints: `POST /api/suppliers`, `POST /api/suppliers/{id}/link`, `POST /api/suppliers/{id}/evidence`, `POST /api/remediation/requests`, `POST /api/remediation/requests/{id}/resolve`, `GET /api/remediation`, and `GET /api/evidence-graph`.
