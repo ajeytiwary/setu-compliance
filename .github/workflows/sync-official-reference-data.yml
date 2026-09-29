@@ -1,0 +1,23 @@
+name: Sync official EU reference datasets
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "43 3 * * 1"
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - run: python scripts/sync_official_reference_data.py
+      - name: Commit changed official datasets
+        run: |
+          git config user.name "setu-regulatory-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/official
+          git diff --cached --quiet || git commit -m "data: refresh official EU regulatory datasets"
+          git push
