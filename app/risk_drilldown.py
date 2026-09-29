@@ -28,3 +28,18 @@ def risk_drilldown():
    countries[s["destination_country"]]["shipments"].append({"shipment_id":s["id"],"shipment_no":s["shipment_no"],"value_eur":s["value_eur"],"blocker_count":len(blockers)})
  total=sum(s["value_eur"] for s in shipments); risk=sum(s["value_eur"] for s in shipments if s["id"] in at_risk_shipments)
  return {"data_status":"CONNECTED_SHIPMENT_DATA","metrics":{"eu_order_book_eur":total,"market_ready_value_eur":total-risk,"revenue_at_risk_eur":risk,"market_ready_value_pct":round(100*(total-risk)/total,1) if total else 0},"countries":[{"country":k,**v} for k,v in sorted(countries.items(),key=lambda x:x[1]["at_risk_value_eur"],reverse=True)],"rule_risk":[{"code":k,"value_eur":v} for k,v in sorted(rule_risk.items(),key=lambda x:x[1],reverse=True)],"drilldown":drill}
+
+def simulate_remediation(shipment_id,requirement_code,estimated_cost_eur=0.0):
+ with connect() as conn:
+  shipment=rows(conn,"SELECT * FROM shipments WHERE id=? OR shipment_no=?",(shipment_id,shipment_id))
+  if not shipment:raise ValueError("shipment not found")
+  s=shipment[0]
+  requirements=rows(conn,"SELECT * FROM requirements WHERE shipment_id=? AND blocking=1 ORDER BY code",(s["id"],))
+ target=next((r for r in requirements if r["code"]==requirement_code),None)
+ if not target:raise ValueError("blocking requirement not found")
+ before=[r for r in requirements if r["status"]!="PASS"]
+ after=[r for r in before if r["code"]!=requirement_code]
+ was_ready=not before; becomes_ready=not after
+ unlocked=s["value_eur"] if (not was_ready and becomes_ready) else 0.0
+ remaining=[{"code":r["code"],"label":r["label"],"status":r["status"]} for r in after]
+ return {"simulation":True,"mutated":False,"shipment_id":s["id"],"shipment_no":s["shipment_no"],"requirement":{"code":target["code"],"label":target["label"],"from_status":target["status"],"simulated_status":"PASS"},"before":{"market_ready":was_ready,"blocking_requirements":len(before),"revenue_at_risk_eur":0.0 if was_ready else s["value_eur"]},"after":{"market_ready":becomes_ready,"blocking_requirements":len(after),"revenue_at_risk_eur":0.0 if becomes_ready else s["value_eur"],"revenue_unlocked_eur":unlocked,"estimated_remediation_cost_eur":estimated_cost_eur,"net_value_unlocked_eur":max(0.0,unlocked-estimated_cost_eur),"next_blocker":remaining[0] if remaining else None,"remaining_blockers":remaining},"notice":"What-if simulation only. No compliance state or evidence record was changed."}
