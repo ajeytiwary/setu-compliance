@@ -27,6 +27,7 @@ class SupplierLinkIn(BaseModel):shipment_id:str; material:str|None=None; quantit
 class SupplierEvidenceIn(BaseModel):evidence_type:str; content:str; status:str=Field(pattern="^(PENDING|VERIFIED|REJECTED)$"); issuer:str|None=None; verifier:str|None=None; valid_until:str|None=None; source_ref:str|None=None; metadata:dict|None=None
 class EvidenceRequestIn(BaseModel):shipment_id:str; supplier_id:str; requirement_code:str="SUPPLIER_DATA"; evidence_type:str; owner:str; due_date:str|None=None; message:str|None=None
 class EvidenceResolveIn(BaseModel):evidence_id:str
+class RemediationSimulationIn(BaseModel):requirement_code:str; estimated_cost_eur:float=Field(default=0,ge=0)
 @app.on_event("startup")
 def startup():init_db();seed_if_empty()
 def detailed(conn,s):
@@ -83,6 +84,11 @@ def market_access_order_book():
 def market_access_risk_drilldown():
  from .risk_drilldown import risk_drilldown
  return risk_drilldown()
+@app.post("/api/market-access/shipments/{shipment_id}/simulate-remediation")
+def market_access_simulate_remediation(shipment_id,x:RemediationSimulationIn):
+ from .risk_drilldown import simulate_remediation
+ try:return simulate_remediation(shipment_id,x.requirement_code,x.estimated_cost_eur)
+ except ValueError as e:raise HTTPException(422,str(e))
 @app.get("/api/evidence-graph")
 def evidence_graph():
  with connect() as conn:
