@@ -1,9 +1,8 @@
 from __future__ import annotations
-import base64,csv,hashlib,io,json,os,re,shutil,urllib.parse,urllib.request,zipfile
+import csv,hashlib,io,json,os,re,shutil,urllib.parse,urllib.request,zipfile
 from datetime import datetime,timezone
 from pathlib import Path
 from xml.etree import ElementTree as ET
-from openpyxl import load_workbook
 from .data_sources import ROOT,registry,selected
 RAW=Path(os.getenv("SETU_RAW_DATA",ROOT/"data"/"raw")); NORMALIZED=Path(os.getenv("SETU_NORMALIZED_DATA",ROOT/"data"/"normalized")); MANIFESTS=Path(os.getenv("SETU_MANIFESTS",ROOT/"data"/"manifests"))
 UA={"User-Agent":"SetuCompliance/0.7 (+regulatory-data-sync)"}
@@ -82,7 +81,7 @@ def normalize_taric(raw):
    mt=row.get("measuretypeid") or row.get("measuretype")
    if cn and mt:records.append({"cn_code":re.sub(r"\D","",cn),"origin_country":row.get("geographicalareaid"),"measure_type":mt,"duty_rate":row.get("dutyexpression") or row.get("dutyamount"),"quota_order_number":row.get("quotaordernumberid"),"additional_code":row.get("additionalcodeid"),"required_document":row.get("certificatecode"),"valid_from":row.get("validitystartdate"),"valid_to":row.get("validityenddate"),"legal_basis":row.get("regulationid"),"source_file":name})
  return records
-def circabc_children(node):\n url="https://circabc.europa.eu/service/api/node/workspace/SpacesStore/"+node+"/children"\n raw,_,_=get(url,headers={"Authorization":"Basic "+base64.b64encode(b"guest:").decode()})\n root=ET.fromstring(raw);out=[]\n for e in root.findall("{http://www.w3.org/2005/Atom}entry"):\n  title=e.findtext("{http://www.w3.org/2005/Atom}title") or ""\n  content=e.find("{http://www.w3.org/2005/Atom}content");mime=content.attrib.get("type","") if content is not None else ""\n  nodeid=None\n  for l in e.findall("{http://www.w3.org/2005/Atom}link"):\n   m=re.search(r"SpacesStore/i/([0-9a-f-]{36})",l.attrib.get("href",""))\n   if m:nodeid=m.group(1);break\n  if nodeid:out.append((title,nodeid,mime))\n return out\ndef taric_circabc():\n root="64db9d0f-e7c9-4084-afe9-f47e70e53c10";years=[x for x in circabc_children(root) if re.fullmatch(r"20\\d\\d",x[0])]\n year=sorted(years,key=lambda x:x[0])[-1];months=[x for x in circabc_children(year[1]) if re.match(r"^\\d\\d ",x[0])];month=sorted(months,key=lambda x:x[0])[-1];files=[x for x in circabc_children(month[1]) if "sheet" in x[2] or "excel" in x[2]]\n if not files:raise RuntimeError("CIRCABC latest TARIC month contains no spreadsheets")\n # Download English/general workbooks and pack them.\n chosen=[x for x in files if " EN" in x[0].upper() or "MEASURE" in x[0].upper() or "NOMENCLATURE" in x[0].upper()] or files\n b=io.BytesIO()\n with zipfile.ZipFile(b,"w",zipfile.ZIP_DEFLATED) as z:\n  for title,node,_ in chosen:\n   raw,_,_=get("https://circabc.europa.eu/service/api/node/workspace/SpacesStore/"+node+"/content",headers={"Authorization":"Basic "+base64.b64encode(b"guest:").decode()});z.writestr(title,raw)\n return "circabc://"+year[0]+"/"+month[0],b.getvalue()\ndef normalize_taric_xlsx_zip(raw):\n z=zipfile.ZipFile(io.BytesIO(raw));out=[]\n for name in z.namelist():\n  if not name.lower().endswith(".xlsx"):continue\n  try:\n   wb=load_workbook(io.BytesIO(z.read(name)),data_only=True,read_only=True)\n   for ws in wb.worksheets:\n    rows=ws.iter_rows(values_only=True);head=next(rows,None)\n    if not head:continue\n    keys=[str(x or "").strip() for x in head]\n    for row in rows:\n     d={keys[i] or "col_"+str(i):v for i,v in enumerate(row) if v not in (None,"")}\n     if d:out.append({"source_file":name,"sheet":ws.title,"fields":d})\n  except Exception:continue\n return out\ndef resolve(dataset):
+def resolve(dataset):
  p=selected(dataset)
  if dataset=="echa_candidate_list":
   u=discover(p.url,[lambda u:u.lower().endswith(".csv") and ("2026" in u or "candidate" in u.lower()),lambda u:u.lower().endswith(".csv")]);return u,"csv",normalize_candidate_csv
@@ -109,7 +108,7 @@ def validate(dataset,records):
  if dataset=="scip_schema" and (not records or records[0].get("version")!="6.10"):errors.append("SCIP_VERSION_MISMATCH")
  return {"valid":not errors,"errors":errors,"record_count":len(records)}
 def sync(dataset):
- p=selected(dataset);url,fmt,normalizer=resolve(dataset)\n if fmt=="circabc": final,raw=taric_circabc();headers={}\n else: raw,headers,final=get(url)\n sha=hashlib.sha256(raw).hexdigest();stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+ p=selected(dataset);url,fmt,normalizer=resolve(dataset);raw,headers,final=get(url);sha=hashlib.sha256(raw).hexdigest();stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
  rawdir=RAW/dataset/sha;rawdir.mkdir(parents=True,exist_ok=True);filename=safe_name(final,"source."+fmt);(rawdir/filename).write_bytes(raw)
  records=normalizer(raw);check=validate(dataset,records)
  manifest={"dataset":dataset,"provider":p.id,"authority":p.authority,"legal_authority":p.legal_authority,"source":final,"retrieved_at":now(),"sha256":sha,"content_type":headers.get("Content-Type"),"etag":headers.get("ETag"),"last_modified":headers.get("Last-Modified"),"parser_version":"setu-source-sync-0.7","validation":check,"raw_file":str((rawdir/filename).relative_to(ROOT))}
