@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "datasets": {
+    "taric_measures": {
+      "purpose": "EU tariff, trade-defence, quota, restriction and document measures",
+      "authority_required": true,
+      "refresh": "daily",
+      "providers": [
+        {
+          "id": "eu_taxud_taric",
+          "kind": "landing_page",
+          "authority": "OFFICIAL",
+          "legal_authority": false,
+          "url": "https://taxation-customs.ec.europa.eu/online-services/online-services-and-databases-customs/eu-customs-tariff-taric_en",
+          "enabled": true
+        },
+        {
+          "id": "taric_opendata_mirror",
+          "kind": "github_release",
+          "authority": "MIRROR",
+          "legal_authority": false,
+          "url": "https://github.com/rousseauxy/taric-opendata",
+          "enabled": false
+        }
+      ]
+    },
+    "quota_balances": {
+      "purpose": "EU first-come-first-served tariff quota balances",
+      "authority_required": true,
+      "refresh": "daily",
+      "providers": [
+        {
+          "id": "eu_taxud_quota",
+          "kind": "landing_page",
+          "authority": "OFFICIAL",
+          "legal_authority": false,
+          "url": "https://taxation-customs.ec.europa.eu/online-services/online-services-and-databases-customs/tariff-quota-database-quota_en",
+          "enabled": true
+        }
+      ]
+    },
+    "eucdm": {
+      "purpose": "EU customs declaration data elements and code lists",
+      "authority_required": true,
+      "refresh": "on_change",
+      "providers": [
+        {
+          "id": "eu_taxud_eucdm",
+          "kind": "landing_page",
+          "authority": "OFFICIAL",
+          "legal_authority": false,
+          "url": "https://taxation-customs.ec.europa.eu/online-services/online-services-and-databases-customs/eu-customs-data-model-eucdm_en",
+          "enabled": true
+        }
+      ]
+    },
+    "steel_2026_1457": {
+      "purpose": "Steel categories, CN codes, country allocations and quota order numbers",
+      "authority_required": true,
+      "refresh": "on_change",
+      "providers": [
+        {
+          "id": "eurlex_2026_1457",
+          "kind": "html",
+          "authority": "LEGAL",
+          "legal_authority": true,
+          "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R1457",
+          "enabled": true
+        }
+      ]
+    },
+    "cbam_defaults": {
+      "purpose": "CBAM definitive default values",
+      "authority_required": true,
+      "refresh": "on_change",
+      "providers": [
+        {
+          "id": "eu_taxud_cbam_defaults",
+          "kind": "xlsx",
+          "authority": "OFFICIAL",
+          "legal_authority": false,
+          "url": "https://taxation-customs.ec.europa.eu/document/download/1c05d211-80cb-4aaa-8ef0-e08005a95d7e_en?filename=DV+correcting+act_final+update_06.08.xlsx",
+          "enabled": true
+        }
+      ]
+    },
+    "cbam_benchmarks": {
+      "purpose": "CBAM benchmark reference table",
+      "authority_required": true,
+      "refresh": "on_change",
+      "providers": [
+        {
+          "id": "eu_taxud_cbam_benchmarks",
+          "kind": "xlsx",
+          "authority": "OFFICIAL",
+          "legal_authority": false,
+          "url": "https://taxation-customs.ec.europa.eu/document/download/9877523c-2a02-4926-a211-aefae7cf6d0d_en?filename=CBAM+Benchmarks_20260206.xlsx",
+          "enabled": true
+        }
+      ]
+    },
+    "echa_candidate_list": {
+      "purpose": "REACH Candidate List / SCIP reference substances",
+      "authority_required": true,
+      "refresh": "on_change",
+      "providers": [
+        {
+          "id": "echa_candidate_package",
+          "kind": "landing_page",
+          "authority": "OFFICIAL",
+          "legal_authority": false,
+          "url": "https://echa.europa.eu/en/candidate-list-package",
+          "enabled": true
+        }
+      ]
+    },
+    "scip_schema": {
+      "purpose": "SCIP notification schema, picklists and validation rules",
+      "authority_required": true,
+      "refresh": "on_change",
+      "providers": [
+        {
+          "id": "echa_scip_610",
+          "kind": "landing_page",
+          "authority": "OFFICIAL",
+          "legal_authority": false,
+          "url": "https://echa.europa.eu/en/scip-format",
+          "enabled": true
+        }
+      ]
+    },
+    "eu_sanctions": {
+      "purpose": "EU consolidated financial sanctions",
+      "authority_required": true,
+      "refresh": "daily",
+      "providers": [
+        {
+          "id": "eu_fsf",
+          "kind": "landing_page",
+          "authority": "OFFICIAL",
+          "legal_authority": false,
+          "url": "https://data.europa.eu/data/datasets/consolidated-list-of-persons-groups-and-entities-subject-to-eu-financial-sanctions?locale=en",
+          "enabled": true
+        }
+      ]
+    },
+    "comext_trade": {
+      "purpose": "India-EU trade context by product, partner and period",
+      "authority_required": false,
+      "refresh": "monthly",
+      "providers": [
+        {
+          "id": "eurostat_comext",
+          "kind": "api",
+          "authority": "OFFICIAL_STATISTICS",
+          "legal_authority": false,
+          "url": "https://ec.europa.eu/eurostat/api/comext/dissemination",
+          "enabled": true
+        }
+      ]
+    },
+    "industrial_telemetry_demo": {
+      "purpose": "Demo-only steel energy/activity telemetry",
+      "authority_required": false,
+      "refresh": "manual",
+      "providers": [
+        {
+          "id": "uci_steel_energy",
+          "kind": "external_dataset",
+          "authority": "DEMO_ONLY",
+          "legal_authority": false,
+          "url": "https://archive.ics.uci.edu/dataset/851/steel+industry+energy+consumption",
+          "enabled": true
+        }
+      ]
+    }
+  }
+}
