@@ -1,0 +1,45 @@
+name: Sync EU regulatory data
+on:
+  workflow_dispatch:
+    inputs:
+      quota_csv_url:
+        description: Direct CSV export URL from the EU Commission QUOTA source
+        required: false
+      taric_csv_url:
+        description: Direct CSV export URL from the EU Commission TARIC raw-data source
+        required: false
+  schedule:
+    - cron: "17 4 * * *"
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Sync configured official exports
+        env:
+          QUOTA_CSV_URL: ${{ inputs.quota_csv_url || secrets.EU_QUOTA_CSV_URL }}
+          TARIC_CSV_URL: ${{ inputs.taric_csv_url || secrets.EU_TARIC_CSV_URL }}
+        run: |
+          python - <<'PY'
+          import os
+          from app.eu_public_data import sync_from_url
+          for kind,key in (("quota","QUOTA_CSV_URL"),("taric","TARIC_CSV_URL")):
+              url=os.getenv(key)
+              if url:
+                  result=sync_from_url(kind,url)
+                  print(kind,result["as_of"],len(result["records"]),result["sha256"])
+              else:
+                  print(f"{kind}: no direct official export URL configured; leaving prior snapshot untouched (fail-closed).")
+          PY
+      - name: Commit changed snapshots
+        run: |
+          git config user.name "setu-regulatory-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/cache || true
+          git diff --cached --quiet || git commit -m "data: refresh EU TARIC and QUOTA snapshots"
+          git push
