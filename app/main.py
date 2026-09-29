@@ -29,6 +29,7 @@ class EvidenceRequestIn(BaseModel):shipment_id:str; supplier_id:str; requirement
 class EvidenceResolveIn(BaseModel):evidence_id:str
 class RemediationSimulationIn(BaseModel):requirement_code:str; estimated_cost_eur:float=Field(default=0,ge=0)
 class ActiveEntitlementIn(BaseModel):payload:dict
+class CBAMVerificationReportIn(BaseModel):payload:dict
 @app.on_event("startup")
 def startup():init_db();seed_if_empty()
 def detailed(conn,s):
@@ -163,6 +164,10 @@ def cbam_calculate(x:CBAMCalculationIn):
  from .cbam_engine import persist_calculation
  try:return persist_calculation(x.payload)
  except ValueError as e:raise HTTPException(422,str(e))
+@app.post("/api/cbam/verification/validate")
+def cbam_verification_validate(x:CBAMVerificationReportIn):
+ from .cbam_verification import verification_state
+ return verification_state(x.payload)
 @app.get("/api/cbam/calculations")
 def cbam_calculations():
  from .cbam_engine import list_calculations
