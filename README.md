@@ -61,3 +61,8 @@ Endpoints: `POST /api/suppliers`, `POST /api/suppliers/{id}/link`, `POST /api/su
 Setu includes provenance-aware adapters for EU Commission TARIC and QUOTA public data. TARIC raw data is published by the Commission and tariff-quota balances are updated daily. Snapshots are hashed and dated; active entitlement consumes a QUOTA balance only when the snapshot is fresh (default: <=1 day). Missing or stale balances produce QUOTA_BALANCE_REQUIRED rather than an assumed in-quota result.
 
 The scheduled GitHub workflow `.github/workflows/sync-eu-regulatory-data.yml` runs daily. Configure direct official Commission export endpoints as repository secrets `EU_QUOTA_CSV_URL` and `EU_TARIC_CSV_URL`, or trigger the workflow manually with URLs. If no direct export URL is configured, the workflow deliberately leaves the prior snapshot untouched so freshness checks fail closed. Runtime/API imports are available under `/api/regulatory/public-data/*`.
+
+
+## Executable TARIC measure stack
+
+A fresh TARIC snapshot can now be resolved by CN code + origin + import date through `POST /api/customs/taric/resolve`. The engine resolves third-country duty, eligible preference/suspension, tariff-quota treatment, additive anti-dumping/countervailing/safeguard duties, additional codes and required supporting-document conditions. Missing/stale TARIC or QUOTA data blocks entitlement. The result is compiled into `POST /api/compliance/active-entitlement` and exposes `customs_liability_eur`. National VAT/excise are intentionally excluded because they are not contained in TARIC.
