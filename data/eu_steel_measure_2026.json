@@ -1,0 +1,45 @@
+{
+  "dataset_id":"EU_STEEL_MEASURE_2026_PUBLIC",
+  "status":"ACTIVE",
+  "effective_from":"2026-07-01",
+  "effective_to":"2026-12-31",
+  "legal_basis":[
+    {"id":"EU_2026_1384","title":"Regulation (EU) 2026/1384","source":"https://eur-lex.europa.eu/eli/reg/2026/1384/oj"},
+    {"id":"EU_2026_1457","title":"Commission Implementing Regulation (EU) 2026/1457","source":"https://eur-lex.europa.eu/eli/reg_impl/2026/1457/oj/eng"}
+  ],
+  "annual_total_quota_t":18345922,
+  "out_of_quota_duty_rate":0.50,
+  "quota_balance_source":"EU Commission QUOTA database; dynamic balance must be supplied/refreshed and is never inferred",
+  "categories":[
+    {
+      "category":"1A",
+      "name":"Non Alloy and Other Alloy Hot Rolled Sheets and Strips",
+      "annual_quota_t":5198754,
+      "cn_codes":["72081000","72082500","72082600","72082700","72083600","72083700","72083800","72083900","72084000","72085210","72085299","72085310","72085390","72085400","72111300","72111400","72111900","72251910","72253010","72253030","72253090","72254015","72254090","72261910","72269120","72269191","72269199"]
+    },
+    {
+      "category":"7",
+      "name":"Non Alloy and Other Alloy Quarto Plates",
+      "india_yearly_quota_t":210838.28,
+      "india_quarterly_quota_t":52709.57,
+      "india_order_number":"09.9856",
+      "cn_codes":["72085120","72085191","72085198","72085291","72089020","72089080","72109030","72254012","72254040","72254060"]
+    },
+    {
+      "category":"8",
+      "name":"Stainless Hot Rolled Sheets and Strips",
+      "india_yearly_quota_t":26019.13,
+      "india_quarterly_quota_t":6504.78,
+      "india_order_number":"09.9862",
+      "cn_codes":["72191100","72191210","72191290","72191310","72191390","72191410","72191490","72192210","72192290","72192300","72192400","72201100","72201200"]
+    },
+    {
+      "category":"14",
+      "name":"Stainless Bars and Light Sections",
+      "india_yearly_quota_t":92556.79,
+      "india_quarterly_quota_t":23139.20,
+      "india_order_number":"09.9890",
+      "cn_codes":["72221111","72221119","72221181","72221189","72221910","72221990","72222011","72222019","72222021","72222029","72222031","72222039","72222081","72222089","72223051","72223091","72223097","72224010","72224050","72224090"]
+    }
+  ]
+}
