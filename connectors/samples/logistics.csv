@@ -1,0 +1,2 @@
+shipment_id,container_no,bill_of_lading,vessel,port_of_loading,port_of_discharge,departure_date,arrival_date,status
+DEMO-EU-001,CONT-DEMO-001,BOL-DEMO-001,Demo Vessel,INMUN,DEHAM,2026-08-22,2026-09-15,DEPARTED
