@@ -3,6 +3,7 @@ import base64,csv,hashlib,io,json,os,re,shutil,urllib.parse,urllib.request,zipfi
 from datetime import datetime,timezone
 from pathlib import Path
 from xml.etree import ElementTree as ET
+from openpyxl import load_workbook
 from .data_sources import ROOT,registry,selected
 RAW=Path(os.getenv("SETU_RAW_DATA",ROOT/"data"/"raw")); NORMALIZED=Path(os.getenv("SETU_NORMALIZED_DATA",ROOT/"data"/"normalized")); MANIFESTS=Path(os.getenv("SETU_MANIFESTS",ROOT/"data"/"manifests"))
 UA={"User-Agent":"SetuCompliance/0.7 (+regulatory-data-sync)"}
