@@ -33,12 +33,13 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          names=["taric_measures","eucdm","echa_candidate_list","scip_schema","eu_sanctions"]
-          for n in names:
-              p=Path("data/normalized")/n/"latest.json"
-              assert p.exists(), f"{n}: latest.json missing"
-              x=json.loads(p.read_text())
-              assert x["validation"]["valid"], f"{n}: invalid"
-              assert x["validation"]["record_count"]>0, f"{n}: empty"\n              assert x.get("transport") != "AUTHORITY_METADATA_FALLBACK" or n == "scip_schema", f"{n}: metadata fallback not allowed"
-              print(n,x["validation"]["record_count"],x["sha256"])
+          names = ["taric_measures", "eucdm", "echa_candidate_list", "scip_schema", "eu_sanctions"]
+          for name in names:
+              path = Path("data/normalized") / name / "latest.json"
+              assert path.exists(), f"{name}: latest.json missing"
+              snapshot = json.loads(path.read_text())
+              assert snapshot["validation"]["valid"], f"{name}: invalid"
+              assert snapshot["validation"]["record_count"] > 0, f"{name}: empty"
+              assert snapshot.get("transport") != "AUTHORITY_METADATA_FALLBACK" or name == "scip_schema"
+              print(name, snapshot["validation"]["record_count"], snapshot["sha256"])
           PY
