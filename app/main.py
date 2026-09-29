@@ -30,6 +30,8 @@ class EvidenceResolveIn(BaseModel):evidence_id:str
 class RemediationSimulationIn(BaseModel):requirement_code:str; estimated_cost_eur:float=Field(default=0,ge=0)
 class ActiveEntitlementIn(BaseModel):payload:dict
 class CBAMVerificationReportIn(BaseModel):payload:dict
+class PublicDataImportIn(BaseModel):csv_content:str; as_of:str|None=None
+class PublicDataSyncIn(BaseModel):url:str; as_of:str|None=None
 @app.on_event("startup")
 def startup():init_db();seed_if_empty()
 def detailed(conn,s):
@@ -172,6 +174,22 @@ def cbam_verification_validate(x:CBAMVerificationReportIn):
 def cbam_calculations():
  from .cbam_engine import list_calculations
  return {"calculations":list_calculations()}
+@app.get("/api/regulatory/public-data/status")
+def regulatory_public_data_status():
+ from .eu_public_data import latest,freshness
+ return {"taric":{"snapshot":latest("taric"),"freshness":freshness(latest("taric"))},"quota":{"snapshot":latest("quota"),"freshness":freshness(latest("quota"))}}
+@app.post("/api/regulatory/public-data/{kind}/import")
+def regulatory_public_data_import(kind,x:PublicDataImportIn):
+ from .eu_public_data import parse_csv,store_snapshot
+ if kind not in ("taric","quota"):raise HTTPException(404,"kind must be taric or quota")
+ try:return store_snapshot(kind,parse_csv(x.csv_content,kind,x.as_of),x.csv_content.encode())
+ except Exception as e:raise HTTPException(422,str(e))
+@app.post("/api/regulatory/public-data/{kind}/sync")
+def regulatory_public_data_sync(kind,x:PublicDataSyncIn):
+ from .eu_public_data import sync_from_url
+ if kind not in ("taric","quota"):raise HTTPException(404,"kind must be taric or quota")
+ try:return sync_from_url(kind,x.url,x.as_of)
+ except Exception as e:raise HTTPException(502,str(e))
 @app.get("/api/regulatory/registry")
 def regulatory_registry(as_of:str|None=None):
  from .regulatory_registry import registry
