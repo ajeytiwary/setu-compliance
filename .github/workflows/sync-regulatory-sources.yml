@@ -1,0 +1,26 @@
+name: Sync pluggable regulatory sources
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * *"
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - name: Sync official source distributions
+        env:
+          SETU_TARIC_BULK_URL: ${{ secrets.SETU_TARIC_BULK_URL }}
+        run: python scripts/sync_sources.py --strict
+      - name: Commit validated snapshots
+        run: |
+          git config user.name "setu-regulatory-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/raw data/normalized data/manifests
+          git diff --cached --quiet || git commit -m "data: refresh regulatory source snapshots"
+          git push
