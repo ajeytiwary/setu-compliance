@@ -1,0 +1,2 @@
+shipment_id,ledger,invoice_no,party,value,currency
+DEMO-EU-001,Export Sales,DEMO-INV-001,Demo automotive buyer,2810000,EUR
