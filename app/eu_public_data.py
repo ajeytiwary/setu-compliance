@@ -33,7 +33,7 @@ def normalize_taric(rows,as_of=None):
  for r in rows:
   cn="".join(x for x in str(r.get("cn_code") or r.get("goods_code") or "") if x.isdigit())
   if not cn:continue
-  out.append({"cn_code":cn,"origin_country":str(r.get("origin_country") or "").upper() or None,"measure_type":r.get("measure_type"),"duty_rate":r.get("duty_rate"),"quota_order_number":r.get("quota_order_number"),"additional_code":r.get("additional_code"),"valid_from":r.get("valid_from"),"valid_to":r.get("valid_to")})
+  out.append({"cn_code":cn,"origin_country":str(r.get("origin_country") or "").upper() or None,"measure_type":r.get("measure_type"),"duty_rate":r.get("duty_rate"),"quota_order_number":r.get("quota_order_number"),"additional_code":r.get("additional_code"),"required_document":r.get("required_document") or r.get("document_code"),"condition_text":r.get("condition_text") or r.get("condition"),"measure_id":r.get("measure_id"),"valid_from":r.get("valid_from"),"valid_to":r.get("valid_to")})
  return {"source":"EU_COMMISSION_TARIC","source_url":TARIC_OFFICIAL,"as_of":as_of or date.today().isoformat(),"fetched_at":_now(),"records":out}
 def parse_csv(text,kind,as_of=None):
  rows=list(csv.DictReader(io.StringIO(text)))
