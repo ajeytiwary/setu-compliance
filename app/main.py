@@ -172,6 +172,11 @@ def cbam_verification_validate(x:CBAMVerificationReportIn):
 def cbam_calculations():
  from .cbam_engine import list_calculations
  return {"calculations":list_calculations()}
+@app.get("/api/regulatory/registry")
+def regulatory_registry(as_of:str|None=None):
+ from .regulatory_registry import registry
+ try:return registry(as_of)
+ except ValueError:raise HTTPException(422,"as_of must be YYYY-MM-DD")
 @app.get("/api/regulatory/steel-measure")
 def regulatory_steel_measure():
  from .steel_trade_measure import public_dataset
