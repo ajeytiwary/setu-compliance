@@ -1,0 +1,2 @@
+shipment_id,sales_order,delivery_id,invoice_id,invoice_date,customer_id,destination_country,material_id,batch_id,quantity_t,invoice_value_eur,currency,cn_code
+DEMO-EU-001,SO-1001,DEL-1001,INV-1001,2026-08-20,CUST-DE-01,DE,HRC-S355,BATCH-HRC-001,4100,2810000,EUR,7208
