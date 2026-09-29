@@ -22,6 +22,11 @@ class IntegrationImportIn(BaseModel):csv_content:str; source_name:str="api"
 class CBAMCalculationIn(BaseModel):payload:dict
 class OriginEvaluationIn(BaseModel):payload:dict
 class PipelineOriginIn(BaseModel):product_specific_rule:dict|None=None
+class SupplierIn(BaseModel):name:str; facility:str|None=None; country:str="IN"; supplier_id:str|None=None
+class SupplierLinkIn(BaseModel):shipment_id:str; material:str|None=None; quantity_t:float|None=None; required_evidence_type:str|None=None
+class SupplierEvidenceIn(BaseModel):evidence_type:str; content:str; status:str=Field(pattern="^(PENDING|VERIFIED|REJECTED)$"); issuer:str|None=None; verifier:str|None=None; valid_until:str|None=None; source_ref:str|None=None; metadata:dict|None=None
+class EvidenceRequestIn(BaseModel):shipment_id:str; supplier_id:str; requirement_code:str="SUPPLIER_DATA"; evidence_type:str; owner:str; due_date:str|None=None; message:str|None=None
+class EvidenceResolveIn(BaseModel):evidence_id:str
 @app.on_event("startup")
 def startup():init_db();seed_if_empty()
 def detailed(conn,s):
@@ -76,16 +81,48 @@ def market_access_order_book():
  return order_book()
 @app.get("/api/evidence-graph")
 def evidence_graph():
- from .evidence_network import CLAIMS
- return {"claims":CLAIMS,"model":"claim → method → data → source → verifier → signed result"}
+ with connect() as conn:
+  evidence=rows(conn,"SELECT e.*,s.name supplier_name FROM supplier_evidence e JOIN suppliers s ON s.id=e.supplier_id ORDER BY e.created_at DESC")
+  requests=rows(conn,"SELECT id,shipment_id,supplier_id,requirement_code,evidence_type,status,submitted_evidence_id FROM evidence_requests ORDER BY created_at DESC")
+ return {"supplier_evidence":evidence,"requests":requests,"model":"shipment requirement → supplier → evidence request → verified evidence → readiness"}
 @app.get("/api/suppliers")
 def suppliers():
- from .evidence_network import SUPPLIERS
- return {"suppliers":SUPPLIERS,"principle":"verify once, permission-share many"}
+ from .evidence_network import list_suppliers
+ return {"suppliers":list_suppliers(),"principle":"verify once, permission-share many"}
+@app.post("/api/suppliers",status_code=201)
+def supplier_create(x:SupplierIn):
+ from .evidence_network import create_supplier
+ return create_supplier(**x.model_dump())
+@app.get("/api/suppliers/{supplier_id}")
+def supplier_detail(supplier_id):
+ from .evidence_network import get_supplier
+ out=get_supplier(supplier_id)
+ if not out:raise HTTPException(404,"supplier not found")
+ return out
+@app.post("/api/suppliers/{supplier_id}/link",status_code=201)
+def supplier_link(supplier_id,x:SupplierLinkIn):
+ from .evidence_network import link_supplier
+ try:return link_supplier(supplier_id,**x.model_dump())
+ except ValueError as e:raise HTTPException(422,str(e))
+@app.post("/api/suppliers/{supplier_id}/evidence",status_code=201)
+def supplier_evidence(supplier_id,x:SupplierEvidenceIn):
+ from .evidence_network import add_supplier_evidence
+ try:return add_supplier_evidence(supplier_id,**x.model_dump())
+ except ValueError as e:raise HTTPException(422,str(e))
 @app.get("/api/remediation")
 def remediation():
- from .evidence_network import REQUESTS
- return {"requests":REQUESTS}
+ from .evidence_network import remediation_summary
+ return remediation_summary()
+@app.post("/api/remediation/requests",status_code=201)
+def remediation_create(x:EvidenceRequestIn):
+ from .evidence_network import create_request
+ try:return create_request(**x.model_dump())
+ except ValueError as e:raise HTTPException(422,str(e))
+@app.post("/api/remediation/requests/{request_id}/resolve")
+def remediation_resolve(request_id,x:EvidenceResolveIn):
+ from .evidence_network import resolve_request
+ try:return resolve_request(request_id,x.evidence_id)
+ except ValueError as e:raise HTTPException(422,str(e))
 @app.get("/api/integrations")
 def integrations_catalog():
  from .integrations import integration_catalog
