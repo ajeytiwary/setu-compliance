@@ -7,6 +7,12 @@ data/*.db
 *.tmp
 .DS_Store
 # Official reference snapshots (re-downloadable via scripts/sync_official_reference_data.py)
+# Versioned upstream snapshots (re-downloadable via scripts/sync_sources.py --all).
+# Raw/normalized/manifests are machine materializations, not source truth.
+# Checked-in legal snapshot: data/eu_steel_measure_2026.json.
 data/official/
 data/sources/
 data/cache/
+data/raw/
+data/normalized/
+data/manifests/

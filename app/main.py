@@ -319,3 +319,31 @@ def data_source_snapshot(dataset:str,provider_id:str|None=None):
  if dataset not in registry(): raise HTTPException(404,"Unknown dataset")
  try:return snapshot(dataset,provider_id)
  except ValueError as e:raise HTTPException(422,str(e))
+
+class SourceSyncIn(BaseModel):as_of:str|None=None; url:str|None=None; force:bool=False
+@app.post("/api/data-sources/{dataset}/sync")
+def data_source_sync(dataset:str,x:SourceSyncIn):
+ """Manual refresh: run the versioned resolver pipeline now.
+
+ Body: {"as_of": "2026-09-29"} pins the version folder; {"url": ...}
+ overrides the distribution URL; {"force": true} re-fetches even when
+ today's manifest already exists. Browser-downloaded files (ECHA 403,
+ FSF auth) are ingested via the sync_sources.py --file CLI path.
+ """
+ from .data_sources import registry
+ if dataset not in registry(): raise HTTPException(404,"Unknown dataset")
+ try:
+  import sys; sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+  from scripts.sync_sources import sync_dataset
+  return sync_dataset(dataset,as_of=x.as_of,url=x.url,force=x.force)
+ except ValueError as e:raise HTTPException(422,str(e))
+ except RuntimeError as e:raise HTTPException(422,str(e))
+
+@app.get("/api/data-sources/{dataset}/manifest")
+def data_source_manifest(dataset:str):
+ from .data_sources import registry
+ if dataset not in registry(): raise HTTPException(404,"Unknown dataset")
+ from .source_resolvers import latest_manifest
+ man=latest_manifest(dataset)
+ if not man:raise HTTPException(404,"No manifest yet -- POST /api/data-sources/"+dataset+"/sync first")
+ return man

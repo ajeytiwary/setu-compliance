@@ -24,7 +24,7 @@
 | 4 | EU–India FTA status | EU Trade policy page (OFFICIAL) | ✅ CHECKED-IN — `EU_IN_FTA_2026_NEGOTIATED`, `NEGOTIATED_NOT_IN_FORCE`, concluded 2026-01-27 | Every FTA response carries `guardrail` + source URL |
 | 5 | ERP/MES/EMS/LIMS/GST/DGFT/ICEGATE/verifier/logistics samples | Synthetic (14 CSVs in `connectors/samples/`) | ✅ IMPORTED — 14/14 connectors SUCCESS | `GET /api/integrations/canonical/summary` |
 | 6 | 12-shipment client portfolio (`HRC-NL-001` … `HRC-IT-012`) | Synthetic commercial | ✅ LOADED via `POST /api/shipments` | `examples/client_portfolio_12_shipments.json` |
-| 7 | TARIC measures, quota balances, EUCDM, ECHA, SCIP, sanctions, COMEXT, telemetry | EU TAXUD/ECHA/Eurostat (OFFICIAL) | ⏳ NOT snapshotted — providers are `landing_page`/`api` kind; app correctly refuses to parse landing pages as truth (`DISCOVERY_REQUIRED` / specialized adapter required) | `GET /api/data-sources` shows `snapshot: null` — this is *by design*, not a bug |
+| 7 | TARIC measures, quota balances, EUCDM, ECHA, SCIP, sanctions, COMEXT, telemetry | EU TAXUD/ECHA/Eurostat (OFFICIAL) | ✅ VERSIONED PIPELINE — auto resolvers (`python scripts/sync_sources.py --strict`, 5 sources via link-discovery) + weekly/manual materialization (`--dataset/--all/--file/--url/--force`, raw→normalized→manifest with SHA-256; bot-blocked publishers via browser `--file`) | `GET /api/data-sources` (manifest pointers) + `POST /api/data-sources/{ds}/sync` manual refresh; see `docs/SOURCE_SYNC.md` |
 | 8 | Public JSW Vijayanagar case (`PUBLIC-JSW-VJ-HRC-EU-2026`) | Company annual report + EPD `EPD-IES-0005172:001` + Commission template | ✅ SEEDED on first boot | `app/seed.py` |
 
 **Key message for the client:** CBAM math runs on the *actual* Commission

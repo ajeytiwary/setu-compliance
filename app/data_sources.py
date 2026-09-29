@@ -52,5 +52,14 @@ def status():
  out={}
  for dataset,d in registry().items():
   path=CACHE/dataset/"latest.json"; snap=json.loads(path.read_text()) if path.exists() else None
-  out[dataset]={"purpose":d["purpose"],"refresh":d["refresh"],"authority_required":d["authority_required"],"providers":[p.__dict__ for p in providers(dataset)],"snapshot":{k:snap.get(k) for k in ("provider","authority","legal_authority","sha256","record_count")} if snap else None}
+  # Prefer the versioned manifest pointer when the resolver pipeline ran.
+  try:
+   from .source_resolvers import latest_manifest
+   man=latest_manifest(dataset)
+  except Exception:man=None
+  if man and not snap:
+   snap={"provider":man["provider_id"],"authority":man["authority"],"legal_authority":man["legal_authority"],"sha256":man["sha256"],"record_count":man["record_count"]}
+  entry={"purpose":d["purpose"],"refresh":d["refresh"],"authority_required":d["authority_required"],"providers":[p.__dict__ for p in providers(dataset)],"snapshot":{k:snap.get(k) for k in ("provider","authority","legal_authority","sha256","record_count")} if snap else None}
+  if man:entry["manifest"]=man
+  out[dataset]=entry
  return out
