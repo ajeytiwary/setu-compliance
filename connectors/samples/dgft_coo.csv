@@ -1,0 +1,2 @@
+shipment_id,iec,agreement,origin_rule,qualification_status,coo_number,issue_date
+DEMO-EU-001,DEMOIEC,EU-INDIA-DEMO,CTH+VALUE_ADD,PASS,DEMO-COO-001,2026-08-20
