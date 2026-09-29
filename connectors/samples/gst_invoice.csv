@@ -1,0 +1,2 @@
+shipment_id,gstin,invoice_no,invoice_date,taxable_value,currency
+DEMO-EU-001,DEMO-GSTIN,DEMO-INV-001,2026-08-20,2810000,EUR
