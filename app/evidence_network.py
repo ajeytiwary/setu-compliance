@@ -20,11 +20,15 @@ def list_suppliers():
  with connect() as conn:
   out=rows(conn,"SELECT s.*,COUNT(DISTINCT l.shipment_id) shipment_count,COUNT(DISTINCT CASE WHEN e.status='VERIFIED' THEN e.id END) verified_evidence_count FROM suppliers s LEFT JOIN supplier_shipment_links l ON l.supplier_id=s.id LEFT JOIN supplier_evidence e ON e.supplier_id=s.id GROUP BY s.id ORDER BY s.name")
  return out
+def _resolve_shipment(conn,ref):
+ s=row(conn,"SELECT * FROM shipments WHERE id=? OR shipment_no=?",(ref,ref))
+ if not s:raise ValueError("shipment not found")
+ return s["id"]
 def link_supplier(supplier_id,shipment_id,material=None,quantity_t=None,required_evidence_type=None):
  lid=str(uuid4())
  with connect() as conn:
   if not row(conn,"SELECT id FROM suppliers WHERE id=?",(supplier_id,)):raise ValueError("supplier not found")
-  if not row(conn,"SELECT id FROM shipments WHERE id=?",(shipment_id,)):raise ValueError("shipment not found")
+  shipment_id=_resolve_shipment(conn,shipment_id)
   conn.execute("INSERT OR IGNORE INTO supplier_shipment_links(id,supplier_id,shipment_id,material,quantity_t,required_evidence_type,created_at) VALUES(?,?,?,?,?,?,?)",(lid,supplier_id,shipment_id,material,quantity_t,required_evidence_type,_now()))
   _refresh_supplier_requirement(conn,shipment_id); audit(conn,shipment_id,"supplier.linked",{"supplier_id":supplier_id,"material":material})
  return {"id":lid,"supplier_id":supplier_id,"shipment_id":shipment_id}
@@ -39,7 +43,7 @@ def add_supplier_evidence(supplier_id,evidence_type,content,status="PENDING",iss
 def create_request(shipment_id,supplier_id,requirement_code,evidence_type,owner,due_date=None,message=None):
  rid=str(uuid4()); now=_now()
  with connect() as conn:
-  if not row(conn,"SELECT id FROM shipments WHERE id=?",(shipment_id,)):raise ValueError("shipment not found")
+  shipment_id=_resolve_shipment(conn,shipment_id)
   if not row(conn,"SELECT id FROM suppliers WHERE id=?",(supplier_id,)):raise ValueError("supplier not found")
   conn.execute("INSERT INTO evidence_requests(id,shipment_id,supplier_id,requirement_code,evidence_type,owner,due_date,status,message,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?)",(rid,shipment_id,supplier_id,requirement_code,evidence_type,owner,due_date,"OPEN",message,now,now))
   audit(conn,shipment_id,"supplier_evidence.requested",{"request_id":rid,"supplier_id":supplier_id,"evidence_type":evidence_type,"owner":owner,"due_date":due_date})

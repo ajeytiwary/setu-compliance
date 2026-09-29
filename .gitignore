@@ -6,3 +6,7 @@ __pycache__/
 data/*.db
 *.tmp
 .DS_Store
+# Official reference snapshots (re-downloadable via scripts/sync_official_reference_data.py)
+data/official/
+data/sources/
+data/cache/

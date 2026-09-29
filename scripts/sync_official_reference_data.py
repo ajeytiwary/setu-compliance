@@ -4,16 +4,24 @@ from pathlib import Path
 from openpyxl import load_workbook
 from app.reference_validation import validate
 ROOT=Path(__file__).resolve().parents[1]; OUT=ROOT/"data"/"official"; STAGE=OUT/"staging"; OUT.mkdir(parents=True,exist_ok=True);STAGE.mkdir(parents=True,exist_ok=True)
-from app.data_sources import selected\nDEFAULT_URL=selected("cbam_defaults").url\nBENCHMARK_URL=selected("cbam_benchmarks").url\nSTEEL_URL=selected("steel_2026_1457").url
+from app.data_sources import selected
+DEFAULT_URL=selected("cbam_defaults").url
+BENCHMARK_URL=selected("cbam_benchmarks").url
+STEEL_URL=selected("steel_2026_1457").url
 def fetch(url):
  req=urllib.request.Request(url,headers={"User-Agent":"SetuCompliance/0.5"});return urllib.request.urlopen(req,timeout=60).read()
 def xlsx_rows(raw):
- wb=load_workbook(io.BytesIO(raw),data_only=True,read_only=True);out=[]
+ wb=load_workbook(io.BytesIO(raw),data_only=True,read_only=True);out=[];seen=set()
  for ws in wb.worksheets:
   rows=list(ws.iter_rows(values_only=True))
   if not rows:continue
   header=[str(x).strip() if x is not None else "" for x in rows[0]]
-  out += [{"sheet":ws.title,**{header[i] or "col_"+str(i):v for i,v in enumerate(row) if v is not None}} for row in rows[1:]]
+  for row in rows[1:]:
+   rec={header[i] or "col_"+str(i):v for i,v in enumerate(row) if v is not None and str(v).strip()!=""}
+   if not rec:continue
+   key=json.dumps({"sheet":ws.title,**rec},sort_keys=True,default=str)
+   if key in seen:continue
+   seen.add(key); out.append({"sheet":ws.title,**rec})
  return out
 def publish(name,source,raw,records,min_records=1):
  check=validate(name,raw,records,min_records)

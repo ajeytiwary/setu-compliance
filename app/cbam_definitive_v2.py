@@ -26,15 +26,44 @@ def import_benchmarks(csv_text,version="2025/2620"):
   cn=normalize_cn(r.get("cn_code")); rows.append({"cn_code":cn,"production_route":r.get("production_route") or None,"benchmark":_num(r.get("benchmark"))})
  return _write("benchmarks.json",{"version":version,"legal_basis":["2025/2620"],"records":rows})
 def _num(v):
- if v in (None,"","-"):return None
- return float(str(v).replace(",","."))
+ if v in (None,"","-","N/A","n/a","NA"):return None
+ try:return float(str(v).replace(",","."))
+ except (TypeError,ValueError):return None
 def select_default(country,cn_code,production_route=None,year=2026):
  ds=_read("defaults.json")
  if not ds:return {"available":False,"reason":"CORRECTED_DEFAULT_DATA_REQUIRED"}
- cn=normalize_cn(cn_code); country=country.upper()
- cand=[r for r in ds["records"] if r["cn_code"]==cn and r["country"] in (country,"OTHER COUNTRIES AND TERRITORIES")]
- exact=[r for r in cand if r["country"]==country]
- r=next((x for x in exact if not x["production_route"] or x["production_route"]==production_route),None) or next((x for x in cand if x["country"]=="OTHER COUNTRIES AND TERRITORIES" and (not x["production_route"] or x["production_route"]==production_route)),None)
+ cn=normalize_cn(cn_code); raw=country.upper()
+ # Official default tables use full country names (INDIA, CHINA, ...).
+ # Accept ISO alpha-2 codes too (IN->INDIA etc.) via pycountry when available.
+ mapped=raw
+ try:
+  import pycountry
+  if len(raw)==2:
+   try:mapped=pycountry.countries.get(alpha_2=raw).name.upper()
+   except Exception:pass
+ except ImportError:pass
+ _ISO_FALLBACK={"IN":"INDIA","CN":"CHINA","TR":"TURKIYE","KR":"KOREA, REPUBLIC OF","RU":"RUSSIAN FEDERATION","UA":"UKRAINE","GB":"UNITED KINGDOM","US":"UNITED STATES","BR":"BRAZIL","ZA":"SOUTH AFRICA","ID":"INDONESIA","MY":"MALAYSIA","TH":"THAILAND","VN":"VIET NAM","TW":"TAIWAN","JP":"JAPAN","SA":"SAUDI ARABIA","AE":"UNITED ARAB EMIRATES","EG":"EGYPT","DZ":"ALGERIA","NG":"NIGERIA","AR":"ARGENTINA","CL":"CHILE","CO":"COLOMBIA","MX":"MEXICO","CA":"CANADA","AU":"AUSTRALIA"}
+ mapped=_ISO_FALLBACK.get(raw,mapped)
+ countries={raw,mapped}
+ def _rn(v):return str(v or "").replace("(","").replace(")","").strip().upper()
+ want=_rn(production_route)
+ # Official default tables list aggregated goods categories (4/6-digit).
+ # Fall back from full CN to 6-digit then 4-digit prefix.
+ prefixes=[cn]+([cn[:6]] if len(cn)>6 else [])+([cn[:4]] if len(cn)>4 else [])
+ r=None
+ for p in prefixes:
+  cand=[x for x in ds["records"] if x["cn_code"]==p and (x["country"] in countries or x["country"]=="OTHER COUNTRIES AND TERRITORIES")]
+  exact=[x for x in cand if x["country"] in countries]
+  # Prefer exact production-route match (route-normalized: C == (C));
+  # fall back to any route for that country+code (official tables are
+  # route-specific, callers often omit it).
+  r=(next((x for x in exact if _rn(x["production_route"])==want),None)
+     or next((x for x in exact if not x["production_route"]),None)
+     or next((x for x in exact),None)
+     or next((x for x in cand if x["country"]=="OTHER COUNTRIES AND TERRITORIES" and (_rn(x["production_route"])==want or not x["production_route"])),None)
+     or next((x for x in cand if x["country"]=="OTHER COUNTRIES AND TERRITORIES"),None))
+  if r and r["total"] is not None:break
+  r=None
  if not r or r["total"] is None:return {"available":False,"reason":"DEFAULT_NOT_FOUND","dataset_version":ds["version"]}
  markup=0.10 if year==2026 else 0.20 if year==2027 else 0.30
  return {"available":True,**r,"year":year,"markup":markup,"certificate_default_total":round(r["total"]*(1+markup),9),"dataset_version":ds["version"]}

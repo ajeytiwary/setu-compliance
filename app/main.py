@@ -37,6 +37,10 @@ class RegulatoryPayloadIn(BaseModel):payload:dict
 class ReferenceCSVIn(BaseModel):csv_content:str
 @app.on_event("startup")
 def startup():init_db();seed_if_empty()
+def find_shipment(conn,ref):
+ s=row(conn,"SELECT * FROM shipments WHERE id=? OR shipment_no=?",(ref,ref))
+ if not s:raise HTTPException(404,"shipment not found")
+ return s
 def detailed(conn,s):
  req=rows(conn,"SELECT * FROM requirements WHERE shipment_id=? ORDER BY blocking DESC,category,code",(s["id"],)); ver=row(conn,"SELECT * FROM verifications WHERE shipment_id=? ORDER BY started_at DESC LIMIT 1",(s["id"],)); cycle=None
  if ver and ver.get("completed_at"):cycle=(datetime.fromisoformat(ver["completed_at"])-datetime.fromisoformat(ver["started_at"])).total_seconds()/86400
@@ -71,6 +75,7 @@ def create_shipment(x:ShipmentIn):
 def add_evidence(shipment_id,x:EvidenceIn):
  eid=str(uuid4()); sha=hashlib.sha256(x.content.encode()).hexdigest()
  with connect() as conn:
+  s=find_shipment(conn,shipment_id); shipment_id=s["id"]
   req=row(conn,"SELECT * FROM requirements WHERE shipment_id=? AND code=?",(shipment_id,x.requirement_code))
   if not req:raise HTTPException(404,"requirement not found")
   conn.execute("INSERT INTO evidence(id,shipment_id,requirement_code,filename,evidence_type,issuer,sha256,valid_until,created_at) VALUES(?,?,?,?,?,?,?,?,?)",(eid,shipment_id,x.requirement_code,x.filename,x.evidence_type,x.issuer,sha,x.valid_until,datetime.now(timezone.utc).isoformat()))
@@ -80,7 +85,7 @@ def add_evidence(shipment_id,x:EvidenceIn):
 @app.get("/api/shipments/{shipment_id}/dpp")
 def dpp(shipment_id):
  with connect() as conn:
-  s=row(conn,"SELECT * FROM shipments WHERE id=?",(shipment_id,))
+  s=find_shipment(conn,shipment_id)
   if not s:raise HTTPException(404,"shipment not found")
   d=detailed(conn,s); return {"@context":["https://schema.org/"],"passport":{"id":f"urn:setu:dpp:{s['id']}","status":"MVP_READINESS","schemaVersion":"steel-v0.1"},"product":{"uniqueProductIdentifier":s["shipment_no"],"name":s["product"],"commodityCode":s["cn_code"],"manufacturer":s["exporter"],"facility":s["facility"],"massTonnes":s["tonnes"]},"environment":{"embeddedEmissions":{"value":s["embedded_emissions_tco2e_per_t"],"unit":"tCO2e/t"}},"compliance":{"autoReady":d["score"]["auto_ready"],"readinessScore":d["score"]["readiness_score"],"blockers":d["score"]["blockers"]},"notice":"MVP readiness payload; final steel ESPR fields remain versioned/configurable."}
 @app.get("/api/market-access/order-book")

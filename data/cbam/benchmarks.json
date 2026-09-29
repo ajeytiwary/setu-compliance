@@ -1,0 +1,2858 @@
+{
+  "legal_basis": [
+    "2025/2620"
+  ],
+  "records": [
+    {
+      "benchmark": 0.666,
+      "cn_code": "25070080",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.666,
+      "cn_code": "25231000",
+      "production_route": "(A)"
+    },
+    {
+      "benchmark": 0.859,
+      "cn_code": "25232100",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.666,
+      "cn_code": "25232900",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.717,
+      "cn_code": "25233000",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.666,
+      "cn_code": "25239000",
+      "production_route": "(A)"
+    },
+    {
+      "benchmark": 5.089,
+      "cn_code": "28041000",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.151,
+      "cn_code": "28080000",
+      "production_route": null
+    },
+    {
+      "benchmark": 1.522,
+      "cn_code": "28141000",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.457,
+      "cn_code": "28142000",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.019,
+      "cn_code": "28342100",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.018,
+      "cn_code": "31021012",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.029,
+      "cn_code": "31021015",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.053,
+      "cn_code": "31021019",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.051,
+      "cn_code": "31021090",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.022,
+      "cn_code": "31022100",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.019,
+      "cn_code": "31022900",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.508,
+      "cn_code": "31023010",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.019,
+      "cn_code": "31023090",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.019,
+      "cn_code": "31024010",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.019,
+      "cn_code": "31024090",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.27,
+      "cn_code": "31025000",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.042,
+      "cn_code": "31026000",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.625,
+      "cn_code": "31028000",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.053,
+      "cn_code": "31029000",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.019,
+      "cn_code": "31051000",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.09,
+      "cn_code": "31052010",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.09,
+      "cn_code": "31052090",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.006,
+      "cn_code": "31053000",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.006,
+      "cn_code": "31054000",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.09,
+      "cn_code": "31055100",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.006,
+      "cn_code": "31055900",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.019,
+      "cn_code": "31059020",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.019,
+      "cn_code": "31059080",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.086,
+      "cn_code": "26011200",
+      "production_route": null
+    },
+    {
+      "benchmark": 1.089,
+      "cn_code": "72011011",
+      "production_route": null
+    },
+    {
+      "benchmark": 1.089,
+      "cn_code": "72011019",
+      "production_route": null
+    },
+    {
+      "benchmark": 1.089,
+      "cn_code": "72011030",
+      "production_route": null
+    },
+    {
+      "benchmark": 1.089,
+      "cn_code": "72011090",
+      "production_route": null
+    },
+    {
+      "benchmark": 1.089,
+      "cn_code": "72012000",
+      "production_route": null
+    },
+    {
+      "benchmark": 1.089,
+      "cn_code": "72015010",
+      "production_route": null
+    },
+    {
+      "benchmark": 1.089,
+      "cn_code": "72015090",
+      "production_route": null
+    },
+    {
+      "benchmark": 1.361,
+      "cn_code": "72021120",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 1.361,
+      "cn_code": "72021180",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 1.361,
+      "cn_code": "72021900",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 1.142,
+      "cn_code": "72024110",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 1.142,
+      "cn_code": "72024190",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 1.142,
+      "cn_code": "72024910",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 1.142,
+      "cn_code": "72024950",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 1.142,
+      "cn_code": "72024990",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 2.39,
+      "cn_code": "72026000",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.295,
+      "cn_code": "72031000",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.295,
+      "cn_code": "72039000",
+      "production_route": null
+    },
+    {
+      "benchmark": 1.288,
+      "cn_code": "72051000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 1.46,
+      "cn_code": "72052100",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 1.288,
+      "cn_code": "72052900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.15,
+      "cn_code": "72061000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.15,
+      "cn_code": "72069000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.188,
+      "cn_code": "72071111",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.188,
+      "cn_code": "72071114",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.188,
+      "cn_code": "72071116",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.453,
+      "cn_code": "72071190",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.188,
+      "cn_code": "72071210",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.453,
+      "cn_code": "72071290",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.188,
+      "cn_code": "72071912",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.453,
+      "cn_code": "72071919",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.188,
+      "cn_code": "72071980",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.188,
+      "cn_code": "72072011",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.188,
+      "cn_code": "72072015",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.188,
+      "cn_code": "72072017",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.453,
+      "cn_code": "72072019",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.188,
+      "cn_code": "72072032",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.453,
+      "cn_code": "72072039",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.188,
+      "cn_code": "72072052",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.453,
+      "cn_code": "72072059",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.188,
+      "cn_code": "72072080",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72081000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72082500",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72082600",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72082700",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72083600",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72083700",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72083800",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72083900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72084000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72085120",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72085191",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72085198",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72085210",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72085291",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72085299",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72085310",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72085390",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72085400",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72089020",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72089080",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72091500",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72091610",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72091690",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72091710",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72091790",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72091810",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72091891",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72091899",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72092500",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72092610",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72092690",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72092710",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72092790",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72092810",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72092890",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72099020",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72099080",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72101100",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72101220",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72101280",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72102000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72103000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72104100",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72104900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72105000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72106100",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72106900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72107010",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72107080",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72109030",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72109040",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72109080",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72111300",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72111400",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "72111900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72112320",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72112330",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72112380",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72112900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72119020",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "72119080",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72121010",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72121090",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72122000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72123000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72124020",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72124080",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72125020",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72125030",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72125040",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72125061",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72125069",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72125090",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "72126000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72131000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72132000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72139110",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72139120",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72139141",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72139149",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72139170",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72139190",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72139910",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72139990",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "72141000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72142000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72143000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72149110",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72149190",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72149910",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72149931",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72149939",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72149950",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72149971",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72149979",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72149995",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72151000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72155011",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72155019",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72155080",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72159000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72161000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72162100",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72162200",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72163110",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72163190",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72163211",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72163219",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72163291",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72163299",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72163310",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72163390",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72164010",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72164090",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72165010",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72165091",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72165099",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72166110",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72166190",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72166900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72169110",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72169180",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72169900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72171010",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72171031",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72171039",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72171050",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "72171090",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.071,
+      "cn_code": "72172010",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.071,
+      "cn_code": "72172030",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.071,
+      "cn_code": "72172050",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.071,
+      "cn_code": "72172090",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.071,
+      "cn_code": "72173041",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.071,
+      "cn_code": "72173049",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.071,
+      "cn_code": "72173050",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.071,
+      "cn_code": "72173090",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.071,
+      "cn_code": "72179020",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.071,
+      "cn_code": "72179050",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.071,
+      "cn_code": "72179090",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.358,
+      "cn_code": "72181000",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.128,
+      "cn_code": "72189110",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.128,
+      "cn_code": "72189180",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.128,
+      "cn_code": "72189911",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.358,
+      "cn_code": "72189919",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.128,
+      "cn_code": "72189920",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.358,
+      "cn_code": "72189980",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72191100",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72191210",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72191290",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72191310",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72191390",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72191410",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72191490",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72192110",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72192190",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72192210",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72192290",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72192300",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72192400",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72193100",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72193210",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72193290",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72193310",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72193390",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72193410",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72193490",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72193510",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72193590",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72199020",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72199080",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72201100",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72201200",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72202021",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72202029",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72202041",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72202049",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72202081",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72202089",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72209020",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72209080",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72210010",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72210090",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72221111",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72221119",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72221181",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72221189",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72221910",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72221990",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72222011",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72222019",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72222021",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72222029",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72222031",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72222039",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72222081",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72222089",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "72223051",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "72223091",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "72223097",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72224010",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72224050",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72224090",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72230011",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72230019",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72230091",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72230099",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.453,
+      "cn_code": "72241010",
+      "production_route": "(F)"
+    },
+    {
+      "benchmark": 0.453,
+      "cn_code": "72241090",
+      "production_route": "(F)"
+    },
+    {
+      "benchmark": 0.223,
+      "cn_code": "72249002",
+      "production_route": "(F)"
+    },
+    {
+      "benchmark": 0.223,
+      "cn_code": "72249003",
+      "production_route": "(F)"
+    },
+    {
+      "benchmark": 0.223,
+      "cn_code": "72249005",
+      "production_route": "(F)"
+    },
+    {
+      "benchmark": 0.223,
+      "cn_code": "72249007",
+      "production_route": "(F)"
+    },
+    {
+      "benchmark": 0.223,
+      "cn_code": "72249014",
+      "production_route": "(F)"
+    },
+    {
+      "benchmark": 0.453,
+      "cn_code": "72249018",
+      "production_route": "(F)"
+    },
+    {
+      "benchmark": 0.223,
+      "cn_code": "72249031",
+      "production_route": "(F)"
+    },
+    {
+      "benchmark": 0.223,
+      "cn_code": "72249038",
+      "production_route": "(F)"
+    },
+    {
+      "benchmark": 0.453,
+      "cn_code": "72249090",
+      "production_route": "(F)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72251100",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72251910",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72251990",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72253010",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72253030",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72253090",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72254012",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72254015",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72254040",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72254060",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72254090",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72255020",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72255080",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.142,
+      "cn_code": "72259100",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.142,
+      "cn_code": "72259200",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.142,
+      "cn_code": "72259900",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72261100",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72261910",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72261980",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72262000",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72269120",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72269191",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "72269199",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72269200",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.142,
+      "cn_code": "72269910",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.142,
+      "cn_code": "72269930",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.142,
+      "cn_code": "72269970",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72271000",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72272000",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72279010",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72279050",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72279095",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72281020",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "72281050",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72281090",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72282010",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72282091",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72282099",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72283020",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72283041",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72283049",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72283061",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72283069",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72283070",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72283089",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "72284010",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "72284090",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72285020",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72285040",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72285061",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72285069",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72285080",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72286020",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72286080",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72287010",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72287090",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72288000",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72292000",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72299020",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72299050",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "72299090",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "73011000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "73012000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73021010",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73021022",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73021028",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73021040",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73021050",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73021090",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73023000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73024000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73029000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.163,
+      "cn_code": "73030010",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.163,
+      "cn_code": "73030090",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73041100",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73041910",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73041930",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73041990",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73042200",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73042300",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73042400",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73042910",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73042930",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73042990",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73043120",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73043180",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73043950",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73043982",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73043983",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73043988",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73044100",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73044983",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73044985",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73044989",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73045110",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73045181",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73045189",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73045930",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73045982",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73045983",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73045989",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73049000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "73051100",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "73051200",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "73051900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "73052000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "73053100",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "73053900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "73059000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "73061100",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "73061900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "73062100",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "73062900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.079,
+      "cn_code": "73063012",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.044,
+      "cn_code": "73063018",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73063041",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73063049",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73063072",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73063077",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73063080",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "73064020",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "73064080",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "73065021",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.073,
+      "cn_code": "73065029",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "73065080",
+      "production_route": "(F)(1)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "73066110",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73066192",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73066199",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.109,
+      "cn_code": "73066910",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73066990",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73069000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.163,
+      "cn_code": "73071110",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.163,
+      "cn_code": "73071190",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.163,
+      "cn_code": "73071910",
+      "production_route": null
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "73071990",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73072100",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73072210",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73072290",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73072310",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73072390",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73072910",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73072980",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73079100",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73079210",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73079290",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73079311",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73079319",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73079391",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73079399",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73079910",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.057,
+      "cn_code": "73079980",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73081000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73082000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73083000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73084000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73089051",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73089059",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73089098",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73090010",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73090030",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73090051",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73090059",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73090090",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73101000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73102111",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73102119",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73102191",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73102199",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73102910",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73102990",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73110011",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73110013",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73110019",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73110030",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73110091",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73110099",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181100",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181210",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181290",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181300",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181410",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181491",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181499",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181520",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181535",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181542",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181548",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181552",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181558",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181562",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181568",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181575",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181582",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181588",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181595",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181631",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181639",
+      "production_route": "(1)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181640",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181660",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181692",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181699",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73181900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73182100",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73182200",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73182300",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73182400",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73182900",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "73261100",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "73261910",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "73261990",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.071,
+      "cn_code": "73262000",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73269030",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73269040",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73269050",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.038,
+      "cn_code": "73269060",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "73269092",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "73269094",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.303,
+      "cn_code": "73269096",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 0.112,
+      "cn_code": "73269098",
+      "production_route": "(C)"
+    },
+    {
+      "benchmark": 1.423,
+      "cn_code": "76011010",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 1.423,
+      "cn_code": "76011090",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 1.423,
+      "cn_code": "76012030",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 1.423,
+      "cn_code": "76012040",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 1.423,
+      "cn_code": "76012080",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.046,
+      "cn_code": "76031000",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.046,
+      "cn_code": "76032000",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76041010",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.06,
+      "cn_code": "76041090",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.06,
+      "cn_code": "76042100",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76042910",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.06,
+      "cn_code": "76042990",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76051100",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76051900",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76052100",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76052900",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76061130",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76061150",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76061191",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76061193",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76061199",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76061211",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76061219",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76061230",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76061250",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76061292",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76061293",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76061299",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76069100",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76069200",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76071111",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76071119",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76071190",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76071910",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76071990",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76072010",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76072091",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76072099",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.06,
+      "cn_code": "76081000",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.06,
+      "cn_code": "76082020",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.06,
+      "cn_code": "76082081",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.06,
+      "cn_code": "76082089",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.06,
+      "cn_code": "76090000",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.06,
+      "cn_code": "76101000",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.06,
+      "cn_code": "76109010",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.06,
+      "cn_code": "76109090",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76110000",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76121000",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76129020",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76129030",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76129080",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.166,
+      "cn_code": "76130000",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76141000",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76149000",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76161000",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76169100",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.046,
+      "cn_code": "76169910",
+      "production_route": "(K)"
+    },
+    {
+      "benchmark": 0.056,
+      "cn_code": "76169990",
+      "production_route": "(K)"
+    }
+  ],
+  "version": "2025/2620"
+}
