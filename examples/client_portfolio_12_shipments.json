@@ -1,0 +1,126 @@
+{
+  "provenance": "SYNTHETIC_COMMERCIAL_DATA_PUBLIC_REGULATORY_CONTEXT",
+  "notice": "All counterparties, invoice values and shipment identifiers are synthetic. Regulatory and statistical context must come from configured source snapshots.",
+  "shipments": [
+    {
+      "shipment_ref": "HRC-NL-001",
+      "origin_country": "IN",
+      "destination_country": "NL",
+      "cn_code": "72083900",
+      "import_date": "2026-09-29",
+      "quantity_t": 20,
+      "customs_value_eur": 120000,
+      "demo_scenario": "READY_CANDIDATE"
+    },
+    {
+      "shipment_ref": "HRC-DE-002",
+      "origin_country": "IN",
+      "destination_country": "DE",
+      "cn_code": "72083900",
+      "import_date": "2026-09-29",
+      "quantity_t": 27,
+      "customs_value_eur": 153000,
+      "demo_scenario": "CBAM_VERIFICATION"
+    },
+    {
+      "shipment_ref": "SS-IT-003",
+      "origin_country": "IN",
+      "destination_country": "IT",
+      "cn_code": "72191390",
+      "import_date": "2026-09-29",
+      "quantity_t": 34,
+      "customs_value_eur": 186000,
+      "demo_scenario": "QUOTA"
+    },
+    {
+      "shipment_ref": "PLATE-BE-004",
+      "origin_country": "IN",
+      "destination_country": "BE",
+      "cn_code": "72085120",
+      "import_date": "2026-09-29",
+      "quantity_t": 41,
+      "customs_value_eur": 219000,
+      "demo_scenario": "QUOTA"
+    },
+    {
+      "shipment_ref": "TUBE-NL-005",
+      "origin_country": "IN",
+      "destination_country": "NL",
+      "cn_code": "73041990",
+      "import_date": "2026-09-29",
+      "quantity_t": 48,
+      "customs_value_eur": 252000,
+      "demo_scenario": "PRECURSOR_EMISSIONS"
+    },
+    {
+      "shipment_ref": "FASTENER-DE-006",
+      "origin_country": "IN",
+      "destination_country": "DE",
+      "cn_code": "73181595",
+      "import_date": "2026-09-29",
+      "quantity_t": 55,
+      "customs_value_eur": 285000,
+      "demo_scenario": "REACH_SVHC"
+    },
+    {
+      "shipment_ref": "MACHINE-FR-007",
+      "origin_country": "IN",
+      "destination_country": "FR",
+      "cn_code": "84798997",
+      "import_date": "2026-09-29",
+      "quantity_t": 62,
+      "customs_value_eur": 318000,
+      "demo_scenario": "SCIP"
+    },
+    {
+      "shipment_ref": "COMP-NL-008",
+      "origin_country": "IN",
+      "destination_country": "NL",
+      "cn_code": "73269098",
+      "import_date": "2026-09-29",
+      "quantity_t": 69,
+      "customs_value_eur": 351000,
+      "demo_scenario": "SANCTIONS_OWNERSHIP"
+    },
+    {
+      "shipment_ref": "STEEL-BE-009",
+      "origin_country": "IN",
+      "destination_country": "BE",
+      "cn_code": "72107080",
+      "import_date": "2026-09-29",
+      "quantity_t": 76,
+      "customs_value_eur": 384000,
+      "demo_scenario": "CUSTOMS_VALUATION"
+    },
+    {
+      "shipment_ref": "STEEL-DE-010",
+      "origin_country": "IN",
+      "destination_country": "DE",
+      "cn_code": "72259900",
+      "import_date": "2026-09-29",
+      "quantity_t": 83,
+      "customs_value_eur": 417000,
+      "demo_scenario": "ORIGIN_EVIDENCE"
+    },
+    {
+      "shipment_ref": "HRC-NL-011",
+      "origin_country": "IN",
+      "destination_country": "NL",
+      "cn_code": "72083900",
+      "import_date": "2026-09-29",
+      "quantity_t": 90,
+      "customs_value_eur": 450000,
+      "demo_scenario": "TARIC_DOCUMENT"
+    },
+    {
+      "shipment_ref": "HRC-IT-012",
+      "origin_country": "IN",
+      "destination_country": "IT",
+      "cn_code": "72083900",
+      "import_date": "2026-09-29",
+      "quantity_t": 97,
+      "customs_value_eur": 483000,
+      "demo_scenario": "GENEALOGY"
+    }
+  ]
+}
