@@ -1,0 +1,2 @@
+timestamp,installation,production_process,source_id,activity_type,quantity,unit,measurement_method,quality_flag,measured_emissions_tco2,emission_factor_tco2_per_unit,oxidation_factor,conversion_factor
+2026-08-18T08:00:00,Vijayanagar,Integrated-HRC,SRC-BF-BOF,process_and_combustion,4100,t,METERED_AND_MASS_BALANCE,VALID,6355,,,1
