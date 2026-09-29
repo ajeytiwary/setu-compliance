@@ -33,6 +33,8 @@ class CBAMVerificationReportIn(BaseModel):payload:dict
 class PublicDataImportIn(BaseModel):csv_content:str; as_of:str|None=None
 class PublicDataSyncIn(BaseModel):url:str; as_of:str|None=None
 class TaricResolveIn(BaseModel):payload:dict
+class RegulatoryPayloadIn(BaseModel):payload:dict
+class ReferenceCSVIn(BaseModel):csv_content:str
 @app.on_event("startup")
 def startup():init_db();seed_if_empty()
 def detailed(conn,s):
@@ -175,6 +177,38 @@ def cbam_verification_validate(x:CBAMVerificationReportIn):
 def cbam_calculations():
  from .cbam_engine import list_calculations
  return {"calculations":list_calculations()}
+@app.post("/api/regulatory/steel/evaluate")
+def regulatory_steel_evaluate(x:RegulatoryPayloadIn):
+ from .steel_trade_engine_v2 import evaluate
+ try:return evaluate(x.payload)
+ except (ValueError,KeyError) as e:raise HTTPException(422,str(e))
+@app.post("/api/regulatory/steel/categories/import")
+def regulatory_steel_categories_import(x:ReferenceCSVIn):
+ from .steel_trade_engine_v2 import import_categories
+ try:return import_categories(x.csv_content)
+ except (ValueError,KeyError) as e:raise HTTPException(422,str(e))
+@app.post("/api/cbam/v2/calculate")
+def cbam_v2_calculate(x:RegulatoryPayloadIn):
+ from .cbam_definitive_v2 import calculate
+ try:return calculate(x.payload)
+ except (ValueError,KeyError) as e:raise HTTPException(422,str(e))
+@app.post("/api/cbam/v2/defaults/import")
+def cbam_defaults_import(x:ReferenceCSVIn):
+ from .cbam_definitive_v2 import import_defaults
+ return import_defaults(x.csv_content)
+@app.post("/api/cbam/v2/benchmarks/import")
+def cbam_benchmarks_import(x:ReferenceCSVIn):
+ from .cbam_definitive_v2 import import_benchmarks
+ return import_benchmarks(x.csv_content)
+@app.post("/api/cbam/verification/pack")
+def cbam_verification_pack(x:RegulatoryPayloadIn):
+ from .cbam_verification_pack import build_pack
+ return build_pack(x.payload)
+@app.post("/api/customs/declaration-readiness")
+def customs_declaration_readiness(x:RegulatoryPayloadIn):
+ from .customs_declaration_pack import compile_pack
+ try:return compile_pack(x.payload)
+ except ValueError as e:raise HTTPException(422,str(e))
 @app.post("/api/customs/taric/resolve")
 def customs_taric_resolve(x:TaricResolveIn):
  from .taric_engine import resolve_taric
