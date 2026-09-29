@@ -4,9 +4,7 @@ from pathlib import Path
 from openpyxl import load_workbook
 from app.reference_validation import validate
 ROOT=Path(__file__).resolve().parents[1]; OUT=ROOT/"data"/"official"; STAGE=OUT/"staging"; OUT.mkdir(parents=True,exist_ok=True);STAGE.mkdir(parents=True,exist_ok=True)
-DEFAULT_URL="https://taxation-customs.ec.europa.eu/document/download/1c05d211-80cb-4aaa-8ef0-e08005a95d7e_en?filename=DV+correcting+act_final+update_06.08.xlsx"
-BENCHMARK_URL="https://taxation-customs.ec.europa.eu/document/download/9877523c-2a02-4926-a211-aefae7cf6d0d_en?filename=CBAM+Benchmarks_20260206.xlsx"
-STEEL_URL="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32026R1457"
+from app.data_sources import selected\nDEFAULT_URL=selected("cbam_defaults").url\nBENCHMARK_URL=selected("cbam_benchmarks").url\nSTEEL_URL=selected("steel_2026_1457").url
 def fetch(url):
  req=urllib.request.Request(url,headers={"User-Agent":"SetuCompliance/0.5"});return urllib.request.urlopen(req,timeout=60).read()
 def xlsx_rows(raw):

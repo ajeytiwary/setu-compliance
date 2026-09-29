@@ -295,3 +295,22 @@ def pipeline_origin(shipment_ref,x:PipelineOriginIn):
  from .steel_pipeline import evaluate_shipment_origin
  try:return evaluate_shipment_origin(shipment_ref,x.product_specific_rule)
  except ValueError as e:raise HTTPException(422,str(e))
+
+
+@app.get("/api/data-sources")
+def data_source_status():
+ from .data_sources import status
+ return status()
+
+@app.get("/api/data-sources/{dataset}")
+def data_source_detail(dataset:str):
+ from .data_sources import registry,status
+ if dataset not in registry(): raise HTTPException(404,"Unknown dataset")
+ return status()[dataset]
+
+@app.post("/api/data-sources/{dataset}/snapshot")
+def data_source_snapshot(dataset:str,provider_id:str|None=None):
+ from .data_sources import registry,snapshot
+ if dataset not in registry(): raise HTTPException(404,"Unknown dataset")
+ try:return snapshot(dataset,provider_id)
+ except ValueError as e:raise HTTPException(422,str(e))
