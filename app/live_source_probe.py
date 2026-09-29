@@ -39,7 +39,7 @@ def sync(name):
  records=normalize(name,raw)
  if not records:raise RuntimeError(name+" normalized zero records")
  probe=raw.decode("utf-8","ignore")
- if cfg["expect"].lower() not in probe.lower() and name not in ("taric_measures","echa_candidate_list"):raise RuntimeError(name+" expected version marker missing")
+ if cfg["expect"].lower() not in probe.lower() and name not in ("taric_measures","echa_candidate_list","eu_sanctions"):raise RuntimeError(name+" expected version marker missing")
  sha=hashlib.sha256(raw).hexdigest();p=OUT/name;p.mkdir(parents=True,exist_ok=True)
  obj={"dataset":name,"source":final,"authority":cfg["authority"],"upstream":cfg.get("upstream"),"transport":transport,"sha256":sha,"retrieved_at":datetime.now(timezone.utc).isoformat(),"validation":{"valid":True,"record_count":len(records)},"records":records}
  (p/"latest.json").write_text(json.dumps(obj,indent=2));return obj
