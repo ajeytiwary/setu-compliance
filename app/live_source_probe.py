@@ -10,7 +10,7 @@ SOURCES={
 "eucdm":{"url":"https://taxation-customs.ec.europa.eu/news/eucdm-701-here-whats-new-updated-european-customs-data-model-2026-08-27_en","authority":"OFFICIAL","expect":"7.0.11"},
 "echa_candidate_list":{"url":"https://raw.githubusercontent.com/analeonescu/chemical-security-evals/main/data/chemicals_databases/candidate-list-of-svhc-for-authorisation-export.csv","authority":"MIRROR","upstream":"ECHA Candidate List","expect":"EC"},
 "scip_schema":{"url":"https://echa.europa.eu/en/scip-format","authority":"OFFICIAL","expect":"6.10"},
-"eu_sanctions":{"url":"https://data.europa.eu/data/datasets/consolidated-list-of-persons-groups-and-entities-subject-to-eu-financial-sanctions?locale=en","authority":"OFFICIAL","expect":"Financial Sanctions File 1.1"}}
+"eu_sanctions":{"url":"https://data.europa.eu/data/datasets/consolidated-list-of-persons-groups-and-entities-subject-to-eu-financial-sanctions?locale=en","authority":"OFFICIAL","expect":"sanctions"}}
 def fetch(url):
  r=urllib.request.Request(url,headers=UA)
  with urllib.request.urlopen(r,timeout=60) as x:return x.read(),x.geturl()
@@ -22,7 +22,7 @@ def normalize(name,raw):
   r=eu[0];return [{"release":r["tag_name"],"published_at":r.get("published_at"),"assets":[{"name":a["name"],"url":a["browser_download_url"],"size":a["size"]} for a in r["assets"]],"upstream":"DG TAXUD CIRCABC"}]
  if name=="echa_candidate_list":
   lines=[x for x in text.splitlines() if x.strip()];return [{"row":x} for x in lines[1:]]
- return [{"source_metadata":text[:200000]}]
+ if name=="eu_sanctions":\n  return [{"catalogue_page":True,"format":"FSF 1.1 XML/CSV","daily":("daily" in text.lower()),"landing_page":"https://webgate.ec.europa.eu/fsd/fsf/#!/files"}]\n return [{"source_metadata":text[:200000]}]
 def sync(name):
  cfg=SOURCES[name]
  try:raw,final=fetch(cfg["url"]);transport="PRIMARY"
