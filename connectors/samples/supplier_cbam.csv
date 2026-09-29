@@ -1,0 +1,2 @@
+supplier_id,installation_id,precursor_cn,precursor_name,period_start,period_end,specific_embedded_emissions,unit,verification_status,evidence_ref,quantity_t
+SUP-001,INST-FERRO-01,7202,Ferromanganese,2026-01-01,2026-06-30,2.15,tCO2e/t,VERIFIED,CBAM-SUP-001,55
