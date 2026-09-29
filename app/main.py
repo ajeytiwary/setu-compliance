@@ -28,6 +28,7 @@ class SupplierEvidenceIn(BaseModel):evidence_type:str; content:str; status:str=F
 class EvidenceRequestIn(BaseModel):shipment_id:str; supplier_id:str; requirement_code:str="SUPPLIER_DATA"; evidence_type:str; owner:str; due_date:str|None=None; message:str|None=None
 class EvidenceResolveIn(BaseModel):evidence_id:str
 class RemediationSimulationIn(BaseModel):requirement_code:str; estimated_cost_eur:float=Field(default=0,ge=0)
+class ActiveEntitlementIn(BaseModel):payload:dict
 @app.on_event("startup")
 def startup():init_db();seed_if_empty()
 def detailed(conn,s):
@@ -166,6 +167,15 @@ def cbam_calculate(x:CBAMCalculationIn):
 def cbam_calculations():
  from .cbam_engine import list_calculations
  return {"calculations":list_calculations()}
+@app.get("/api/regulatory/steel-measure")
+def regulatory_steel_measure():
+ from .steel_trade_measure import public_dataset
+ return public_dataset()
+@app.post("/api/compliance/active-entitlement")
+def active_entitlement(x:ActiveEntitlementIn):
+ from .compliance_entitlement import compile_active_entitlement
+ try:return compile_active_entitlement(x.payload)
+ except ValueError as e:raise HTTPException(422,str(e))
 @app.get("/api/fta/agreements")
 def fta_agreements():
  from .fta_origin import AGREEMENTS
