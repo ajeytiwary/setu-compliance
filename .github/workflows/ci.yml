@@ -39,6 +39,6 @@ jobs:
               assert p.exists(), f"{n}: latest.json missing"
               x=json.loads(p.read_text())
               assert x["validation"]["valid"], f"{n}: invalid"
-              assert x["validation"]["record_count"]>0, f"{n}: empty"
+              assert x["validation"]["record_count"]>0, f"{n}: empty"\n              assert x.get("transport") != "AUTHORITY_METADATA_FALLBACK" or n == "scip_schema", f"{n}: metadata fallback not allowed"
               print(n,x["validation"]["record_count"],x["sha256"])
           PY
