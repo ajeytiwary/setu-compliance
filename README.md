@@ -54,3 +54,10 @@ Setu is engineering assurance infrastructure, not legal certification. Regulator
 Setu now persists supplier identities, shipment/material links, reusable supplier evidence and evidence requests. A request only resolves against VERIFIED evidence belonging to the same supplier. Resolution recomputes supplier coverage and the blocking SUPPLIER_DATA requirement, creating an auditable blocker → supplier → evidence → readiness loop.
 
 Endpoints: `POST /api/suppliers`, `POST /api/suppliers/{id}/link`, `POST /api/suppliers/{id}/evidence`, `POST /api/remediation/requests`, `POST /api/remediation/requests/{id}/resolve`, `GET /api/remediation`, and `GET /api/evidence-graph`.
+
+
+## Live EU customs regulatory data
+
+Setu includes provenance-aware adapters for EU Commission TARIC and QUOTA public data. TARIC raw data is published by the Commission and tariff-quota balances are updated daily. Snapshots are hashed and dated; active entitlement consumes a QUOTA balance only when the snapshot is fresh (default: <=1 day). Missing or stale balances produce QUOTA_BALANCE_REQUIRED rather than an assumed in-quota result.
+
+The scheduled GitHub workflow `.github/workflows/sync-eu-regulatory-data.yml` runs daily. Configure direct official Commission export endpoints as repository secrets `EU_QUOTA_CSV_URL` and `EU_TARIC_CSV_URL`, or trigger the workflow manually with URLs. If no direct export URL is configured, the workflow deliberately leaves the prior snapshot untouched so freshness checks fail closed. Runtime/API imports are available under `/api/regulatory/public-data/*`.
