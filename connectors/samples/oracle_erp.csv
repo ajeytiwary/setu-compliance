@@ -1,0 +1,2 @@
+shipment_id,order_no,invoice_no,customer,destination,value_eur,material
+DEMO-EU-001,DEMO-ORD-001,DEMO-INV-001,Demo automotive buyer,DE,2810000,HRC
