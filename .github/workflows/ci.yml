@@ -27,7 +27,7 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - name: Sync all five live regulatory sources
-        run: python scripts/sync_sources.py --strict
+        run: python scripts/sync_live_sources.py
       - name: Verify populated normalized snapshots
         run: |
           python - <<'PY'
