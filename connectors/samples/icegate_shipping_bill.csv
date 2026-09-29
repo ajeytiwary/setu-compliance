@@ -1,0 +1,2 @@
+shipment_id,shipping_bill_no,shipping_bill_date,port,hs_code,invoice_value,currency,destination
+DEMO-EU-001,DEMO-SB-001,2026-08-21,INMAA1,7208,2810000,EUR,DE
