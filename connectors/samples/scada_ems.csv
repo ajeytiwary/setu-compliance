@@ -1,0 +1,2 @@
+facility,meter_id,activity,timestamp,quantity,unit,quality
+Vijayanagar,DEMO-METER-1,electricity,2026-08-20T10:00:00,1000,kWh,VALID
