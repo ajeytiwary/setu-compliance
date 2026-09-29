@@ -1,0 +1,2 @@
+material_document,posting_date,material_id,batch_id,supplier_id,quantity,unit,plant,purchase_order,country_of_origin
+MATDOC-001,2026-08-18,FERRO-MN,BATCH-FM-001,SUP-001,42,t,Vijayanagar,PO-4001,IN
