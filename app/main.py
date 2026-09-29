@@ -79,6 +79,10 @@ def dpp(shipment_id):
 def market_access_order_book():
  from .market_access import order_book
  return order_book()
+@app.get("/api/market-access/risk-drilldown")
+def market_access_risk_drilldown():
+ from .risk_drilldown import risk_drilldown
+ return risk_drilldown()
 @app.get("/api/evidence-graph")
 def evidence_graph():
  with connect() as conn:
