@@ -32,6 +32,7 @@ class ActiveEntitlementIn(BaseModel):payload:dict
 class CBAMVerificationReportIn(BaseModel):payload:dict
 class PublicDataImportIn(BaseModel):csv_content:str; as_of:str|None=None
 class PublicDataSyncIn(BaseModel):url:str; as_of:str|None=None
+class TaricResolveIn(BaseModel):payload:dict
 @app.on_event("startup")
 def startup():init_db();seed_if_empty()
 def detailed(conn,s):
@@ -174,6 +175,15 @@ def cbam_verification_validate(x:CBAMVerificationReportIn):
 def cbam_calculations():
  from .cbam_engine import list_calculations
  return {"calculations":list_calculations()}
+@app.post("/api/customs/taric/resolve")
+def customs_taric_resolve(x:TaricResolveIn):
+ from .taric_engine import resolve_taric
+ p=x.payload
+ required=("cn_code","origin_country","import_date","customs_value_eur","quantity_t")
+ missing=[k for k in required if k not in p]
+ if missing:raise HTTPException(422,"Missing required fields")
+ try:return resolve_taric(p["cn_code"],p["origin_country"],p["import_date"],p["customs_value_eur"],p["quantity_t"],p.get("customs_documents"),p.get("additional_code"))
+ except ValueError as e:raise HTTPException(422,str(e))
 @app.get("/api/regulatory/public-data/status")
 def regulatory_public_data_status():
  from .eu_public_data import latest,freshness
