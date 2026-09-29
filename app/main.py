@@ -207,7 +207,10 @@ def cbam_verification_pack(x:RegulatoryPayloadIn):
 @app.post("/api/market-access/v2/compile")
 def market_access_v2_compile(x:RegulatoryPayloadIn):
  from .market_access_compiler_v2 import compile_shipment
- try:return compile_shipment(x.payload)
+ from .readiness import submission_readiness
+ try:
+  result=compile_shipment(x.payload)
+  return {**result,**submission_readiness(result)}
  except (ValueError,KeyError) as e:raise HTTPException(422,str(e))
 @app.post("/api/customs/declaration-readiness")
 def customs_declaration_readiness(x:RegulatoryPayloadIn):
