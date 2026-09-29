@@ -1,0 +1,2 @@
+installation_id,reporting_period,verifier,accreditation_ref,status,started_at,completed_at,findings,statement_ref
+VIJ-DEMO,2026-H1,Demo Verifier EU,ACC-DEMO-001,VERIFIED,2026-07-01,2026-07-05,0,VER-STMT-001
