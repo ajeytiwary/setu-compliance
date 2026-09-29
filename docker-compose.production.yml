@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: setu
+      POSTGRES_USER: setu
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - setu_pg:/var/lib/postgresql/data
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://setu:${POSTGRES_PASSWORD}@db:5432/setu
+      SETU_ENV: production
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+volumes:
+  setu_pg:
