@@ -2,7 +2,7 @@ const eur=n=>new Intl.NumberFormat("en-IE",{style:"currency",currency:"EUR",maxi
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 const pct=(n,d)=>d?Math.round(100*n/d):0;
 let overview=null;
-let filter={country:null,rule:null};
+let filter={country:null,rule:null,shipment:null};
 let simRank=[];
 function statusPill(s){const cls=(s==="SIGNAL_PRESENT"||s==="CONNECTED_ROWS"||s==="READY")?"good":((s==="NO_SIGNAL"||s==="NO_ROWS"||s==="BLOCKED")?"bad":"");return '<span class="pill '+cls+'">'+esc(s)+"</span>";}
 function renderKpis(){
@@ -24,11 +24,14 @@ function renderRisk(){
   '<div class="row clickable'+(filter.country===c.country?" selected":"")+'" data-country="'+esc(c.country)+'"><div class="kv"><span class="t">'+esc(c.country)+'</span><span class="v bad">'+eur(c.at_risk_value_eur)+'</span></div><div class="bar"><i style="width:'+pct(c.at_risk_value_eur,c.total_value_eur)+'%"></i></div><div class="muted" style="font-size:12px">'+eur(c.total_value_eur)+" total</div></div>").join("")||'<div class="muted">No destinations.</div>';
  document.querySelector("#rules").innerHTML=risk.rule_risk.map(r=>
   '<div class="row clickable'+(filter.rule===r.code?" selected":"")+'" data-rule="'+esc(r.code)+'"><div class="kv"><span class="t">'+esc(r.code)+'</span><span class="v bad">'+eur(r.value_eur)+"</span></div></div>").join("")||'<div class="muted">No blocking rules.</div>';
- const rows=risk.drilldown.filter(x=>(!filter.country||x.country===filter.country)&&(!filter.rule||x.blocker.code===filter.rule));
- document.querySelector("#breadcrumb").textContent=["Portfolio",filter.country,filter.rule].filter(Boolean).join(" → ");
+ const rows=risk.drilldown.filter(x=>(!filter.country||x.country===filter.country)&&(!filter.rule||x.blocker.code===filter.rule)&&(!filter.shipment||x.shipment_id===filter.shipment));
+ const selShip=(overview.shipments||[]).find(s=>s.id===filter.shipment);
+ const selShipNo=selShip?selShip.shipment_no:filter.shipment;
+ document.querySelector("#breadcrumb").textContent=["Portfolio",filter.country,filter.rule,selShipNo].filter(Boolean).join(" → ");
  document.querySelector("#activeFilters").innerHTML=
   (filter.country?'<span class="chip">'+esc(filter.country)+'<button data-clear="country" aria-label="clear">×</button></span>':"")+
-  (filter.rule?'<span class="chip">'+esc(filter.rule)+'<button data-clear="rule" aria-label="clear">×</button></span>':"");
+  (filter.rule?'<span class="chip">'+esc(filter.rule)+'<button data-clear="rule" aria-label="clear">×</button></span>':"")+
+  (filter.shipment?'<span class="chip">'+esc(selShipNo)+'<button data-clear="shipment" aria-label="clear">×</button></span>':"");
  document.querySelector("#drilldown").innerHTML=rows.map(x=>
   '<div class="drill"><div class="drill-head"><span><b>'+esc(x.shipment_no)+"</b> · "+esc(x.country)+
   '</span><span class="v">'+eur(x.value_eur)+"</span></div>"+
@@ -41,7 +44,7 @@ function renderRisk(){
  document.querySelectorAll("[data-country]").forEach(e=>e.onclick=()=>{filter.country=filter.country===e.dataset.country?null:e.dataset.country;renderRisk();});
  document.querySelectorAll("[data-rule]").forEach(e=>e.onclick=()=>{filter.rule=filter.rule===e.dataset.rule?null:e.dataset.rule;renderRisk();});
  document.querySelectorAll("[data-clear]").forEach(e=>e.onclick=()=>{filter[e.dataset.clear]=null;renderRisk();});
- if(filter.country||filter.rule)markStep(1);
+ if(filter.country||filter.rule||filter.shipment)markStep(1);
  wireActions();
 }
 function wireActions(){
@@ -53,6 +56,23 @@ function wireActions(){
   document.querySelector("#owner").focus();
   document.querySelector("#requestForm").scrollIntoView({behavior:"smooth",block:"center"});
  });
+}
+function wireShipmentRows(){
+ document.querySelectorAll("[data-shipment-row]").forEach(e=>{
+  const open=()=>{
+   filter.shipment=filter.shipment===e.dataset.shipmentRow?null:e.dataset.shipmentRow;
+   renderRisk();
+   renderShipments();
+   document.querySelector("#drilldown").scrollIntoView({behavior:"smooth",block:"center"});
+  };
+  e.onclick=open;
+  e.onkeydown=ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();open();}};
+ });
+}
+function renderShipments(){
+ const d=overview;
+ document.querySelector("#shipments").innerHTML=d.shipments.map(s=>'<div class="row clickable'+(filter.shipment===s.id?" selected":"")+'" data-shipment-row="'+esc(s.id)+'" role="button" tabindex="0" aria-label="Inspect '+esc(s.shipment_no)+' blockers"><div class="kv"><span class="t"><b>'+esc(s.shipment_no)+"</b> · "+esc(s.destination_country)+" · "+esc(s.cn_code)+'</span><span class="v">'+eur(s.value_eur)+'</span></div><div class="'+(s.ready?"good":"bad")+'">'+(s.ready?"READY":"BLOCKED")+" · "+s.open_blockers+"/"+s.blocking_total+" blocking open"+(s.first_blocker?" · "+esc(s.first_blocker.code)+" · "+esc(s.first_blocker.label):"")+'</div><div class="muted" style="font-size:12px">Click to see what is blocked and what is blocking it.</div></div>').join("")||'<div class="muted">No shipments yet.</div>';
+ wireShipmentRows();
 }
 async function simulate(shipment,rule){
  if(!rule)return;
@@ -121,7 +141,7 @@ function renderStatic(){
  document.querySelector("#scope-line").textContent=d.scope.notice;
  document.querySelector("#weeks").innerHTML=d.weeks.map(w=>'<div class="row"><b>W'+w.week+"</b> · "+esc(w.objective)+'<span style="float:right">'+statusPill(w.status)+'</span><div class="muted">Exit: '+esc(w.exit)+'</div><div class="muted">Signal: '+esc(w.signal)+" = "+esc(w.signal_value??"manual")+"</div></div>").join("");
  document.querySelector("#contracts").innerHTML=d.contracts.map(c=>'<div class="row"><b>'+esc(c.label)+'</b><span style="float:right">'+statusPill(c.status)+(c.sample_only?' <span class="pill">SAMPLE_ONLY</span>':"")+'</span><div class="muted">'+esc(c.rows)+" canonical rows · "+esc(c.unlocks)+'</div><div class="muted">Last run: '+esc(c.last_run||"never")+"</div></div>").join("");
- document.querySelector("#shipments").innerHTML=d.shipments.map(s=>'<div class="row"><b>'+esc(s.shipment_no)+"</b> · "+esc(s.destination_country)+" · "+esc(s.cn_code)+'<span style="float:right">'+eur(s.value_eur)+'</span><div class="'+(s.ready?"good":"bad")+'">'+(s.ready?"READY":"BLOCKED")+" · "+s.open_blockers+"/"+s.blocking_total+" blocking open"+(s.first_blocker?" · "+esc(s.first_blocker.code)+" · "+esc(s.first_blocker.label):"")+"</div>"+(s.ready||!s.first_blocker?"":'<button class="secondary small simulate" data-shipment="'+esc(s.shipment_no)+'" data-rule="'+esc(s.first_blocker.code)+'">Simulate fix</button>')+"</div>").join("")||'<div class="muted">No shipments yet.</div>';
+ renderShipments();
  document.querySelector("#cbam").innerHTML="<p><b>"+d.cbam_calculations.length+"</b> persisted calculations (newest first)</p>"+d.cbam_calculations.slice(0,20).map(c=>'<div class="row"><b>'+esc(c.cn_code)+"</b> · "+esc(c.installation_id||"n/a")+" · "+esc(c.reporting_period||"n/a")+'<span style="float:right">'+esc(c.status)+'</span><div class="muted">'+esc(c.specific_embedded_emissions)+" tCO2e/t · "+esc(c.created_at||"")+"</div></div>").join("");
  renderRemediation();
  document.querySelector("#regulatory").innerHTML=Object.entries(d.regulatory).map(([key,v])=>'<div class="row"><b>'+esc(key)+"</b>"+(v.snapshot?'<span style="float:right" class="good">SNAPSHOT</span>':'<span style="float:right" class="bad">NO SNAPSHOT</span>')+'<div class="muted">'+esc(v.purpose||v.error||"")+"</div><div class=\"muted\">"+esc(v.snapshot?((v.snapshot.provider||"?")+" · "+(v.snapshot.record_count??"?")+" records · sha "+String(v.snapshot.sha256||"").slice(0,12)+"… · manifest "+(v.manifest_version||"n/a")):("run POST /api/data-sources/"+key+"/sync"))+"</div></div>").join("");
