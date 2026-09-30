@@ -8,24 +8,24 @@
 <link rel="stylesheet" href="/demo.css">
 <style>
 /* Pilot-only additions on top of the shared light system (demo.css). */
-.pilot-banner{background:#eef7e4;border:1px solid #bfe3b4;border-radius:12px;padding:14px 18px;margin:18px 0}
+.pilot-banner{background:#eef7e4;border:1px solid #bfe3b4;border-radius:var(--radius);padding:14px 18px;margin:18px 0}
 .pilot-banner b{color:var(--green)}
 .topnav .brand{letter-spacing:.18em}
 .topnav .navlinks a.active{font-weight:800;color:var(--green)}
-.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:11px;font-weight:700;margin:3px 4px 3px 0;background:var(--cream)}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:var(--radius-chip);padding:3px 10px;font-size:11px;font-weight:700;margin:3px 4px 3px 0;background:var(--cream)}
 .pill.good{color:var(--green);border-color:#bfe3b4;background:#e9f7e4}
 .pill.bad{color:var(--red);border-color:#f0c4bd;background:#fdecea}
 .sim-cost{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:13px;font-weight:700;color:#3c4d46}
 .sim-cost input{width:150px}
 .workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}
-.wstep{background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12px}
+.wstep{background:var(--cream);border:1px solid var(--line);border-radius:var(--radius-chip);padding:10px 12px;font-size:12px}
 .wstep b{display:block;font-size:12px;margin-bottom:4px}
 .wstep.done{border-color:#bfe3b4;background:#e9f7e4}
 .wstep .wnum{display:inline-block;background:var(--green);color:#fff;border-radius:999px;font-size:11px;font-weight:800;width:20px;height:20px;line-height:20px;text-align:center;margin-right:6px}
 .sim-story p{margin:8px 0;line-height:1.55}
 .sim-steps{margin:10px 0 4px 18px;line-height:1.6}
 .sim-meta{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-.evidence-cycle{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;background:#fff}
+.evidence-cycle{border:1px solid var(--line);border-radius:var(--radius-chip);padding:10px 12px;margin:8px 0;background:#fff}
 .evidence-cycle .ev-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
 .evidence-cycle input{width:220px}
 .evidence-cycle .ev-list{margin:8px 0 0 0;padding:0;list-style:none;font-size:13px}
@@ -121,8 +121,9 @@
 <section class="panel"><p class="eyebrow">PROVENANCE</p><h2>Regulatory snapshots</h2><div id="regulatory"><div class="muted">Loading…</div></div></section>
 <section class="panel"><p class="eyebrow">AUDIT</p><h2>Recent audit trail</h2><div id="audit"><div class="muted">Loading…</div></div></section>
 
-<footer>Engineering assurance infrastructure, not legal certification, customs acceptance, CBAM Registry acceptance or verifier accreditation.</footer>
 </main>
+
+<footer><p class="muted">Engineering assurance infrastructure, not legal certification, customs acceptance, CBAM Registry acceptance or verifier accreditation.</p></footer>
 <script src="/pilot.js"></script>
 </body>
 </html>
