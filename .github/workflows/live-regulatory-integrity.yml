@@ -1,0 +1,21 @@
+name: Live regulatory source integrity
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "43 5 * * *"
+jobs:
+  live-source-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Fetch and validate five live regulatory sources (fail closed)
+        run: python scripts/sync_live_sources.py
+      - name: Validate regulatory content
+        run: pytest -q tests/test_regulatory_content.py
