@@ -25,6 +25,16 @@ def import_benchmarks(csv_text,version="2025/2620"):
  for r in csv.DictReader(io.StringIO(csv_text)):
   cn=normalize_cn(r.get("cn_code")); rows.append({"cn_code":cn,"production_route":r.get("production_route") or None,"benchmark":_num(r.get("benchmark"))})
  return _write("benchmarks.json",{"version":version,"legal_basis":["2025/2620"],"records":rows})
+def import_cscf(payload):
+ """Import the official uniform CSCF table (CELEX:32021D0927 / 32026D1862).
+
+ Accepts either {"2026": 1.0, ...} or {"values": {"2026": 1.0}, "source": ...}.
+ """
+ values=payload.get("values") if isinstance(payload.get("values"),dict) else payload
+ table={str(k):float(v) for k,v in values.items() if str(k).isdigit() and v is not None}
+ if not table:raise ValueError("CSCF_TABLE_EMPTY")
+ out={"source":payload.get("source") or "OFFICIAL_CSCF_TABLE","legal_basis":payload.get("legal_basis") or [],"retrieved_at":payload.get("retrieved_at"),"notes":payload.get("notes"),**table}
+ return _write("cscf.json",out)
 def _num(v):
  if v in (None,"","-","N/A","n/a","NA"):return None
  try:return float(str(v).replace(",","."))
@@ -70,18 +80,42 @@ def select_default(country,cn_code,production_route=None,year=2026):
 def select_benchmark(cn_code,production_route=None):
  bs=_read("benchmarks.json")
  if not bs:return {"available":False,"reason":"BENCHMARK_DATA_REQUIRED"}
- cn=normalize_cn(cn_code); cand=[r for r in bs["records"] if r["cn_code"]==cn and (not r["production_route"] or r["production_route"]==production_route)]
- if not cand:return {"available":False,"reason":"BENCHMARK_NOT_FOUND","dataset_version":bs["version"]}
+ cn=normalize_cn(cn_code)
+ def _rn(v):return str(v or "").replace("(","").replace(")","").strip().upper()
+ want=_rn(production_route)
+ by_cn=[r for r in bs["records"] if r["cn_code"]==cn]
+ if not by_cn:return {"available":False,"reason":"BENCHMARK_NOT_FOUND","dataset_version":bs["version"]}
+ # Prefer exact route; fall back to any route for that CN when caller omits it
+ # (official tables are route-specific, callers often omit it).
+ cand=[r for r in by_cn if not r["production_route"] or _rn(r["production_route"])==want] or by_cn
  # 2620 requires highest benchmark where multiple steel alloy grades exist for same CN.
  r=max(cand,key=lambda x:x["benchmark"] if x["benchmark"] is not None else -1)
  return {"available":r["benchmark"] is not None,**r,"dataset_version":bs["version"]}
+def _cscf(reporting_year,cscf=None):
+ """Resolve the uniform cross-sectoral correction factor.
+
+ Explicit per-call `cscf` wins; otherwise fall back to the checked-in
+ official table `data/cbam/cscf.json` (CELEX:32021D0927 for 2021-2025 and
+ CELEX:32026D1862 for 2026-2030, both Article 1 = 100 %). Returns
+ (value, source) or (None, reason).
+ """
+ if cscf is not None:
+  try:return float(cscf),"CALLER_PROVIDED"
+  except (TypeError,ValueError):return None,"CSCF_INVALID"
+ table=_read("cscf.json")
+ if not table:return None,"CSCF_TABLE_REQUIRED"
+ val=table.get(str(reporting_year))
+ if val is None:return None,"CSCF_YEAR_UNSUPPORTED"
+ try:return float(val),table.get("source","OFFICIAL_CSCF_TABLE")
+ except (TypeError,ValueError):return None,"CSCF_TABLE_INVALID"
 def free_allocation_adjustment(cn_code,mass_t,reporting_year,production_route=None,cscf=None):
  bm=select_benchmark(cn_code,production_route)
  if not bm["available"]:return {"available":False,"reason":bm["reason"],"benchmark":bm}
  if reporting_year not in CBAM_FACTOR:return {"available":False,"reason":"CBAM_FACTOR_YEAR_UNSUPPORTED"}
- if cscf is None:return {"available":False,"reason":"CSCF_REQUIRED","benchmark":bm}
- sefa=CBAM_FACTOR[reporting_year]*float(cscf)*bm["benchmark"]
- return {"available":True,"cbam_factor":CBAM_FACTOR[reporting_year],"cscf":float(cscf),"benchmark":bm,"specific_embedded_free_allocation_tco2e_per_t":round(sefa,9),"free_allocation_adjustment_tco2e":round(sefa*float(mass_t),9),"legal_basis":"Implementing Regulation (EU) 2025/2620"}
+ cscf_val,cscf_src=_cscf(reporting_year,cscf)
+ if cscf_val is None:return {"available":False,"reason":cscf_src,"benchmark":bm}
+ sefa=CBAM_FACTOR[reporting_year]*cscf_val*bm["benchmark"]
+ return {"available":True,"cbam_factor":CBAM_FACTOR[reporting_year],"cscf":cscf_val,"cscf_source":cscf_src,"benchmark":bm,"specific_embedded_free_allocation_tco2e_per_t":round(sefa,9),"free_allocation_adjustment_tco2e":round(sefa*float(mass_t),9),"legal_basis":"Implementing Regulation (EU) 2025/2620"}
 def calculate(payload):
  mode=str(payload.get("value_type","ACTUAL")).upper(); year=int(payload.get("reporting_period") or payload.get("year") or 2026)
  if mode=="ACTUAL":

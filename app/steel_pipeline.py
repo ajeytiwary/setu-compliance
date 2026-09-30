@@ -20,6 +20,11 @@ def assemble_shipment(shipment_ref):
         parents={x.get("parent_id") for x in genealogy}; genealogy += [x for x in mes if x.get("child_id") in parents and x not in genealogy]
         facility=(genealogy[0].get("facility") if genealogy else None) or "UNKNOWN"
         ems=[x for x in _canonical(conn,"ems_activity") if x.get("facility")==facility]
+        # Prefer shipment-specific activity rows (source_id carries the shipment
+        # ref, e.g. SRC-BF-BOF-JSW-HRC-NL-001) over the whole-facility ledger so
+        # per-shipment CBAM math does not sum every shipment's activity.
+        scoped=[x for x in ems if shipment_ref in str(x.get("source_id") or "")]
+        if scoped:ems=scoped
         preferred=[x for x in ems if x.get("process")=="Integrated-HRC"]
         if preferred:ems=preferred
         suppliers=_canonical(conn,"supplier_cbam"); verifiers=_canonical(conn,"verifier")
@@ -34,6 +39,12 @@ def build_cbam_payload(shipment_ref):
     return {"methodology_id":"EU_CBAM_2026_2547","reporting_period":int(production_date[:4]),"production_date":production_date,"installation_id":installation,"monitoring_plan_ref":"PRIVATE_REQUIRED","production_process":"Integrated-HRC","production_route":route,"cn_code":s.get("cn_code"),"activity_level_t":float(s.get("quantity_t") or 0),"direct_emission_sources":direct,"boundary_adjustments":[],"precursors":prec,"verification":{"status":"VERIFIED" if verified else "NOT_PROVIDED"},"_pipeline_provenance":a["provenance"]}
 
 def evaluate_shipment_cbam(shipment_ref):
+    asm = assemble_shipment(shipment_ref)
+    if not asm["completeness"]["genealogy"] or not asm["completeness"]["ems"]:
+        missing = [k for k, v in asm["completeness"].items() if not v]
+        return {"status": "BLOCKED_MISSING_CANONICAL_INPUTS", "shipment_ref": shipment_ref,
+                "missing": missing, "completeness": asm["completeness"],
+                "cbam_payload": None, "result": None}
     payload=build_cbam_payload(shipment_ref); unusable=[x for x in payload["direct_emission_sources"] if x.get("measured_emissions_tco2") is None and x.get("emission_factor_tco2_per_unit") is None]
     if unusable:return {"status":"BLOCKED_MISSING_EMISSION_FACTORS_OR_MEASUREMENTS","shipment_ref":shipment_ref,"cbam_payload":payload,"missing_sources":[x.get("source_id") for x in unusable]}
     result=calculate_actual_steel(payload); return {"status":result["status"],"shipment_ref":shipment_ref,"cbam_payload":payload,"result":result}

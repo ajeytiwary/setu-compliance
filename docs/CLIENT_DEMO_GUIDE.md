@@ -146,7 +146,7 @@ Watch the blocker list shrink. `CBAM_VERIFICATION` / `SUPPLIER_DATA` /
 Full happy path (pig-iron CN with both a default *and* a benchmark):
 ```bash
 curl -s -X POST localhost:8765/api/cbam/v2/calculate -H 'Content-Type: application/json' \
-  -d '{"payload":{"origin_country":"IN","cn_code":"72011011","value_type":"DEFAULT","reporting_period":2026,"activity_level_t":20,"cscf":0.9}}' \
+  -d '{"payload":{"origin_country":"IN","cn_code":"72011011","value_type":"DEFAULT","reporting_period":2026,"activity_level_t":20}}' \
   | python3 -m json.tool
 ```
 Expected: `status: CALCULATED`, `specific_embedded_emissions: 2.783 tCO₂e/t`

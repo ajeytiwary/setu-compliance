@@ -210,6 +210,10 @@ def cbam_defaults_import(x:ReferenceCSVIn):
 def cbam_benchmarks_import(x:ReferenceCSVIn):
  from .cbam_definitive_v2 import import_benchmarks
  return import_benchmarks(x.csv_content)
+@app.post("/api/cbam/v2/cscf/import")
+def cbam_cscf_import(x:RegulatoryPayloadIn):
+ from .cbam_definitive_v2 import import_cscf
+ return import_cscf(x.payload)
 @app.post("/api/cbam/verification/pack")
 def cbam_verification_pack(x:RegulatoryPayloadIn):
  from .cbam_verification_pack import build_pack

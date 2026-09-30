@@ -104,3 +104,30 @@ def test_real_dialects_parse():
     assert {r["version"] for r in iuclid} == {"6.10"}
     assert any(r.get("value_code") == "87819" for r in iuclid)
     assert any(r.get("field") == "ArticleCategorisationArticleCategory" for r in iuclid)
+
+
+def test_steel_full_table_carries_all_categories_and_india_orders():
+    """The full 26-category Annex I table (CELEX:32026R1457) must be loaded.
+
+    Guards the checked-in data/eu_steel_categories_full.json so CI fails if the
+    table is ever reverted to the 4-category skeleton or the empty extract.
+    """
+    p = ROOT / "data" / "eu_steel_categories_full.json"
+    if not p.exists():
+        pytest.skip("full steel table not imported yet (run scripts/build_steel_categories.py)")
+    d = json.loads(p.read_text())
+    assert d["rule_version"] == "STEEL_QUOTA_2026_1384_1457_V2"
+    cats = d["categories"]
+    assert len(cats) >= 26, f"only {len(cats)} categories"
+    assert sum(len(c["cn_codes"]) for c in cats) >= 200, "CN coverage too thin"
+    # India-specific order numbers must match the checked-in legal snapshot.
+    india = {c["category"]: c.get("order_number") for c in cats if c.get("order_number")}
+    assert india.get("7") == "09.9856"
+    assert india.get("8") == "09.9862"
+    assert india.get("14") == "09.9890"
+    assert india.get("1A") == "09.9803"
+    # Every category must carry a quota amount and order number for lookups.
+    for c in cats:
+        assert c.get("period_quota_t"), f"{c['category']}: missing quota"
+        assert c.get("order_number"), f"{c['category']}: missing order number"
+        assert c.get("cn_codes"), f"{c['category']}: no CN codes"
