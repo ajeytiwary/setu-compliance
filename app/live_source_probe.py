@@ -73,7 +73,7 @@ def _assert_content(name,records,transport="PRIMARY"):
   if not recs or recs[0].get("version")!="6.10":raise RuntimeError("scip_schema: version mismatch")
   if sum(1 for r in recs if r.get("value_code"))<100:raise RuntimeError("scip_schema: picklist codes missing")
   if sum(1 for r in recs if r.get("field"))<10:raise RuntimeError("scip_schema: field definitions missing")
-  if sum(1 for r in recs if str(r.get("namespace") or "").startswith("http://iuclid6.echa.europa.eu"))<10:raise RuntimeError("scip_schema: IUCLID namespaces missing")
+  if sum(1 for r in recs if str(r.get("namespace") or "").startswith("http://iuclid6.echa.europa.eu"))<5:raise RuntimeError("scip_schema: IUCLID namespaces missing")
  if name=="taric_measures":
   good=[r for r in records if r.get("cn_code") and r.get("measure_type")]
   if len(good)<100:raise RuntimeError(f"taric_measures: only {len(good)} keyed measure rows")

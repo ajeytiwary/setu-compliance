@@ -100,21 +100,24 @@ SOURCES: dict[str, dict] = {
     "echa_candidate_list": {
         "provider_id": "echa_candidate_csv",
         "url": "https://raw.githubusercontent.com/analeonescu/chemical-security-evals/main/data/chemicals_databases/candidate-list-of-svhc-for-authorisation-export.csv",
-        "where": "Tab-delimited Candidate List mirror (ECHA blocks bots with 403). "
-                 "AUTO path: positional sync fetches the mirror directly (~507 substances).",
+        "where": "Official ECHA Candidate List export (tab-delimited, 507 substances, "
+                 "group entries split). ECHA blocks bots with 403/Azure WAF, so the "
+                 "official CSV is captured in a browser (candidate-list-table export "
+                 "POST) and ingested via --file. The mirror URL is the AUTO fallback.",
         "filename": "candidate_list_en.csv", "content_type": "text/csv",
-        "authority": "MIRROR", "legal_authority": False, "min_records": 1,
+        "authority": "OFFICIAL", "legal_authority": False, "min_records": 1,
     },
     "scip_schema": {
         "provider_id": "echa_scip_610",
         "url": "https://raw.githubusercontent.com/USEPA/CompTox-IUCLIDTools/dev/entity_models/article_6_8/models/article_9_0.py",
-        "where": "IUCLID ARTICLE.9.0 dossier models (SCIP 6.10 schema/picklists) from "
-                 "USEPA/CompTox-IUCLIDTools dev branch -- the official ECHA SCIP 6.10 ZIP "
-                 "(https://echa.europa.eu/en/scip-format) blocks automated fetches (Azure WAF), "
-                 "so the versioned path fetches the three model files directly; "
-                 "a browser-downloaded official ZIP can still be ingested via --file.",
-        "filename": "article_9_0.py", "content_type": "text/x-python",
-        "authority": "MIRROR", "legal_authority": False, "min_records": 1,
+        "where": "Official ECHA SCIP 6.10 package (April 2026): configuration.zip with "
+                 "phrases/PHRASEGROUP.properties (137k picklist values) + PHRASEGROUP.xml, "
+                 "xsd/*.xsd (5 iuclid6 namespaces), changes_log.txt. ECHA blocks automated "
+                 "fetches (Azure WAF), so the official ZIP is downloaded in a browser "
+                 "(https://echa.europa.eu/en/scip-format) and ingested via --file. "
+                 "The USEPA mirror is the AUTO fallback.",
+        "filename": "scip_6.10_official.zip", "content_type": "application/zip",
+        "authority": "OFFICIAL", "legal_authority": False, "min_records": 1,
     },
     "eu_sanctions": {
         "provider_id": "eu_fsf_11_xml",
@@ -213,6 +216,7 @@ def sync_dataset(dataset: str, as_of: str | None = None, url: str | None = None,
                              f"`python scripts/sync_sources.py --dataset {dataset} --file <path>`")
         src = target
 
+    latest_records = None
     if dataset == "taric_measures":
         if raw[:2] == b"PK":
             from app.source_sync import normalize_taric as _nt
@@ -245,10 +249,35 @@ def sync_dataset(dataset: str, as_of: str | None = None, url: str | None = None,
     elif dataset == "scip_schema":
         if raw[:2] == b"PK":
             inv = R.normalize_scip_zip(raw)
-            records = [{"version": "6.10", "file": f} for f in inv["files"]] + \
-                      [{"version": "6.10", "picklist": p["list"], "value": p["value"]}
-                       for p in inv["picklist_values"][:5000]]
+            records = [{"version": "6.10", "file": f} for f in inv["files"]]
+            # Official package: phrase codes are the picklist value codes,
+            # XSD namespaces carry the iuclid6 schema truth.
+            if inv.get("namespaces"):
+                records += [{"version": "6.10", "namespace": ns} for ns in inv["namespaces"]]
+            for p in inv["picklist_values"]:
+                if p.get("phrase_code"):
+                    records.append({"version": "6.10", "value_code": p["phrase_code"],
+                                    "value": p["value"], "picklist": "PHRASEGROUP"})
+                elif p.get("phrase_group"):
+                    records.append({"version": "6.10", "value_code": p["value"],
+                                    "phrase_group": p["phrase_group"],
+                                    "provider": p.get("provider", ""),
+                                    "obsolete": p.get("obsolete", "false"),
+                                    "picklist": "PHRASEGROUP"})
+            if inv.get("xsd_files"):
+                records += [{"version": "6.10", "field": f, "schema": "xsd"}
+                            for f in inv["xsd_files"]]
+            # Tracked latest.json carries a representative subset (all
+            # namespaces/fields/files + bounded picklist sample) so CI content
+            # gates still prove real SCIP 6.10 payloads without a 25MB blob;
+            # the full 137k-value payload lives in the versioned snapshot.
+            latest_records = [r for r in records
+                              if r.get("namespace") or r.get("field") or r.get("file")]
+            pv = [r for r in records if r.get("value_code") and not r.get("phrase_group")]
+            pg = [r for r in records if r.get("phrase_group")]
+            latest_records += pv[:2000] + pg[:2000]
         else:
+            latest_records = None
             # Versioned path: fetch the sibling model files next to the
             # resolved article_9_0.py (or parse a --file'd model file alone).
             import urllib.request as _url
@@ -283,7 +312,8 @@ def sync_dataset(dataset: str, as_of: str | None = None, url: str | None = None,
         dataset, spec["provider_id"], src, raw, records,
         content_type=ctype, authority=spec["authority"],
         legal_authority=spec["legal_authority"], as_of=as_of,
-        min_records=spec["min_records"], filename=spec["filename"])
+        min_records=spec["min_records"], filename=spec["filename"],
+        latest_records=latest_records)
     bridge_to_engines(dataset, manifest)
     return {"dataset": dataset, "status": "SYNCED", "manifest": manifest}
 

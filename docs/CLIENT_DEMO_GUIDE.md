@@ -45,7 +45,7 @@ uv pip install --python .venv/bin/python openpyxl   # official XLSX parsing
 # 2a. Download official CBAM workbooks (TAXUD URLs in config/data_sources.json)
 PYTHONPATH=. .venv/bin/python scripts/sync_official_reference_data.py
 # → data/official/cbam-defaults-official.json + cbam-benchmarks-official.json
-#   (steel annex fetch currently yields 0 categories — checked-in JSON is used)
+#   (steel annex: full 30-category table now checked in — see docs/SOURCE_SYNC.md)
 
 # 2b. Convert to importable CSVs (handles per-country sheets + N/A cells)
 PYTHONPATH=. .venv/bin/python scripts/convert_official_to_imports.py

@@ -1,0 +1,18 @@
+{
+  "authority": "OFFICIAL",
+  "content_type": "application/zip",
+  "dataset_id": "scip_schema",
+  "effective_from": "2026-09-30",
+  "effective_to": null,
+  "legal_authority": false,
+  "normalized_path": "data/normalized/scip_schema/2026-09-30-7687a1e1/normalized.json",
+  "normalizer_version": "source_normalizers/1.0",
+  "parser_version": "source_resolvers/1.0",
+  "provider_id": "echa_scip_610",
+  "raw_path": "data/raw/scip_schema/2026-09-30-7687a1e1/scip_6.10_official.zip",
+  "record_count": 137834,
+  "retrieved_at": "2026-09-30T10:40:13.587272+00:00",
+  "sha256": "7687a1e18195a2664dd01cccab0e54cdcef41a7912f5e37232258ef1f8f34dcc",
+  "source_url": "file:///tmp/scip_6.10_official.zip",
+  "version": "2026-09-30-7687a1e1"
+}

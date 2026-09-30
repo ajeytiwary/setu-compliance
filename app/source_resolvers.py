@@ -18,6 +18,7 @@ import csv
 import hashlib
 import io
 import json
+import os
 import re
 import urllib.request
 import zipfile
@@ -301,16 +302,29 @@ def normalize_echa_candidate_csv(text: str) -> list[dict]:
     # The ECHA Candidate List export is TAB-delimited with quoted fields
     # (the public mirror preserves this dialect); sniff before parsing so a
     # comma DictReader never collapses a row into a single column.
+    # The official export also carries a preamble (export date, filter info)
+    # before the header row — skip rows until the real header is found.
     sample = text[:8192]
     try:
         dialect = csv.Sniffer().sniff(sample, delimiters=",\t;")
         delimiter = dialect.delimiter
     except Exception:
         delimiter = "\t" if "\t" in sample else ","
-    rows = list(csv.DictReader(io.StringIO(text), delimiter=delimiter))
+    rows = list(csv.reader(io.StringIO(text), delimiter=delimiter))
+    # Find the header row: the one containing "Substance name" (case-insensitive)
+    header_idx = None
+    for i, r in enumerate(rows):
+        if any("substance name" in str(c).strip().lower() for c in r):
+            header_idx = i
+            break
+    if header_idx is None:
+        return []
+    header = [str(c).strip().lower() for c in rows[header_idx]]
     out: list[dict] = []
-    for r in rows:
-        low = {str(k).strip().lower(): (v or "").strip() for k, v in r.items()}
+    for r in rows[header_idx + 1:]:
+        if len(r) < len(header):
+            continue
+        low = {h: (v or "").strip() for h, v in zip(header, r)}
         def pick(*names):
             for n in names:
                 for k, v in low.items():
@@ -361,30 +375,98 @@ def normalize_iuclid_zip(raw: bytes) -> dict:
 
 # ----------------------------------------------------------------- SCIP ----
 def normalize_scip_zip(raw: bytes) -> dict:
-    """SCIP 6.10 package: picklists, changelog, validation artefacts inventory."""
+    """SCIP 6.10 package: picklists, changelog, validation artefacts inventory.
+
+    Handles both the official ECHA package (nested ``configuration.zip`` with
+    ``phrases/PHRASEGROUP.properties`` + ``phrases/PHRASEGROUP.xml``, plus
+    ``xsd/*.xsd`` schema files and ``changes_log.txt``) and the older
+    flat ``picklist*.xml`` layout.
+    """
     z = zipfile.ZipFile(io.BytesIO(raw))
     files = z.namelist()
     picklists: list[dict] = []
     changelog: list[str] = []
+    namespaces: set[str] = set()
+    xsd_files: list[str] = []
+
+    def _scan_zip(zf: zipfile.ZipFile, prefix: str = "") -> None:
+        for n in zf.namelist():
+            low = n.lower()
+            if "change" in low and low.endswith((".txt", ".md", ".pdf", ".html")):
+                try:
+                    changelog.append(zf.read(n).decode("utf-8", "ignore")[:4000])
+                except Exception:
+                    pass
+            if low.endswith(".xsd"):
+                xsd_files.append(n)
+                try:
+                    txt = zf.read(n).decode("utf-8", "ignore")
+                    import re as _re
+                    for m in _re.finditer(r'namespace="([^"]+)"', txt):
+                        if "iuclid6.echa.europa.eu" in m.group(1):
+                            namespaces.add(m.group(1))
+                except Exception:
+                    pass
+            if "picklist" in low and low.endswith(".xml"):
+                try:
+                    root = ET.fromstring(zf.read(n))
+                    for item in root.iter():
+                        if _strip_ns(item.tag).lower() in ("value", "item", "entry", "picklistvalue"):
+                            txt = (item.text or "").strip()
+                            if txt:
+                                picklists.append({"list": n, "value": txt,
+                                                  "attrs": dict(item.attrib)})
+                except ET.ParseError:
+                    continue
+            # Official package: phrases/PHRASEGROUP.properties holds the
+            # picklist values (phrase code -> text), PHRASEGROUP.xml the groups.
+            if low.endswith("phrases/phrasegroup.properties"):
+                try:
+                    txt = zf.read(n).decode("utf-8", "ignore")
+                    for line in txt.splitlines():
+                        line = line.strip()
+                        if not line or "=" not in line:
+                            continue
+                        key, _, val = line.partition("=")
+                        key = key.strip()
+                        if key.startswith("phrases.") and key.endswith(".text"):
+                            code = key[len("phrases."):-len(".text")]
+                            if val.strip():
+                                picklists.append({"list": "PHRASEGROUP.properties",
+                                                  "value": val.strip(),
+                                                  "phrase_code": code})
+                except Exception:
+                    pass
+            if low.endswith("phrases/phrasegroup.xml"):
+                try:
+                    root = ET.fromstring(zf.read(n))
+                    for grp in root.iter():
+                        if _strip_ns(grp.tag).lower() == "phrasegroup":
+                            gcode = grp.get("code", "")
+                            for ph in grp:
+                                if _strip_ns(ph.tag).lower() == "phrase":
+                                    picklists.append({
+                                        "list": "PHRASEGROUP.xml",
+                                        "value": ph.get("code", ""),
+                                        "phrase_group": gcode,
+                                        "provider": ph.get("provider", ""),
+                                        "obsolete": ph.get("obsolete", "false"),
+                                    })
+                except ET.ParseError:
+                    continue
+
+    _scan_zip(z)
+    # Official package nests the picklists inside configuration.zip
     for n in files:
-        low = n.lower()
-        if "change" in low and low.endswith((".txt", ".md", ".pdf", ".html")):
+        if n.lower().endswith("configuration.zip"):
             try:
-                changelog.append(z.read(n).decode("utf-8", "ignore")[:4000])
+                inner = zipfile.ZipFile(io.BytesIO(z.read(n)))
+                _scan_zip(inner, prefix=n)
             except Exception:
-                pass
-        if "picklist" in low and low.endswith(".xml"):
-            try:
-                root = ET.fromstring(z.read(n))
-                for item in root.iter():
-                    if _strip_ns(item.tag).lower() in ("value", "item", "entry", "picklistvalue"):
-                        txt = (item.text or "").strip()
-                        if txt:
-                            picklists.append({"list": n, "value": txt,
-                                              "attrs": dict(item.attrib)})
-            except ET.ParseError:
                 continue
-    return {"files": files, "picklist_values": picklists, "changelog_excerpts": changelog}
+    return {"files": files, "picklist_values": picklists,
+            "changelog_excerpts": changelog,
+            "namespaces": sorted(namespaces), "xsd_files": xsd_files}
 
 
 def normalize_iuclid_article_models(files: dict[str, str]) -> list[dict]:
@@ -611,7 +693,8 @@ def publish_normalized(dataset: str, provider_id: str, source_url: str, raw: byt
                        records, content_type: str = "application/octet-stream",
                        authority: str = "OFFICIAL", legal_authority: bool = False,
                        as_of: str | None = None, effective_to: str | None = None,
-                       min_records: int = 1, filename: str = "source.bin") -> dict:
+                       min_records: int = 1, filename: str = "source.bin",
+                       latest_records=None) -> dict:
     from .reference_validation import validate, publishable
     count = len(records) if isinstance(records, list) else 1
     check = validate(dataset, raw, records if isinstance(records, list) else [records],
@@ -639,6 +722,17 @@ def publish_normalized(dataset: str, provider_id: str, source_url: str, raw: byt
     (folder / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True))
     MANIFESTS.mkdir(parents=True, exist_ok=True)
     (MANIFESTS / f"{dataset}-latest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True))
+    # Keep data/normalized/<dataset>/latest.json in sync so tests and engines
+    # (which read latest.json) see the freshly ingested official payload.
+    # latest_records (optional) lets callers trim the tracked snapshot while
+    # the versioned normalized.json keeps the full payload.
+    latest = NORMALIZED / dataset / "latest.json"
+    tmp = NORMALIZED / dataset / f".latest-{version}.tmp"
+    tmp.write_text(json.dumps({**manifest, "transport": "PRIMARY",
+                               "normalized_file": f"data/normalized/{dataset}/{version}/normalized.json",
+                               "records": latest_records if latest_records is not None else records},
+                              indent=2, default=str))
+    os.replace(tmp, latest)
     return manifest
 
 

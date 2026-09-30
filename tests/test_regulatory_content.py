@@ -68,7 +68,10 @@ def test_scip_carries_schema_picklists():
     assert {r.get("version") for r in recs} == {"6.10"}
     assert sum(1 for r in recs if r.get("value_code")) >= 100
     assert sum(1 for r in recs if r.get("field")) >= 10
-    assert sum(1 for r in recs if "iuclid6.echa.europa.eu" in str(r.get("namespace"))) >= 10
+    # Official SCIP 6.10 package: 5 distinct iuclid6 namespaces across the XSDs
+    # (domain/v11, platform-fields/v1, platform-attachment/v1,
+    #  platform-metadata/v1, platform-modification-history/v1).
+    assert sum(1 for r in recs if "iuclid6.echa.europa.eu" in str(r.get("namespace"))) >= 5
     _assert_content("scip_schema", recs)
 
 
@@ -131,3 +134,35 @@ def test_steel_full_table_carries_all_categories_and_india_orders():
         assert c.get("period_quota_t"), f"{c['category']}: missing quota"
         assert c.get("order_number"), f"{c['category']}: missing order number"
         assert c.get("cn_codes"), f"{c['category']}: no CN codes"
+
+
+def test_celex_resolver_finds_oj_html_url():
+    """The reproducible pipeline must resolve CELEX -> OJ HTML URL programmatically.
+
+    EUR-Lex blocks urllib (AWS WAF), but the Cellar semantic API does not.
+    This guards scripts/resolve_eurlex_oj.py so the update path stays open.
+    """
+    from scripts.resolve_eurlex_oj import resolve_celex, oj_to_url
+
+    ojs = resolve_celex("32026R1457")
+    assert "L_202601457" in ojs, f"expected L_202601457, got {ojs}"
+    url = oj_to_url("L_202601457")
+    assert url == "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202601457"
+
+
+def test_fetch_script_rebuilds_from_saved_table():
+    """The one-command updater must rebuild the full dataset from a saved capture."""
+    import subprocess, sys
+
+    table = ROOT / "data" / "official" / "steel-2026-1457-table.json"
+    if not table.exists():
+        pytest.skip("raw table capture not present (run the browser extraction first)")
+    r = subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "fetch_steel_quota_table.py"),
+         "--browser-json", str(table)],
+        capture_output=True, text=True, cwd=ROOT,
+    )
+    assert r.returncode == 0, f"fetch script failed:\n{r.stdout}\n{r.stderr}"
+    assert "imported 30 categories" in r.stdout
+    d = json.loads((ROOT / "data" / "eu_steel_categories_full.json").read_text())
+    assert len(d["categories"]) >= 26

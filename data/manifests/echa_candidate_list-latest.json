@@ -1,0 +1,18 @@
+{
+  "authority": "OFFICIAL",
+  "content_type": "text/csv",
+  "dataset_id": "echa_candidate_list",
+  "effective_from": "2026-09-30",
+  "effective_to": null,
+  "legal_authority": false,
+  "normalized_path": "data/normalized/echa_candidate_list/2026-09-30-eb462c11/normalized.json",
+  "normalizer_version": "source_normalizers/1.0",
+  "parser_version": "source_resolvers/1.0",
+  "provider_id": "echa_candidate_csv",
+  "raw_path": "data/raw/echa_candidate_list/2026-09-30-eb462c11/candidate_list_en.csv",
+  "record_count": 507,
+  "retrieved_at": "2026-09-30T10:37:45.876182+00:00",
+  "sha256": "eb462c1122571850bbc54c67f35b148cea2b676eb063dddb884fa00473e780ac",
+  "source_url": "file:///tmp/echa_candidate_list_en_clean.csv",
+  "version": "2026-09-30-eb462c11"
+}

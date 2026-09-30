@@ -35,6 +35,36 @@ Raw/normalized/manifests are gitignored (re-downloadable); the checked-in legal
 snapshot `data/eu_steel_measure_2026.json` stays authoritative for steel until a
 full 26-category 2026/1457 table is imported.
 
+## Steel quota table (2026/1457 Annex I) — reproducible update
+
+The full 30-category / 337-CN-code table is now checked in at
+`data/eu_steel_categories_full.json` (tracked). Updating it when the EU
+publishes a new implementing regulation is a one-command pipeline:
+
+```bash
+# 1. Resolve CELEX -> OJ HTML URL (Cellar semantic API, urllib works)
+PYTHONPATH=. .venv/bin/python scripts/resolve_eurlex_oj.py 32026R1457
+# -> https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202601457
+
+# 2. Open that URL in a real browser (EUR-Lex is behind an AWS WAF that blocks
+#    urllib AND headless Chrome). Run scripts/extract_annex_tables.js in the
+#    page (browser console / automation) and save its JSON output.
+
+# 3. Rebuild CSV + full dataset from the capture
+PYTHONPATH=. .venv/bin/python scripts/fetch_steel_quota_table.py \
+    --celex 32026R1457 --browser-json /tmp/annex1_capture.json --table-index 20
+# -> data/official/steel-2026-1457-categories.csv
+# -> data/eu_steel_categories_full.json (30 categories, 337 CN codes)
+
+# Rebuild from a previously saved capture (no browser needed):
+PYTHONPATH=. .venv/bin/python scripts/fetch_steel_quota_table.py \
+    --browser-json data/official/steel-2026-1457-table.json
+```
+
+The pipeline is guarded by `tests/test_regulatory_content.py`:
+`test_celex_resolver_finds_oj_html_url` (resolver stays open) and
+`test_fetch_script_rebuilds_from_saved_table` (rebuild stays green).
+
 ## Weekly (automatic)
 
 ```bash
@@ -75,8 +105,8 @@ workaround** instead of silently publishing nothing.
 | EUCDM Annex B / code lists | ✅ HTML distribution ZIP (272 D.E.s incl. 1/1, 2/3, 3/1) | Download .xlsx → `--file` |
 | Steel 2026/1457 | ⚠️ EUR-Lex TXT often empty via urllib | Falls back to checked-in legal snapshot; full table via `--file` |
 | CBAM defaults / benchmarks | ✅ TAXUD URLs from registry | `--file` if TAXUD rotates UUIDs |
-| ECHA Candidate List | ✅ CSV mirror (507 substances) | Browser download `candidate_list_en.csv` → `--file` |
-| SCIP 6.10 | ✅ IUCLID ARTICLE.9.0 models (schema fields + Pg* picklist codes) | Browser download official ZIP → `--file` |
+| ECHA Candidate List | ✅ Official ECHA export (507 substances, group entries split) | Browser download `candidate_list_en.csv` → `--file` |
+| SCIP 6.10 | ✅ Official ECHA package (137k picklist values, 5 iuclid6 namespaces, 15 XSDs) | Browser download official ZIP → `--file` |
 | EU sanctions FSF 1.1 | ✅ DCAT-resolved XML (6241 entities) with CSV fallback | Browser download XML/CSV → `--file` (versioned, never overwritten) |
 | Comext India→EU 72/73 | ✅ dissemination API | `--url` override for custom queries |
 | UCI steel telemetry | ❌ DEMO_ONLY | Download CSV → `--file` |
