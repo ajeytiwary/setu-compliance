@@ -124,7 +124,13 @@ def resolve(dataset):
   except Exception:u,fmt=_fsf_download_url("csv")
   return u,fmt,lambda b:normalize_sanctions(b,fmt)
  if dataset=="eucdm":
-  # The softdev mirror intermittently returns 403 from GitHub-hosted runners.\n  # Prefer the configured registry provider when available, then fall back to the mirror.\n  try:\n   p=selected("eucdm","eu_taxud_eucdm_zip")\n   return p.url,"zip",normalize_eucdm\n  except Exception:\n   return EUCDM_ZIP_URL,"zip",normalize_eucdm
+  # The softdev mirror intermittently returns 403 from GitHub-hosted runners.
+  # Prefer the configured registry provider when available, then fall back to the mirror.
+  try:
+   p=selected("eucdm","eu_taxud_eucdm_zip")
+   return p.url,"zip",normalize_eucdm
+  except Exception:
+   return EUCDM_ZIP_URL,"zip",normalize_eucdm
  if dataset=="taric_measures":
   # Prefer configured direct bulk URL, else newest daily delta from the mirror.
   direct=os.getenv("EUROSETU_TARIC_BULK_URL")
@@ -179,7 +185,23 @@ def sync(dataset):
  if dataset=="scip_schema":
   return _sync_scip_iuclid(p)
  url,fmt,normalizer=resolve(dataset)
- req_headers=BROWSER_UA if dataset=="eucdm" else None\n try:\n  raw,resp_headers,final=get(url,headers=req_headers)\n except Exception as exc:\n  if dataset=="eucdm":\n   # Fail over to the checked-in validated snapshot instead of failing the whole scheduled sync\n   # when the upstream mirror blocks automation. This preserves fail-closed semantics: no new\n   # EUCDM data are published unless a fresh payload validates.\n   latest=NORMALIZED/"eucdm"/"latest.json"\n   if latest.exists():\n    snap=json.loads(latest.read_text())\n    snap["transport"]="STALE_VALIDATED_FALLBACK"\n    snap["sync_warning"]=f"Fresh EUCDM fetch failed: {exc}"\n    return snap\n  raise\n else:\n  sha=hashlib.sha256(raw).hexdigest();stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+ req_headers=BROWSER_UA if dataset=="eucdm" else None
+ try:
+  raw,resp_headers,final=get(url,headers=req_headers)
+ except Exception as exc:
+  if dataset=="eucdm":
+   # Fail over to the checked-in validated snapshot instead of failing the whole scheduled sync
+   # when the upstream mirror blocks automation. This preserves fail-closed semantics: no new
+   # EUCDM data are published unless a fresh payload validates.
+   latest=NORMALIZED/"eucdm"/"latest.json"
+   if latest.exists():
+    snap=json.loads(latest.read_text())
+    snap["transport"]="STALE_VALIDATED_FALLBACK"
+    snap["sync_warning"]=f"Fresh EUCDM fetch failed: {exc}"
+    return snap
+  raise
+ else:
+  sha=hashlib.sha256(raw).hexdigest();stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
  rawdir=RAW/dataset/sha;rawdir.mkdir(parents=True,exist_ok=True);filename=safe_name(final,"source."+fmt);(rawdir/filename).write_bytes(raw)
  records=normalizer(raw);check=validate(dataset,records)
  manifest={"dataset":dataset,"provider":p.id,"authority":p.authority,"legal_authority":p.legal_authority,"source":final,"retrieved_at":now(),"sha256":sha,"content_type":resp_headers.get("Content-Type"),"etag":resp_headers.get("ETag"),"last_modified":resp_headers.get("Last-Modified"),"parser_version":"setu-source-sync-0.8","validation":check,"raw_file":str((rawdir/filename).relative_to(ROOT))}
