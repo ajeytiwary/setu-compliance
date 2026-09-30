@@ -28,6 +28,12 @@ def assemble_shipment(shipment_ref):
         preferred=[x for x in ems if x.get("process")=="Integrated-HRC"]
         if preferred:ems=preferred
         suppliers=_canonical(conn,"supplier_cbam"); verifiers=_canonical(conn,"verifier")
+        # Shipment-scoped verifier records (verifier.csv may carry an optional
+        # shipment_id) take precedence: if any exist, only the ones matching
+        # this shipment apply. Otherwise installation-level records (no
+        # shipment_id) apply to all shipments at that installation.
+        if any(x.get("shipment_id") for x in verifiers):
+            verifiers=[x for x in verifiers if x.get("shipment_id")==shipment_ref]
         return {"shipment":s,"genealogy":genealogy,"activity":ems,"supplier_precursors":suppliers,"verifications":verifiers,"provenance":{"sap_sd":[x["_sha256"] for x in sap],"mes":[x["_sha256"] for x in genealogy],"ems":[x["_sha256"] for x in ems],"supplier_cbam":[x["_sha256"] for x in suppliers],"verifier":[x["_sha256"] for x in verifiers]},"completeness":{"sap":bool(sap),"genealogy":bool(genealogy),"ems":bool(ems),"supplier_precursors":bool(suppliers),"verifier":bool(verifiers)}}
 
 def build_cbam_payload(shipment_ref):

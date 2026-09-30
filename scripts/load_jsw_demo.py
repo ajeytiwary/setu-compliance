@@ -102,10 +102,13 @@ def inject_supplier_verifier() -> dict:
         "2026-01-01,2026-06-30,1.8,tCO2e/t,VERIFIED,CBAM-SUP-JSW-FE-001,250\n"
     )
     import_csv("supplier_cbam", sup_csv, source_name="jsw-demo")
+    # Verifier record scoped to the hero shipment only: NL-001 resolves
+    # CALCULATED_VERIFIED while DE-002 (same installation, no verifier row)
+    # resolves CALCULATED_UNVERIFIED — the demo's verification contrast.
     ver_csv = (
-        "installation_id,reporting_period,verifier,accreditation_ref,status,"
+        "shipment_id,installation_id,reporting_period,verifier,accreditation_ref,status,"
         "started_at,completed_at,findings,statement_ref\n"
-        "VIJAYANAGAR-HRC-01 (demo),2026-H1,Demo Verifier EU,ACC-DEMO-001,VERIFIED,"
+        "JSW-HRC-NL-001,VIJAYANAGAR-HRC-01 (demo),2026-H1,Demo Verifier EU,ACC-DEMO-001,VERIFIED,"
         "2026-07-01,2026-07-05,0,VER-STMT-JSW-001\n"
     )
     import_csv("verifier", ver_csv, source_name="jsw-demo")
@@ -209,7 +212,13 @@ def main() -> None:
     if args.reset:
         with connect() as conn:
             conn.execute("DELETE FROM shipments WHERE shipment_no LIKE 'JSW-%'")
-        print("reset: JSW-% shipments removed")
+            # Clear demo canonical records so re-runs are idempotent: the
+            # pipeline assembles from canonical_records, and stale verifier /
+            # activity rows would otherwise mask the demo's intended contrast
+            # (NL-001 VERIFIED vs DE-002 UNVERIFIED).
+            conn.execute("DELETE FROM canonical_records WHERE source_key LIKE 'JSW-%' OR source_key LIKE 'SO-JSW-%' OR source_key LIKE 'BATCH-JSW-%'")
+            conn.execute("DELETE FROM canonical_records WHERE connector='verifier' AND (payload_json LIKE '%JSW-HRC-NL-001%' OR payload_json LIKE '%VIJAYANAGAR-HRC-01 (demo)%')")
+        print("reset: JSW-% shipments + demo canonical records removed")
 
     ensure_backbone()
     data = json.loads(PORTFOLIO.read_text())
