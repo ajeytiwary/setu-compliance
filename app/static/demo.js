@@ -103,11 +103,12 @@ async function simulate(shipment, rule) {
   const raw = prompt("Estimated remediation cost (€)", "5000");
   if (raw === null) return;
   const cost = Math.max(0, Number(raw) || 0);
+  box.classList.remove("muted");
   box.textContent = "Simulating…";
   const res = await api("/api/market-access/shipments/" + encodeURIComponent(shipment) + "/simulate-remediation",
     { method: "POST", body: JSON.stringify({ requirement_code: rule, estimated_cost_eur: cost }) });
   const s = await res.json();
-  if (!res.ok) { box.textContent = s.detail || "Simulation failed"; return; }
+  if (!res.ok) { box.classList.add("muted"); box.textContent = s.detail || "Simulation failed"; return; }
   box.classList.remove("muted");
   box.innerHTML = "<b>" + esc(s.shipment_no) + " · " + esc(s.requirement.code) + " → PASS</b>" +
     '<div class="' + (s.after.market_ready ? "good" : "bad") + '">' +

@@ -71,7 +71,7 @@ SCOPE_NOTICE = (
     "Pilot working view for the delivery team and the pilot customer. "
     "Commercial rows are pilot-supplied or synthetic demo data until the pilot "
     "data contract replaces them; regulatory context comes from versioned source "
-    "snapshots. Terminal states are BLOCKED and READY_FOR_SUBMISSION, "
+    "snapshots. Terminal states are BLOCKED and READY_FOR_SUBMISSION. "
     "READY_FOR_SUBMISSION is engineering assurance, not customs acceptance, "
     "CBAM Registry acceptance, legal certification or verifier accreditation."
 )

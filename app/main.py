@@ -123,6 +123,12 @@ def pilot_remediation_resolve(request_id,x:EvidenceResolveIn):
  from .evidence_network import resolve_request
  try:return resolve_request(request_id,x.evidence_id)
  except ValueError as e:raise HTTPException(422,str(e))
+@app.get("/favicon.svg")
+def favicon_svg():return FileResponse(STATIC/"favicon.svg",media_type="image/svg+xml")
+@app.get("/robots.txt")
+def robots():return Response("User-agent: *\nAllow: /\nSitemap: /sitemap.xml\n",media_type="text/plain")
+@app.get("/sitemap.xml")
+def sitemap():return Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>/</loc></url><url><loc>/demo</loc></url><url><loc>/pilot</loc></url></urlset>',media_type="application/xml")
 @app.get("/app.js")
 def js():return FileResponse(STATIC/"app.js",media_type="application/javascript")
 @app.get("/styles.css")

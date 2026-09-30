@@ -28,15 +28,17 @@ h3{font-size:20px;margin:14px 0 8px}
 .three,.cards,.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .three article,.cards article,.team-grid article{border:1px solid var(--line);border-radius:var(--radius);padding:26px;background:var(--card);box-shadow:var(--shadow)}
 .three b{font-size:12px;color:var(--green)}
-.terminal{margin-top:32px;background:#091a15;color:#eef7f2;padding:26px;border-radius:6px;box-shadow:0 20px 60px #0b1f1818}
+.terminal{margin-top:32px;background:#091a15;color:#eef7f2;padding:26px;border-radius:6px;box-shadow:0 20px 60px #0b1f1818;overflow:hidden}
 .terminal-head{font:700 12px ui-monospace,monospace;color:var(--lime);margin-bottom:22px}
 .terminal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.terminal small{display:block;color:#8ca097;font-size:10px}
+.terminal small{display:block;color:#a9bcb3;font-size:10px}
 .terminal strong{font:700 22px ui-monospace,monospace}
-.terminal p{font-family:ui-monospace,monospace}
+.terminal p{font-family:ui-monospace,monospace;overflow-wrap:anywhere}
+.terminal hr{border:0;border-top:1px solid #2a4438;margin:18px 0}
 .green{color:#79df9a}
 .red{color:#ff7568}
 .muted{color:var(--muted)}
+.terminal .muted{color:#a9bcb3}
 .cards article{display:flex;flex-direction:column}
 .cards .featured{background:var(--ink);color:white;border-color:var(--ink);transform:translateY(-8px)}
 .cards .featured .tag{color:var(--ink)}
