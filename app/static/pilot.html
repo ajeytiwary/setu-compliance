@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Setu Pilot Operations Dashboard</title>
+<link rel="stylesheet" href="/styles.css">
+<style>
+.pilot-banner{background:#161d08;border:1px solid #7ee787;border-radius:12px;padding:14px 18px;margin:18px 0}
+.pilot-banner b{color:#7ee787}
+.topnav{display:flex;align-items:center;gap:18px;padding:14px 0}
+.topnav .brand{font-weight:800;letter-spacing:.08em}
+.topnav nav{margin-left:auto;display:flex;gap:14px}
+.topnav a{color:#aab6c3;text-decoration:none;font-size:14px}
+.topnav a.active{color:#7ee787;font-weight:700}
+button.simulate{background:#1f6feb;border-color:#388bfd;font-weight:600;margin-top:8px}
+button.simulate:hover{background:#388bfd}
+.cols{columns:2;column-gap:22px}
+@media(max-width:800px){.cols{columns:1}}
+</style>
+</head>
+<body>
+<main>
+<div class="topnav"><span class="brand">SETU · PILOT</span><nav><a href="/">Public site</a><a href="/demo">Demo</a><a class="active" href="/pilot">Pilot dashboard</a></nav></div>
+<header><p class="eyebrow">PILOT OPERATIONS — INTERNAL + PILOT CUSTOMER</p><h1>Pilot control dashboard</h1>
+<p class="lede">Live tracking for the 12-week steelmaker pilot: plan progress, data-contract coverage, shipment readiness, CBAM reproducibility, remediation and regulatory provenance. Read-only signals — never certifications.</p></header>
+<div class="pilot-banner"><b>Boundary. </b><span id="scope-line">Loading pilot scope…</span></div>
+<section class="panel"><h2>Pilot KPIs</h2><div id="kpis" class="grid"><div class="muted">Loading…</div></div></section>
+<section class="panel"><h2>12-week plan</h2><div id="weeks"><div class="muted">Loading…</div></div></section>
+<section class="panel"><h2>Data-contract coverage</h2><p class="muted">The six pilot feeds from docs/PILOT_DATA_CONTRACT.md. CONNECTED_ROWS means canonical rows exist; SAMPLE_ONLY means only connector samples so far.</p><div id="contracts"><div class="muted">Loading…</div></div></section>
+<section class="panel"><h2>Shipment readiness</h2><div id="shipments"><div class="muted">Loading…</div></div></section>
+<section class="panel"><h2>CBAM reproducibility</h2><div id="cbam"><div class="muted">Loading…</div></div></section>
+<section class="panel"><h2>Remediation queue</h2><div id="remediation"><div class="muted">Loading…</div></div></section>
+<section class="panel"><h2>Regulatory snapshots</h2><div id="regulatory"><div class="muted">Loading…</div></div></section>
+<section class="panel"><h2>Recent audit trail</h2><div id="audit"><div class="muted">Loading…</div></div></section>
+<footer>Engineering assurance infrastructure — not legal certification, customs acceptance, CBAM Registry acceptance or verifier accreditation.</footer>
+</main>
+<script src="/pilot.js"></script>
+</body>
+</html>

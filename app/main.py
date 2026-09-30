@@ -52,6 +52,15 @@ def home():
 @app.get("/demo",response_class=HTMLResponse)
 def demo():
  return FileResponse(STATIC/"dashboard.html")
+@app.get("/pilot",response_class=HTMLResponse)
+def pilot():
+ return FileResponse(STATIC/"pilot.html")
+@app.get("/pilot.js")
+def pilot_js():return FileResponse(STATIC/"pilot.js",media_type="application/javascript")
+@app.get("/api/pilot/overview")
+def pilot_overview():
+ from .pilot import pilot_overview as _overview
+ return _overview()
 @app.get("/app.js")
 def js():return FileResponse(STATIC/"app.js",media_type="application/javascript")
 @app.get("/styles.css")
