@@ -40,6 +40,27 @@ jobs:
               snapshot = json.loads(path.read_text())
               assert snapshot["validation"]["valid"], f"{name}: invalid"
               assert snapshot["validation"]["record_count"] > 0, f"{name}: empty"
-              assert snapshot.get("transport") != "AUTHORITY_METADATA_FALLBACK" or name == "scip_schema"
+              assert snapshot.get("transport") != "AUTHORITY_METADATA_FALLBACK"
+              assert snapshot.get("transport") == "PRIMARY", f"{name}: not a downloaded payload"
+              for r in snapshot.get("records", []):
+                  assert set(r) != {"catalogue_page"}, f"{name}: catalogue placeholder"
+                  assert set(r) != {"source_metadata"}, f"{name}: metadata placeholder"
+              recs = snapshot["records"]
+              if name == "taric_measures":
+                  assert sum(1 for r in recs if r.get("cn_code") and r.get("measure_type")) >= 100
+              elif name == "eucdm":
+                  des = {str(r.get("data_element")) for r in recs}
+                  assert len(des) >= 100 and {"1/1", "2/3", "3/1"} <= des, f"{name}: D.E. coverage"
+              elif name == "echa_candidate_list":
+                  assert 500 <= len(recs) <= 560, f"{name}: count {len(recs)}"
+              elif name == "eu_sanctions":
+                  assert sum(1 for r in recs if r.get("eu_reference") and (r.get("primary_name") or r.get("name"))) >= 5000
+              elif name == "scip_schema":
+                  assert {r.get("version") for r in recs} == {"6.10"}, f"{name}: version"
+                  assert sum(1 for r in recs if r.get("value_code")) >= 100, f"{name}: picklists"
+                  assert sum(1 for r in recs if r.get("field")) >= 10, f"{name}: fields"
+                  assert sum(1 for r in recs if "iuclid6.echa.europa.eu" in str(r.get("namespace"))) >= 10
               print(name, snapshot["validation"]["record_count"], snapshot["sha256"])
           PY
+      - name: Regulatory content gates
+        run: pytest -q tests/test_regulatory_content.py

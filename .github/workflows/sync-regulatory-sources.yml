@@ -21,6 +21,9 @@ jobs:
         run: |
           git config user.name "setu-regulatory-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/raw data/normalized data/manifests
+          # Only the CI snapshot pointers are tracked (see .gitignore):
+          # data/normalized/*/latest.json + data/manifests/**. Raw payloads
+          # stay local (re-downloadable, hash-verified via manifests).
+          git add -f data/normalized/*/latest.json data/manifests
           git diff --cached --quiet || git commit -m "data: refresh regulatory source snapshots"
           git push

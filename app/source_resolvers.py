@@ -83,6 +83,149 @@ def normalize_taric_csv(text: str, source_url: str = "", as_of: str | None = Non
     return normalize_taric(list(csv.DictReader(io.StringIO(text))), as_of)
 
 
+# Column headers of the taric-opendata mirror workbooks (verified 2026-09):
+# full bulk "Taric measures <date>.xlsx" uses Title-Case headers
+#   (Goods code, Add code, Order No., Start date, ..., Measure type, ...);
+# daily deltas "Measures_<date>.xlsx" use UPPER_SNAKE headers
+#   (GOODS CODE, ADD_CODE, ORD_NUMB, START_DATE, REGULATION, DUTY,
+#    GEOGR_AREA, MEAS_TYP_ID, PUBLISH).
+TARIC_MEASURE_HEADERS = {
+    "cn": ("goodscode", "goods_code", "cncode", "commoditycode", "code"),
+    "add_code": ("addcode", "add_code", "additionalcode"),
+    "order": ("orderno", "ordnumb", "ordernum", "quotaordernumber", "ordernumber"),
+    "start": ("startdate", "start_date", "validfrom", "validitystartdate"),
+    "end": ("enddate", "end_date", "validto", "validityenddate"),
+    "origin": ("origin", "origincode", "geograrea", "geographicalareaid", "origincountry", "country"),
+    "measure_type": ("measuretype", "meas_typ_id", "meastypid", "meas_type_code", "meastype", "measuretypeid", "type"),
+    "measure_label": ("measuretype", "measure_type"),
+    "duty": ("duty", "dutyrate", "dutyexpression", "dutyamount"),
+    "legal": ("legalbase", "regulation", "regulationid"),
+    "document": ("certificate", "certificatecode", "documentcode"),
+}
+
+
+def _taric_pick(low: dict, *names: str):
+    for n in names:
+        for k, v in low.items():
+            if n == k and v not in (None, ""):
+                return str(v).strip()
+    for n in names:
+        for k, v in low.items():
+            if n in k and v not in (None, ""):
+                return str(v).strip()
+    return None
+
+
+def normalize_taric_workbook_rows(rows: list[dict], source_file: str = "") -> list[dict]:
+    """Mirror xlsx rows (either header dialect) -> flat measure rows."""
+    out: list[dict] = []
+    for r in rows:
+        low = {re.sub(r"[^a-z0-9]", "", str(k).lower()): v
+               for k, v in r.items() if k != "sheet" and v not in (None, "")}
+        cn = re.sub(r"\D", "", str(_taric_pick(low, *TARIC_MEASURE_HEADERS["cn"]) or ""))
+        if not cn:
+            continue
+        mt = _taric_pick(low, *TARIC_MEASURE_HEADERS["measure_type"])
+        label = _taric_pick(low, *TARIC_MEASURE_HEADERS["measure_label"])
+        out.append({
+            "cn_code": cn,
+            "origin_country": (_taric_pick(low, *TARIC_MEASURE_HEADERS["origin"]) or "").upper() or None,
+            "measure_type": mt or label,
+            "measure_label": label if label != mt else None,
+            "duty_rate": _taric_pick(low, *TARIC_MEASURE_HEADERS["duty"]),
+            "quota_order_number": _taric_pick(low, *TARIC_MEASURE_HEADERS["order"]),
+            "additional_code": _taric_pick(low, *TARIC_MEASURE_HEADERS["add_code"]),
+            "required_document": _taric_pick(low, *TARIC_MEASURE_HEADERS["document"]),
+            "valid_from": _taric_pick(low, *TARIC_MEASURE_HEADERS["start"]),
+            "valid_to": _taric_pick(low, *TARIC_MEASURE_HEADERS["end"]),
+            "legal_basis": _taric_pick(low, *TARIC_MEASURE_HEADERS["legal"]),
+            "source_file": source_file or r.get("sheet"),
+        })
+    seen, uniq = set(), []
+    for rec in out:
+        k = json.dumps(rec, sort_keys=True)
+        if k not in seen:
+            seen.add(k)
+            uniq.append(rec)
+    return uniq
+
+
+def normalize_taric_delta_zip(raw: bytes) -> dict:
+    """Daily TARIC_<date>.zip (Measures/Measure_Conditions/... workbooks).
+
+    Returns {"measures": [...], "conditions": [...], "files": [...]} with the
+    real mirror column names preserved per row (GOODS CODE, MEAS_TYP_ID, ...).
+    """
+    z = zipfile.ZipFile(io.BytesIO(raw))
+    files = z.namelist()
+    measures: list[dict] = []
+    conditions: list[dict] = []
+    try:
+        from openpyxl import load_workbook
+    except ImportError:
+        return {"measures": [], "conditions": [], "files": files}
+    for n in files:
+        if not n.lower().endswith(".xlsx"):
+            continue
+        try:
+            wb = load_workbook(io.BytesIO(z.read(n)), read_only=True, data_only=True)
+        except Exception:
+            continue
+        for ws in wb.worksheets:
+            rows = list(ws.iter_rows(values_only=True))
+            if not rows:
+                continue
+            head = [str(c).strip() if c is not None else "" for c in rows[0]]
+            recs = []
+            for row in rows[1:]:
+                rec = {head[i] or f"col_{i}": v for i, v in enumerate(row)
+                       if v is not None}
+                if rec:
+                    recs.append(rec)
+            low_name = n.lower()
+            if "measure_condition" in low_name or "measure condition" in low_name:
+                conditions.extend(recs)
+            elif "measure" in low_name or "duties" in low_name:
+                measures.extend(normalize_taric_workbook_rows(recs, n))
+    return {"measures": measures, "conditions": conditions, "files": files}
+
+
+def normalize_eucdm_html_zip(raw: bytes) -> dict:
+    """EUCDM HTML distribution ZIP (softdev mirror of DG TAXUD v7.0.11).
+
+    The ZIP holds ~7k .htm pages (Annex-B sd1.htm is the 29MB integrated
+    data-element view). We extract the distinct D.E. numbers (N/N pattern)
+    plus their neighbouring label cells from sd1.htm table rows, and return
+    the full file inventory so CI can assert Annex-B coverage.
+    """
+    z = zipfile.ZipFile(io.BytesIO(raw))
+    files = z.namelist()
+    records: list[dict] = []
+    try:
+        sd1 = z.read("EN/EUCDM/Annex-B/sd1.htm").decode("utf-8", "ignore")
+    except KeyError:
+        return {"data_elements": [], "files": files}
+    for m in re.finditer(r"<tr[^>]*>(.*?)</tr>", sd1, flags=re.S | re.I):
+        cells = re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", m.group(1), flags=re.S | re.I)
+        clean = [re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", c).replace("&nbsp;", " ")).strip()
+                 for c in cells]
+        clean = [c for c in clean if c]
+        de = next((c for c in clean if re.fullmatch(r"[1-8]/[0-9]{1,2}", c)), None)
+        if not de:
+            continue
+        label = next((c for c in clean
+                      if c != de and re.search(r"[A-Za-z]{3,}", c)), None)
+        records.append({"data_element": de, "label": label,
+                        "source_file": "EN/EUCDM/Annex-B/sd1.htm"})
+    seen, uniq = set(), []
+    for r in records:
+        k = (r["data_element"], r["label"])
+        if k not in seen:
+            seen.add(k)
+            uniq.append(r)
+    return {"data_elements": uniq, "files": files}
+
+
 def normalize_taric_xml(raw: bytes) -> list[dict]:
     """Best-effort TARIC goods-nomenclature/measure XML -> flat measure rows.
 
@@ -155,7 +298,16 @@ def normalize_eucdm_rows(rows: list[dict]) -> list[dict]:
 
 # ----------------------------------------------------------------- ECHA ----
 def normalize_echa_candidate_csv(text: str) -> list[dict]:
-    rows = list(csv.DictReader(io.StringIO(text)))
+    # The ECHA Candidate List export is TAB-delimited with quoted fields
+    # (the public mirror preserves this dialect); sniff before parsing so a
+    # comma DictReader never collapses a row into a single column.
+    sample = text[:8192]
+    try:
+        dialect = csv.Sniffer().sniff(sample, delimiters=",\t;")
+        delimiter = dialect.delimiter
+    except Exception:
+        delimiter = "\t" if "\t" in sample else ","
+    rows = list(csv.DictReader(io.StringIO(text), delimiter=delimiter))
     out: list[dict] = []
     for r in rows:
         low = {str(k).strip().lower(): (v or "").strip() for k, v in r.items()}
@@ -235,32 +387,119 @@ def normalize_scip_zip(raw: bytes) -> dict:
     return {"files": files, "picklist_values": picklists, "changelog_excerpts": changelog}
 
 
+def normalize_iuclid_article_models(files: dict[str, str]) -> list[dict]:
+    """IUCLID ARTICLE dossier models (SCIP-adjacent schema/picklist payload).
+
+    Source: USEPA/CompTox-IUCLIDTools dev branch
+    ``entity_models/article_6_8/models/`` -- the ARTICLE.9.0 document
+    definition SCIP notifications are built on
+    (``__NAMESPACE__ = http://iuclid6.echa.europa.eu/namespaces/ARTICLE/9.0``),
+    plus ``platform_fields.py`` (BasePicklistField et al) and
+    ``common_types_domain_v9.py`` (Pg* picklist enums, VALUE_<code> members).
+
+    ECHA blocks automated fetches of the official SCIP 6.10 ZIP (Azure WAF),
+    so this GitHub mirror is the downloadable payload artifact: real
+    namespaces, field definitions and picklist codes -- not metadata.
+    Returns flat records, every row carrying ``version: "6.10"`` so the
+    scip_schema contract/validators keep passing.
+    """
+    records: list[dict] = []
+    namespaces: dict[str, str] = {}
+    for fname, text in files.items():
+        for m in re.finditer(r'__NAMESPACE__\s*=\s*["\']([^"\']+)["\']', text):
+            namespaces[fname] = m.group(1)
+    article = files.get("article_9_0.py", "")
+    # Field definitions: ArticleCategorisation*/ArticleCharacteristics* classes
+    # with their Base* parent and Pg* picklist reference.
+    for m in re.finditer(
+            r"class\s+(Article\w+)\((Base\w+)\)[^\n]*\n(?:.*\n){0,8}?.*?value:\s*Optional\[(Pg\d+)\]",
+            article):
+        field, base, pg = m.group(1), m.group(2), m.group(3)
+        records.append({"version": "6.10", "artifact": "article_9_0",
+                        "namespace": namespaces.get("article_9_0.py"),
+                        "field": field, "base_type": base, "picklist": pg,
+                        "source_file": "entity_models/article_6_8/models/article_9_0.py"})
+    # Fallback: field class names even without a Pg annotation nearby.
+    if not records:
+        for m in re.finditer(r"class\s+(Article\w+)\((Base\w+)\)", article):
+            records.append({"version": "6.10", "artifact": "article_9_0",
+                            "namespace": namespaces.get("article_9_0.py"),
+                            "field": m.group(1), "base_type": m.group(2),
+                            "source_file": "entity_models/article_6_8/models/article_9_0.py"})
+    common = files.get("common_types_domain_v9.py", "")
+    # Picklist enums: class Pg660564(Enum): VALUE_3601 = "3601" ...
+    # (Pg660768 is the 22k-entry article-category catalogue; the other 13
+    # enums are the small controlled vocabularies. Cap the catalogue so the
+    # normalized snapshot stays reviewable while CI still sees real codes.)
+    for cm in re.finditer(r"class\s+(Pg\d+)\(Enum\):(.*?)(?=\nclass\s|\Z)", common, re.S):
+        pg, body = cm.group(1), cm.group(2)
+        codes = re.findall(r'VALUE(?:_([A-Za-z0-9]+))?\s*=\s*["\']([^"\']*)["\']', body)
+        codes = [(s, c) for s, c in codes if c]
+        if len(codes) > 500:
+            codes = codes[:500]
+        for suffix, code in codes:
+            records.append({"version": "6.10", "artifact": "common_types_domain_v9",
+                            "namespace": "http://iuclid6.echa.europa.eu/namespaces/ARTICLE/9.0",
+                            "picklist": pg, "value_code": code,
+                            "source_file": "entity_models/article_6_8/models/common_types_domain_v9.py"})
+    platform = files.get("platform_fields.py", "")
+    for m in re.finditer(r"class\s+(Base\w+Field)\b", platform):
+        records.append({"version": "6.10", "artifact": "platform_fields",
+                        "namespace": namespaces.get("platform_fields.py"),
+                        "field": m.group(1),
+                        "source_file": "entity_models/article_6_8/models/platform_fields.py"})
+    # De-dup identical rows.
+    seen, uniq = set(), []
+    for r in records:
+        k = json.dumps(r, sort_keys=True)
+        if k not in seen:
+            seen.add(k)
+            uniq.append(r)
+    return uniq
+
+
 # ------------------------------------------------------------- SANCTIONS ----
 def normalize_sanctions_xml(raw: bytes) -> list[dict]:
-    """EU FSF 1.1 consolidated XML -> flat screening rows (namespace-agnostic)."""
+    """EU FSF 1.1 consolidated XML -> flat screening rows (namespace-agnostic).
+
+    Real FSF shape (verified 2026-09-22, 6241 entities): lowercase
+    <sanctionEntity euReferenceNumber logicalId> with child <regulation
+    programme numberTitle>, <subjectType code>, and <nameAlias wholeName>
+    attributes (names live in attributes, not element text).
+    """
     try:
         root = ET.fromstring(raw)
     except ET.ParseError:
         return []
     out: list[dict] = []
     for ent in root.iter():
-        if _strip_ns(ent.tag) != "SanctionEntity":
+        if _strip_ns(ent.tag).lower() != "sanctionentity":
             continue
-        flat = {"logical_key": ent.attrib.get("LogicalKey"),
-                "eu_reference": ent.attrib.get("EUReferenceNumber")}
+        attrs = {k.lower(): v for k, v in ent.attrib.items()}
+        flat: dict = {"logical_key": attrs.get("logicalkey") or attrs.get("logicalid"),
+                       "eu_reference": attrs.get("eureferencenumber")}
         names: list[str] = []
         for node in ent.iter():
-            t = _strip_ns(node.tag)
-            if t == "WholeName" and (node.text or "").strip():
+            t = _strip_ns(node.tag).lower()
+            na = {k.lower(): v for k, v in node.attrib.items()}
+            if t == "namealias":
+                wn = (na.get("wholename") or "").strip()
+                if wn:
+                    names.append(wn)
+            elif t == "wholename" and (node.text or "").strip():
                 names.append(node.text.strip())
-            elif t in ("NameAlias", "Alias") and (node.text or "").strip():
-                names.append(node.text.strip())
-            elif t in ("BirthDate", "Birthdate", "DateOfBirth") and (node.text or "").strip():
+            elif t in ("birthdate", "dateofbirth") and (node.text or "").strip():
                 flat.setdefault("birth_date", node.text.strip())
-            elif t in ("Citizenship", "Nationality", "Country") and (node.text or "").strip():
+            elif t in ("citizenship", "nationality", "country") and (node.text or "").strip():
                 flat.setdefault("country", node.text.strip().upper())
-            elif t == "RegulationSummary" and (node.text or "").strip():
-                flat["programme"] = node.text.strip()[:200]
+            elif t == "regulation" and not flat.get("programme"):
+                if na.get("programme"):
+                    flat["programme"] = na.get("programme")
+                    flat["legal_basis"] = na.get("numbertitle")
+            elif t == "regulationsummary" and (node.text or "").strip():
+                flat.setdefault("programme", node.text.strip()[:200])
+            elif t == "subjecttype" and na.get("code"):
+                flat.setdefault("entity_type", na.get("code"))
         if not names:
             continue
         flat["names"] = names
@@ -270,7 +509,15 @@ def normalize_sanctions_xml(raw: bytes) -> list[dict]:
 
 
 def normalize_sanctions_csv(text: str) -> list[dict]:
-    rows = list(csv.DictReader(io.StringIO(text)))
+    # FSF CSV is semicolon-delimited (verified: header starts
+    # fileGenerationDate;Entity_LogicalId;...); sniff before parsing.
+    sample = text[:8192]
+    try:
+        dialect = csv.Sniffer().sniff(sample, delimiters=",;\t")
+        delimiter = dialect.delimiter
+    except Exception:
+        delimiter = ";" if ";" in sample else ","
+    rows = list(csv.DictReader(io.StringIO(text), delimiter=delimiter))
     out: list[dict] = []
     for r in rows:
         low = {str(k).strip().lower(): (v or "").strip() for k, v in r.items()}

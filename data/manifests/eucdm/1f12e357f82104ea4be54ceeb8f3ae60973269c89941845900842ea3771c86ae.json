@@ -1,0 +1,19 @@
+{
+  "dataset": "eucdm",
+  "provider": "eu_taxud_eucdm",
+  "authority": "OFFICIAL",
+  "legal_authority": false,
+  "source": "https://eucdm.softdev.eu.com/EUCDM/Download/EUCDM-HTML_v7p0p11_2026-08-19.zip",
+  "retrieved_at": "2026-09-30T08:56:49+00:00",
+  "sha256": "1f12e357f82104ea4be54ceeb8f3ae60973269c89941845900842ea3771c86ae",
+  "content_type": "application/zip",
+  "etag": "\"d5521d219cc6796d0b590f2bcb88fb29-5\"",
+  "last_modified": "Fri, 04 Sep 2026 14:28:40 GMT",
+  "parser_version": "setu-source-sync-0.8",
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "record_count": 272
+  },
+  "raw_file": "data/raw/eucdm/1f12e357f82104ea4be54ceeb8f3ae60973269c89941845900842ea3771c86ae/EUCDM-HTML_v7p0p11_2026-08-19.zip"
+}

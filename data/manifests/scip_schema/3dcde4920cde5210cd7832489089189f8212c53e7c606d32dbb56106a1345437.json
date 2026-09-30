@@ -1,0 +1,17 @@
+{
+  "dataset": "scip_schema",
+  "provider": "echa_scip_610",
+  "authority": "MIRROR",
+  "legal_authority": false,
+  "source": "https://raw.githubusercontent.com/USEPA/CompTox-IUCLIDTools/dev/entity_models/article_6_8/models",
+  "retrieved_at": "2026-09-30T08:56:50+00:00",
+  "sha256": "3dcde4920cde5210cd7832489089189f8212c53e7c606d32dbb56106a1345437",
+  "content_type": "text/x-python",
+  "parser_version": "setu-source-sync-0.9",
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "record_count": 1150
+  },
+  "raw_file": "data/raw/scip_schema/3dcde4920cde5210cd7832489089189f8212c53e7c606d32dbb56106a1345437/article_9_0.py"
+}

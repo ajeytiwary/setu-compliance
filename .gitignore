@@ -8,11 +8,23 @@ data/*.db
 .DS_Store
 # Official reference snapshots (re-downloadable via scripts/sync_official_reference_data.py)
 # Versioned upstream snapshots (re-downloadable via scripts/sync_sources.py --all).
-# Raw/normalized/manifests are machine materializations, not source truth.
-# Checked-in legal snapshot: data/eu_steel_measure_2026.json.
+# Raw payloads are machine materializations, not source truth (re-downloadable,
+# hash-verified via manifests) -- hence ignored. Normalized latest.json snapshots
+# + manifests ARE tracked so CI content gates validate real regulatory contents
+# on checkout (see .github/workflows/ci.yml + tests/test_regulatory_content.py).
 data/official/
 data/sources/
 data/cache/
 data/raw/
-data/normalized/
-data/manifests/
+# Normalized + manifests: ignore everything EXCEPT the tracked CI snapshots
+# (latest.json payloads + manifest pointers). Parent dirs must stay
+# un-ignored for the negations below to take effect.
+data/normalized/*
+!data/normalized/*/
+data/normalized/*/*
+!data/normalized/*/latest.json
+data/manifests/*
+!data/manifests/*/
+!data/manifests/*.json
+data/manifests/*/*
+!data/manifests/**/*.json

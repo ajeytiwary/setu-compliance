@@ -7,7 +7,7 @@ CONTRACTS={
 "cbam_defaults":{"key":["good","country","route"],"fields":["good","cn_code","country","route","direct","indirect","unit","period"]},
 "cbam_benchmarks":{"key":["product","route"],"fields":["product","route","benchmark","unit","period"]},
 "echa_candidate_list":{"key":["ec_number"],"fields":["name","ec_number","cas_number","reason","included_at"]},
-"scip_schema":{"key":["version"],"fields":["version","picklists","validation_rules","schema_files"]},
+"scip_schema":{"key":["version","picklist","value_code"],"fields":["version","artifact","namespace","picklist","value_code","field","base_field","source_file"]},
 "eu_sanctions":{"key":["eu_reference"],"fields":["eu_reference","entity_type","name","aliases","identifiers","programme","legal_basis"]},
 "comext_trade":{"key":["period","reporter","partner","product"],"fields":["period","reporter","partner","product","value_eur","net_mass_kg","quantity"]}}
 def contract(dataset):return CONTRACTS[dataset]

@@ -12,10 +12,13 @@ python scripts/sync_sources.py taric_measures eucdm  # subset
 python scripts/sync_sources.py --strict              # CI: exit 1 if any source fails
 ```
 
-Resolvers live in `app/source_sync.py` (`discover()` scrapes official landing
-pages for versioned distributions: ECHA CSV, SCIP 6.10 ZIP, FSF 1.1 XML/CSV via
-data.europa.eu DCAT, EUCDM ZIP, TARIC via `SETU_TARIC_BULK_URL` or ZIP
-discovery). Layout: `data/raw/<ds>/<sha>/` + `data/normalized/<ds>/<sha>/records.json`
+Resolvers live in `app/source_sync.py` (direct versioned distributions, verified
+2026-09-30: TARIC daily delta ZIP from the taric-opendata mirror releases API,
+EUCDM HTML distribution ZIP, ECHA Candidate List CSV mirror, FSF 1.1 XML/CSV via
+the data.europa.eu DCAT record with webgate token fallbacks, and the IUCLID
+ARTICLE.9.0 dossier models as the SCIP 6.10 schema/picklist payload -- the
+official ECHA SCIP ZIP blocks automated fetches with an Azure WAF 403, so a
+browser-downloaded official ZIP can still be ingested via `--file`). Layout: `data/raw/<ds>/<sha>/` + `data/normalized/<ds>/<sha>/records.json`
 + `data/manifests/<ds>/<sha>.json` + `latest.json` pointer. The GitHub workflow
 `.github/workflows/sync-regulatory-sources.yml` runs this daily (04:17 UTC) and
 commits validated snapshots. CI (`.github/workflows/ci.yml`) enforces populated
@@ -67,14 +70,14 @@ workaround** instead of silently publishing nothing.
 
 | Dataset | Auto-download | Manual path |
 |---|---|---|
-| TARIC measures | ❌ (no anonymous bulk file) | Export CSV/XML from TARIC consultation or taric-opendata mirror → `--file` |
+| TARIC measures | ✅ daily delta ZIP from taric-opendata mirror releases API (or `SETU_TARIC_BULK_URL`) | Export CSV/XML from TARIC consultation → `--file` |
 | Quota balances | ❌ (consultation export) | Export CSV from QUOTA database → `--file` (daily) |
-| EUCDM Annex B / code lists | ❌ | Download .xlsx → `--file` |
+| EUCDM Annex B / code lists | ✅ HTML distribution ZIP (272 D.E.s incl. 1/1, 2/3, 3/1) | Download .xlsx → `--file` |
 | Steel 2026/1457 | ⚠️ EUR-Lex TXT often empty via urllib | Falls back to checked-in legal snapshot; full table via `--file` |
 | CBAM defaults / benchmarks | ✅ TAXUD URLs from registry | `--file` if TAXUD rotates UUIDs |
-| ECHA Candidate List | ⚠️ 403 to bots | Browser download `candidate_list_en.csv` → `--file` |
-| SCIP 6.10 | ❌ | Browser download ZIP → `--file` |
-| EU sanctions FSF 1.1 | ⚠️ API needs token | Browser download XML/CSV → `--file` (versioned, never overwritten) |
+| ECHA Candidate List | ✅ CSV mirror (507 substances) | Browser download `candidate_list_en.csv` → `--file` |
+| SCIP 6.10 | ✅ IUCLID ARTICLE.9.0 models (schema fields + Pg* picklist codes) | Browser download official ZIP → `--file` |
+| EU sanctions FSF 1.1 | ✅ DCAT-resolved XML (6241 entities) with CSV fallback | Browser download XML/CSV → `--file` (versioned, never overwritten) |
 | Comext India→EU 72/73 | ✅ dissemination API | `--url` override for custom queries |
 | UCI steel telemetry | ❌ DEMO_ONLY | Download CSV → `--file` |
 

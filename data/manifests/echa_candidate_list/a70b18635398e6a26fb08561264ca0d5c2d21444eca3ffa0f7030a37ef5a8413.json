@@ -1,0 +1,19 @@
+{
+  "dataset": "echa_candidate_list",
+  "provider": "echa_candidate_package",
+  "authority": "OFFICIAL",
+  "legal_authority": false,
+  "source": "https://raw.githubusercontent.com/analeonescu/chemical-security-evals/main/data/chemicals_databases/candidate-list-of-svhc-for-authorisation-export.csv",
+  "retrieved_at": "2026-09-30T08:56:49+00:00",
+  "sha256": "a70b18635398e6a26fb08561264ca0d5c2d21444eca3ffa0f7030a37ef5a8413",
+  "content_type": "text/plain; charset=utf-8",
+  "etag": "\"6776786f2c906bbdc3c9490cc793951b8761de7f65cbeac5072f860626a3983e\"",
+  "last_modified": null,
+  "parser_version": "setu-source-sync-0.8",
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "record_count": 507
+  },
+  "raw_file": "data/raw/echa_candidate_list/a70b18635398e6a26fb08561264ca0d5c2d21444eca3ffa0f7030a37ef5a8413/candidate-list-of-svhc-for-authorisation-export.csv"
+}

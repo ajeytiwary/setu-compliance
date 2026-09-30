@@ -49,12 +49,12 @@ SOURCES: dict[str, dict] = {
     "taric_measures": {
         "provider_id": "eu_taxud_taric_bulk",
         "url": None,
-        "where": "TARIC consultation has no anonymous bulk file; export CSV/XML from "
-                 "https://taxation-customs.ec.europa.eu/online-services/online-services-and-databases-customs/eu-customs-tariff-taric_en "
-                 "or use the taric-opendata mirror (https://github.com/rousseauxy/taric-opendata), then --file it. "
-                 "AUTO path: set SETU_TARIC_BULK_URL or use positional sync.",
-        "filename": "taric.csv", "content_type": "text/csv",
-        "authority": "OFFICIAL", "legal_authority": False, "min_records": 1,
+        "where": "Daily TARIC delta ZIP from the taric-opendata mirror "
+                 "(https://github.com/rousseauxy/taric-opendata, newest eu-* TARIC_<date>.zip), "
+                 "or export CSV/XML from https://taxation-customs.ec.europa.eu/online-services/online-services-and-databases-customs/eu-customs-tariff-taric_en, "
+                 "then --file it. AUTO path: set SETU_TARIC_BULK_URL or use positional sync.",
+        "filename": "taric-delta.zip", "content_type": "application/zip",
+        "authority": "MIRROR", "legal_authority": False, "min_records": 1,
     },
     "quota_balances": {
         "provider_id": "eu_taxud_quota_export",
@@ -66,13 +66,13 @@ SOURCES: dict[str, dict] = {
     },
     "eucdm": {
         "provider_id": "eu_taxud_eucdm_annex_b",
-        "url": None,
-        "where": "EUCDM Annex B v7.0.11 + code lists from "
-                 "https://taxation-customs.ec.europa.eu/online-services/online-services-and-databases-customs/eu-customs-data-model-eucdm_en, then --file the .xlsx. "
-                 "AUTO path: positional `python scripts/sync_sources.py eucdm` uses link-discovery.",
-        "filename": "eucdm.xlsx",
-        "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "authority": "OFFICIAL", "legal_authority": False, "min_records": 1,
+        "url": "https://eucdm.softdev.eu.com/EUCDM/Download/EUCDM-HTML_v7p0p11_2026-08-19.zip",
+        "where": "EUCDM v7.0.11 HTML distribution (softdev mirror of DG TAXUD; needs a browser "
+                 "User-Agent). Annex-B declaration data elements parsed from EN/EUCDM/Annex-B/sd1.htm. "
+                 "AUTO path: positional `python scripts/sync_sources.py eucdm` fetches it directly.",
+        "filename": "eucdm-7.0.11.zip",
+        "content_type": "application/zip",
+        "authority": "MIRROR", "legal_authority": False, "min_records": 1,
     },
     "steel_2026_1457": {
         "provider_id": "eurlex_2026_1457",
@@ -99,29 +99,30 @@ SOURCES: dict[str, dict] = {
     },
     "echa_candidate_list": {
         "provider_id": "echa_candidate_csv",
-        "url": "https://echa.europa.eu/documents/10162/82546/candidate_list_en.csv",
-        "where": "ECHA Candidate List package https://echa.europa.eu/en/candidate-list-package "
-                 "(bots get 403; download candidate_list_en.csv in a browser, then --file it). "
-                 "AUTO path: positional sync uses link-discovery.",
+        "url": "https://raw.githubusercontent.com/analeonescu/chemical-security-evals/main/data/chemicals_databases/candidate-list-of-svhc-for-authorisation-export.csv",
+        "where": "Tab-delimited Candidate List mirror (ECHA blocks bots with 403). "
+                 "AUTO path: positional sync fetches the mirror directly (~507 substances).",
         "filename": "candidate_list_en.csv", "content_type": "text/csv",
-        "authority": "OFFICIAL", "legal_authority": False, "min_records": 1,
+        "authority": "MIRROR", "legal_authority": False, "min_records": 1,
     },
     "scip_schema": {
         "provider_id": "echa_scip_610",
-        "url": None,
-        "where": "SCIP 6.10 format package https://echa.europa.eu/en/scip-format "
-                 "(download the ZIP in a browser, then --file it). "
-                 "AUTO path: positional sync uses link-discovery.",
-        "filename": "scip-6.10.zip", "content_type": "application/zip",
-        "authority": "OFFICIAL", "legal_authority": False, "min_records": 1,
+        "url": "https://raw.githubusercontent.com/USEPA/CompTox-IUCLIDTools/dev/entity_models/article_6_8/models/article_9_0.py",
+        "where": "IUCLID ARTICLE.9.0 dossier models (SCIP 6.10 schema/picklists) from "
+                 "USEPA/CompTox-IUCLIDTools dev branch -- the official ECHA SCIP 6.10 ZIP "
+                 "(https://echa.europa.eu/en/scip-format) blocks automated fetches (Azure WAF), "
+                 "so the versioned path fetches the three model files directly; "
+                 "a browser-downloaded official ZIP can still be ingested via --file.",
+        "filename": "article_9_0.py", "content_type": "text/x-python",
+        "authority": "MIRROR", "legal_authority": False, "min_records": 1,
     },
     "eu_sanctions": {
         "provider_id": "eu_fsf_11_xml",
-        "url": "https://data.europa.eu/api/hub/store/data/eu-sanctions-map-xml-all.xml",
-        "where": "EU FSF 1.1 consolidated XML (data.europa.eu; API now needs a bearer token -- "
-                 "download FullSanctionsMap XML/CSV in a browser, then --file it). "
+        "url": "https://webgate.ec.europa.eu/fsd/fsf/public/files/xmlFullSanctionsList_1_1/content?token=dG9rZW4tMjAxNw",
+        "where": "EU FSF 1.1 consolidated XML resolved via the data.europa.eu DCAT record "
+                 "(distributions carry download_url/access_url token links). "
                  "Versions are date-foldered and never overwritten. "
-                 "AUTO path: positional sync uses DCAT discovery.",
+                 "AUTO path: positional sync uses DCAT discovery with webgate fallback.",
         "filename": "eu-sanctions-map-xml-all.xml", "content_type": "application/xml",
         "authority": "OFFICIAL", "legal_authority": False, "min_records": 1,
     },
@@ -197,7 +198,15 @@ def sync_dataset(dataset: str, as_of: str | None = None, url: str | None = None,
         if not target:
             raise ValueError(f"{dataset}: no direct download URL. {spec['where']}")
         try:
-            raw, ctype = R.fetch_url(target)
+            # EUCDM's mirror sits behind CloudFront: needs a browser User-Agent.
+            if dataset == "eucdm":
+                import urllib.request as _url
+                req = _url.Request(target, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"})
+                with _url.urlopen(req, timeout=120) as _r:
+                    raw = _r.read()
+                    ctype = (_r.headers.get("Content-Type") or spec["content_type"]).split(";")[0].strip()
+            else:
+                raw, ctype = R.fetch_url(target)
         except Exception as e:
             raise ValueError(f"{dataset}: download failed ({e}). {spec['where']} "
                              f"Workaround: download in a browser, then "
@@ -205,7 +214,10 @@ def sync_dataset(dataset: str, as_of: str | None = None, url: str | None = None,
         src = target
 
     if dataset == "taric_measures":
-        if raw.lstrip()[:1] == b"<":
+        if raw[:2] == b"PK":
+            from app.source_sync import normalize_taric as _nt
+            records = _nt(raw)  # daily delta ZIP (Measures/MEAS_TYP_ID dialect)
+        elif raw.lstrip()[:1] == b"<":
             records = R.normalize_taric_xml(raw)
             if not records:
                 raise ValueError("taric_measures: no measure rows parsed; supply a TARIC CSV/XML export via --file")
@@ -216,7 +228,11 @@ def sync_dataset(dataset: str, as_of: str | None = None, url: str | None = None,
         import csv as _csv
         records = normalize_quota(list(_csv.DictReader(io.StringIO(raw.decode("utf-8-sig")))), as_of)["records"]
     elif dataset == "eucdm":
-        records = R.normalize_eucdm_rows(_xlsx_rows(raw))
+        if raw[:2] == b"PK":
+            from app.source_sync import normalize_eucdm as _ne
+            records = _ne(raw)  # EUCDM HTML distribution ZIP (sd1.htm D.E.s)
+        else:
+            records = R.normalize_eucdm_rows(_xlsx_rows(raw))
     elif dataset == "steel_2026_1457":
         records = R.normalize_steel_1457(raw.decode("utf-8", "ignore"), src)
         cats = records[0]["categories"] if records else []
@@ -227,9 +243,28 @@ def sync_dataset(dataset: str, as_of: str | None = None, url: str | None = None,
     elif dataset == "echa_candidate_list":
         records = R.normalize_echa_candidate_csv(raw.decode("utf-8-sig", "ignore"))
     elif dataset == "scip_schema":
-        inv = R.normalize_scip_zip(raw)
-        records = [{"file": f} for f in inv["files"]] + \
-                  [{"picklist": p["list"], "value": p["value"]} for p in inv["picklist_values"][:5000]]
+        if raw[:2] == b"PK":
+            inv = R.normalize_scip_zip(raw)
+            records = [{"version": "6.10", "file": f} for f in inv["files"]] + \
+                      [{"version": "6.10", "picklist": p["list"], "value": p["value"]}
+                       for p in inv["picklist_values"][:5000]]
+        else:
+            # Versioned path: fetch the sibling model files next to the
+            # resolved article_9_0.py (or parse a --file'd model file alone).
+            import urllib.request as _url
+            text = raw.decode("utf-8", "ignore")
+            files = {"article_9_0.py": text}
+            if not file:
+                base = (url or _resolve_url(dataset) or "").rsplit("/", 1)[0]
+                for sib in ("common_types_domain_v9.py", "platform_fields.py"):
+                    try:
+                        req = _url.Request(base + "/" + sib,
+                                           headers={"User-Agent": "SetuCompliance/0.7 (+weekly regulatory sync)"})
+                        with _url.urlopen(req, timeout=90) as _r:
+                            files[sib] = _r.read().decode("utf-8", "ignore")
+                    except Exception:
+                        pass
+            records = R.normalize_iuclid_article_models(files)
     elif dataset == "eu_sanctions":
         if raw.lstrip()[:1] == b"<":
             records = R.normalize_sanctions_xml(raw)

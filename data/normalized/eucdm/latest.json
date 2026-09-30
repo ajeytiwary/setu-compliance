@@ -1,0 +1,1383 @@
+{
+  "dataset": "eucdm",
+  "provider": "eu_taxud_eucdm",
+  "authority": "OFFICIAL",
+  "legal_authority": false,
+  "source": "https://eucdm.softdev.eu.com/EUCDM/Download/EUCDM-HTML_v7p0p11_2026-08-19.zip",
+  "retrieved_at": "2026-09-30T08:56:49+00:00",
+  "sha256": "1f12e357f82104ea4be54ceeb8f3ae60973269c89941845900842ea3771c86ae",
+  "content_type": "application/zip",
+  "etag": "\"d5521d219cc6796d0b590f2bcb88fb29-5\"",
+  "last_modified": "Fri, 04 Sep 2026 14:28:40 GMT",
+  "parser_version": "setu-source-sync-0.8",
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "record_count": 272
+  },
+  "raw_file": "data/raw/eucdm/1f12e357f82104ea4be54ceeb8f3ae60973269c89941845900842ea3771c86ae/EUCDM-HTML_v7p0p11_2026-08-19.zip",
+  "transport": "PRIMARY",
+  "normalized_file": "data/normalized/eucdm/1f12e357f82104ea4be54ceeb8f3ae60973269c89941845900842ea3771c86ae/records.json",
+  "records": [
+    {
+      "data_element": "1/1",
+      "label": "declarationtype",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/1",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/1",
+      "label": "Declarationtype",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/2",
+      "label": "additionaldeclarationtype",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/2",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/2",
+      "label": "Additionaldeclarationtype",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/6",
+      "label": "goodsitemnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/6",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/6",
+      "label": "Goodsitemnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/7",
+      "label": "specificcircumstanceindicator",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/7",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/7",
+      "label": "Specificcircumstanceindicator",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/10",
+      "label": "procedure",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/10",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/10",
+      "label": "procedureRequestedprocedure",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/10",
+      "label": "procedurePreviousprocedure",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/11",
+      "label": "additionalprocedure",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/11",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/11",
+      "label": "Additionalprocedure",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "1/11",
+      "label": "declarationgoodsitemnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/1",
+      "label": "previousdocument",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/1",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/2",
+      "label": "additionalinformation",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/2",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/3",
+      "label": "supportingdocument",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/3",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/4",
+      "label": "referencenumberucr",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/4",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/4",
+      "label": "ReferencenumberUCR",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/5",
+      "label": "lrn",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/5",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/6",
+      "label": "deferredpayment",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/6",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/7",
+      "label": "warehouse",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "2/7",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/1",
+      "label": "exporter",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/1",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/2",
+      "label": "exporterIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/2",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/7",
+      "label": "consignor",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/7",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/8",
+      "label": "consignorIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/8",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/9",
+      "label": "consignee",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/9",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/10",
+      "label": "consigneeIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/10",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/15",
+      "label": "importer",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/15",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/16",
+      "label": "importerIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/16",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/17",
+      "label": "declarant",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/17",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/18",
+      "label": "declarantIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/18",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/19",
+      "label": "representative",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/19",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/20",
+      "label": "representativeIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/20",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/21",
+      "label": "representativeStatus",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/21",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/22",
+      "label": "holderofthetransitprocedure",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/22",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/23",
+      "label": "holderofthetransitprocedureIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/23",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/24",
+      "label": "seller",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/24",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/25",
+      "label": "sellerIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/25",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/26",
+      "label": "buyer",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/26",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/27",
+      "label": "buyerIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/27",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/28",
+      "label": "personnotifyingthearrival",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/28",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/28",
+      "label": "personnotifyingthearrivalIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/30",
+      "label": "personpresentingthegoods",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/30",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/30",
+      "label": "personpresentingthegoodsIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/31",
+      "label": "carrier",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/31",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/32",
+      "label": "carrierIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/32",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/33",
+      "label": "notifyparty",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/33",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/34",
+      "label": "notifypartyIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/34",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/37",
+      "label": "additionalsupplychainactor",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/37",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/38",
+      "label": "supplementarydeclarant",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/38",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/40",
+      "label": "additionalfiscalreference",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/40",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/42",
+      "label": "personlodgingthecustomsgoodsmanifest",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/42",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/42",
+      "label": "personlodgingthecustomsgoodsmanifestIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/43",
+      "label": "personrequestingaproofofthecustomsstatusofuniongoods",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/43",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/43",
+      "label": "personrequestingaproofofthecustomsstatusofuniongoodsIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/44",
+      "label": "personnotifyingthearrivalofgoodsfollowingmovementundertemporarystorage",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/44",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/44",
+      "label": "personnotifyingthearrivalofgoodsfollowingmovementundertemporarystorageIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/45",
+      "label": "personprovidingaguarantee",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/45",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/45",
+      "label": "personprovidingaguaranteeIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/46",
+      "label": "personpayingthecustomsduty",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/46",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "3/46",
+      "label": "personpayingthecustomsdutyIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/1",
+      "label": "deliveryterms",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/1",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/2",
+      "label": "transportchargesMethodofpayment",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/2",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/3",
+      "label": "dutiesandtaxesTaxtype",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/3",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/8",
+      "label": "dutiesandtaxesMethodofpayment",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/8",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/6",
+      "label": "dutiesandtaxesPayabletaxamount",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/6",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/4",
+      "label": "dutiesandtaxesTaxbase",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/4",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/5",
+      "label": "dutiesandtaxesTaxbaseTaxrate",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/5",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/9",
+      "label": "additionsanddeductions",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/9",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/10",
+      "label": "invoicecurrency",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/10",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/11",
+      "label": "totalamountinvoiced",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/11",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/13",
+      "label": "valuationindicators",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/13",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/14",
+      "label": "itemamountinvoiced",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/14",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/15",
+      "label": "exchangerate",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/15",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/16",
+      "label": "valuationmethod",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/16",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/17",
+      "label": "preference",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/17",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/18",
+      "label": "postalvalue",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/18",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/19",
+      "label": "postalcharges",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/19",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/7",
+      "label": "totaldutiesandtaxesamount",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/7",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/12",
+      "label": "internalcurrencyunit",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "4/12",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/1",
+      "label": "estimateddateandtimeofarrival",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/1",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/2",
+      "label": "estimateddateandtimeofarrivalattheportofunloading",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/2",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/3",
+      "label": "actualdateandtimeofarrival",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/3",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/4",
+      "label": "declarationdate",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/4",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/28",
+      "label": "requestedvalidityoftheproof",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/28",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/29",
+      "label": "dateandtimeofpresentationofthegoods",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/29",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/31",
+      "label": "dateofacceptance",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/31",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/8",
+      "label": "countryofdestination",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/8",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/9",
+      "label": "regionofdestination",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/9",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/10",
+      "label": "placeofdelivery",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/10",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/14",
+      "label": "countryofdispatch",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/14",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/15",
+      "label": "countryoforigin",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/15",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/16",
+      "label": "countryofpreferentialorigin",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/16",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/17",
+      "label": "regionoforigin",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/17",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/19",
+      "label": "countriesofroutingofmeansoftransport",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/19",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/20",
+      "label": "countryofroutingofconsignment",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/20",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/21",
+      "label": "placeofloading",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/21",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/22",
+      "label": "placeofunloading",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/22",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/23",
+      "label": "locationofgoods",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/23",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/12",
+      "label": "customsofficeofexit",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/12",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/7",
+      "label": "customsofficeoftransit",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/7",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/6",
+      "label": "customsofficeofdestination",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/6",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/24",
+      "label": "customsofficeoffirstentry",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/24",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/25",
+      "label": "actualcustomsofficeoffirstentry",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/25",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/26",
+      "label": "customsofficeofpresentation",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/26",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/27",
+      "label": "supervisingcustomsoffice",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "5/27",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/1",
+      "label": "netmass",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/1",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/2",
+      "label": "supplementaryunit",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/2",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/5",
+      "label": "grossmass",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/5",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/8",
+      "label": "descriptionofgoods",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/8",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/9",
+      "label": "packagingTypeofpackages",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/9",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/10",
+      "label": "packagingNumberofpackages",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/10",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/11",
+      "label": "packagingShippingmarks",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/11",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/12",
+      "label": "dangerousgoods",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/12",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/13",
+      "label": "cuscode",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/13",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/14",
+      "label": "commoditycodeCombinednomenclaturecode",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/14",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/15",
+      "label": "commoditycodeTARICcode",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/15",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/16",
+      "label": "commoditycodeTARICadditionalcode",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/16",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/17",
+      "label": "commoditycodeNationaladditionalcode",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/17",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/19",
+      "label": "typeofgoods",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "6/19",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/2",
+      "label": "containerindicator",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/2",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/3",
+      "label": "conveyancereferencenumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/3",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/4",
+      "label": "modeoftransportattheborder",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/4",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/5",
+      "label": "inlandmodeoftransport",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/5",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/7",
+      "label": "departuretransportmeans",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/7",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/8",
+      "label": "departuretransportmeansNationality",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/8",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/9",
+      "label": "arrivaltransportmeans",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/9",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/10",
+      "label": "transportequipmentContaineridentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/10",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/11",
+      "label": "transportequipmentContainersizeandtypeidentification",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/11",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/12",
+      "label": "transportequipmentContainerpackedstatus",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/12",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/13",
+      "label": "transportequipmentContainersuppliertypecode",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/13",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/14",
+      "label": "activebordertransportmeansIdentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/14",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/15",
+      "label": "activebordertransportmeansNationality",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/15",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/16",
+      "label": "passivebordertransportmeans",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/16",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/17",
+      "label": "passivebordertransportmeansNationality",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/17",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/18",
+      "label": "seal",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/18",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/20",
+      "label": "receptacleidentificationnumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "7/20",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "8/1",
+      "label": "quotaordernumber",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "8/1",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "8/2",
+      "label": "guaranteetype",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "8/2",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "8/3",
+      "label": "guaranteereference",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "8/3",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "8/4",
+      "label": "specificguaranteereference",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "8/4",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "8/5",
+      "label": "natureoftransaction",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "8/5",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "8/6",
+      "label": "statisticalvalue",
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    },
+    {
+      "data_element": "8/6",
+      "label": null,
+      "source_file": "EN/EUCDM/Annex-B/sd1.htm"
+    }
+  ]
+}
