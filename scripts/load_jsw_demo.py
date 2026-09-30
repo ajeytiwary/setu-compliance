@@ -38,7 +38,7 @@ from app.evidence_network import (  # noqa: E402
 )
 
 PORTFOLIO = ROOT / "examples" / "jsw_vijayanagar_demo_portfolio.json"
-EXPORTER = "JSW Steel Limited (demo — synthetic commercial rows)"
+EXPORTER = "JSW Steel Limited (demo, synthetic commercial rows)"
 FACILITY = "Vijayanagar Works, Karnataka, India"
 
 
@@ -50,7 +50,7 @@ def ensure_backbone() -> None:
     for c in integration_catalog()["connectors"]:
         try:
             import_sample(c["code"])
-        except Exception as e:  # noqa: BLE001 — demo loader must keep going
+        except Exception as e:  # noqa: BLE001, demo loader must keep going
             print(f"warn: sample {c['code']} failed: {e}")
 
 
@@ -104,7 +104,7 @@ def inject_supplier_verifier() -> dict:
     import_csv("supplier_cbam", sup_csv, source_name="jsw-demo")
     # Verifier record scoped to the hero shipment only: NL-001 resolves
     # CALCULATED_VERIFIED while DE-002 (same installation, no verifier row)
-    # resolves CALCULATED_UNVERIFIED — the demo's verification contrast.
+    # resolves CALCULATED_UNVERIFIED, the demo's verification contrast.
     ver_csv = (
         "shipment_id,installation_id,reporting_period,verifier,accreditation_ref,status,"
         "started_at,completed_at,findings,statement_ref\n"

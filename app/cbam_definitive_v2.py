@@ -7,7 +7,7 @@ defaults and 2025/2620 benchmarks before a default/FAA entitlement can be assert
 import csv,io,json,os
 from pathlib import Path
 from .cbam_engine import calculate_actual_steel,normalize_cn
-DATA=Path(os.getenv("SETU_CBAM_REFERENCE_DATA","data/cbam"))
+DATA=Path(os.getenv("EUROSETU_CBAM_REFERENCE_DATA","data/cbam"))
 DATA.mkdir(parents=True,exist_ok=True)
 CBAM_FACTOR={2026:0.975,2027:0.95,2028:0.90,2029:0.775,2030:0.515,2031:0.39,2032:0.265,2033:0.14,2034:0.0}
 def _read(name):

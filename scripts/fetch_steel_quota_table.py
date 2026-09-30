@@ -3,19 +3,19 @@
 
 Reproducible end-to-end update pipeline for Regulation (EU) 2026/1457 Annex I:
 
-  1. RESOLVE  — CELEX 32026R1457 -> OJ HTML URL via the Cellar semantic API
+  1. RESOLVE: CELEX 32026R1457 -> OJ HTML URL via the Cellar semantic API
                 (urllib works here; EUR-Lex itself is WAF-blocked)
-  2. FETCH    — the OJ HTML table. EUR-Lex blocks urllib AND headless Chrome
+  2. FETCH: the OJ HTML table. EUR-Lex blocks urllib AND headless Chrome
                 (AWS WAF JS challenge), so this needs a real browser session:
                   a) --browser-json FILE : a JSON file with the table rows
                      (paste the output of scripts/extract_annex_tables.js run in
                      the browser, or the saved data/official/steel-2026-1457-table.json)
                   b) --table-index N     : which table in the JSON to use
                      (default 20 = the main Annex I table, 285x13)
-  3. PARSE    — DOM rows -> per-category dicts (13-cell category rows +
+  3. PARSE: DOM rows -> per-category dicts (13-cell category rows +
                 10-cell country continuation rows)
-  4. BUILD    — one CSV row per (category, cn_code) with India order numbers
-  5. IMPORT   — app.steel_trade_engine_v2.import_categories -> data/eu_steel_categories_full.json
+  4. BUILD: one CSV row per (category, cn_code) with India order numbers
+  5. IMPORT: app.steel_trade_engine_v2.import_categories -> data/eu_steel_categories_full.json
 
 Usage:
     # Resolve the OJ URL for a CELEX number

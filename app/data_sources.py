@@ -5,8 +5,8 @@ from pathlib import Path
 from typing import Any
 from openpyxl import load_workbook
 ROOT=Path(__file__).resolve().parents[1]
-CONFIG=Path(os.getenv("SETU_DATA_SOURCES",ROOT/"config"/"data_sources.json"))
-CACHE=Path(os.getenv("SETU_SOURCE_CACHE",ROOT/"data"/"sources"))
+CONFIG=Path(os.getenv("EUROSETU_DATA_SOURCES",ROOT/"config"/"data_sources.json"))
+CACHE=Path(os.getenv("EUROSETU_SOURCE_CACHE",ROOT/"data"/"sources"))
 @dataclass(frozen=True)
 class Provider:
  dataset:str; id:str; kind:str; authority:str; legal_authority:bool; url:str; enabled:bool=True
@@ -21,7 +21,7 @@ def selected(dataset,provider_id=None):
  if not ps: raise KeyError("No enabled provider for "+dataset)
  return ps[0]
 def fetch(provider:Provider,timeout=60):
- req=urllib.request.Request(provider.url,headers={"User-Agent":"SetuCompliance/0.6"})
+ req=urllib.request.Request(provider.url,headers={"User-Agent":"EuroSetuCompliance/0.6"})
  with urllib.request.urlopen(req,timeout=timeout) as r:return r.read(),dict(r.headers)
 def parse(kind,raw):
  if kind=="xlsx":

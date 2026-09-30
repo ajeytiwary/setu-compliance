@@ -28,13 +28,13 @@ def test_lead_create_verify_and_gated_dashboard():
     token = ok.json()["token"]
     assert token
     # verify
-    v = c.get("/api/leads/verify", headers={"x-setu-lead-token": token})
+    v = c.get("/api/leads/verify", headers={"x-eurosetu-lead-token": token})
     assert v.json()["valid"] is True
     # gated with token
-    d = c.get("/api/market-access/risk-drilldown", headers={"x-setu-lead-token": token})
+    d = c.get("/api/market-access/risk-drilldown", headers={"x-eurosetu-lead-token": token})
     assert d.status_code == 200, d.text
     assert "drilldown" in d.json()
-    dash = c.get("/api/dashboard", headers={"x-setu-lead-token": token})
+    dash = c.get("/api/dashboard", headers={"x-eurosetu-lead-token": token})
     assert dash.status_code == 200
     # returning lead reuses token
     again = c.post("/api/leads", json={

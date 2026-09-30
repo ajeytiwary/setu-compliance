@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Setu — Product demo</title>
-<meta name="description" content="Interactive demo of the Setu market-access control plane. Request access to explore.">
+<title>EuroSetu: Product demo</title>
+<meta name="description" content="Interactive demo of the EuroSetu market-access control plane. Request access to explore.">
 <link rel="stylesheet" href="/demo.css">
 </head>
 <body>
 <nav class="topnav">
-  <a class="brand" href="/">SETU</a>
+  <a class="brand" href="/">EUROSETU</a>
   <div class="navlinks">
     <a href="/">Public site</a>
     <a href="/pilot">Pilot dashboard</a>
@@ -22,7 +22,7 @@
   <div class="gate-card">
     <p class="eyebrow">PRODUCT DEMO · REQUEST ACCESS</p>
     <h1>See the control plane on live data.</h1>
-    <p class="lede">Share your work details and we will unlock the interactive demo — every shipment, every blocker, every euro at risk.</p>
+    <p class="lede">Share your work details to unlock the interactive demo with every shipment, every blocker and every euro at risk.</p>
     <form id="leadForm" novalidate>
       <div class="form-grid">
         <label>Full name<input id="leadName" name="name" autocomplete="name" placeholder="Priya Sharma" required></label>
@@ -46,7 +46,7 @@
       </label>
       <p id="leadError" class="error" role="alert" hidden></p>
       <button type="submit" id="leadSubmit">Unlock the demo →</button>
-      <p class="privacy">We use your details to follow up on the demo. No spam, no list-selling — founder-led outreach only.</p>
+      <p class="privacy">We use your details only to follow up on the demo. No spam and no list selling. Outreach is founder led.</p>
     </form>
   </div>
 </div>
@@ -57,7 +57,7 @@
     <div>
       <p class="eyebrow">INDIA → EU MARKET ACCESS CONTROL PLANE · LIVE DEMO</p>
       <h1>Every order. Every blocker. Every euro.</h1>
-      <p class="lede" id="welcomeLine">Explore the working system below — filter by destination or rule, simulate fixes, raise evidence requests.</p>
+      <p class="lede" id="welcomeLine">Explore the working system below. Filter by destination or rule, simulate fixes and raise evidence requests.</p>
     </div>
     <div class="access-chip" id="accessChip" hidden></div>
   </header>
@@ -86,14 +86,14 @@
   <section class="panel">
     <p class="eyebrow">WHAT-IF</p>
     <h2>Remediation simulator</h2>
-    <p class="muted">Enter a cost next to any blocker and simulate the fix. Setu shows whether the shipment unlocks, the value released and the next blocker — without changing compliance state.</p>
+    <p class="muted">Enter a cost next to any blocker and simulate the fix. EuroSetu shows whether the shipment unlocks, the value released and the next blocker. Simulations never change compliance state.</p>
     <div id="simulation" class="callout muted">No simulation run yet.</div>
   </section>
 
   <section class="panel">
     <p class="eyebrow">ACTION</p>
     <h2>Request evidence</h2>
-    <p class="muted">Pick “Request evidence” on a supplier blocker above, or fill the form directly.</p>
+    <p class="muted">Select Request evidence on a supplier blocker above, or complete the form directly.</p>
     <form id="requestForm">
       <div class="form-grid">
         <label>Shipment ID<input id="shipmentId" placeholder="e.g. JSW-HRC-NL-001" required></label>
@@ -122,8 +122,8 @@
   </section>
 
   <footer>
-    <p><b>Setu</b> — market-access infrastructure for industrial trade.</p>
-    <p class="muted">Engineering assurance infrastructure — not legal advice, legal certification, customs authority acceptance or verifier accreditation.</p>
+    <p><b>EuroSetu:</b> market-access infrastructure for industrial trade.</p>
+    <p class="muted">Engineering assurance infrastructure, not legal advice, legal certification, customs authority acceptance or verifier accreditation.</p>
   </footer>
 </main>
 <script src="/demo.js"></script>

@@ -1,4 +1,4 @@
-# Setu differentiated MVP
+# EuroSetu differentiated MVP
 
 The market-access compiler treats the export transaction as the decision object and evaluates 15 rule families: CBAM, ESPR, DPP, REACH, origin, customs, FTA, buyer requirements, GPP, EPD, certification, sanctions, carbon, packaging and documentation.
 

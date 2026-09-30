@@ -4,8 +4,8 @@ from datetime import datetime,timezone
 from pathlib import Path
 from xml.etree import ElementTree as ET
 from .data_sources import ROOT,registry,selected
-RAW=Path(os.getenv("SETU_RAW_DATA",ROOT/"data"/"raw")); NORMALIZED=Path(os.getenv("SETU_NORMALIZED_DATA",ROOT/"data"/"normalized")); MANIFESTS=Path(os.getenv("SETU_MANIFESTS",ROOT/"data"/"manifests"))
-UA={"User-Agent":"SetuCompliance/0.7 (+regulatory-data-sync)"}
+RAW=Path(os.getenv("EUROSETU_RAW_DATA",ROOT/"data"/"raw")); NORMALIZED=Path(os.getenv("EUROSETU_NORMALIZED_DATA",ROOT/"data"/"normalized")); MANIFESTS=Path(os.getenv("EUROSETU_MANIFESTS",ROOT/"data"/"manifests"))
+UA={"User-Agent":"EuroSetuCompliance/0.7 (+regulatory-data-sync)"}
 BROWSER_UA={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
 # Direct versioned distributions (verified 2026-09-30). Landing pages expose
 # no file links, so resolvers fetch these payloads instead of link-discovery.
@@ -127,7 +127,7 @@ def resolve(dataset):
   return EUCDM_ZIP_URL,"zip",normalize_eucdm
  if dataset=="taric_measures":
   # Prefer configured direct bulk URL, else newest daily delta from the mirror.
-  direct=os.getenv("SETU_TARIC_BULK_URL")
+  direct=os.getenv("EUROSETU_TARIC_BULK_URL")
   if direct:return direct,"zip",normalize_taric
   u,fmt=_taric_latest_delta_asset();return u,fmt,normalize_taric
  raise KeyError(dataset)

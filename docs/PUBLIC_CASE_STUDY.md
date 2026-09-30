@@ -1,7 +1,7 @@
-# JSW Steel Vijayanagar → EU: public-record Setu case study
+# JSW Steel Vijayanagar → EU: public-record EuroSetu case study
 
 ## Scope
-This is an evidence-backed reconstruction, **not** a claim that Setu is deployed by JSW Steel. It uses public records to populate what can be substantiated and leaves confidential fields incomplete.
+This is an evidence-backed reconstruction, **not** a claim that EuroSetu is deployed by JSW Steel. It uses public records to populate what can be substantiated and leaves confidential fields incomplete.
 
 ## Publicly substantiated facts
 - FY2025-26 JSW group export sales were ~2.80 MnT; Europe represented 66.8%. JSW Steel exports included 1.13 MnT HRC.

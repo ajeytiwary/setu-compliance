@@ -33,7 +33,7 @@ MANIFESTS = ROOT / "data" / "manifests"
 
 PARSER_VERSION = "source_resolvers/1.0"
 NORMALIZER_VERSION = "source_normalizers/1.0"
-UA = "SetuCompliance/0.7 (+weekly regulatory sync)"
+UA = "EuroSetuCompliance/0.7 (+weekly regulatory sync)"
 
 
 def _now() -> str:
@@ -303,7 +303,7 @@ def normalize_echa_candidate_csv(text: str) -> list[dict]:
     # (the public mirror preserves this dialect); sniff before parsing so a
     # comma DictReader never collapses a row into a single column.
     # The official export also carries a preamble (export date, filter info)
-    # before the header row — skip rows until the real header is found.
+    # before the header row, skip rows until the real header is found.
     sample = text[:8192]
     try:
         dialect = csv.Sniffer().sniff(sample, delimiters=",\t;")

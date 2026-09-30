@@ -4,12 +4,12 @@ The public-record reconstruction proves company, installation, HRC product, BF/B
 
 ## Minimum private integrations
 
-1. **SAP SD/FI** — EU deliveries, invoices, customer/importer, destination, quantity, value, CN code. Unlocks the value-weighted north-star metric.
-2. **SAP MM** — raw-material receipts/consumption, batches, suppliers, origin and purchase orders.
-3. **MES** — heat → slab → coil genealogy and production quantities.
-4. **EMS/historian** — fuels, process activity and metered observations required by the approved CBAM methodology.
-5. **Supplier CBAM feed** — precursor embedded-emissions communications and verification evidence.
-6. **Verifier feed** — accredited verifier engagement, findings and statement reference.
+1. **SAP SD/FI**, EU deliveries, invoices, customer/importer, destination, quantity, value, CN code. Unlocks the value-weighted north-star metric.
+2. **SAP MM**, raw-material receipts/consumption, batches, suppliers, origin and purchase orders.
+3. **MES**, heat → slab → coil genealogy and production quantities.
+4. **EMS/historian**, fuels, process activity and metered observations required by the approved CBAM methodology.
+5. **Supplier CBAM feed**, precursor embedded-emissions communications and verification evidence.
+6. **Verifier feed**, accredited verifier engagement, findings and statement reference.
 
 CSV contracts are under `connectors/samples/`. Production adapters can use OData/IDoc/API/CDC while preserving the same canonical fields.
 

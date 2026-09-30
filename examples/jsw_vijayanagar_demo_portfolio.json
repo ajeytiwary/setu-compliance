@@ -3,7 +3,7 @@
   "demo_id": "JSW-VIJAYANAGAR-HRC-EU-2026",
   "notice": "All counterparties, invoice values, tonnages and shipment identifiers are synthetic demo rows for JSW Vijayanagar HRC. Regulatory context (CBAM tables, steel safeguard categories 2026/1384 + 2026/1457, EU-India FTA status) must come from configured source snapshots. This demo does NOT claim access to JSW private SAP/MES/EMS or to be deployed by JSW Steel. See docs/PUBLIC_CASE_STUDY.md for publicly substantiated facts.",
   "facility": "Vijayanagar Works, Karnataka, India",
-  "exporter": "JSW Steel Limited (demo — synthetic commercial rows)",
+  "exporter": "JSW Steel Limited (demo, synthetic commercial rows)",
   "production_route": "BF-BOF → continuous casting → hot strip mill (public EPD route; shipment genealogy synthetic)",
   "public_anchors": {
     "epd": "EPD-IES-0005172:001 (Hot Rolled Coils, Vijayanagar, valid to 2031-03-12)",
@@ -37,7 +37,7 @@
       "customs_value_eur": 1220000,
       "batch_id": "BATCH-JSW-HRC-002",
       "demo_scenario": "CBAM_VERIFICATION",
-      "demo_notes": "CBAM actuals calculated but verifier IN_REVIEW — shows CALCULATED_UNVERIFIED vs CALCULATED_VERIFIED."
+      "demo_notes": "CBAM actuals calculated but verifier IN_REVIEW, shows CALCULATED_UNVERIFIED vs CALCULATED_VERIFIED."
     },
     {
       "shipment_ref": "JSW-HRC-IT-003",
@@ -51,7 +51,7 @@
       "customs_value_eur": 820000,
       "batch_id": "BATCH-JSW-HRC-003",
       "demo_scenario": "QUOTA",
-      "demo_notes": "Category 1A safeguard: mapping live, balance QUOTA_BALANCE_REQUIRED — never hallucinated."
+      "demo_notes": "Category 1A safeguard: mapping live, balance QUOTA_BALANCE_REQUIRED, never hallucinated."
     },
     {
       "shipment_ref": "JSW-PLATE-BE-004",
@@ -65,7 +65,7 @@
       "customs_value_eur": 680000,
       "batch_id": "BATCH-JSW-PLATE-004",
       "demo_scenario": "QUOTA",
-      "demo_notes": "Category 7, India order number 09.9856 — country-specific quota path."
+      "demo_notes": "Category 7, India order number 09.9856, country-specific quota path."
     },
     {
       "shipment_ref": "JSW-SS-IT-005",
@@ -79,7 +79,7 @@
       "customs_value_eur": 1050000,
       "batch_id": "BATCH-JSW-SS-005",
       "demo_scenario": "REACH_SVHC",
-      "demo_notes": "Category 8 stainless (order 09.9862). Higher EUR/t — shows value-weighted risk."
+      "demo_notes": "Category 8 stainless (order 09.9862). Higher EUR/t, shows value-weighted risk."
     },
     {
       "shipment_ref": "JSW-HRC-FR-006",
@@ -93,7 +93,7 @@
       "customs_value_eur": 1020000,
       "batch_id": "BATCH-JSW-HRC-006",
       "demo_scenario": "PRECURSOR_EMISSIONS",
-      "demo_notes": "Ferroalloy precursor with VERIFIED supplier evidence vs DEFAULT share — precursor drilldown."
+      "demo_notes": "Ferroalloy precursor with VERIFIED supplier evidence vs DEFAULT share, precursor drilldown."
     },
     {
       "shipment_ref": "JSW-HRC-ES-007",
@@ -107,7 +107,7 @@
       "customs_value_eur": 750000,
       "batch_id": "BATCH-JSW-HRC-007",
       "demo_scenario": "ORIGIN_EVIDENCE",
-      "demo_notes": "FTA preview: technical CTH/MAXNOM pass but CURRENT_MFN — savings never booked before entry into force."
+      "demo_notes": "FTA preview: technical CTH/MAXNOM pass but CURRENT_MFN, savings never booked before entry into force."
     },
     {
       "shipment_ref": "JSW-HRC-PL-008",
@@ -121,7 +121,7 @@
       "customs_value_eur": 550000,
       "batch_id": "BATCH-JSW-HRC-008",
       "demo_scenario": "GENEALOGY",
-      "demo_notes": "Missing heat/slab/coil link — genealogy blocker + supplier evidence request loop."
+      "demo_notes": "Missing heat/slab/coil link, genealogy blocker + supplier evidence request loop."
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Pluggable regulatory and demo data sources
 
-Setu engines consume stable logical dataset IDs, never vendor URLs. `config/data_sources.json` maps each dataset to ordered providers.
+EuroSetu engines consume stable logical dataset IDs, never vendor URLs. `config/data_sources.json` maps each dataset to ordered providers.
 
 Trust classes:
 - LEGAL: authentic legal text; may define binding rules.

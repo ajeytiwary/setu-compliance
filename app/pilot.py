@@ -2,8 +2,8 @@ from __future__ import annotations
 """Pilot operations dashboard backend.
 
 Separate from the customer-facing website (``/``) and the public demo
-(``/demo``). ``/pilot`` is the working view for a live pilot team —
-internal operators plus the pilot customer — tracking the 12-week plan
+(``/demo``). ``/pilot`` is the working view for a live pilot team
+(internal operators plus the pilot customer) tracking the 12-week plan
 (``docs/12_WEEK_PLAN.md``), the six pilot data contracts
 (``docs/PILOT_DATA_CONTRACT.md``), shipment readiness, CBAM
 reproducibility, remediation and regulatory-snapshot provenance.
@@ -53,17 +53,17 @@ PILOT_WEEKS = [
 ]
 
 DATA_CONTRACTS = [
-    {"id": "sap_sd", "label": "SAP SD/FI — EU deliveries, invoices, CN code",
+    {"id": "sap_sd", "label": "SAP SD/FI: EU deliveries, invoices, CN code",
      "connectors": ["sap_sd"], "unlocks": "Value-weighted readiness metric"},
-    {"id": "sap_mm", "label": "SAP MM — receipts, batches, suppliers, origin",
+    {"id": "sap_mm", "label": "SAP MM: receipts, batches, suppliers, origin",
      "connectors": ["sap_mm"], "unlocks": "BOM + origin inputs"},
-    {"id": "mes", "label": "MES — heat → slab → coil genealogy",
+    {"id": "mes", "label": "MES: heat to slab to coil genealogy",
      "connectors": ["mes"], "unlocks": "Genealogy coverage"},
-    {"id": "ems", "label": "EMS/historian — fuels, activity, metered observations",
+    {"id": "ems", "label": "EMS and historian: fuels, activity, metered observations",
      "connectors": ["ems_activity", "scada_ems"], "unlocks": "CBAM methodology inputs"},
-    {"id": "supplier_cbam", "label": "Supplier CBAM feed — precursor emissions + evidence",
+    {"id": "supplier_cbam", "label": "Supplier CBAM feed: precursor emissions and evidence",
      "connectors": ["supplier_cbam"], "unlocks": "Precursor actuals vs defaults"},
-    {"id": "verifier", "label": "Verifier feed — engagement, findings, statement",
+    {"id": "verifier", "label": "Verifier feed: engagement, findings, statement",
      "connectors": ["verifier"], "unlocks": "CALCULATED_VERIFIED status"},
 ]
 
@@ -71,7 +71,7 @@ SCOPE_NOTICE = (
     "Pilot working view for the delivery team and the pilot customer. "
     "Commercial rows are pilot-supplied or synthetic demo data until the pilot "
     "data contract replaces them; regulatory context comes from versioned source "
-    "snapshots. Terminal states are BLOCKED and READY_FOR_SUBMISSION — "
+    "snapshots. Terminal states are BLOCKED and READY_FOR_SUBMISSION, "
     "READY_FOR_SUBMISSION is engineering assurance, not customs acceptance, "
     "CBAM Registry acceptance, legal certification or verifier accreditation."
 )
@@ -143,7 +143,7 @@ def pilot_overview() -> dict:
                 pass
             # Fallback: the AUTO pipeline (app/source_sync.py) writes
             # data/normalized/<ds>/latest.json + data/manifests/<ds>/<sha>.json
-            # without a *-latest.json pointer — read those directly.
+            # without a *-latest.json pointer, read those directly.
             if not _snap:
                 _lp = _norm_root / _k / "latest.json"
                 if _lp.exists():

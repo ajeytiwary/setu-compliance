@@ -2,7 +2,7 @@ from __future__ import annotations
 import json, sqlite3
 from contextlib import contextmanager
 from pathlib import Path
-DB_PATH=Path(__file__).resolve().parents[1]/"data"/"setu.db"
+DB_PATH=Path(__file__).resolve().parents[1]/"data"/"eurosetu.db"
 SCHEMA="""PRAGMA foreign_keys=ON;
 CREATE TABLE IF NOT EXISTS shipments(id TEXT PRIMARY KEY,shipment_no TEXT UNIQUE NOT NULL,exporter TEXT NOT NULL,facility TEXT NOT NULL,importer TEXT NOT NULL,destination_country TEXT NOT NULL,product TEXT NOT NULL,cn_code TEXT NOT NULL,tonnes REAL NOT NULL,value_eur REAL NOT NULL,emissions_method TEXT NOT NULL DEFAULT 'actual',embedded_emissions_tco2e_per_t REAL,supplier_required INTEGER NOT NULL DEFAULT 0,supplier_complete INTEGER NOT NULL DEFAULT 0,manual_hours REAL NOT NULL DEFAULT 0,created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS requirements(id INTEGER PRIMARY KEY AUTOINCREMENT,shipment_id TEXT NOT NULL,code TEXT NOT NULL,label TEXT NOT NULL,category TEXT NOT NULL,blocking INTEGER NOT NULL DEFAULT 1,status TEXT NOT NULL DEFAULT 'MISSING',required_evidence INTEGER NOT NULL DEFAULT 0,evidence_count INTEGER NOT NULL DEFAULT 0,notes TEXT,UNIQUE(shipment_id,code),FOREIGN KEY(shipment_id) REFERENCES shipments(id) ON DELETE CASCADE);

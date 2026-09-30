@@ -52,7 +52,7 @@ SOURCES: dict[str, dict] = {
         "where": "Daily TARIC delta ZIP from the taric-opendata mirror "
                  "(https://github.com/rousseauxy/taric-opendata, newest eu-* TARIC_<date>.zip), "
                  "or export CSV/XML from https://taxation-customs.ec.europa.eu/online-services/online-services-and-databases-customs/eu-customs-tariff-taric_en, "
-                 "then --file it. AUTO path: set SETU_TARIC_BULK_URL or use positional sync.",
+                 "then --file it. AUTO path: set EUROSETU_TARIC_BULK_URL or use positional sync.",
         "filename": "taric-delta.zip", "content_type": "application/zip",
         "authority": "MIRROR", "legal_authority": False, "min_records": 1,
     },
@@ -288,7 +288,7 @@ def sync_dataset(dataset: str, as_of: str | None = None, url: str | None = None,
                 for sib in ("common_types_domain_v9.py", "platform_fields.py"):
                     try:
                         req = _url.Request(base + "/" + sib,
-                                           headers={"User-Agent": "SetuCompliance/0.7 (+weekly regulatory sync)"})
+                                           headers={"User-Agent": "EuroSetuCompliance/0.7 (+weekly regulatory sync)"})
                         with _url.urlopen(req, timeout=90) as _r:
                             files[sib] = _r.read().decode("utf-8", "ignore")
                     except Exception:
@@ -334,7 +334,7 @@ def bridge_to_engines(dataset: str, manifest: dict) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description="Download, hash, normalize and validate Setu regulatory sources")
+    ap = argparse.ArgumentParser(description="Download, hash, normalize and validate EuroSetu regulatory sources")
     ap.add_argument("datasets", nargs="*", default=None,
                     help="AUTO positional datasets (default: 5 pluggable sources via link-discovery)")
     ap.add_argument("--strict", action="store_true", help="exit non-zero if any source fails (CI)")

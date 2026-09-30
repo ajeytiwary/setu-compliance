@@ -1,0 +1,12 @@
+[Unit]
+Description=EuroSetu weekly EU reference-data sync
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/plasmion/git/eurosetu-market-access-mvp-production
+Environment=PYTHONPATH=.
+ExecStart=/home/plasmion/git/eurosetu-market-access-mvp-production/.venv/bin/python scripts/sync_sources.py --all
+StandardOutput=append:/var/log/eurosetu-sync.log
+StandardError=append:/var/log/eurosetu-sync.log

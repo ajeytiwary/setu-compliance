@@ -20,7 +20,7 @@ import re
 import sys
 import urllib.request
 
-UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36 SetuCompliance/0.8"}
+UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36 EuroSetuCompliance/0.8"}
 CELLAR_CELEX = "https://publications.europa.eu/resource/celex/{celex}"
 
 

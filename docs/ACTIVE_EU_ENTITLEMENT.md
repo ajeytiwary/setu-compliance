@@ -1,22 +1,22 @@
-# Active EU compliance entitlement — regulatory data contract
+# Active EU compliance entitlement, regulatory data contract
 
-As of 29 September 2026, Setu treats an entitlement as **active** only when the applicable legal regime is in force and the required dynamic/evidentiary inputs are present.
+As of 29 September 2026, EuroSetu treats an entitlement as **active** only when the applicable legal regime is in force and the required dynamic/evidentiary inputs are present.
 
 ## Active public-law sources
 
-- Regulation (EU) 2026/1384 — EU steel tariff quotas; 18,345,922 t annual total and 50% out-of-quota duty.
-- Implementing Regulation (EU) 2026/1457 — distribution applicable 1 July–31 December 2026. The checked-in public snapshot includes official CN mappings for category 1A and official India quota/order-number examples for categories 7, 8 and 14.
-- Regulation (EU) 2023/956 as amended — definitive CBAM from 1 January 2026.
-- Implementing Regulation (EU) 2025/2547 — definitive embedded-emissions methodology.
-- Implementing Regulation (EU) 2025/2546 and Delegated Regulation (EU) 2025/2551 — verification/reporting and reasonable assurance.
-- Implementing Regulation (EU) 2025/2620 — free-allocation adjustment/benchmarks.
-- Implementing Regulation (EU) 2025/2621 corrected by 2026/1740 — legally binding default values.
+- Regulation (EU) 2026/1384, EU steel tariff quotas; 18,345,922 t annual total and 50% out-of-quota duty.
+- Implementing Regulation (EU) 2026/1457, distribution applicable 1 July–31 December 2026. The checked-in public snapshot includes official CN mappings for category 1A and official India quota/order-number examples for categories 7, 8 and 14.
+- Regulation (EU) 2023/956 as amended, definitive CBAM from 1 January 2026.
+- Implementing Regulation (EU) 2025/2547, definitive embedded-emissions methodology.
+- Implementing Regulation (EU) 2025/2546 and Delegated Regulation (EU) 2025/2551, verification/reporting and reasonable assurance.
+- Implementing Regulation (EU) 2025/2620, free-allocation adjustment/benchmarks.
+- Implementing Regulation (EU) 2025/2621 corrected by 2026/1740, legally binding default values.
 
 Official Commission information files for defaults and benchmarks are intentionally treated as reference-data imports; the regulations remain the legal source of truth.
 
 ## Dynamic public data
 
-Current tariff-quota balances change as customs declarations are allocated. The European Commission QUOTA database publishes current balances. Setu therefore **fails closed** when a balance has not been refreshed: it returns `QUOTA_BALANCE_REQUIRED` instead of assuming quota availability.
+Current tariff-quota balances change as customs declarations are allocated. The European Commission QUOTA database publishes current balances. EuroSetu therefore **fails closed** when a balance has not been refreshed: it returns `QUOTA_BALANCE_REQUIRED` instead of assuming quota availability.
 
 ## EU–India FTA
 

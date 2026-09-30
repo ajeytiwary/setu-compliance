@@ -33,4 +33,4 @@ def compile_shipment(p):
  for b in blockers:
   k=(b.get("engine"),b.get("code"),b.get("document"),b.get("evidence_type"),str(b.get("party")),str(b.get("article")))
   if k not in seen:seen.add(k);ded.append(b)
- return {"version":VERSION,"decision":"READY_FOR_SUBMISSION" if not ded else "BLOCKED","ready_for_submission":not ded,"authority_acceptance":"PENDING" if not ded else "NOT_SUBMITTED","filing_pack":filing,"engines":{**engines,"customs":base},"blockers":ded,"guardrail":"READY_FOR_SUBMISSION means Setu rule/evidence gates pass. Customs/CBAM/verifier acceptance remains external."}
+ return {"version":VERSION,"decision":"READY_FOR_SUBMISSION" if not ded else "BLOCKED","ready_for_submission":not ded,"authority_acceptance":"PENDING" if not ded else "NOT_SUBMITTED","filing_pack":filing,"engines":{**engines,"customs":base},"blockers":ded,"guardrail":"READY_FOR_SUBMISSION means EuroSetu rule/evidence gates pass. Customs/CBAM/verifier acceptance remains external."}

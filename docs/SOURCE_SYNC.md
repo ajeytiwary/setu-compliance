@@ -1,10 +1,10 @@
-# Source Sync — Auto + Weekly + Manual Refresh
+# Source Sync, Auto + Weekly + Manual Refresh
 
 Upstream EU reference data is **materialized**, not stubbed. Two complementary
 pipelines share one CLI (`scripts/sync_sources.py`), both fail-closed, both
 write hashed versioned snapshots, and engines consume **normalized only**.
 
-## Auto (CI-safe, link-discovery) — 5 pluggable sources
+## Auto (CI-safe, link-discovery), 5 pluggable sources
 
 ```bash
 python scripts/sync_sources.py                       # 5 auto sources (positional default)
@@ -24,18 +24,18 @@ browser-downloaded official ZIP can still be ingested via `--file`). Layout: `da
 commits validated snapshots. CI (`.github/workflows/ci.yml`) enforces populated
 live snapshots via `scripts/sync_live_sources.py` probes.
 
-## Weekly + Manual (versioned) — all 11 registry datasets
+## Weekly + Manual (versioned), all 11 registry datasets
 
 Every dataset lands in `data/raw/<dataset>/<YYYY-MM-DD>-<sha8>/`, normalizes into
 `data/normalized/<dataset>/<version>/normalized.json`, and gets a manifest with
 `dataset_id, provider_id, source_url, retrieved_at, effective_from/effective_to,
 SHA256, content_type, record_count, authority, legal_authority, parser_version,
-normalizer_version`. Engines consume **normalized only** — never raw Excel/XML.
+normalizer_version`. Engines consume **normalized only**, never raw Excel/XML.
 Raw/normalized/manifests are gitignored (re-downloadable); the checked-in legal
 snapshot `data/eu_steel_measure_2026.json` stays authoritative for steel until a
 full 26-category 2026/1457 table is imported.
 
-## Steel quota table (2026/1457 Annex I) — reproducible update
+## Steel quota table (2026/1457 Annex I), reproducible update
 
 The full 30-category / 337-CN-code table is now checked in at
 `data/eu_steel_categories_full.json` (tracked). Updating it when the EU
@@ -68,13 +68,13 @@ The pipeline is guarded by `tests/test_regulatory_content.py`:
 ## Weekly (automatic)
 
 ```bash
-# systemd (server) — Mondays 03:00 UTC, ±30 min jitter
-sudo cp deploy/setu-sync.{service,timer} /etc/systemd/system/
-sudo systemctl daemon-reload && sudo systemctl enable --now setu-sync.timer
-systemctl list-timers setu-sync.timer   # verify
+# systemd (server), Mondays 03:00 UTC, ±30 min jitter
+sudo cp deploy/eurosetu-sync.{service,timer} /etc/systemd/system/
+sudo systemctl daemon-reload && sudo systemctl enable --now eurosetu-sync.timer
+systemctl list-timers eurosetu-sync.timer   # verify
 
 # cron fallback (any box)
-0 3 * * 1 cd /home/plasmion/git/setu-market-access-mvp-production && PYTHONPATH=. .venv/bin/python scripts/sync_sources.py --all >>/var/log/setu-sync.log 2>&1
+0 3 * * 1 cd /home/plasmion/git/eurosetu-market-access-mvp-production && PYTHONPATH=. .venv/bin/python scripts/sync_sources.py --all >>/var/log/eurosetu-sync.log 2>&1
 ```
 
 `--all` syncs every dataset, writes `data/manifests/_sync_report.json`, and
@@ -100,7 +100,7 @@ workaround** instead of silently publishing nothing.
 
 | Dataset | Auto-download | Manual path |
 |---|---|---|
-| TARIC measures | ✅ daily delta ZIP from taric-opendata mirror releases API (or `SETU_TARIC_BULK_URL`) | Export CSV/XML from TARIC consultation → `--file` |
+| TARIC measures | ✅ daily delta ZIP from taric-opendata mirror releases API (or `EUROSETU_TARIC_BULK_URL`) | Export CSV/XML from TARIC consultation → `--file` |
 | Quota balances | ❌ (consultation export) | Export CSV from QUOTA database → `--file` (daily) |
 | EUCDM Annex B / code lists | ✅ HTML distribution ZIP (272 D.E.s incl. 1/1, 2/3, 3/1) | Download .xlsx → `--file` |
 | Steel 2026/1457 | ⚠️ EUR-Lex TXT often empty via urllib | Falls back to checked-in legal snapshot; full table via `--file` |
@@ -121,7 +121,7 @@ GET  /api/data-sources                     # status now includes "manifest" per 
 
 ## Failure semantics (demo-safe)
 
-- Landing pages are **never parsed as truth** — the pipeline raises with a
+- Landing pages are **never parsed as truth**, the pipeline raises with a
   `where to click` message instead of inventing rows.
 - Empty parses (e.g. landing-page HTML fed as TARIC XML) yield zero records and
   **refuse publication** (`RECORD_COUNT_BELOW_MINIMUM`).

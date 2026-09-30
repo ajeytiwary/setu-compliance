@@ -1,15 +1,15 @@
-/* Setu lead-gated demo — designer pass.
-   Gate: POST /api/leads -> localStorage token -> x-setu-lead-token header.
+/* EuroSetu lead-gated demo, designer pass.
+   Gate: POST /api/leads -> localStorage token -> x-eurosetu-lead-token header.
    Display: KPI cards, drilldown filters, simulator, evidence form, queue. */
 const eur = n => new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n || 0);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m]));
 const pct = (n, d) => d ? Math.round(100 * n / d) : 0;
-const TOKEN_KEY = "setu_lead_token";
+const TOKEN_KEY = "eurosetu_lead_token";
 let riskData = null;
 let filter = { country: null, rule: null };
 
 const token = () => localStorage.getItem(TOKEN_KEY) || "";
-const authHeaders = (extra = {}) => ({ ...extra, "x-setu-lead-token": token() });
+const authHeaders = (extra = {}) => ({ ...extra, "x-eurosetu-lead-token": token() });
 async function api(path, opts = {}) {
   const res = await fetch(path, { ...opts, headers: authHeaders({ "Content-Type": "application/json", ...(opts.headers || {}) }) });
   if (res.status === 403) { showGate(); throw new Error("forbidden"); }
@@ -28,7 +28,7 @@ function showDemo(name, company) {
     chip.hidden = false;
     chip.textContent = "Access: " + name + (company ? " · " + company : "");
     document.querySelector("#welcomeLine").textContent =
-      "Welcome, " + name + " — explore the working system below. Filter by destination or rule, simulate fixes, raise evidence requests.";
+      "Welcome, " + name + ". Explore the working system below. Filter by destination or rule, simulate fixes and raise evidence requests.";
   }
 }
 
@@ -37,7 +37,7 @@ function renderRisk() {
   document.querySelector("#kpis").innerHTML = [
     ["EU order book", eur(m.eu_order_book_eur), "total EU-bound value"],
     ["Market ready", eur(m.market_ready_value_eur), (m.market_ready_value_pct ?? 0) + "% of book"],
-    ["Revenue at risk", eur(m.revenue_at_risk_eur), "blocked by evidence/rules"],
+    ["Revenue at risk", eur(m.revenue_at_risk_eur), "blocked by missing evidence or unmet rules"],
     ["Ready", (m.market_ready_value_pct ?? 0) + "%", "share of value shippable"],
   ].map((x, i) =>
     '<div class="card' + (i === 2 ? " danger" : i === 1 ? " accent" : "") + '"><div class="label">' + x[0] +
@@ -114,8 +114,8 @@ async function simulate(shipment, rule) {
     (s.after.market_ready ? "Shipment becomes market-ready" : "Shipment remains blocked") + "</div>" +
     "<div>Revenue unlocked: <b>" + eur(s.after.revenue_unlocked_eur) + "</b> · remediation cost: " +
     eur(s.after.estimated_remediation_cost_eur) + " · net value unlocked: <b>" + eur(s.after.net_value_unlocked_eur) + "</b></div>" +
-    '<div class="muted">' + (s.after.next_blocker ? "Next blocker: " + esc(s.after.next_blocker.code) + " — " + esc(s.after.next_blocker.label) : "No remaining blocking requirements.") + "</div>" +
-    '<div class="muted">What-if only — no compliance state was changed.</div>';
+    '<div class="muted">' + (s.after.next_blocker ? "Next blocker: " + esc(s.after.next_blocker.code) + ", " + esc(s.after.next_blocker.label) : "No remaining blocking requirements.") + "</div>" +
+    '<div class="muted">What-if only, no compliance state was changed.</div>';
 }
 
 async function loadRemediation() {
@@ -204,7 +204,7 @@ document.querySelector("#requestForm").addEventListener("submit", async e => {
   const t = token();
   if (!t) { showGate(); return; }
   try {
-    const res = await fetch("/api/leads/verify", { headers: { "x-setu-lead-token": t } });
+    const res = await fetch("/api/leads/verify", { headers: { "x-eurosetu-lead-token": t } });
     const out = await res.json();
     if (!out.valid) { localStorage.removeItem(TOKEN_KEY); showGate(); return; }
     showDemo(out.name, out.company);

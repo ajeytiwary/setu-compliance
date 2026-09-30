@@ -3,37 +3,38 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Setu Pilot Operations Dashboard</title>
-<link rel="stylesheet" href="/styles.css">
+<title>EuroSetu Pilot Operations Dashboard</title>
+<link rel="stylesheet" href="/demo.css">
 <style>
-.pilot-banner{background:#161d08;border:1px solid #7ee787;border-radius:12px;padding:14px 18px;margin:18px 0}
-.pilot-banner b{color:#7ee787}
-.topnav{display:flex;align-items:center;gap:18px;padding:14px 0}
-.topnav .brand{font-weight:800;letter-spacing:.08em}
-.topnav nav{margin-left:auto;display:flex;gap:14px}
-.topnav a{color:#aab6c3;text-decoration:none;font-size:14px}
-.topnav a.active{color:#7ee787;font-weight:700}
-button.simulate{background:#1f6feb;border-color:#388bfd;font-weight:600;margin-top:8px}
-button.simulate:hover{background:#388bfd}
+/* Pilot-only additions on top of the shared light system (demo.css). */
+.pilot-banner{background:#eef7e4;border:1px solid #bfe3b4;border-radius:12px;padding:14px 18px;margin:18px 0}
+.pilot-banner b{color:var(--green)}
+.topnav .brand{letter-spacing:.18em}
+.topnav .navlinks a.active{font-weight:800;color:var(--green)}
 .cols{columns:2;column-gap:22px}
 @media(max-width:800px){.cols{columns:1}}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:11px;font-weight:700;margin:3px 4px 3px 0;background:var(--cream)}
+.pill.good{color:var(--green);border-color:#bfe3b4;background:#e9f7e4}
+.pill.bad{color:var(--red);border-color:#f0c4bd;background:#fdecea}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0}
+.grid .card .value{font-size:clamp(20px,1.9vw,26px);font-weight:800;margin-top:6px;white-space:nowrap;overflow-wrap:normal}
 </style>
 </head>
 <body>
 <main>
-<div class="topnav"><span class="brand">SETU · PILOT</span><nav><a href="/">Public site</a><a href="/demo">Demo</a><a class="active" href="/pilot">Pilot dashboard</a></nav></div>
-<header><p class="eyebrow">PILOT OPERATIONS — INTERNAL + PILOT CUSTOMER</p><h1>Pilot control dashboard</h1>
-<p class="lede">Live tracking for the 12-week steelmaker pilot: plan progress, data-contract coverage, shipment readiness, CBAM reproducibility, remediation and regulatory provenance. Read-only signals — never certifications.</p></header>
-<div class="pilot-banner"><b>Boundary. </b><span id="scope-line">Loading pilot scope…</span></div>
+<nav class="topnav"><a class="brand" href="/">EUROSETU</a><div class="navlinks"><a href="/">Public site</a><a href="/demo">Demo</a><a class="active" href="/pilot">Pilot dashboard</a><span class="demo-badge">Pilot</span></div></nav>
+<header><p class="eyebrow">PILOT OPERATIONS, INTERNAL + PILOT CUSTOMER</p><h1>Pilot control dashboard</h1>
+<p class="lede">Live tracking for the 12-week steelmaker pilot. Covers plan progress, data contract coverage, shipment readiness, CBAM reproducibility, remediation and regulatory provenance. Signals are read only and are never certifications.</p></header>
+<div class="pilot-banner"><b>Boundary: </b><span id="scope-line">Loading pilot scope…</span></div>
 <section class="panel"><h2>Pilot KPIs</h2><div id="kpis" class="grid"><div class="muted">Loading…</div></div></section>
 <section class="panel"><h2>12-week plan</h2><div id="weeks"><div class="muted">Loading…</div></div></section>
-<section class="panel"><h2>Data-contract coverage</h2><p class="muted">The six pilot feeds from docs/PILOT_DATA_CONTRACT.md. CONNECTED_ROWS means canonical rows exist; SAMPLE_ONLY means only connector samples so far.</p><div id="contracts"><div class="muted">Loading…</div></div></section>
+<section class="panel"><h2>Data-contract coverage</h2><p class="muted">The six pilot feeds from docs/PILOT_DATA_CONTRACT.md. CONNECTED_ROWS means canonical rows exist. SAMPLE_ONLY means only connector samples exist so far.</p><div id="contracts"><div class="muted">Loading…</div></div></section>
 <section class="panel"><h2>Shipment readiness</h2><div id="shipments"><div class="muted">Loading…</div></div></section>
 <section class="panel"><h2>CBAM reproducibility</h2><div id="cbam"><div class="muted">Loading…</div></div></section>
 <section class="panel"><h2>Remediation queue</h2><div id="remediation"><div class="muted">Loading…</div></div></section>
 <section class="panel"><h2>Regulatory snapshots</h2><div id="regulatory"><div class="muted">Loading…</div></div></section>
 <section class="panel"><h2>Recent audit trail</h2><div id="audit"><div class="muted">Loading…</div></div></section>
-<footer>Engineering assurance infrastructure — not legal certification, customs acceptance, CBAM Registry acceptance or verifier accreditation.</footer>
+<footer>Engineering assurance infrastructure, not legal certification, customs acceptance, CBAM Registry acceptance or verifier accreditation.</footer>
 </main>
 <script src="/pilot.js"></script>
 </body>

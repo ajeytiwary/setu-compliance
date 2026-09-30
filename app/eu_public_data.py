@@ -9,7 +9,7 @@ import csv,hashlib,io,json,os
 from datetime import date,datetime,timezone
 from pathlib import Path
 from urllib.request import Request,urlopen
-CACHE=Path(os.getenv("SETU_REGULATORY_CACHE","data/cache"))
+CACHE=Path(os.getenv("EUROSETU_REGULATORY_CACHE","data/cache"))
 TARIC_OFFICIAL="https://taxation-customs.ec.europa.eu/online-services/online-services-and-databases-customs/eu-customs-tariff-taric_en"
 QUOTA_OFFICIAL="https://taxation-customs.ec.europa.eu/customs/common-customs-tariff-cct/tariff-quotas_en"
 def _now():return datetime.now(timezone.utc).isoformat()
@@ -17,7 +17,7 @@ def _hash(b):return hashlib.sha256(b).hexdigest()
 def _write(name,obj):
  CACHE.mkdir(parents=True,exist_ok=True); p=CACHE/name; p.write_text(json.dumps(obj,indent=2,sort_keys=True)); return str(p)
 def _fetch(url):
- req=Request(url,headers={"User-Agent":"SetuCompliance/0.3 (+EU regulatory data sync)"})
+ req=Request(url,headers={"User-Agent":"EuroSetuCompliance/0.3 (+EU regulatory data sync)"})
  with urlopen(req,timeout=30) as r:return r.read()
 def normalize_quota(rows,as_of=None):
  out=[]

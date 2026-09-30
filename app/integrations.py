@@ -11,20 +11,20 @@ ROOT=Path(__file__).resolve().parents[1]; SAMPLE_DIR=ROOT/"connectors"/"samples"
 class ConnectorSpec:
  code:str; label:str; sample:str; required:tuple[str,...]; canonical_type:str; mode:str="CSV/API"; env_url:str|None=None
 CONNECTORS={
-"sap_sd":ConnectorSpec("sap_sd","SAP SD/FI","sap_sd.csv",("shipment_id","sales_order","delivery_id","invoice_id","destination_country","material_id","quantity_t","invoice_value_eur","currency","cn_code"),"shipment",env_url="SETU_SAP_SD_URL"),
-"sap_mm":ConnectorSpec("sap_mm","SAP MM/PP","sap_mm.csv",("material_document","posting_date","material_id","batch_id","supplier_id","quantity","unit","plant","country_of_origin"),"material_movement",env_url="SETU_SAP_MM_URL"),
-"oracle_erp":ConnectorSpec("oracle_erp","Oracle ERP","oracle_erp.csv",("shipment_id","order_no","invoice_no","customer","destination","value_eur","material"),"shipment_finance",env_url="SETU_ORACLE_ERP_URL"),
+"sap_sd":ConnectorSpec("sap_sd","SAP SD/FI","sap_sd.csv",("shipment_id","sales_order","delivery_id","invoice_id","destination_country","material_id","quantity_t","invoice_value_eur","currency","cn_code"),"shipment",env_url="EUROSETU_SAP_SD_URL"),
+"sap_mm":ConnectorSpec("sap_mm","SAP MM/PP","sap_mm.csv",("material_document","posting_date","material_id","batch_id","supplier_id","quantity","unit","plant","country_of_origin"),"material_movement",env_url="EUROSETU_SAP_MM_URL"),
+"oracle_erp":ConnectorSpec("oracle_erp","Oracle ERP","oracle_erp.csv",("shipment_id","order_no","invoice_no","customer","destination","value_eur","material"),"shipment_finance",env_url="EUROSETU_ORACLE_ERP_URL"),
 "tally":ConnectorSpec("tally","Tally","tally_export.csv",("shipment_id","ledger","invoice_no","party","value","currency"),"shipment_finance"),
-"mes":ConnectorSpec("mes","MES genealogy","mes_genealogy.csv",("event_time","plant","process","parent_type","parent_id","child_type","child_id","quantity_t","production_line"),"genealogy",env_url="SETU_MES_URL"),
-"scada_ems":ConnectorSpec("scada_ems","SCADA / EMS","scada_ems.csv",("facility","meter_id","activity","timestamp","quantity","unit","quality"),"activity",env_url="SETU_SCADA_URL"),
-"ems_activity":ConnectorSpec("ems_activity","Environmental activity ledger","ems_activity.csv",("timestamp","installation","production_process","source_id","activity_type","quantity","unit","measurement_method","quality_flag"),"activity",env_url="SETU_EMS_URL"),
-"lims":ConnectorSpec("lims","LIMS","lims.csv",("coil_id","test_id","standard","chemistry_status","mechanical_status","certificate_ref"),"quality",env_url="SETU_LIMS_URL"),
+"mes":ConnectorSpec("mes","MES genealogy","mes_genealogy.csv",("event_time","plant","process","parent_type","parent_id","child_type","child_id","quantity_t","production_line"),"genealogy",env_url="EUROSETU_MES_URL"),
+"scada_ems":ConnectorSpec("scada_ems","SCADA / EMS","scada_ems.csv",("facility","meter_id","activity","timestamp","quantity","unit","quality"),"activity",env_url="EUROSETU_SCADA_URL"),
+"ems_activity":ConnectorSpec("ems_activity","Environmental activity ledger","ems_activity.csv",("timestamp","installation","production_process","source_id","activity_type","quantity","unit","measurement_method","quality_flag"),"activity",env_url="EUROSETU_EMS_URL"),
+"lims":ConnectorSpec("lims","LIMS","lims.csv",("coil_id","test_id","standard","chemistry_status","mechanical_status","certificate_ref"),"quality",env_url="EUROSETU_LIMS_URL"),
 "gst":ConnectorSpec("gst","GST invoice","gst_invoice.csv",("shipment_id","gstin","invoice_no","invoice_date","taxable_value","currency"),"trade_document"),
 "dgft_coo":ConnectorSpec("dgft_coo","DGFT / Certificate of Origin","dgft_coo.csv",("shipment_id","iec","agreement","origin_rule","qualification_status","coo_number","issue_date"),"trade_document"),
 "icegate":ConnectorSpec("icegate","ICEGATE shipping bill","icegate_shipping_bill.csv",("shipment_id","shipping_bill_no","shipping_bill_date","port","hs_code","invoice_value","currency","destination"),"trade_document"),
 "supplier_cbam":ConnectorSpec("supplier_cbam","Supplier CBAM","supplier_cbam.csv",("supplier_id","installation_id","precursor_cn","precursor_name","period_start","period_end","specific_embedded_emissions","unit","verification_status","evidence_ref"),"supplier_evidence"),
-"verifier":ConnectorSpec("verifier","Verifier / Lab","verifier.csv",("installation_id","reporting_period","verifier","accreditation_ref","status","started_at","findings","statement_ref"),"verification",env_url="SETU_VERIFIER_URL"),
-"logistics":ConnectorSpec("logistics","Logistics / Bill of Lading","logistics.csv",("shipment_id","container_no","bill_of_lading","port_of_loading","port_of_discharge","departure_date","status"),"trade_document",env_url="SETU_LOGISTICS_URL")}
+"verifier":ConnectorSpec("verifier","Verifier / Lab","verifier.csv",("installation_id","reporting_period","verifier","accreditation_ref","status","started_at","findings","statement_ref"),"verification",env_url="EUROSETU_VERIFIER_URL"),
+"logistics":ConnectorSpec("logistics","Logistics / Bill of Lading","logistics.csv",("shipment_id","container_no","bill_of_lading","port_of_loading","port_of_discharge","departure_date","status"),"trade_document",env_url="EUROSETU_LOGISTICS_URL")}
 def _now():return datetime.now(timezone.utc).isoformat()
 def _float(v):
  if v in (None,""):return None

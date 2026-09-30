@@ -4,7 +4,7 @@ from datetime import datetime,timezone
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"data"/"normalized"
-UA={"User-Agent":"Mozilla/5.0 SetuCompliance/0.8"}
+UA={"User-Agent":"Mozilla/5.0 EuroSetuCompliance/0.8"}
 BROWSER_UA={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
 TARIC_RELEASES_API="https://api.github.com/repos/rousseauxy/taric-opendata/releases"
 EUCDM_ZIP_URL="https://eucdm.softdev.eu.com/EUCDM/Download/EUCDM-HTML_v7p0p11_2026-08-19.zip"

@@ -9,7 +9,7 @@ DEFAULT_URL=selected("cbam_defaults").url
 BENCHMARK_URL=selected("cbam_benchmarks").url
 STEEL_URL=selected("steel_2026_1457").url
 def fetch(url):
- req=urllib.request.Request(url,headers={"User-Agent":"SetuCompliance/0.5"});return urllib.request.urlopen(req,timeout=60).read()
+ req=urllib.request.Request(url,headers={"User-Agent":"EuroSetuCompliance/0.5"});return urllib.request.urlopen(req,timeout=60).read()
 def xlsx_rows(raw):
  wb=load_workbook(io.BytesIO(raw),data_only=True,read_only=True);out=[];seen=set()
  for ws in wb.worksheets:

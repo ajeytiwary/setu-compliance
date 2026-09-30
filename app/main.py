@@ -10,7 +10,7 @@ from .db import init_db,connect,rows,row,audit
 from .metrics import shipment_score,portfolio_metrics
 from .rules import STEEL_EU_RULES,initial_status
 from .seed import seed_if_empty
-app=FastAPI(title="Setu EU Market Access OS",version="0.2.0")
+app=FastAPI(title="EuroSetu EU Market Access OS",version="0.2.0")
 STATIC=Path(__file__).parent/"static"
 class ShipmentIn(BaseModel):
  shipment_no:str; exporter:str="Indian steel exporter"; facility:str; importer:str; destination_country:str; product:str="Hot Rolled Coil"; cn_code:str="7208"; tonnes:float=Field(gt=0); value_eur:float=Field(gt=0); emissions_method:str="actual"; embedded_emissions_tco2e_per_t:float|None=None; supplier_required:int=0; supplier_complete:int=0; manual_hours:float=0
@@ -39,7 +39,7 @@ class LeadIn(BaseModel):
  name:str; work_email:str; company:str; role:str|None=None; message:str|None=None
 EMAIL_RE=re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 def require_lead(request:Request):
- token=request.headers.get("x-setu-lead-token") or request.query_params.get("lead_token")
+ token=request.headers.get("x-eurosetu-lead-token") or request.query_params.get("lead_token")
  if not token:raise HTTPException(403,"Demo access requires the contact form (POST /api/leads) first")
  with connect() as conn:
   hit=row(conn,"SELECT id FROM leads WHERE token=?",(token,))
@@ -58,7 +58,7 @@ def detailed(conn,s):
 @app.get("/",response_class=HTMLResponse)
 def home():
  p=STATIC/"index.html"
- return FileResponse(p) if p.exists() else HTMLResponse("<h1>Setu</h1>")
+ return FileResponse(p) if p.exists() else HTMLResponse("<h1>EuroSetu</h1>")
 @app.get("/demo",response_class=HTMLResponse)
 def demo():
  p=STATIC/"demo.html"
@@ -137,7 +137,7 @@ def dpp(shipment_id):
  with connect() as conn:
   s=find_shipment(conn,shipment_id)
   if not s:raise HTTPException(404,"shipment not found")
-  d=detailed(conn,s); return {"@context":["https://schema.org/"],"passport":{"id":f"urn:setu:dpp:{s['id']}","status":"MVP_READINESS","schemaVersion":"steel-v0.1"},"product":{"uniqueProductIdentifier":s["shipment_no"],"name":s["product"],"commodityCode":s["cn_code"],"manufacturer":s["exporter"],"facility":s["facility"],"massTonnes":s["tonnes"]},"environment":{"embeddedEmissions":{"value":s["embedded_emissions_tco2e_per_t"],"unit":"tCO2e/t"}},"compliance":{"autoReady":d["score"]["auto_ready"],"readinessScore":d["score"]["readiness_score"],"blockers":d["score"]["blockers"]},"notice":"MVP readiness payload; final steel ESPR fields remain versioned/configurable."}
+  d=detailed(conn,s); return {"@context":["https://schema.org/"],"passport":{"id":f"urn:eurosetu:dpp:{s['id']}","status":"MVP_READINESS","schemaVersion":"steel-v0.1"},"product":{"uniqueProductIdentifier":s["shipment_no"],"name":s["product"],"commodityCode":s["cn_code"],"manufacturer":s["exporter"],"facility":s["facility"],"massTonnes":s["tonnes"]},"environment":{"embeddedEmissions":{"value":s["embedded_emissions_tco2e_per_t"],"unit":"tCO2e/t"}},"compliance":{"autoReady":d["score"]["auto_ready"],"readinessScore":d["score"]["readiness_score"],"blockers":d["score"]["blockers"]},"notice":"MVP readiness payload; final steel ESPR fields remain versioned/configurable."}
 @app.get("/api/market-access/order-book")
 def market_access_order_book(request:Request):
  require_lead(request)

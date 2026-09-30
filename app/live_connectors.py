@@ -17,7 +17,7 @@ def http_json(url:str,headers=None)->Any:
     with urllib.request.urlopen(req,timeout=60) as r:return json.loads(r.read().decode())
 
 def sap_odata_pull(connector:str,url:str|None=None)->dict[str,Any]:
-    prefix="SETU_"+connector.upper(); endpoint=url or os.getenv(prefix+"_URL")
+    prefix="EUROSETU_"+connector.upper(); endpoint=url or os.getenv(prefix+"_URL")
     if not endpoint:raise ValueError(f"{prefix}_URL is not configured")
     fmap=json.loads(os.getenv(prefix+"_FIELD_MAP","{}")); records=[]; next_url=endpoint
     while next_url:
@@ -37,13 +37,13 @@ def generic_rest_pull(connector:str,prefix:str,collection_key:str)->dict[str,Any
     for rec in records:w.writerow({f:rec.get(fmap.get(f,f),"") for f in spec.required})
     return import_csv(connector,out.getvalue(),source_name=f"{prefix}_API:{endpoint}")
 
-def generic_mes_pull():return generic_rest_pull("mes","SETU_MES","events")
-def generic_ems_pull():return generic_rest_pull("ems_activity","SETU_EMS","measurements")
+def generic_mes_pull():return generic_rest_pull("mes","EUROSETU_MES","events")
+def generic_ems_pull():return generic_rest_pull("ems_activity","EUROSETU_EMS","measurements")
 
 DAEWOO_UCI_URL="https://archive.ics.uci.edu/static/public/851/steel+industry+energy+consumption.zip"
 DAEWOO_UCI_DOI="10.24432/C52G8C"
 def sync_daewoo_public_ems(max_rows:int|None=None)->dict[str,Any]:
-    req=urllib.request.Request(DAEWOO_UCI_URL,headers={"User-Agent":"Setu-Market-Access-OS/0.2"})
+    req=urllib.request.Request(DAEWOO_UCI_URL,headers={"User-Agent":"EuroSetu-Market-Access-OS/0.2"})
     with urllib.request.urlopen(req,timeout=60) as r:blob=r.read()
     z=zipfile.ZipFile(io.BytesIO(blob)); names=[n for n in z.namelist() if n.lower().endswith(".csv")]
     reader=csv.DictReader(io.StringIO(z.read(names[0]).decode(errors="replace"))); out=io.StringIO(); spec=CONNECTORS["scada_ems"]; w=csv.DictWriter(out,fieldnames=list(spec.required)); w.writeheader(); n=0
@@ -56,7 +56,7 @@ def sync_daewoo_public_ems(max_rows:int|None=None)->dict[str,Any]:
 
 def connection_status():
     items=[]
-    for code,prefix in [("sap_sd","SETU_SAP_SD"),("sap_mm","SETU_SAP_MM"),("mes","SETU_MES"),("ems_activity","SETU_EMS")]:
+    for code,prefix in [("sap_sd","EUROSETU_SAP_SD"),("sap_mm","EUROSETU_SAP_MM"),("mes","EUROSETU_MES"),("ems_activity","EUROSETU_EMS")]:
         items.append({"connector":code,"url_configured":bool(os.getenv(prefix+"_URL")),"auth_configured":bool(os.getenv(prefix+"_BEARER_TOKEN") or (os.getenv(prefix+"_USER") and os.getenv(prefix+"_PASSWORD"))),"mode":"LIVE_HTTP"})
     items.append({"connector":"daewoo_public_ems","url_configured":True,"auth_configured":True,"mode":"PUBLIC_UCI","source":DAEWOO_UCI_DOI})
     return items
