@@ -27,6 +27,8 @@ class SupplierLinkIn(BaseModel):shipment_id:str; material:str|None=None; quantit
 class SupplierEvidenceIn(BaseModel):evidence_type:str; content:str; status:str=Field(pattern="^(PENDING|VERIFIED|REJECTED)$"); issuer:str|None=None; verifier:str|None=None; valid_until:str|None=None; source_ref:str|None=None; metadata:dict|None=None
 class EvidenceRequestIn(BaseModel):shipment_id:str; supplier_id:str; requirement_code:str="SUPPLIER_DATA"; evidence_type:str; owner:str; due_date:str|None=None; message:str|None=None
 class EvidenceResolveIn(BaseModel):evidence_id:str
+class SupplierEvidenceSubmitIn(BaseModel):evidence_type:str; content:str; issuer:str|None=None; source_ref:str|None=None
+class SupplierEvidenceVerifyIn(BaseModel):verifier:str
 class RemediationSimulationIn(BaseModel):requirement_code:str; estimated_cost_eur:float=Field(default=0,ge=0)
 class ActiveEntitlementIn(BaseModel):payload:dict
 class CBAMVerificationReportIn(BaseModel):payload:dict
@@ -96,6 +98,31 @@ def pilot_js():return FileResponse(STATIC/"pilot.js",media_type="application/jav
 def pilot_overview():
  from .pilot import pilot_overview as _overview
  return _overview()
+@app.post("/api/pilot/shipments/{shipment_id}/simulate-remediation")
+def pilot_simulate_remediation(shipment_id,x:RemediationSimulationIn):
+ from .risk_drilldown import simulate_remediation
+ try:return simulate_remediation(shipment_id,x.requirement_code,x.estimated_cost_eur)
+ except ValueError as e:raise HTTPException(422,str(e))
+@app.post("/api/pilot/remediation/requests",status_code=201)
+def pilot_remediation_create(x:EvidenceRequestIn):
+ from .evidence_network import create_request
+ try:return create_request(**x.model_dump())
+ except ValueError as e:raise HTTPException(422,str(e))
+@app.post("/api/pilot/suppliers/{supplier_id}/evidence",status_code=201)
+def pilot_evidence_submit(supplier_id,x:SupplierEvidenceSubmitIn):
+ from .evidence_network import add_supplier_evidence
+ try:return add_supplier_evidence(supplier_id,evidence_type=x.evidence_type,content=x.content,issuer=x.issuer,source_ref=x.source_ref)
+ except ValueError as e:raise HTTPException(422,str(e))
+@app.post("/api/pilot/evidence/{evidence_id}/verify")
+def pilot_evidence_verify(evidence_id,x:SupplierEvidenceVerifyIn):
+ from .evidence_network import verify_supplier_evidence
+ try:return verify_supplier_evidence(evidence_id,x.verifier)
+ except ValueError as e:raise HTTPException(422,str(e))
+@app.post("/api/pilot/remediation/requests/{request_id}/resolve")
+def pilot_remediation_resolve(request_id,x:EvidenceResolveIn):
+ from .evidence_network import resolve_request
+ try:return resolve_request(request_id,x.evidence_id)
+ except ValueError as e:raise HTTPException(422,str(e))
 @app.get("/app.js")
 def js():return FileResponse(STATIC/"app.js",media_type="application/javascript")
 @app.get("/styles.css")

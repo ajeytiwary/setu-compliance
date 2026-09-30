@@ -24,3 +24,12 @@ def test_simulation_unlocks_only_when_last_blocker_is_fixed():
  with connect() as c:
   status=c.execute("SELECT status FROM requirements WHERE shipment_id=? AND code='GENEALOGY'",(sid,)).fetchone()[0]
  assert status=="MISSING"
+def test_simulation_includes_verbose_proposed_solution():
+ init_db(); sid=_add("SIM-B","DE",250000,"SUPPLIER_DATA")
+ out=simulate_remediation(sid,"SUPPLIER_DATA",2000)
+ ps=out["proposed_solution"]
+ assert ps["requirement_code"]=="SUPPLIER_DATA" and ps["title"]
+ assert len(ps["story"])>=2 and len(ps["steps"])>=2 and len(ps["evidence_checklist"])>=1
+ assert ps["owner_suggestion"] and ps["typical_timeline"]
+ assert ps["economics"]["revenue_unlocked_eur"]==250000
+ assert ps["economics"]["net_value_unlocked_eur"]==248000

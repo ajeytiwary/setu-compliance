@@ -1,7 +1,7 @@
 from uuid import uuid4
 import pytest
 from app.db import init_db,connect,row
-from app.evidence_network import create_supplier,link_supplier,add_supplier_evidence,create_request,resolve_request,remediation_summary
+from app.evidence_network import create_supplier,link_supplier,add_supplier_evidence,create_request,resolve_request,remediation_summary,verify_supplier_evidence
 from app.rules import STEEL_EU_RULES
 def _shipment():
  init_db(); sid=str(uuid4()); no="TEST-"+sid[:8]; now="2026-09-29T00:00:00+00:00"
@@ -24,3 +24,20 @@ def test_remediation_summary_deduplicates_revenue_at_risk():
  sid=_shipment(); s=create_supplier("Risk supplier"); link_supplier(s["id"],sid,"a",1,"PCF")
  create_request(sid,s["id"],"SUPPLIER_DATA","PCF","Buyer"); create_request(sid,s["id"],"SUPPLIER_DATA","CERT","Buyer")
  summary=remediation_summary(); assert summary["open_requests"]>=2; assert summary["revenue_at_risk_eur"]>=100000
+def test_verify_endpoint_marks_pending_evidence_verified():
+ sid=_shipment(); s=create_supplier("Verify supplier"); link_supplier(s["id"],sid,"ferroalloy",1,"CBAM_PRECURSOR")
+ req=create_request(sid,s["id"],"SUPPLIER_DATA","CBAM_PRECURSOR","Procurement")
+ pending=add_supplier_evidence(s["id"],"CBAM_PRECURSOR","pending-file","PENDING")
+ verified=verify_supplier_evidence(pending["id"],"Accredited verifier")
+ assert verified["status"]=="VERIFIED" and verified["verifier"]=="Accredited verifier"
+ resolved=resolve_request(req["id"],pending["id"]); assert resolved["status"]=="RESOLVED"
+ with connect() as c:
+  rr=row(c,"SELECT status FROM requirements WHERE shipment_id=? AND code='SUPPLIER_DATA'",(sid,))
+ assert rr["status"]=="PASS"
+def test_remediation_summary_carries_evidence_per_request():
+ sid=_shipment(); s=create_supplier("Evidence list supplier"); link_supplier(s["id"],sid,"a",1,"PCF")
+ req=create_request(sid,s["id"],"SUPPLIER_DATA","PCF","Buyer")
+ add_supplier_evidence(s["id"],"PCF","file-a","PENDING")
+ summary=remediation_summary()
+ hit=[r for r in summary["requests"] if r["id"]==req["id"]][0]
+ assert "evidence" in hit and any(e["evidence_type"]=="PCF" for e in hit["evidence"])

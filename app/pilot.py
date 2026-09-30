@@ -240,6 +240,7 @@ def pilot_overview() -> dict:
     return {
         "scope": {"audience": "pilot delivery team + pilot customer", "notice": SCOPE_NOTICE},
         "kpis": kpis,
+        "risk": risk,
         "weeks": weeks,
         "contracts": contracts,
         "shipments": shipments,

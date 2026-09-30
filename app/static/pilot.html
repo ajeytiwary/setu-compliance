@@ -11,29 +11,115 @@
 .pilot-banner b{color:var(--green)}
 .topnav .brand{letter-spacing:.18em}
 .topnav .navlinks a.active{font-weight:800;color:var(--green)}
-.cols{columns:2;column-gap:22px}
-@media(max-width:800px){.cols{columns:1}}
 .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:11px;font-weight:700;margin:3px 4px 3px 0;background:var(--cream)}
 .pill.good{color:var(--green);border-color:#bfe3b4;background:#e9f7e4}
 .pill.bad{color:var(--red);border-color:#f0c4bd;background:#fdecea}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0}
-.grid .card .value{font-size:clamp(20px,1.9vw,26px);font-weight:800;margin-top:6px;white-space:nowrap;overflow-wrap:normal}
+.sim-cost{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:13px;font-weight:700;color:#3c4d46}
+.sim-cost input{width:150px}
+.workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px 0}
+.wstep{background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12px}
+.wstep b{display:block;font-size:12px;margin-bottom:4px}
+.wstep.done{border-color:#bfe3b4;background:#e9f7e4}
+.wstep .wnum{display:inline-block;background:var(--green);color:#fff;border-radius:999px;font-size:11px;font-weight:800;width:20px;height:20px;line-height:20px;text-align:center;margin-right:6px}
+.sim-story p{margin:8px 0;line-height:1.55}
+.sim-steps{margin:10px 0 4px 18px;line-height:1.6}
+.sim-meta{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.evidence-cycle{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;background:#fff}
+.evidence-cycle .ev-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.evidence-cycle input{width:220px}
+.evidence-cycle .ev-list{margin:8px 0 0 0;padding:0;list-style:none;font-size:13px}
+.evidence-cycle .ev-list li{padding:6px 0;border-top:1px dashed var(--line)}
+@media(max-width:900px){.workflow{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<main>
 <nav class="topnav"><a class="brand" href="/">EUROSETU</a><div class="navlinks"><a href="/">Public site</a><a href="/demo">Demo</a><a class="active" href="/pilot">Pilot dashboard</a><span class="demo-badge">Pilot</span></div></nav>
-<header><p class="eyebrow">PILOT OPERATIONS, INTERNAL + PILOT CUSTOMER</p><h1>Pilot control dashboard</h1>
-<p class="lede">Live tracking for the 12-week steelmaker pilot. Covers plan progress, data contract coverage, shipment readiness, CBAM reproducibility, remediation and regulatory provenance. Signals are read only and are never certifications.</p></header>
+<main>
+<header class="demo-head">
+  <div>
+    <p class="eyebrow">PILOT OPERATIONS · INTERNAL + PILOT CUSTOMER</p>
+    <h1>Pilot control dashboard</h1>
+    <p class="lede">Live tracking for the 12-week steelmaker pilot: every order, every blocker, every euro, plus plan progress, data-contract coverage, CBAM reproducibility and regulatory provenance. Signals are read only and are never certifications.</p>
+  </div>
+  <div class="access-chip">Pilot working view</div>
+</header>
 <div class="pilot-banner"><b>Boundary: </b><span id="scope-line">Loading pilot scope…</span></div>
-<section class="panel"><h2>Pilot KPIs</h2><div id="kpis" class="grid"><div class="muted">Loading…</div></div></section>
-<section class="panel"><h2>12-week plan</h2><div id="weeks"><div class="muted">Loading…</div></div></section>
-<section class="panel"><h2>Data-contract coverage</h2><p class="muted">The six pilot feeds from docs/PILOT_DATA_CONTRACT.md. CONNECTED_ROWS means canonical rows exist. SAMPLE_ONLY means only connector samples exist so far.</p><div id="contracts"><div class="muted">Loading…</div></div></section>
-<section class="panel"><h2>Shipment readiness</h2><div id="shipments"><div class="muted">Loading…</div></div></section>
-<section class="panel"><h2>CBAM reproducibility</h2><div id="cbam"><div class="muted">Loading…</div></div></section>
-<section class="panel"><h2>Remediation queue</h2><div id="remediation"><div class="muted">Loading…</div></div></section>
-<section class="panel"><h2>Regulatory snapshots</h2><div id="regulatory"><div class="muted">Loading…</div></div></section>
-<section class="panel"><h2>Recent audit trail</h2><div id="audit"><div class="muted">Loading…</div></div></section>
+
+<section aria-label="Pilot metrics">
+  <div id="kpis" class="kpi-grid"><div class="card skeleton">Loading portfolio…</div></div>
+</section>
+
+<section class="panel">
+  <div class="section-head">
+    <div><p class="eyebrow">REVENUE AT RISK</p><h2>Where is the money blocked?</h2></div>
+    <div id="breadcrumb" class="breadcrumb">Portfolio</div>
+  </div>
+  <div id="activeFilters"></div>
+  <div class="drill-layout">
+    <div>
+      <h3>By destination</h3><div id="countries"><div class="muted">Loading…</div></div>
+      <h3>By blocking rule</h3><div id="rules"><div class="muted">Loading…</div></div>
+    </div>
+    <div>
+      <h3>Shipment blockers</h3><div id="drilldown"><div class="muted">Loading…</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <p class="eyebrow">WORKFLOW</p>
+  <h2>Remediation workspace</h2>
+  <p class="muted">The ideal flow, tracked live: filter the portfolio, simulate each blocker to rank by euros unlocked, raise the evidence request, walk the supplier submission through verification, and watch revenue move from at-risk to ready.</p>
+  <div class="workflow" id="workflow">
+    <div class="wstep" data-step="1"><b><span class="wnum">1</span>Filter</b><span>Destination or rule selected above.</span></div>
+    <div class="wstep" data-step="2"><b><span class="wnum">2</span>Simulate</b><span>Run Simulate fix on each blocker.</span></div>
+    <div class="wstep" data-step="3"><b><span class="wnum">3</span>Request</b><span>Raise evidence request with owner + due date.</span></div>
+    <div class="wstep" data-step="4"><b><span class="wnum">4</span>Verify</b><span>Supplier submits, verifier marks VERIFIED.</span></div>
+    <div class="wstep" data-step="5"><b><span class="wnum">5</span>Resolve</b><span>Request resolves, revenue flips to ready.</span></div>
+  </div>
+  <div id="rankBox"><div class="muted">Simulate blockers above to rank them by net value unlocked.</div></div>
+</section>
+
+<section class="panel">
+  <p class="eyebrow">WHAT-IF</p>
+  <h2>Remediation simulator</h2>
+  <p class="muted">Select “Simulate fix” on any blocker above. EuroSetu shows whether that fix unlocks the shipment, the value released and the next blocker. Simulations never change compliance state.</p>
+  <div class="sim-cost"><label for="simCost">Estimated remediation cost (€)</label><input id="simCost" type="number" min="0" step="500" value="5000"></div>
+  <div id="simulation" class="callout muted">No simulation run yet.</div>
+</section>
+
+<section class="panel">
+  <p class="eyebrow">ACTION</p>
+  <h2>Request evidence</h2>
+  <p class="muted">Select Request evidence on a supplier blocker above, or complete the form directly.</p>
+  <form id="requestForm">
+    <div class="form-grid">
+      <label>Shipment ID<input id="shipmentId" placeholder="e.g. JSW-HRC-NL-001" required></label>
+      <label>Supplier ID<input id="supplierId" placeholder="Supplier ID" required></label>
+      <label>Evidence type<input id="evidenceType" placeholder="e.g. CBAM_PRECURSOR" required></label>
+      <label>Owner<input id="owner" placeholder="Who chases this?" required></label>
+      <label>Due date<input id="dueDate" type="date"></label>
+      <label>Requirement<input id="requirementCode" value="SUPPLIER_DATA"></label>
+    </div>
+    <label class="full">Message<textarea id="message" placeholder="Message to supplier"></textarea></label>
+    <button type="submit">Request evidence</button>
+    <span id="formStatus" role="status"></span>
+  </form>
+</section>
+
+<section class="panel">
+  <p class="eyebrow">QUEUE</p>
+  <h2>Open remediation</h2>
+  <div id="remediation"><div class="muted">Loading…</div></div>
+</section>
+
+<section class="panel"><p class="eyebrow">PLAN</p><h2>12-week plan</h2><div id="weeks"><div class="muted">Loading…</div></div></section>
+<section class="panel"><p class="eyebrow">DATA CONTRACTS</p><h2>Data-contract coverage</h2><p class="muted">The six pilot feeds from docs/PILOT_DATA_CONTRACT.md. CONNECTED_ROWS means canonical rows exist. SAMPLE_ONLY means only connector samples exist so far.</p><div id="contracts"><div class="muted">Loading…</div></div></section>
+<section class="panel"><p class="eyebrow">READINESS</p><h2>Shipment readiness</h2><div id="shipments"><div class="muted">Loading…</div></div></section>
+<section class="panel"><p class="eyebrow">CBAM</p><h2>CBAM reproducibility</h2><div id="cbam"><div class="muted">Loading…</div></div></section>
+<section class="panel"><p class="eyebrow">PROVENANCE</p><h2>Regulatory snapshots</h2><div id="regulatory"><div class="muted">Loading…</div></div></section>
+<section class="panel"><p class="eyebrow">AUDIT</p><h2>Recent audit trail</h2><div id="audit"><div class="muted">Loading…</div></div></section>
+
 <footer>Engineering assurance infrastructure, not legal certification, customs acceptance, CBAM Registry acceptance or verifier accreditation.</footer>
 </main>
 <script src="/pilot.js"></script>

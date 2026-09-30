@@ -40,6 +40,17 @@ def add_supplier_evidence(supplier_id,evidence_type,content,status="PENDING",iss
   linked=rows(conn,"SELECT shipment_id FROM supplier_shipment_links WHERE supplier_id=?",(supplier_id,))
   for x in linked:_refresh_supplier_requirement(conn,x["shipment_id"])
  return {"id":eid,"supplier_id":supplier_id,"evidence_type":evidence_type,"status":status,"sha256":digest}
+def verify_supplier_evidence(evidence_id,verifier):
+ now=_now()
+ with connect() as conn:
+  ev=row(conn,"SELECT * FROM supplier_evidence WHERE id=?",(evidence_id,))
+  if not ev:raise ValueError("evidence not found")
+  if ev["status"]=="VERIFIED":return row(conn,"SELECT * FROM supplier_evidence WHERE id=?",(evidence_id,))
+  conn.execute("UPDATE supplier_evidence SET status='VERIFIED',verifier=?,updated_at=? WHERE id=?",(verifier,now,evidence_id))
+  linked=rows(conn,"SELECT shipment_id FROM supplier_shipment_links WHERE supplier_id=?",(ev["supplier_id"],))
+  for x in linked:_refresh_supplier_requirement(conn,x["shipment_id"])
+  audit(conn,None,"supplier_evidence.verified",{"evidence_id":evidence_id,"verifier":verifier})
+  return row(conn,"SELECT * FROM supplier_evidence WHERE id=?",(evidence_id,))
 def create_request(shipment_id,supplier_id,requirement_code,evidence_type,owner,due_date=None,message=None):
  rid=str(uuid4()); now=_now()
  with connect() as conn:
@@ -75,4 +86,7 @@ def _refresh_supplier_requirement(conn,shipment_id):
  if required:conn.execute("UPDATE requirements SET status=?,notes=? WHERE shipment_id=? AND code='SUPPLIER_DATA'",("PASS" if complete==len(required) else "MISSING",f"{complete}/{len(required)} required supplier evidence links verified",shipment_id))
 def remediation_summary():
  reqs=list_requests(); open_reqs=[r for r in reqs if r["status"]=="OPEN"]
+ with connect() as conn:
+  for r in reqs:
+   r["evidence"]=rows(conn,"SELECT id,evidence_type,status,issuer,verifier,created_at FROM supplier_evidence WHERE supplier_id=? ORDER BY created_at DESC",(r["supplier_id"],))
  return {"open_requests":len(open_reqs),"resolved_requests":sum(1 for r in reqs if r["status"]=="RESOLVED"),"revenue_at_risk_eur":sum({r["shipment_id"]:r["value_eur"] for r in open_reqs}.values()),"requests":reqs}
