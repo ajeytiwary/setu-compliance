@@ -48,11 +48,16 @@ def detailed(conn,s):
 @app.get("/",response_class=HTMLResponse)
 def home():
  p=STATIC/"index.html"
- return FileResponse(p) if p.exists() else HTMLResponse("<h1>Setu Compliance</h1><p>Open <a href='/docs'>/docs</a> for the API.</p>")
+ return FileResponse(p) if p.exists() else HTMLResponse("<h1>Setu</h1>")
+@app.get("/demo",response_class=HTMLResponse)
+def demo():
+ return FileResponse(STATIC/"dashboard.html")
 @app.get("/app.js")
 def js():return FileResponse(STATIC/"app.js",media_type="application/javascript")
 @app.get("/styles.css")
 def css():return FileResponse(STATIC/"styles.css",media_type="text/css")
+@app.get("/public.css")
+def public_css():return FileResponse(STATIC/"public.css",media_type="text/css")
 @app.get("/api/dashboard")
 def dashboard():
  with connect() as conn:
