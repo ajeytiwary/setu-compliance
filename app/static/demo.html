@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Setu — Product demo</title>
+<meta name="description" content="Interactive demo of the Setu market-access control plane. Request access to explore.">
+<link rel="stylesheet" href="/demo.css">
+</head>
+<body>
+<nav class="topnav">
+  <a class="brand" href="/">SETU</a>
+  <div class="navlinks">
+    <a href="/">Public site</a>
+    <a href="/pilot">Pilot dashboard</a>
+    <span class="demo-badge">Demo</span>
+  </div>
+</nav>
+
+<!-- Lead gate: shown until the contact form is submitted -->
+<div id="gate" class="gate" hidden>
+  <div class="gate-card">
+    <p class="eyebrow">PRODUCT DEMO · REQUEST ACCESS</p>
+    <h1>See the control plane on live data.</h1>
+    <p class="lede">Share your work details and we will unlock the interactive demo — every shipment, every blocker, every euro at risk.</p>
+    <form id="leadForm" novalidate>
+      <div class="form-grid">
+        <label>Full name<input id="leadName" name="name" autocomplete="name" placeholder="Priya Sharma" required></label>
+        <label>Work email<input id="leadEmail" name="email" type="email" autocomplete="email" placeholder="priya@company.com" required></label>
+        <label>Company<input id="leadCompany" name="company" autocomplete="organization" placeholder="JSW Steel" required></label>
+        <label>Role
+          <select id="leadRole" name="role">
+            <option value="">Select…</option>
+            <option>Exports / Commercial</option>
+            <option>Compliance / Legal</option>
+            <option>Sustainability / ESG</option>
+            <option>Operations / Plant</option>
+            <option>IT / Digital</option>
+            <option>Founder / CXO</option>
+            <option>Other</option>
+          </select>
+        </label>
+      </div>
+      <label class="full">What are you trying to solve?
+        <textarea id="leadMessage" name="message" placeholder="e.g. CBAM exposure on our EU-bound HRC orders"></textarea>
+      </label>
+      <p id="leadError" class="error" role="alert" hidden></p>
+      <button type="submit" id="leadSubmit">Unlock the demo →</button>
+      <p class="privacy">We use your details to follow up on the demo. No spam, no list-selling — founder-led outreach only.</p>
+    </form>
+  </div>
+</div>
+
+<!-- Demo content: hidden until a lead token exists -->
+<main id="demo" hidden>
+  <header class="demo-head">
+    <div>
+      <p class="eyebrow">INDIA → EU MARKET ACCESS CONTROL PLANE · LIVE DEMO</p>
+      <h1>Every order. Every blocker. Every euro.</h1>
+      <p class="lede" id="welcomeLine">Explore the working system below — filter by destination or rule, simulate fixes, raise evidence requests.</p>
+    </div>
+    <div class="access-chip" id="accessChip" hidden></div>
+  </header>
+
+  <section aria-label="Portfolio metrics">
+    <div id="kpis" class="kpi-grid"><div class="card skeleton">Loading portfolio…</div></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head">
+      <div><p class="eyebrow">REVENUE AT RISK</p><h2>Where is the money blocked?</h2></div>
+      <div id="breadcrumb" class="breadcrumb">Portfolio</div>
+    </div>
+    <div id="activeFilters"></div>
+    <div class="drill-layout">
+      <div>
+        <h3>By destination</h3><div id="countries"><div class="muted">Loading…</div></div>
+        <h3>By blocking rule</h3><div id="rules"><div class="muted">Loading…</div></div>
+      </div>
+      <div>
+        <h3>Shipment blockers</h3><div id="drilldown"><div class="muted">Loading…</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <p class="eyebrow">WHAT-IF</p>
+    <h2>Remediation simulator</h2>
+    <p class="muted">Enter a cost next to any blocker and simulate the fix. Setu shows whether the shipment unlocks, the value released and the next blocker — without changing compliance state.</p>
+    <div id="simulation" class="callout muted">No simulation run yet.</div>
+  </section>
+
+  <section class="panel">
+    <p class="eyebrow">ACTION</p>
+    <h2>Request evidence</h2>
+    <p class="muted">Pick “Request evidence” on a supplier blocker above, or fill the form directly.</p>
+    <form id="requestForm">
+      <div class="form-grid">
+        <label>Shipment ID<input id="shipmentId" placeholder="e.g. JSW-HRC-NL-001" required></label>
+        <label>Supplier ID<input id="supplierId" placeholder="Supplier ID" required></label>
+        <label>Evidence type<input id="evidenceType" placeholder="e.g. CBAM_PRECURSOR" required></label>
+        <label>Owner<input id="owner" placeholder="Who chases this?" required></label>
+        <label>Due date<input id="dueDate" type="date"></label>
+        <label>Requirement<input id="requirementCode" value="SUPPLIER_DATA"></label>
+      </div>
+      <label class="full">Message<textarea id="message" placeholder="Message to supplier"></textarea></label>
+      <button type="submit">Request evidence</button>
+      <span id="formStatus" role="status"></span>
+    </form>
+  </section>
+
+  <section class="panel">
+    <p class="eyebrow">QUEUE</p>
+    <h2>Open remediation</h2>
+    <div id="remediation"><div class="muted">Loading…</div></div>
+  </section>
+
+  <section class="panel">
+    <p class="eyebrow">CONNECTIVITY</p>
+    <h2>Integration surface</h2>
+    <div id="integrations"><div class="muted">Loading…</div></div>
+  </section>
+
+  <footer>
+    <p><b>Setu</b> — market-access infrastructure for industrial trade.</p>
+    <p class="muted">Engineering assurance infrastructure — not legal advice, legal certification, customs authority acceptance or verifier accreditation.</p>
+  </footer>
+</main>
+<script src="/demo.js"></script>
+</body>
+</html>

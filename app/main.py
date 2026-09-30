@@ -1,9 +1,9 @@
 from __future__ import annotations
-import hashlib,io,json,zipfile
+import hashlib,io,json,re,secrets,sqlite3,zipfile
 from datetime import datetime,timezone
 from pathlib import Path
 from uuid import uuid4
-from fastapi import FastAPI,HTTPException,Response
+from fastapi import FastAPI,HTTPException,Request,Response
 from fastapi.responses import FileResponse,HTMLResponse
 from pydantic import BaseModel,Field
 from .db import init_db,connect,rows,row,audit
@@ -35,6 +35,16 @@ class PublicDataSyncIn(BaseModel):url:str; as_of:str|None=None
 class TaricResolveIn(BaseModel):payload:dict
 class RegulatoryPayloadIn(BaseModel):payload:dict
 class ReferenceCSVIn(BaseModel):csv_content:str
+class LeadIn(BaseModel):
+ name:str; work_email:str; company:str; role:str|None=None; message:str|None=None
+EMAIL_RE=re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+def require_lead(request:Request):
+ token=request.headers.get("x-setu-lead-token") or request.query_params.get("lead_token")
+ if not token:raise HTTPException(403,"Demo access requires the contact form (POST /api/leads) first")
+ with connect() as conn:
+  hit=row(conn,"SELECT id FROM leads WHERE token=?",(token,))
+ if not hit:raise HTTPException(403,"Invalid demo access token")
+ return token
 @app.on_event("startup")
 def startup():init_db();seed_if_empty()
 def find_shipment(conn,ref):
@@ -51,7 +61,32 @@ def home():
  return FileResponse(p) if p.exists() else HTMLResponse("<h1>Setu</h1>")
 @app.get("/demo",response_class=HTMLResponse)
 def demo():
- return FileResponse(STATIC/"dashboard.html")
+ p=STATIC/"demo.html"
+ return FileResponse(p) if p.exists() else FileResponse(STATIC/"dashboard.html")
+@app.get("/demo.js")
+def demo_js():return FileResponse(STATIC/"demo.js",media_type="application/javascript")
+@app.get("/demo.css")
+def demo_css():return FileResponse(STATIC/"demo.css",media_type="text/css")
+@app.post("/api/leads",status_code=201)
+def leads_create(x:LeadIn):
+ email=x.work_email.strip().lower()
+ if not EMAIL_RE.match(email):raise HTTPException(422,"Valid work email required")
+ if not x.name.strip() or not x.company.strip():raise HTTPException(422,"Name and company required")
+ now=datetime.now(timezone.utc).isoformat()
+ with connect() as conn:
+  existing=row(conn,"SELECT id,token FROM leads WHERE work_email=?",(email,))
+  if existing:return {"lead_id":existing["id"],"token":existing["token"],"returning":True}
+  lid=str(uuid4()); token=secrets.token_urlsafe(24)
+  conn.execute("INSERT INTO leads(id,name,work_email,company,role,message,token,created_at) VALUES(?,?,?,?,?,?,?,?)",(lid,x.name.strip(),email,x.company.strip(),(x.role or "").strip() or None,(x.message or "").strip() or None,token,now))
+  audit(conn,None,"lead.created",{"lead_id":lid,"company":x.company.strip()})
+  return {"lead_id":lid,"token":token,"returning":False}
+@app.get("/api/leads/verify")
+def leads_verify(request:Request):
+ try:token=require_lead(request)
+ except HTTPException:return {"valid":False}
+ with connect() as conn:
+  hit=row(conn,"SELECT name,company FROM leads WHERE token=?",(token,))
+ return {"valid":True,"name":hit["name"],"company":hit["company"]} if hit else {"valid":False}
 @app.get("/pilot",response_class=HTMLResponse)
 def pilot():
  return FileResponse(STATIC/"pilot.html")
@@ -68,7 +103,8 @@ def css():return FileResponse(STATIC/"styles.css",media_type="text/css")
 @app.get("/public.css")
 def public_css():return FileResponse(STATIC/"public.css",media_type="text/css")
 @app.get("/api/dashboard")
-def dashboard():
+def dashboard(request:Request):
+ require_lead(request)
  with connect() as conn:
   ds=[detailed(conn,s) for s in rows(conn,"SELECT * FROM shipments ORDER BY created_at DESC")]
   return {"metrics":portfolio_metrics(ds),"shipments":ds,"case_study":True,"metric_definition":"Production metric: compliant EU-bound shipment value / total EU-bound shipment value. Public records do not disclose shipment-level value, so the public case does not fabricate this KPI."}
@@ -103,15 +139,18 @@ def dpp(shipment_id):
   if not s:raise HTTPException(404,"shipment not found")
   d=detailed(conn,s); return {"@context":["https://schema.org/"],"passport":{"id":f"urn:setu:dpp:{s['id']}","status":"MVP_READINESS","schemaVersion":"steel-v0.1"},"product":{"uniqueProductIdentifier":s["shipment_no"],"name":s["product"],"commodityCode":s["cn_code"],"manufacturer":s["exporter"],"facility":s["facility"],"massTonnes":s["tonnes"]},"environment":{"embeddedEmissions":{"value":s["embedded_emissions_tco2e_per_t"],"unit":"tCO2e/t"}},"compliance":{"autoReady":d["score"]["auto_ready"],"readinessScore":d["score"]["readiness_score"],"blockers":d["score"]["blockers"]},"notice":"MVP readiness payload; final steel ESPR fields remain versioned/configurable."}
 @app.get("/api/market-access/order-book")
-def market_access_order_book():
+def market_access_order_book(request:Request):
+ require_lead(request)
  from .market_access import order_book
  return order_book()
 @app.get("/api/market-access/risk-drilldown")
-def market_access_risk_drilldown():
+def market_access_risk_drilldown(request:Request):
+ require_lead(request)
  from .risk_drilldown import risk_drilldown
  return risk_drilldown()
 @app.post("/api/market-access/shipments/{shipment_id}/simulate-remediation")
-def market_access_simulate_remediation(shipment_id,x:RemediationSimulationIn):
+def market_access_simulate_remediation(shipment_id,x:RemediationSimulationIn,request:Request):
+ require_lead(request)
  from .risk_drilldown import simulate_remediation
  try:return simulate_remediation(shipment_id,x.requirement_code,x.estimated_cost_eur)
  except ValueError as e:raise HTTPException(422,str(e))
@@ -146,11 +185,13 @@ def supplier_evidence(supplier_id,x:SupplierEvidenceIn):
  try:return add_supplier_evidence(supplier_id,**x.model_dump())
  except ValueError as e:raise HTTPException(422,str(e))
 @app.get("/api/remediation")
-def remediation():
+def remediation(request:Request):
+ require_lead(request)
  from .evidence_network import remediation_summary
  return remediation_summary()
 @app.post("/api/remediation/requests",status_code=201)
-def remediation_create(x:EvidenceRequestIn):
+def remediation_create(x:EvidenceRequestIn,request:Request):
+ require_lead(request)
  from .evidence_network import create_request
  try:return create_request(**x.model_dump())
  except ValueError as e:raise HTTPException(422,str(e))
@@ -160,7 +201,8 @@ def remediation_resolve(request_id,x:EvidenceResolveIn):
  try:return resolve_request(request_id,x.evidence_id)
  except ValueError as e:raise HTTPException(422,str(e))
 @app.get("/api/integrations")
-def integrations_catalog():
+def integrations_catalog(request:Request):
+ require_lead(request)
  from .integrations import integration_catalog
  return integration_catalog()
 @app.post("/api/integrations/{connector}/import")
