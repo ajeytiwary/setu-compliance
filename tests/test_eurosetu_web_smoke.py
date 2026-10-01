@@ -11,6 +11,13 @@ def test_eurosetu_public_to_demo_journey():
         assert "EuroSetu" in home.text
         assert 'href="/demo"' in home.text
         assert c.get("/public.css").status_code == 200
+        trust = c.get("/trust")
+        assert trust.status_code == 200 and "Trust & Security" in trust.text
+        case = c.get("/case-study")
+        assert case.status_code == 200 and "SYNTHETIC COMMERCIAL DATA" in case.text
+        assert 'name="viewport"' in home.text
+        assert 'name="viewport"' in trust.text
+        assert 'name="viewport"' in case.text
         demo = c.get("/demo")
         assert demo.status_code == 200
         assert "leadForm" in demo.text
