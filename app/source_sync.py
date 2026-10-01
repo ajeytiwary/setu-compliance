@@ -208,8 +208,18 @@ def sync(dataset):
  mdir=MANIFESTS/dataset;mdir.mkdir(parents=True,exist_ok=True);(mdir/(sha+".json")).write_text(json.dumps(manifest,indent=2))
  if not check["valid"]:raise RuntimeError(dataset+" validation failed: "+",".join(check["errors"]))
  ndir=NORMALIZED/dataset/sha;ndir.mkdir(parents=True,exist_ok=True);(ndir/"records.json").write_text(json.dumps(records,indent=2,default=str))
- latest=NORMALIZED/dataset/"latest.json";tmp=NORMALIZED/dataset/(".latest-"+stamp+".tmp");tmp.write_text(json.dumps({**manifest,"transport":"PRIMARY","normalized_file":str((ndir/"records.json").relative_to(ROOT)),"records":records},indent=2));os.replace(tmp,latest)
- return json.loads(latest.read_text())
+ latest=NORMALIZED/dataset/"latest.json"; old_sha=None
+ if latest.exists():
+  try:old_sha=json.loads(latest.read_text()).get("sha256")
+  except Exception:pass
+ tmp=NORMALIZED/dataset/(".latest-"+stamp+".tmp");tmp.write_text(json.dumps({**manifest,"transport":"PRIMARY","normalized_file":str((ndir/"records.json").relative_to(ROOT)),"records":records},indent=2));os.replace(tmp,latest)
+ out=json.loads(latest.read_text())
+ try:
+  from .regulatory_impact import record_change
+  out["impact"]=record_change(dataset,old_sha,sha)
+ except Exception as exc:
+  out["impact"]={"changed":old_sha!=sha,"queued":0,"warning":str(exc)}
+ return out
 def sync_many(datasets):
  result={}
  for d in datasets:

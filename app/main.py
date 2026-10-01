@@ -61,6 +61,10 @@ def detailed(conn,s):
 def home():
  p=STATIC/"index.html"
  return FileResponse(p) if p.exists() else HTMLResponse("<h1>EuroSetu</h1>")
+@app.get("/trust",response_class=HTMLResponse)
+def trust():return FileResponse(STATIC/"trust.html")
+@app.get("/case-study",response_class=HTMLResponse)
+def case_study():return FileResponse(STATIC/"case-study.html")
 @app.get("/demo",response_class=HTMLResponse)
 def demo():
  p=STATIC/"demo.html"
@@ -90,36 +94,51 @@ def leads_verify(request:Request):
   hit=row(conn,"SELECT name,company FROM leads WHERE token=?",(token,))
  return {"valid":True,"name":hit["name"],"company":hit["company"]} if hit else {"valid":False}
 @app.get("/pilot",response_class=HTMLResponse)
-def pilot():
+def pilot(request:Request):
+ from .security import require_request
+ require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
  return FileResponse(STATIC/"pilot.html")
 @app.get("/pilot.js")
 def pilot_js():return FileResponse(STATIC/"pilot.js",media_type="application/javascript")
 @app.get("/api/pilot/overview")
-def pilot_overview():
+def pilot_overview(request:Request):
+ from .security import require_request
+ require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
  from .pilot import pilot_overview as _overview
  return _overview()
 @app.post("/api/pilot/shipments/{shipment_id}/simulate-remediation")
-def pilot_simulate_remediation(shipment_id,x:RemediationSimulationIn):
+def pilot_simulate_remediation(shipment_id,x:RemediationSimulationIn,request:Request):
+ from .security import require_request
+ require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
  from .risk_drilldown import simulate_remediation
  try:return simulate_remediation(shipment_id,x.requirement_code,x.estimated_cost_eur)
  except ValueError as e:raise HTTPException(422,str(e))
 @app.post("/api/pilot/remediation/requests",status_code=201)
-def pilot_remediation_create(x:EvidenceRequestIn):
+def pilot_remediation_create(x:EvidenceRequestIn,request:Request):
+ from .security import require_request
+ require_request(request,"pilot_contributor","admin")
  from .evidence_network import create_request
  try:return create_request(**x.model_dump())
  except ValueError as e:raise HTTPException(422,str(e))
 @app.post("/api/pilot/suppliers/{supplier_id}/evidence",status_code=201)
-def pilot_evidence_submit(supplier_id,x:SupplierEvidenceSubmitIn):
+def pilot_evidence_submit(supplier_id,x:SupplierEvidenceSubmitIn,request:Request):
+ from .security import require_request
+ require_request(request,"pilot_contributor","admin")
  from .evidence_network import add_supplier_evidence
  try:return add_supplier_evidence(supplier_id,evidence_type=x.evidence_type,content=x.content,issuer=x.issuer,source_ref=x.source_ref)
  except ValueError as e:raise HTTPException(422,str(e))
 @app.post("/api/pilot/evidence/{evidence_id}/verify")
-def pilot_evidence_verify(evidence_id,x:SupplierEvidenceVerifyIn):
+def pilot_evidence_verify(evidence_id,x:SupplierEvidenceVerifyIn,request:Request):
+ from .security import require_request
+ p=require_request(request,"verifier","admin")
+ x.verifier=p.subject
  from .evidence_network import verify_supplier_evidence
  try:return verify_supplier_evidence(evidence_id,x.verifier)
  except ValueError as e:raise HTTPException(422,str(e))
 @app.post("/api/pilot/remediation/requests/{request_id}/resolve")
-def pilot_remediation_resolve(request_id,x:EvidenceResolveIn):
+def pilot_remediation_resolve(request_id,x:EvidenceResolveIn,request:Request):
+ from .security import require_request
+ require_request(request,"verifier","admin")
  from .evidence_network import resolve_request
  try:return resolve_request(request_id,x.evidence_id)
  except ValueError as e:raise HTTPException(422,str(e))
@@ -340,6 +359,12 @@ def regulatory_public_data_sync(kind,x:PublicDataSyncIn):
  if kind not in ("taric","quota"):raise HTTPException(404,"kind must be taric or quota")
  try:return sync_from_url(kind,x.url,x.as_of)
  except Exception as e:raise HTTPException(502,str(e))
+@app.get("/api/regulatory/change-impact")
+def regulatory_change_impact(request:Request,status:str|None=None):
+ from .security import require_request
+ require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ from .regulatory_impact import queue
+ return {"impacts":queue(status),"model":"source hash change -> affected shipment -> rule family -> review queue"}
 @app.get("/api/regulatory/registry")
 def regulatory_registry(as_of:str|None=None):
  from .regulatory_registry import registry

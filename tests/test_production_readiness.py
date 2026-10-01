@@ -1,11 +1,11 @@
 import hashlib
 from fastapi import HTTPException
-from app.security import principal,require
+from app.security import Principal,require
 from app.evidence_store import put,verify
 from app.reference_validation import validate
 from app.readiness import submission_readiness
 def test_tenant_principal_and_roles():
- p=principal("user-1","tenant-a","compliance_admin,viewer");assert p.tenant_id=="tenant-a";assert require(p,"compliance_admin")==p
+ p=Principal("user-1","tenant-a",frozenset({"compliance_admin","viewer"}));assert p.tenant_id=="tenant-a";assert require(p,"compliance_admin")==p
  try: require(p,"owner"); assert False
  except HTTPException as e: assert e.status_code==403
 def test_evidence_content_addressed(tmp_path,monkeypatch):
