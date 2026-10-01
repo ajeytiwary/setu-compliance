@@ -28,6 +28,8 @@ CREATE INDEX IF NOT EXISTS idx_supplier_evidence_supplier ON supplier_evidence(s
 CREATE INDEX IF NOT EXISTS idx_evidence_requests_shipment ON evidence_requests(shipment_id,status);
 CREATE TABLE IF NOT EXISTS audit_events(id INTEGER PRIMARY KEY AUTOINCREMENT,shipment_id TEXT,event_type TEXT NOT NULL,payload TEXT NOT NULL,created_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS leads(id TEXT PRIMARY KEY,name TEXT NOT NULL,work_email TEXT UNIQUE NOT NULL,company TEXT NOT NULL,role TEXT,message TEXT,token TEXT UNIQUE NOT NULL,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS regulatory_change_impacts(id TEXT PRIMARY KEY,dataset TEXT NOT NULL,old_sha TEXT,new_sha TEXT NOT NULL,shipment_id TEXT NOT NULL,shipment_no TEXT NOT NULL,rule_codes TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'REVIEW_REQUIRED',created_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS idx_reg_change_status ON regulatory_change_impacts(status,created_at);
 """
 @contextmanager
 def connect():
