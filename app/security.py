@@ -13,6 +13,15 @@ def _b64decode(value:str)->bytes:
     return base64.urlsafe_b64decode(value+"="*(-len(value)%4))
 
 def _jwt(token:str)->dict:
+    jwks=os.getenv("EUROSETU_OIDC_JWKS_URL")
+    if jwks:
+        try:
+            import jwt
+            key=jwt.PyJWKClient(jwks).get_signing_key_from_jwt(token).key
+            opts={"require":["exp","sub"]}
+            return jwt.decode(token,key,algorithms=["RS256","ES256"],issuer=os.getenv("EUROSETU_JWT_ISSUER") or None,audience=os.getenv("EUROSETU_JWT_AUDIENCE") or None,options=opts)
+        except Exception:
+            raise HTTPException(401,"Invalid or expired OIDC bearer token")
     secret=os.getenv("EUROSETU_JWT_SECRET")
     if not secret:
         raise HTTPException(503,"Production authentication is not configured")
