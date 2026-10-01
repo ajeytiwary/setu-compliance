@@ -4,7 +4,15 @@ The pilot dashboard (/pilot) is separate from the customer-facing website
 (/) and the public demo (/demo). These tests guard the route registration,
 the 12-week plan shape, the six data contracts, and the overview payload.
 """
-from app.pilot import DATA_CONTRACTS, PILOT_WEEKS, pilot_overview\nimport base64,hashlib,hmac,json,time\n\ndef _auth(monkeypatch,roles=("pilot_contributor","verifier"),tenant="tenant-a"):\n    secret="test-secret"; monkeypatch.setenv("EUROSETU_JWT_SECRET",secret)\n    enc=lambda o:base64.urlsafe_b64encode(json.dumps(o,separators=(",",":")).encode()).rstrip(b"=").decode()\n    h=enc({"alg":"HS256","typ":"JWT"}); p=enc({"sub":"test-user","exp":int(time.time())+3600,"tenant_id":tenant,"tenants":{tenant:list(roles)}})\n    sig=base64.urlsafe_b64encode(hmac.new(secret.encode(),f"{h}.{p}".encode(),hashlib.sha256).digest()).rstrip(b"=").decode()\n    return {"Authorization":f"Bearer {h}.{p}.{sig}","x-eurosetu-tenant":tenant}
+from app.pilot import DATA_CONTRACTS, PILOT_WEEKS, pilot_overview
+import base64,hashlib,hmac,json,time
+
+def _auth(monkeypatch,roles=("pilot_contributor","verifier"),tenant="tenant-a"):
+    secret="test-secret"; monkeypatch.setenv("EUROSETU_JWT_SECRET",secret)
+    enc=lambda o:base64.urlsafe_b64encode(json.dumps(o,separators=(",",":")).encode()).rstrip(b"=").decode()
+    h=enc({"alg":"HS256","typ":"JWT"}); p=enc({"sub":"test-user","exp":int(time.time())+3600,"tenant_id":tenant,"tenants":{tenant:list(roles)}})
+    sig=base64.urlsafe_b64encode(hmac.new(secret.encode(),f"{h}.{p}".encode(),hashlib.sha256).digest()).rstrip(b"=").decode()
+    return {"Authorization":f"Bearer {h}.{p}.{sig}","x-eurosetu-tenant":tenant}
 
 
 def test_pilot_plan_and_contracts_shape():
