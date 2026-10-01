@@ -359,7 +359,13 @@ def regulatory_public_data_sync(kind,x:PublicDataSyncIn):
  if kind not in ("taric","quota"):raise HTTPException(404,"kind must be taric or quota")
  try:return sync_from_url(kind,x.url,x.as_of)
  except Exception as e:raise HTTPException(502,str(e))
-@app.get("/api/regulatory/change-impact")\ndef regulatory_change_impact(request:Request,status:str|None=None):\n from .security import require_request\n require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")\n from .regulatory_impact import queue\n return {"impacts":queue(status),"model":"source hash change -> affected shipment -> rule family -> review queue"}\n@app.get("/api/regulatory/registry")
+@app.get("/api/regulatory/change-impact")
+def regulatory_change_impact(request:Request,status:str|None=None):
+ from .security import require_request
+ require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ from .regulatory_impact import queue
+ return {"impacts":queue(status),"model":"source hash change -> affected shipment -> rule family -> review queue"}
+@app.get("/api/regulatory/registry")
 def regulatory_registry(as_of:str|None=None):
  from .regulatory_registry import registry
  try:return registry(as_of)
