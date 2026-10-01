@@ -1,22 +1,23 @@
 {
-  "dataset_id": "echa_candidate_list",
-  "provider_id": "echa_candidate_csv",
-  "version": "2026-09-30-eb462c11",
-  "source_url": "file:///tmp/echa_candidate_list_en_clean.csv",
-  "retrieved_at": "2026-09-30T10:37:45.876182+00:00",
-  "effective_from": "2026-09-30",
-  "effective_to": null,
-  "sha256": "eb462c1122571850bbc54c67f35b148cea2b676eb063dddb884fa00473e780ac",
-  "content_type": "text/csv",
-  "record_count": 507,
+  "dataset": "echa_candidate_list",
+  "provider": "echa_candidate_package",
   "authority": "OFFICIAL",
   "legal_authority": false,
-  "parser_version": "source_resolvers/1.0",
-  "normalizer_version": "source_normalizers/1.0",
-  "raw_path": "data/raw/echa_candidate_list/2026-09-30-eb462c11/candidate_list_en.csv",
-  "normalized_path": "data/normalized/echa_candidate_list/2026-09-30-eb462c11/normalized.json",
+  "source": "https://raw.githubusercontent.com/analeonescu/chemical-security-evals/main/data/chemicals_databases/candidate-list-of-svhc-for-authorisation-export.csv",
+  "retrieved_at": "2026-10-01T11:00:24+00:00",
+  "sha256": "a70b18635398e6a26fb08561264ca0d5c2d21444eca3ffa0f7030a37ef5a8413",
+  "content_type": "text/plain; charset=utf-8",
+  "etag": "\"6776786f2c906bbdc3c9490cc793951b8761de7f65cbeac5072f860626a3983e\"",
+  "last_modified": null,
+  "parser_version": "setu-source-sync-0.8",
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "record_count": 507
+  },
+  "raw_file": "data/raw/echa_candidate_list/a70b18635398e6a26fb08561264ca0d5c2d21444eca3ffa0f7030a37ef5a8413/candidate-list-of-svhc-for-authorisation-export.csv",
   "transport": "PRIMARY",
-  "normalized_file": "data/normalized/echa_candidate_list/2026-09-30-eb462c11/normalized.json",
+  "normalized_file": "data/normalized/echa_candidate_list/a70b18635398e6a26fb08561264ca0d5c2d21444eca3ffa0f7030a37ef5a8413/records.json",
   "records": [
     {
       "substance_name": "n-hexane",
@@ -30,6 +31,14 @@
       "substance_name": "4,4'-[2,2,2-trifluoro-1-(trifluoromethyl)ethylidene]diphenol and its salts",
       "ec_number": "-",
       "cas_number": "-",
+      "date_included": "04-Feb-2026",
+      "reason": "Toxic for reproduction (Article 57c)",
+      "decision": "https://echa.europa.eu/documents/10162/71f21fe4-c687-cf7d-42d9-fcf0b7b384eb"
+    },
+    {
+      "substance_name": "Benzyltriphenylphosphonium, salt with 4,4'-[2,2,2-trifluoro-1-(trifluoromethyl)ethylidene]bis[phenol] (1:1)",
+      "ec_number": "278-305-5",
+      "cas_number": "75768-65-9",
       "date_included": "04-Feb-2026",
       "reason": "Toxic for reproduction (Article 57c)",
       "decision": "https://echa.europa.eu/documents/10162/71f21fe4-c687-cf7d-42d9-fcf0b7b384eb"
@@ -59,14 +68,6 @@
       "decision": "https://echa.europa.eu/documents/10162/71f21fe4-c687-cf7d-42d9-fcf0b7b384eb"
     },
     {
-      "substance_name": "Reaction products of benzene, chlorine and sulfur chloride (S2Cl2) with 4,4'-[2,2,2-trifluoro-1-(trifluoromethyl)ethylidene]diphenol",
-      "ec_number": "469-080-6",
-      "cas_number": "921213-47-0",
-      "date_included": "04-Feb-2026",
-      "reason": "Toxic for reproduction (Article 57c)",
-      "decision": "https://echa.europa.eu/documents/10162/71f21fe4-c687-cf7d-42d9-fcf0b7b384eb"
-    },
-    {
       "substance_name": "4,4'-[2,2,2-trifluoro-1-(trifluoromethyl)ethylidene]diphenol (Bisphenol AF)",
       "ec_number": "216-036-7",
       "cas_number": "1478-61-1",
@@ -75,9 +76,9 @@
       "decision": "https://echa.europa.eu/documents/10162/71f21fe4-c687-cf7d-42d9-fcf0b7b384eb"
     },
     {
-      "substance_name": "Reaction mass of 4,4'-[2,2,2-trifluoro-1-(trifluoromethyl)ethylidene]diphenol and benzyl(diethylamino)diphenylphosphonium 4-[1,1,1,3,3,3-hexafluoro-2-(4-hydroxyphenyl)propan-2-yl]phenolate (1:1)",
-      "ec_number": "-",
-      "cas_number": "-",
+      "substance_name": "benzyl(diethylamino)diphenylphosphonium 4-[1,1,1,3,3,3-hexafluoro-2-(4-hydroxyphenyl)propan-2-yl]phenolate",
+      "ec_number": "479-100-5",
+      "cas_number": "577705-90-9",
       "date_included": "04-Feb-2026",
       "reason": "Toxic for reproduction (Article 57c)",
       "decision": "https://echa.europa.eu/documents/10162/71f21fe4-c687-cf7d-42d9-fcf0b7b384eb"
@@ -91,17 +92,17 @@
       "decision": "https://echa.europa.eu/documents/10162/71f21fe4-c687-cf7d-42d9-fcf0b7b384eb"
     },
     {
-      "substance_name": "Benzyltriphenylphosphonium, salt with 4,4'-[2,2,2-trifluoro-1-(trifluoromethyl)ethylidene]bis[phenol] (1:1)",
-      "ec_number": "278-305-5",
-      "cas_number": "75768-65-9",
+      "substance_name": "Reaction mass of 4,4'-[2,2,2-trifluoro-1-(trifluoromethyl)ethylidene]diphenol and benzyl(diethylamino)diphenylphosphonium 4-[1,1,1,3,3,3-hexafluoro-2-(4-hydroxyphenyl)propan-2-yl]phenolate (1:1)",
+      "ec_number": "-",
+      "cas_number": "-",
       "date_included": "04-Feb-2026",
       "reason": "Toxic for reproduction (Article 57c)",
       "decision": "https://echa.europa.eu/documents/10162/71f21fe4-c687-cf7d-42d9-fcf0b7b384eb"
     },
     {
-      "substance_name": "benzyl(diethylamino)diphenylphosphonium 4-[1,1,1,3,3,3-hexafluoro-2-(4-hydroxyphenyl)propan-2-yl]phenolate",
-      "ec_number": "479-100-5",
-      "cas_number": "577705-90-9",
+      "substance_name": "Reaction products of benzene, chlorine and sulfur chloride (S2Cl2) with 4,4'-[2,2,2-trifluoro-1-(trifluoromethyl)ethylidene]diphenol",
+      "ec_number": "469-080-6",
+      "cas_number": "921213-47-0",
       "date_included": "04-Feb-2026",
       "reason": "Toxic for reproduction (Article 57c)",
       "decision": "https://echa.europa.eu/documents/10162/71f21fe4-c687-cf7d-42d9-fcf0b7b384eb"
@@ -411,6 +412,14 @@
       "decision": "https://echa.europa.eu/documents/10162/b05be4ea-eff8-5c93-f021-9961a9abc10d"
     },
     {
+      "substance_name": "(\u00b1)-1,7,7-trimethyl-3-[(4-methylphenyl)methylene]bicyclo[2.2.1]heptan-2-one",
+      "ec_number": "253-242-6",
+      "cas_number": "36861-47-9",
+      "date_included": "17-Jan-2022",
+      "reason": "Endocrine disrupting properties (Article 57(f) - human health)",
+      "decision": "https://echa.europa.eu/documents/10162/b05be4ea-eff8-5c93-f021-9961a9abc10d"
+    },
+    {
       "substance_name": "(3E)-1,7,7-trimethyl-3-(4-methylbenzylidene)bicyclo[2.2.1]heptan-2-one",
       "ec_number": "-",
       "cas_number": "1782069-81-1",
@@ -427,17 +436,17 @@
       "decision": "https://echa.europa.eu/documents/10162/b05be4ea-eff8-5c93-f021-9961a9abc10d"
     },
     {
-      "substance_name": "(1S,3Z,4R)-1,7,7-trimethyl-3-(4-methylbenzylidene)bicyclo[2.2.1]heptan-2-one",
+      "substance_name": "(1S,3E,4R)-1,7,7-trimethyl-3-(4-methylbenzylidene)bicyclo[2.2.1]heptan-2-one",
       "ec_number": "-",
-      "cas_number": "852541-25-4",
+      "cas_number": "852541-30-1",
       "date_included": "17-Jan-2022",
       "reason": "Endocrine disrupting properties (Article 57(f) - human health)",
       "decision": "https://echa.europa.eu/documents/10162/b05be4ea-eff8-5c93-f021-9961a9abc10d"
     },
     {
-      "substance_name": "(\u00b1)-1,7,7-trimethyl-3-[(4-methylphenyl)methylene]bicyclo[2.2.1]heptan-2-one",
-      "ec_number": "253-242-6",
-      "cas_number": "36861-47-9",
+      "substance_name": "(1R,3Z,4S)-1,7,7-trimethyl-3-(4-methylbenzylidene)bicyclo[2.2.1]heptan-2-one",
+      "ec_number": "-",
+      "cas_number": "852541-21-0",
       "date_included": "17-Jan-2022",
       "reason": "Endocrine disrupting properties (Article 57(f) - human health)",
       "decision": "https://echa.europa.eu/documents/10162/b05be4ea-eff8-5c93-f021-9961a9abc10d"
@@ -451,17 +460,9 @@
       "decision": "https://echa.europa.eu/documents/10162/b05be4ea-eff8-5c93-f021-9961a9abc10d"
     },
     {
-      "substance_name": "(1S,3E,4R)-1,7,7-trimethyl-3-(4-methylbenzylidene)bicyclo[2.2.1]heptan-2-one",
+      "substance_name": "(1S,3Z,4R)-1,7,7-trimethyl-3-(4-methylbenzylidene)bicyclo[2.2.1]heptan-2-one",
       "ec_number": "-",
-      "cas_number": "852541-30-1",
-      "date_included": "17-Jan-2022",
-      "reason": "Endocrine disrupting properties (Article 57(f) - human health)",
-      "decision": "https://echa.europa.eu/documents/10162/b05be4ea-eff8-5c93-f021-9961a9abc10d"
-    },
-    {
-      "substance_name": "(1R,3Z,4S)-1,7,7-trimethyl-3-(4-methylbenzylidene)bicyclo[2.2.1]heptan-2-one",
-      "ec_number": "-",
-      "cas_number": "852541-21-0",
+      "cas_number": "852541-25-4",
       "date_included": "17-Jan-2022",
       "reason": "Endocrine disrupting properties (Article 57(f) - human health)",
       "decision": "https://echa.europa.eu/documents/10162/b05be4ea-eff8-5c93-f021-9961a9abc10d"
@@ -531,9 +532,9 @@
       "decision": "https://echa.europa.eu/documents/10162/2ffc10a7-fe57-2c75-9af2-001cb5f5aa1e"
     },
     {
-      "substance_name": "Boric acid, sodium salt",
-      "ec_number": "215-604-1",
-      "cas_number": "1333-73-9",
+      "substance_name": "boric acid (H3BO3), sodium salt, hydrate",
+      "ec_number": "-",
+      "cas_number": "25747-83-5",
       "date_included": "08-Jul-2021",
       "reason": "Toxic for reproduction (Article 57c)",
       "decision": "https://echa.europa.eu/documents/10162/2ffc10a7-fe57-2c75-9af2-001cb5f5aa1e"
@@ -547,17 +548,9 @@
       "decision": "https://echa.europa.eu/documents/10162/2ffc10a7-fe57-2c75-9af2-001cb5f5aa1e"
     },
     {
-      "substance_name": "boric acid (H3BO3), sodium salt, hydrate",
-      "ec_number": "-",
-      "cas_number": "25747-83-5",
-      "date_included": "08-Jul-2021",
-      "reason": "Toxic for reproduction (Article 57c)",
-      "decision": "https://echa.europa.eu/documents/10162/2ffc10a7-fe57-2c75-9af2-001cb5f5aa1e"
-    },
-    {
-      "substance_name": "boric acid (H3BO3), sodium salt (1:1)",
-      "ec_number": "-",
-      "cas_number": "14890-53-0",
+      "substance_name": "Boric acid, sodium salt",
+      "ec_number": "215-604-1",
+      "cas_number": "1333-73-9",
       "date_included": "08-Jul-2021",
       "reason": "Toxic for reproduction (Article 57c)",
       "decision": "https://echa.europa.eu/documents/10162/2ffc10a7-fe57-2c75-9af2-001cb5f5aa1e"
@@ -579,7 +572,23 @@
       "decision": "https://echa.europa.eu/documents/10162/2ffc10a7-fe57-2c75-9af2-001cb5f5aa1e"
     },
     {
+      "substance_name": "boric acid (H3BO3), sodium salt (1:1)",
+      "ec_number": "-",
+      "cas_number": "14890-53-0",
+      "date_included": "08-Jul-2021",
+      "reason": "Toxic for reproduction (Article 57c)",
+      "decision": "https://echa.europa.eu/documents/10162/2ffc10a7-fe57-2c75-9af2-001cb5f5aa1e"
+    },
+    {
       "substance_name": "Medium-chain chlorinated paraffins (MCCP)",
+      "ec_number": "-",
+      "cas_number": "-",
+      "date_included": "08-Jul-2021",
+      "reason": "PBT (Article 57d)\"vPvB (Article 57e)",
+      "decision": "https://echa.europa.eu/documents/10162/af3efea2-1518-3bbe-0bf5-3867131c2f4c"
+    },
+    {
+      "substance_name": "di-, tri- and tetrachlorotetradecane",
       "ec_number": "-",
       "cas_number": "-",
       "date_included": "08-Jul-2021",
@@ -606,14 +615,6 @@
       "substance_name": "Alkanes, C14-16, chloro",
       "ec_number": "-",
       "cas_number": "1372804-76-6",
-      "date_included": "08-Jul-2021",
-      "reason": "PBT (Article 57d)\"vPvB (Article 57e)",
-      "decision": "https://echa.europa.eu/documents/10162/af3efea2-1518-3bbe-0bf5-3867131c2f4c"
-    },
-    {
-      "substance_name": "di-, tri- and tetrachlorotetradecane",
-      "ec_number": "-",
-      "cas_number": "-",
       "date_included": "08-Jul-2021",
       "reason": "PBT (Article 57d)\"vPvB (Article 57e)",
       "decision": "https://echa.europa.eu/documents/10162/af3efea2-1518-3bbe-0bf5-3867131c2f4c"
@@ -691,17 +692,17 @@
       "decision": "https://echa.europa.eu/documents/10162/27d5b22f-c74a-00c5-e988-d0d4db720822"
     },
     {
-      "substance_name": "2,2-bis(bromomethyl)propane-1,3-diol (BMP)",
-      "ec_number": "221-967-7",
-      "cas_number": "3296-90-0",
+      "substance_name": "2,3-dibromo-1-propanol (2,3-DBPA)",
+      "ec_number": "202-480-9",
+      "cas_number": "96-13-9",
       "date_included": "08-Jul-2021",
       "reason": "Carcinogenic (Article 57a)",
       "decision": "https://echa.europa.eu/documents/10162/27d5b22f-c74a-00c5-e988-d0d4db720822"
     },
     {
-      "substance_name": "2,3-dibromo-1-propanol (2,3-DBPA)",
-      "ec_number": "202-480-9",
-      "cas_number": "96-13-9",
+      "substance_name": "2,2-bis(bromomethyl)propane-1,3-diol (BMP)",
+      "ec_number": "221-967-7",
+      "cas_number": "3296-90-0",
       "date_included": "08-Jul-2021",
       "reason": "Carcinogenic (Article 57a)",
       "decision": "https://echa.europa.eu/documents/10162/27d5b22f-c74a-00c5-e988-d0d4db720822"
@@ -723,14 +724,6 @@
       "decision": "https://echa.europa.eu/documents/10162/7fc5894b-3785-4c7f-bba8-5a172ad287a7"
     },
     {
-      "substance_name": "Stannane, dioctyl-, bis(coco acyloxy) derivs.",
-      "ec_number": "293-901-5",
-      "cas_number": "91648-39-4",
-      "date_included": "19-Jan-2021",
-      "reason": "Toxic for reproduction (Article 57c)",
-      "decision": "https://echa.europa.eu/documents/10162/7fc5894b-3785-4c7f-bba8-5a172ad287a7"
-    },
-    {
       "substance_name": "Dioctyltin dilaurate",
       "ec_number": "222-883-3",
       "cas_number": "3648-18-8",
@@ -742,6 +735,14 @@
       "substance_name": "dioctyltin dilaurate; stannane, dioctyl-, bis(coco acyloxy) derivs.",
       "ec_number": "-",
       "cas_number": "-",
+      "date_included": "19-Jan-2021",
+      "reason": "Toxic for reproduction (Article 57c)",
+      "decision": "https://echa.europa.eu/documents/10162/7fc5894b-3785-4c7f-bba8-5a172ad287a7"
+    },
+    {
+      "substance_name": "Stannane, dioctyl-, bis(coco acyloxy) derivs.",
+      "ec_number": "293-901-5",
+      "cas_number": "91648-39-4",
       "date_included": "19-Jan-2021",
       "reason": "Toxic for reproduction (Article 57c)",
       "decision": "https://echa.europa.eu/documents/10162/7fc5894b-3785-4c7f-bba8-5a172ad287a7"
@@ -795,38 +796,6 @@
       "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
     },
     {
-      "substance_name": "1,1,2,2,3,3,4,4,4-nonafluorobutane-1-sulphonic acid",
-      "ec_number": "206-793-1",
-      "cas_number": "375-73-5",
-      "date_included": "16-Jan-2020",
-      "reason": "Equivalent level of concern having probable serious effects to human health (Article 57(f) - human health)\"Equivalent level of concern having probable serious effects to the environment (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
-    },
-    {
-      "substance_name": "Potassium 1,1,2,2,3,3,4,4,4-nonafluorobutane-1-sulphonate",
-      "ec_number": "249-616-3",
-      "cas_number": "29420-49-3",
-      "date_included": "16-Jan-2020",
-      "reason": "Equivalent level of concern having probable serious effects to human health (Article 57(f) - human health)\"Equivalent level of concern having probable serious effects to the environment (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
-    },
-    {
-      "substance_name": "Ammonium 1,1,2,2,3,3,4,4,4-nonafluorobutane-1-sulphonate",
-      "ec_number": "269-513-7",
-      "cas_number": "68259-10-9",
-      "date_included": "16-Jan-2020",
-      "reason": "Equivalent level of concern having probable serious effects to human health (Article 57(f) - human health)\"Equivalent level of concern having probable serious effects to the environment (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
-    },
-    {
-      "substance_name": "N,N,N-triethylethanaminium 1,1,2,2,3,3,4,4,4-nonafluorobutane-1-sulfonate",
-      "ec_number": "-",
-      "cas_number": "25628-08-4",
-      "date_included": "16-Jan-2020",
-      "reason": "Equivalent level of concern having probable serious effects to human health (Article 57(f) - human health)\"Equivalent level of concern having probable serious effects to the environment (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
-    },
-    {
       "substance_name": "bis(4-t-butylphenyl)iodonium perfluorobutanesulfonate",
       "ec_number": "432-660-4",
       "cas_number": "194999-85-4",
@@ -835,9 +804,9 @@
       "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
     },
     {
-      "substance_name": "morpholinium perfluorobutanesulfonate",
-      "ec_number": "-",
-      "cas_number": "503155-89-3",
+      "substance_name": "tetrabutyl-phosphonium nonafluoro-butane-1-sulfonate",
+      "ec_number": "444-440-5",
+      "cas_number": "220689-12-3",
       "date_included": "16-Jan-2020",
       "reason": "Equivalent level of concern having probable serious effects to human health (Article 57(f) - human health)\"Equivalent level of concern having probable serious effects to the environment (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
@@ -867,6 +836,14 @@
       "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
     },
     {
+      "substance_name": "1,1,2,2,3,3,4,4,4-nonafluorobutane-1-sulphonic acid",
+      "ec_number": "206-793-1",
+      "cas_number": "375-73-5",
+      "date_included": "16-Jan-2020",
+      "reason": "Equivalent level of concern having probable serious effects to human health (Article 57(f) - human health)\"Equivalent level of concern having probable serious effects to the environment (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
+    },
+    {
       "substance_name": "magnesium perfluorobutanesulfonate",
       "ec_number": "-",
       "cas_number": "507453-86-3",
@@ -883,9 +860,33 @@
       "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
     },
     {
-      "substance_name": "tetrabutyl-phosphonium nonafluoro-butane-1-sulfonate",
-      "ec_number": "444-440-5",
-      "cas_number": "220689-12-3",
+      "substance_name": "morpholinium perfluorobutanesulfonate",
+      "ec_number": "-",
+      "cas_number": "503155-89-3",
+      "date_included": "16-Jan-2020",
+      "reason": "Equivalent level of concern having probable serious effects to human health (Article 57(f) - human health)\"Equivalent level of concern having probable serious effects to the environment (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
+    },
+    {
+      "substance_name": "Potassium 1,1,2,2,3,3,4,4,4-nonafluorobutane-1-sulphonate",
+      "ec_number": "249-616-3",
+      "cas_number": "29420-49-3",
+      "date_included": "16-Jan-2020",
+      "reason": "Equivalent level of concern having probable serious effects to human health (Article 57(f) - human health)\"Equivalent level of concern having probable serious effects to the environment (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
+    },
+    {
+      "substance_name": "Ammonium 1,1,2,2,3,3,4,4,4-nonafluorobutane-1-sulphonate",
+      "ec_number": "269-513-7",
+      "cas_number": "68259-10-9",
+      "date_included": "16-Jan-2020",
+      "reason": "Equivalent level of concern having probable serious effects to human health (Article 57(f) - human health)\"Equivalent level of concern having probable serious effects to the environment (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
+    },
+    {
+      "substance_name": "N,N,N-triethylethanaminium 1,1,2,2,3,3,4,4,4-nonafluorobutane-1-sulfonate",
+      "ec_number": "-",
+      "cas_number": "25628-08-4",
       "date_included": "16-Jan-2020",
       "reason": "Equivalent level of concern having probable serious effects to human health (Article 57(f) - human health)\"Equivalent level of concern having probable serious effects to the environment (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/079c04a0-2464-4168-f132-a22ffb04d910"
@@ -923,14 +924,6 @@
       "decision": "https://echa.europa.eu/documents/10162/a661cbe6-c805-b9c7-1287-53dee5cd1df5\"https://echa.europa.eu/documents/10162/f162b35e-2aac-6b5a-a3de-3290bedd8805"
     },
     {
-      "substance_name": "tris(nonylphenyl) phosphite",
-      "ec_number": "247-759-6",
-      "cas_number": "26523-78-4",
-      "date_included": "16-Jul-2019",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/a661cbe6-c805-b9c7-1287-53dee5cd1df5\"https://echa.europa.eu/documents/10162/f162b35e-2aac-6b5a-a3de-3290bedd8805"
-    },
-    {
       "substance_name": "Phenol, 4-nonyl-, phosphite (3:1)",
       "ec_number": "-",
       "cas_number": "3050-88-2",
@@ -942,6 +935,14 @@
       "substance_name": "tris(4-nonylphenyl, branched) phosphite",
       "ec_number": "-",
       "cas_number": "-",
+      "date_included": "16-Jul-2019",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/a661cbe6-c805-b9c7-1287-53dee5cd1df5\"https://echa.europa.eu/documents/10162/f162b35e-2aac-6b5a-a3de-3290bedd8805"
+    },
+    {
+      "substance_name": "tris(nonylphenyl) phosphite",
+      "ec_number": "247-759-6",
+      "cas_number": "26523-78-4",
       "date_included": "16-Jul-2019",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/a661cbe6-c805-b9c7-1287-53dee5cd1df5\"https://echa.europa.eu/documents/10162/f162b35e-2aac-6b5a-a3de-3290bedd8805"
@@ -1171,17 +1172,17 @@
       "decision": "https://echa.europa.eu/documents/10162/339e0894-361d-ab6c-615f-7e201376d128"
     },
     {
-      "substance_name": "Reaction product of 1,3,4-thiadiazolidine-2,5-dithione, formaldehyde and phenol, heptyl derivs.",
-      "ec_number": "-",
-      "cas_number": "1471311-26-8",
+      "substance_name": "Formaldehyde, reaction products with branched and linear heptylphenol, carbon disulfide and hydrazine",
+      "ec_number": "300-298-5",
+      "cas_number": "93925-00-9",
       "date_included": "15-Jan-2018",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/339e0894-361d-ab6c-615f-7e201376d128"
     },
     {
-      "substance_name": "Formaldehyde, reaction products with branched and linear heptylphenol, carbon disulfide and hydrazine",
-      "ec_number": "300-298-5",
-      "cas_number": "93925-00-9",
+      "substance_name": "Reaction product of 1,3,4-thiadiazolidine-2,5-dithione, formaldehyde and phenol, heptyl derivs.",
+      "ec_number": "-",
+      "cas_number": "1471311-26-8",
       "date_included": "15-Jan-2018",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/339e0894-361d-ab6c-615f-7e201376d128"
@@ -1243,14 +1244,6 @@
       "decision": "https://echa.europa.eu/documents/10162/48495b62-d4d3-e6fc-bf86-f42fd4f2e6dc"
     },
     {
-      "substance_name": "(1S,2S,5S,6S,9R,10R,13R,14R)-1,6,7,8,9,14,15,16,17,17,18,18-Dodecachloropentacyclo[12.2.1.1\u2076,\u2079.0\u00b2,\u00b9\u00b3.0\u2075,\u00b9\u2070]octadeca-7,15-diene",
-      "ec_number": "-",
-      "cas_number": "135821-74-8",
-      "date_included": "15-Jan-2018",
-      "reason": "vPvB (Article 57e)",
-      "decision": "https://echa.europa.eu/documents/10162/48495b62-d4d3-e6fc-bf86-f42fd4f2e6dc"
-    },
-    {
       "substance_name": "1,6,7,8,9,14,15,16,17,17,18,18-dodecachloropentacyclo[12.2.1.16,9.02,13.05,10]octadeca-7,15-diene",
       "ec_number": "236-948-9",
       "cas_number": "13560-89-9",
@@ -1259,7 +1252,15 @@
       "decision": "https://echa.europa.eu/documents/10162/48495b62-d4d3-e6fc-bf86-f42fd4f2e6dc"
     },
     {
-      "substance_name": "rel-(1R,4S,4aS,6aS,7S,10R,10aR,12aR)-1,2,3,4,7,8,9,10,13,13,14,14-dodecachloro-1,4,4a,5,6,6a,7,10,10a,11,12,12a-dodecahydro-1,4:7,10-dimethanodibenzo[a,e]cyclooctene",
+      "substance_name": "(1S,2S,5S,6S,9R,10R,13R,14R)-1,6,7,8,9,14,15,16,17,17,18,18-Dodecachloropentacyclo[12.2.1.1\u2076,\u2079.0\u00b2,\u00b9\u00b3.0\u2075,\u00b9\u2070]octadeca-7,15-diene",
+      "ec_number": "-",
+      "cas_number": "135821-74-8",
+      "date_included": "15-Jan-2018",
+      "reason": "vPvB (Article 57e)",
+      "decision": "https://echa.europa.eu/documents/10162/48495b62-d4d3-e6fc-bf86-f42fd4f2e6dc"
+    },
+    {
+      "substance_name": "rel-(1R,4S,4aS,6aR,7R,10S,10aS,12aR)-1,2,3,4,7,8,9,10,13,13,14,14-dodecachloro-1,4,4a,5,6,6a,7,10,10a,11,12,12a-dodecahydro-1,4:7,10-dimethanodibenzo[a,e]cyclooctene",
       "ec_number": "-",
       "cas_number": "-",
       "date_included": "15-Jan-2018",
@@ -1267,7 +1268,7 @@
       "decision": "https://echa.europa.eu/documents/10162/48495b62-d4d3-e6fc-bf86-f42fd4f2e6dc"
     },
     {
-      "substance_name": "rel-(1R,4S,4aS,6aR,7R,10S,10aS,12aR)-1,2,3,4,7,8,9,10,13,13,14,14-dodecachloro-1,4,4a,5,6,6a,7,10,10a,11,12,12a-dodecahydro-1,4:7,10-dimethanodibenzo[a,e]cyclooctene",
+      "substance_name": "rel-(1R,4S,4aS,6aS,7S,10R,10aR,12aR)-1,2,3,4,7,8,9,10,13,13,14,14-dodecachloro-1,4,4a,5,6,6a,7,10,10a,11,12,12a-dodecahydro-1,4:7,10-dimethanodibenzo[a,e]cyclooctene",
       "ec_number": "-",
       "cas_number": "-",
       "date_included": "15-Jan-2018",
@@ -1915,9 +1916,49 @@
       "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
     },
     {
-      "substance_name": "Reaction mass of 5-sec-butyl-2-(2,4-dimethylcyclohex-3-en-1-yl)-5-methyl-1,3-dioxane and 5-sec-butyl-2-(4,6-dimethylcyclohex-3-en-1-yl)-5-methyl-1,3-dioxane",
-      "ec_number": "413-720-9",
+      "substance_name": "Reaction mass of 5-[(2R)-butan-2-yl]-2-[(1R,2R)-2,4-dimethylcyclohex-3-en-1-yl]-5-methyl-1,3-dioxane and 5-[(2R)-butan-2-yl]-2-[(1R,6R)-4,6-dimethylcyclohex-3-en-1-yl]-5-methyl-1,3-dioxane and 5-[(2S)-butan-2-yl]-2-[(1R,2R)-2,4-dimethylcyclohex-3-en-1-yl]-5-methyl-1,3-dioxane and 5-[(2S)-butan-2-yl]-2-[(1S,2R)-2,4-dimethylcyclohex-3-en-1-yl]-5-methyl-1,3-dioxane and 5-[(2S)-butan-2-yl]-2-[(1S,6R)-4,6-dimethylcyclohex-3-en-1-yl]-5-methyl-1,3-dioxane",
+      "ec_number": "-",
       "cas_number": "-",
+      "date_included": "15-Jun-2015",
+      "reason": "vPvB (Article 57e)",
+      "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
+    },
+    {
+      "substance_name": "1,3-Dioxane, 2-(2,4-dimethyl-3-cyclohexen-1-yl)-5-methyl-5-(1-methylpropyl)-",
+      "ec_number": "-",
+      "cas_number": "117933-89-8",
+      "date_included": "15-Jun-2015",
+      "reason": "vPvB (Article 57e)",
+      "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
+    },
+    {
+      "substance_name": "5-sec-butyl-2-(4,6-dimethylcyclohex-3-en-1-yl)-5-methyl-1,3-dioxane",
+      "ec_number": "-",
+      "cas_number": "-",
+      "date_included": "15-Jun-2015",
+      "reason": "vPvB (Article 57e)",
+      "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
+    },
+    {
+      "substance_name": "1,3-Dioxane, 2-[(1R,2R)-2,4-dimethyl-3-cyclohexen-1-yl]-5-methyl-5-(1-methylpropyl)-, cis-",
+      "ec_number": "-",
+      "cas_number": "676367-05-8",
+      "date_included": "15-Jun-2015",
+      "reason": "vPvB (Article 57e)",
+      "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
+    },
+    {
+      "substance_name": "1,3-Dioxane, 2-[(1R,2R)-2,4-dimethyl-3-cyclohexen-1-yl]-5-methyl-5-(1-methylpropyl)-, cis-rel-",
+      "ec_number": "-",
+      "cas_number": "343934-04-3",
+      "date_included": "15-Jun-2015",
+      "reason": "vPvB (Article 57e)",
+      "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
+    },
+    {
+      "substance_name": "1,3-Dioxane, 2-[(1R,2R)-2,4-dimethyl-3-cyclohexen-1-yl]-5-methyl-5-(1-methylpropyl)-, trans-",
+      "ec_number": "-",
+      "cas_number": "676367-09-2",
       "date_included": "15-Jun-2015",
       "reason": "vPvB (Article 57e)",
       "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
@@ -1979,8 +2020,8 @@
       "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
     },
     {
-      "substance_name": "Reaction mass of 5-[(2R)-butan-2-yl]-2-[(1R,2R)-2,4-dimethylcyclohex-3-en-1-yl]-5-methyl-1,3-dioxane and 5-[(2R)-butan-2-yl]-2-[(1R,6R)-4,6-dimethylcyclohex-3-en-1-yl]-5-methyl-1,3-dioxane and 5-[(2S)-butan-2-yl]-2-[(1R,2R)-2,4-dimethylcyclohex-3-en-1-yl]-5-methyl-1,3-dioxane and 5-[(2S)-butan-2-yl]-2-[(1S,2R)-2,4-dimethylcyclohex-3-en-1-yl]-5-methyl-1,3-dioxane and 5-[(2S)-butan-2-yl]-2-[(1S,6R)-4,6-dimethylcyclohex-3-en-1-yl]-5-methyl-1,3-dioxane",
-      "ec_number": "-",
+      "substance_name": "Reaction mass of 5-sec-butyl-2-(2,4-dimethylcyclohex-3-en-1-yl)-5-methyl-1,3-dioxane and 5-sec-butyl-2-(4,6-dimethylcyclohex-3-en-1-yl)-5-methyl-1,3-dioxane",
+      "ec_number": "413-720-9",
       "cas_number": "-",
       "date_included": "15-Jun-2015",
       "reason": "vPvB (Article 57e)",
@@ -1990,46 +2031,6 @@
       "substance_name": "5-sec-butyl-2-(2,4-dimethylcyclohex-3-en-1-yl)-5-methyl-1,3-dioxane",
       "ec_number": "-",
       "cas_number": "-",
-      "date_included": "15-Jun-2015",
-      "reason": "vPvB (Article 57e)",
-      "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
-    },
-    {
-      "substance_name": "5-sec-butyl-2-(4,6-dimethylcyclohex-3-en-1-yl)-5-methyl-1,3-dioxane",
-      "ec_number": "-",
-      "cas_number": "-",
-      "date_included": "15-Jun-2015",
-      "reason": "vPvB (Article 57e)",
-      "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
-    },
-    {
-      "substance_name": "1,3-Dioxane, 2-[(1R,2R)-2,4-dimethyl-3-cyclohexen-1-yl]-5-methyl-5-(1-methylpropyl)-, cis-",
-      "ec_number": "-",
-      "cas_number": "676367-05-8",
-      "date_included": "15-Jun-2015",
-      "reason": "vPvB (Article 57e)",
-      "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
-    },
-    {
-      "substance_name": "1,3-Dioxane, 2-[(1R,2R)-2,4-dimethyl-3-cyclohexen-1-yl]-5-methyl-5-(1-methylpropyl)-, cis-rel-",
-      "ec_number": "-",
-      "cas_number": "343934-04-3",
-      "date_included": "15-Jun-2015",
-      "reason": "vPvB (Article 57e)",
-      "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
-    },
-    {
-      "substance_name": "1,3-Dioxane, 2-[(1R,2R)-2,4-dimethyl-3-cyclohexen-1-yl]-5-methyl-5-(1-methylpropyl)-, trans-",
-      "ec_number": "-",
-      "cas_number": "676367-09-2",
-      "date_included": "15-Jun-2015",
-      "reason": "vPvB (Article 57e)",
-      "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
-    },
-    {
-      "substance_name": "1,3-Dioxane, 2-(2,4-dimethyl-3-cyclohexen-1-yl)-5-methyl-5-(1-methylpropyl)-",
-      "ec_number": "-",
-      "cas_number": "117933-89-8",
       "date_included": "15-Jun-2015",
       "reason": "vPvB (Article 57e)",
       "decision": "https://echa.europa.eu/documents/10162/f7c78fc1-bc3e-4913-9a8f-1f57e03326e4"
@@ -2075,17 +2076,17 @@
       "decision": "https://echa.europa.eu/documents/10162/9e3c41d5-088a-47e7-944a-2ccb112493b3"
     },
     {
-      "substance_name": "Sulfuric acid, cadmium salt, hydrate (3:3:8)",
-      "ec_number": "616-572-5",
-      "cas_number": "7790-84-3",
+      "substance_name": "Sulfuric acid, cadmium salt (1:1), hydrate",
+      "ec_number": "626-360-4",
+      "cas_number": "15244-35-6",
       "date_included": "17-Dec-2014",
       "reason": "Carcinogenic (Article 57a)\"Mutagenic (Article 57b)\"Toxic for reproduction (Article 57c)\"Specific target organ toxicity after repeated exposure (Article 57(f) - human health)",
       "decision": "https://echa.europa.eu/documents/10162/9e3c41d5-088a-47e7-944a-2ccb112493b3"
     },
     {
-      "substance_name": "Sulfuric acid, cadmium salt (1:1), hydrate",
-      "ec_number": "626-360-4",
-      "cas_number": "15244-35-6",
+      "substance_name": "Sulfuric acid, cadmium salt, hydrate (3:3:8)",
+      "ec_number": "616-572-5",
+      "cas_number": "7790-84-3",
       "date_included": "17-Dec-2014",
       "reason": "Carcinogenic (Article 57a)\"Mutagenic (Article 57b)\"Toxic for reproduction (Article 57c)\"Specific target organ toxicity after repeated exposure (Article 57(f) - human health)",
       "decision": "https://echa.europa.eu/documents/10162/9e3c41d5-088a-47e7-944a-2ccb112493b3"
@@ -2139,17 +2140,17 @@
       "decision": "https://echa.europa.eu/documents/10162/b5ae52f9-bb66-62b5-9950-242db987ec5a"
     },
     {
-      "substance_name": "Perboric acid (HBO(O2)), sodium salt, tetrahydrate",
+      "substance_name": "Perboric acid, sodium salt, tetrahydrate ()",
       "ec_number": "-",
-      "cas_number": "10486-00-7",
+      "cas_number": "37244-98-7",
       "date_included": "16-Jun-2014",
       "reason": "Toxic for reproduction (Article 57c)",
       "decision": "https://echa.europa.eu/documents/10162/b5ae52f9-bb66-62b5-9950-242db987ec5a"
     },
     {
-      "substance_name": "Perboric acid, sodium salt, tetrahydrate ()",
+      "substance_name": "Perboric acid (HBO(O2)), sodium salt, tetrahydrate",
       "ec_number": "-",
-      "cas_number": "37244-98-7",
+      "cas_number": "10486-00-7",
       "date_included": "16-Jun-2014",
       "reason": "Toxic for reproduction (Article 57c)",
       "decision": "https://echa.europa.eu/documents/10162/b5ae52f9-bb66-62b5-9950-242db987ec5a"
@@ -2339,17 +2340,9 @@
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
     },
     {
-      "substance_name": "4-Nonylphenol, ethoxylated",
-      "ec_number": "500-045-0",
-      "cas_number": "26027-38-3",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "20-(4-nonylphenoxy)-3,6,9,12,15,18-hexaoxaicosan-1-ol",
-      "ec_number": "248-743-1",
-      "cas_number": "27942-27-4",
+      "substance_name": "14-(nonylphenoxy)-3,6,9,12-tetraoxatetradecan-1-ol",
+      "ec_number": "247-555-7",
+      "cas_number": "26264-02-8",
       "date_included": "20-Jun-2013",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
@@ -2363,65 +2356,9 @@
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
     },
     {
-      "substance_name": "2-[2-(nonylphenoxy)ethoxy]ethanol",
-      "ec_number": "248-291-5",
-      "cas_number": "27176-93-8",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "14-(nonylphenoxy)-3,6,9,12-tetraoxatetradecan-1-ol",
-      "ec_number": "247-555-7",
-      "cas_number": "26264-02-8",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "2-[2-[2-[2-(4-nonylphenoxy)ethoxy]ethoxy]ethoxy]ethanol",
-      "ec_number": "230-770-5",
-      "cas_number": "7311-27-5",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "2-[2-(4-nonylphenoxy)ethoxy]ethanol",
-      "ec_number": "243-816-4",
-      "cas_number": "20427-84-3",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "26-(4-Nonylphenoxy)-3,6,9,12,15,18,21,24- octaoxahexacosan -1-ol",
+      "substance_name": "2-{2-[4-(3,6-dimethylheptan-3-yl)phenoxy]ethoxy}ethanol",
       "ec_number": "-",
-      "cas_number": "14409-72-4",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "4-Nonylphenol, branched, ethoxylated",
-      "ec_number": "500-315-8",
-      "cas_number": "127087-87-0",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "Nonylphenol, branched, ethoxylated",
-      "ec_number": "500-209-1",
-      "cas_number": "68412-54-4",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "2-(nonylphenoxy)ethanol",
-      "ec_number": "248-762-5",
-      "cas_number": "27986-36-3",
+      "cas_number": "1119449-38-5",
       "date_included": "20-Jun-2013",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
@@ -2435,145 +2372,73 @@
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
     },
     {
-      "substance_name": "2-{2-[4-(3,6-dimethylheptan-3-yl)phenoxy]ethoxy}ethanol",
+      "substance_name": "2-[2-[2-[2-(4-nonylphenoxy)ethoxy]ethoxy]ethoxy]ethanol",
+      "ec_number": "230-770-5",
+      "cas_number": "7311-27-5",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "4-Nonylphenol, ethoxylated",
+      "ec_number": "500-045-0",
+      "cas_number": "26027-38-3",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "2-(nonylphenoxy)ethanol",
+      "ec_number": "248-762-5",
+      "cas_number": "27986-36-3",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "4-Nonylphenol, branched, ethoxylated",
+      "ec_number": "500-315-8",
+      "cas_number": "127087-87-0",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "26-(4-Nonylphenoxy)-3,6,9,12,15,18,21,24- octaoxahexacosan -1-ol",
       "ec_number": "-",
-      "cas_number": "1119449-38-5",
+      "cas_number": "14409-72-4",
       "date_included": "20-Jun-2013",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
     },
     {
-      "substance_name": "Nonylphenol, ethoxylated (EO = 4)",
-      "ec_number": "-",
-      "cas_number": "-",
+      "substance_name": "2-[2-(nonylphenoxy)ethoxy]ethanol",
+      "ec_number": "248-291-5",
+      "cas_number": "27176-93-8",
       "date_included": "20-Jun-2013",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
     },
     {
-      "substance_name": "2-(4-nonylphenoxy)ethanol",
-      "ec_number": "-",
-      "cas_number": "104-35-8",
+      "substance_name": "2-[2-(4-nonylphenoxy)ethoxy]ethanol",
+      "ec_number": "243-816-4",
+      "cas_number": "20427-84-3",
       "date_included": "20-Jun-2013",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
     },
     {
-      "substance_name": "4-t-Nonylphenol-diethoxylate",
-      "ec_number": "-",
-      "cas_number": "156609-10-8",
+      "substance_name": "20-(4-nonylphenoxy)-3,6,9,12,15,18-hexaoxaicosan-1-ol",
+      "ec_number": "248-743-1",
+      "cas_number": "27942-27-4",
       "date_included": "20-Jun-2013",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
     },
     {
-      "substance_name": "3,6,9,12-Tetraoxatetradecan-1-ol, 14-(4-nonylphenoxy)-",
-      "ec_number": "-",
-      "cas_number": "20636-48-0",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "3,6,9,12,15-Pentaoxaheptadecan-1-ol, 17-(nonylphenoxy)-",
-      "ec_number": "-",
-      "cas_number": "27177-01-1",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "3,6,9,12,15,18,21,24,27-Nonaoxanonacosan-1-ol, 29-(isononylphenoxy)-",
-      "ec_number": "-",
-      "cas_number": "65455-72-3",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "3,6,9,12-Tetraoxatetradecan-1-ol, 14-(4-nonylphenoxy)-, branched",
-      "ec_number": "293-926-1",
-      "cas_number": "91648-64-5",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "44-(nonylphenoxy)-3,6,9,12,15,18,21,24,27,30,33,36,39,42-tetradecaoxatetratetracontanol",
-      "ec_number": "260-678-0",
-      "cas_number": "57321-10-5",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "20-(isononylphenoxy)-3,6,9,12,15,18-hexaoxaicosan-1-ol",
-      "ec_number": "265-785-6",
-      "cas_number": "65455-69-8",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "26-(nonylphenoxy)-3,6,9,12,15,18,21,24-octaoxahexacosan-1-ol;",
-      "ec_number": "255-695-5",
-      "cas_number": "42173-90-0",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "20-(nonylphenoxy)-3,6,9,12,15,18-hexaoxaicosan-1-ol",
-      "ec_number": "248-292-0",
-      "cas_number": "27177-03-3",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "17-(4-nonylphenoxy)-3,6,9,12,15-pentaoxaheptadecan-1-ol",
-      "ec_number": "-",
-      "cas_number": "34166-38-6",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "Isononylphenol, ethoxylated",
-      "ec_number": "-",
-      "cas_number": "37205-87-1",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "26-(nonylphenoxy)-3,6,9,12,15,18,21,24-octaoxahexacosan-1-ol",
-      "ec_number": "247-816-5",
-      "cas_number": "26571-11-9",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "29-(nonylphenoxy)-3,6,9,12,15,18,21,24,27-nonaoxanonacosanol",
-      "ec_number": "248-294-1",
-      "cas_number": "27177-08-8",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "Nonylphenol, ethoxylated (polymer)",
-      "ec_number": "-",
-      "cas_number": "-",
-      "date_included": "20-Jun-2013",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
-    },
-    {
-      "substance_name": "2-(isononylphenoxy)ethanol",
-      "ec_number": "284-987-5",
-      "cas_number": "85005-55-6",
+      "substance_name": "Nonylphenol, branched, ethoxylated",
+      "ec_number": "500-209-1",
+      "cas_number": "68412-54-4",
       "date_included": "20-Jun-2013",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
@@ -2595,9 +2460,9 @@
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
     },
     {
-      "substance_name": "Nonylphenol, ethoxylated (EO = 10)",
+      "substance_name": "4-Nonylphenol, branched, ethoxylated",
       "ec_number": "-",
-      "cas_number": "-",
+      "cas_number": "127087-87-0",
       "date_included": "20-Jun-2013",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
@@ -2611,23 +2476,151 @@
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
     },
     {
-      "substance_name": "4-Nonylphenol, branched, ethoxylated",
+      "substance_name": "2-(4-nonylphenoxy)ethanol",
       "ec_number": "-",
-      "cas_number": "127087-87-0",
+      "cas_number": "104-35-8",
       "date_included": "20-Jun-2013",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
     },
     {
-      "substance_name": "Nonylphenol, ethoxylated (15-EO)",
-      "ec_number": "-",
-      "cas_number": "9016-45-9",
+      "substance_name": "29-(nonylphenoxy)-3,6,9,12,15,18,21,24,27-nonaoxanonacosanol",
+      "ec_number": "248-294-1",
+      "cas_number": "27177-08-8",
       "date_included": "20-Jun-2013",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
     },
     {
-      "substance_name": "Nonylphenol, ethoxylated (10-EO)",
+      "substance_name": "20-(nonylphenoxy)-3,6,9,12,15,18-hexaoxaicosan-1-ol",
+      "ec_number": "248-292-0",
+      "cas_number": "27177-03-3",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "26-(nonylphenoxy)-3,6,9,12,15,18,21,24-octaoxahexacosan-1-ol",
+      "ec_number": "247-816-5",
+      "cas_number": "26571-11-9",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "26-(nonylphenoxy)-3,6,9,12,15,18,21,24-octaoxahexacosan-1-ol;",
+      "ec_number": "255-695-5",
+      "cas_number": "42173-90-0",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "20-(isononylphenoxy)-3,6,9,12,15,18-hexaoxaicosan-1-ol",
+      "ec_number": "265-785-6",
+      "cas_number": "65455-69-8",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "3,6,9,12,15,18,21,24,27-Nonaoxanonacosan-1-ol, 29-(isononylphenoxy)-",
+      "ec_number": "-",
+      "cas_number": "65455-72-3",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "44-(nonylphenoxy)-3,6,9,12,15,18,21,24,27,30,33,36,39,42-tetradecaoxatetratetracontanol",
+      "ec_number": "260-678-0",
+      "cas_number": "57321-10-5",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "3,6,9,12,15-Pentaoxaheptadecan-1-ol, 17-(nonylphenoxy)-",
+      "ec_number": "-",
+      "cas_number": "27177-01-1",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "3,6,9,12-Tetraoxatetradecan-1-ol, 14-(4-nonylphenoxy)-",
+      "ec_number": "-",
+      "cas_number": "20636-48-0",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "4-t-Nonylphenol-diethoxylate",
+      "ec_number": "-",
+      "cas_number": "156609-10-8",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "Isononylphenol, ethoxylated",
+      "ec_number": "-",
+      "cas_number": "37205-87-1",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "17-(4-nonylphenoxy)-3,6,9,12,15-pentaoxaheptadecan-1-ol",
+      "ec_number": "-",
+      "cas_number": "34166-38-6",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "Nonylphenol, ethoxylated (polymer)",
+      "ec_number": "-",
+      "cas_number": "-",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "Nonylphenol, ethoxylated (EO = 4)",
+      "ec_number": "-",
+      "cas_number": "-",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "Nonylphenol, ethoxylated (EO = 10)",
+      "ec_number": "-",
+      "cas_number": "-",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "2-(isononylphenoxy)ethanol",
+      "ec_number": "284-987-5",
+      "cas_number": "85005-55-6",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "3,6,9,12-Tetraoxatetradecan-1-ol, 14-(4-nonylphenoxy)-, branched",
+      "ec_number": "293-926-1",
+      "cas_number": "91648-64-5",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "Nonylphenol, ethoxylated (6,5-EO)",
       "ec_number": "-",
       "cas_number": "9016-45-9",
       "date_included": "20-Jun-2013",
@@ -2643,7 +2636,15 @@
       "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
     },
     {
-      "substance_name": "Nonylphenol, ethoxylated (6,5-EO)",
+      "substance_name": "Nonylphenol, ethoxylated (10-EO)",
+      "ec_number": "-",
+      "cas_number": "9016-45-9",
+      "date_included": "20-Jun-2013",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/fd80f890-fb73-4201-8e2f-06dc04eaf5a9"
+    },
+    {
+      "substance_name": "Nonylphenol, ethoxylated (15-EO)",
       "ec_number": "-",
       "cas_number": "9016-45-9",
       "date_included": "20-Jun-2013",
@@ -3011,17 +3012,17 @@
       "decision": "https://echa.europa.eu/documents/10162/b7a93309-0b81-4dbf-90e0-859bc0f41ce4"
     },
     {
-      "substance_name": "Cyclohexane-1,2-dicarboxylic anhydride",
-      "ec_number": "201-604-9",
-      "cas_number": "85-42-7",
+      "substance_name": "trans-cyclohexane-1,2-dicarboxylic anhydride",
+      "ec_number": "238-009-9",
+      "cas_number": "14166-21-3",
       "date_included": "19-Dec-2012",
       "reason": "Respiratory sensitising properties (Article 57(f) - human health)",
       "decision": "https://echa.europa.eu/documents/10162/b7a93309-0b81-4dbf-90e0-859bc0f41ce4"
     },
     {
-      "substance_name": "trans-cyclohexane-1,2-dicarboxylic anhydride",
-      "ec_number": "238-009-9",
-      "cas_number": "14166-21-3",
+      "substance_name": "Cyclohexane-1,2-dicarboxylic anhydride",
+      "ec_number": "201-604-9",
+      "cas_number": "85-42-7",
       "date_included": "19-Dec-2012",
       "reason": "Respiratory sensitising properties (Article 57(f) - human health)",
       "decision": "https://echa.europa.eu/documents/10162/b7a93309-0b81-4dbf-90e0-859bc0f41ce4"
@@ -3083,33 +3084,9 @@
       "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
     },
     {
-      "substance_name": "Phenol, 4-nonyl-, branched",
-      "ec_number": "284-325-5",
-      "cas_number": "84852-15-3",
-      "date_included": "19-Dec-2012",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
-    },
-    {
       "substance_name": "p-(1-methyloctyl)phenol",
       "ec_number": "241-427-4",
       "cas_number": "17404-66-9",
-      "date_included": "19-Dec-2012",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
-    },
-    {
-      "substance_name": "4-(1-ethyl-1-methylhexyl)phenol",
-      "ec_number": "257-907-1",
-      "cas_number": "52427-13-1",
-      "date_included": "19-Dec-2012",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
-    },
-    {
-      "substance_name": "4-(1-Ethyl-1,4-dimethylpentyl)phenol",
-      "ec_number": "-",
-      "cas_number": "142731-63-3",
       "date_included": "19-Dec-2012",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
@@ -3123,17 +3100,9 @@
       "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
     },
     {
-      "substance_name": "p-(1,1-dimethylheptyl)phenol",
-      "ec_number": "250-339-5",
-      "cas_number": "30784-30-6",
-      "date_included": "19-Dec-2012",
-      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
-      "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
-    },
-    {
-      "substance_name": "p-nonylphenol",
-      "ec_number": "203-199-4",
-      "cas_number": "104-40-5",
+      "substance_name": "4-(1-Ethyl-1,4-dimethylpentyl)phenol",
+      "ec_number": "-",
+      "cas_number": "142731-63-3",
       "date_included": "19-Dec-2012",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
@@ -3147,25 +3116,33 @@
       "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
     },
     {
-      "substance_name": "Isononylphenol",
-      "ec_number": "234-284-4",
-      "cas_number": "11066-49-2",
+      "substance_name": "p-(1,1-dimethylheptyl)phenol",
+      "ec_number": "250-339-5",
+      "cas_number": "30784-30-6",
       "date_included": "19-Dec-2012",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
     },
     {
-      "substance_name": "4-(3-ethylheptan-2-yl)phenol",
-      "ec_number": "-",
-      "cas_number": "186825-39-8",
+      "substance_name": "4-(1-ethyl-1-methylhexyl)phenol",
+      "ec_number": "257-907-1",
+      "cas_number": "52427-13-1",
       "date_included": "19-Dec-2012",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
     },
     {
-      "substance_name": "Nonylphenol",
-      "ec_number": "246-672-0",
-      "cas_number": "25154-52-3",
+      "substance_name": "p-nonylphenol",
+      "ec_number": "203-199-4",
+      "cas_number": "104-40-5",
+      "date_included": "19-Dec-2012",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
+    },
+    {
+      "substance_name": "Phenol, 4-nonyl-, branched",
+      "ec_number": "284-325-5",
+      "cas_number": "84852-15-3",
       "date_included": "19-Dec-2012",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
@@ -3182,6 +3159,30 @@
       "substance_name": "4-(1,1,5-Trimethylhexyl)phenol",
       "ec_number": "-",
       "cas_number": "521947-27-3",
+      "date_included": "19-Dec-2012",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
+    },
+    {
+      "substance_name": "Nonylphenol",
+      "ec_number": "246-672-0",
+      "cas_number": "25154-52-3",
+      "date_included": "19-Dec-2012",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
+    },
+    {
+      "substance_name": "4-(3-ethylheptan-2-yl)phenol",
+      "ec_number": "-",
+      "cas_number": "186825-39-8",
+      "date_included": "19-Dec-2012",
+      "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
+      "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
+    },
+    {
+      "substance_name": "Isononylphenol",
+      "ec_number": "234-284-4",
+      "cas_number": "11066-49-2",
       "date_included": "19-Dec-2012",
       "reason": "Endocrine disrupting properties (Article 57(f) - environment)",
       "decision": "https://echa.europa.eu/documents/10162/dea74d46-dc8e-4b10-947b-51a19d890153"
@@ -3691,9 +3692,9 @@
       "decision": "https://echa.europa.eu/documents/10162/7ec3a9eb-a9f6-4e82-9e7d-99794b3dc95e"
     },
     {
-      "substance_name": "Chromic acid",
-      "ec_number": "231-801-5",
-      "cas_number": "7738-94-5",
+      "substance_name": "Oligomers of chromic acid and dichromic acid",
+      "ec_number": "-",
+      "cas_number": "-",
       "date_included": "15-Dec-2010",
       "reason": "Carcinogenic (Article 57a)",
       "decision": "https://echa.europa.eu/documents/10162/7ec3a9eb-a9f6-4e82-9e7d-99794b3dc95e"
@@ -3707,9 +3708,9 @@
       "decision": "https://echa.europa.eu/documents/10162/7ec3a9eb-a9f6-4e82-9e7d-99794b3dc95e"
     },
     {
-      "substance_name": "Oligomers of chromic acid and dichromic acid",
-      "ec_number": "-",
-      "cas_number": "-",
+      "substance_name": "Chromic acid",
+      "ec_number": "231-801-5",
+      "cas_number": "7738-94-5",
       "date_included": "15-Dec-2010",
       "reason": "Carcinogenic (Article 57a)",
       "decision": "https://echa.europa.eu/documents/10162/7ec3a9eb-a9f6-4e82-9e7d-99794b3dc95e"
@@ -3787,17 +3788,17 @@
       "decision": "https://echa.europa.eu/documents/10162/6877f24b-c82b-4021-b05b-a25af94185c0"
     },
     {
-      "substance_name": "Boric acid",
-      "ec_number": "233-139-2",
-      "cas_number": "10043-35-3",
+      "substance_name": "Boric acid, crude natural",
+      "ec_number": "234-343-4",
+      "cas_number": "11113-50-1",
       "date_included": "18-Jun-2010",
       "reason": "Toxic for reproduction (Article 57c)",
       "decision": "https://echa.europa.eu/documents/10162/6877f24b-c82b-4021-b05b-a25af94185c0"
     },
     {
-      "substance_name": "Boric acid, crude natural",
-      "ec_number": "234-343-4",
-      "cas_number": "11113-50-1",
+      "substance_name": "Boric acid",
+      "ec_number": "233-139-2",
+      "cas_number": "10043-35-3",
       "date_included": "18-Jun-2010",
       "reason": "Toxic for reproduction (Article 57c)",
       "decision": "https://echa.europa.eu/documents/10162/6877f24b-c82b-4021-b05b-a25af94185c0"
@@ -3947,17 +3948,17 @@
       "decision": "https://echa.europa.eu/documents/10162/471aceac-4e5e-4c53-a4b2-23159a290893"
     },
     {
-      "substance_name": "Hexabromocyclododecane",
-      "ec_number": "247-148-4",
-      "cas_number": "25637-99-4",
+      "substance_name": "1,2,5,6,9,10-hexabromocyclododecane",
+      "ec_number": "221-695-9",
+      "cas_number": "3194-55-6",
       "date_included": "28-Oct-2008",
       "reason": "PBT (Article 57d)",
       "decision": "https://echa.europa.eu/documents/10162/471aceac-4e5e-4c53-a4b2-23159a290893"
     },
     {
-      "substance_name": "1,2,5,6,9,10-hexabromocyclododecane",
-      "ec_number": "221-695-9",
-      "cas_number": "3194-55-6",
+      "substance_name": "Hexabromocyclododecane",
+      "ec_number": "247-148-4",
+      "cas_number": "25637-99-4",
       "date_included": "28-Oct-2008",
       "reason": "PBT (Article 57d)",
       "decision": "https://echa.europa.eu/documents/10162/471aceac-4e5e-4c53-a4b2-23159a290893"
