@@ -169,7 +169,7 @@
 
   function ensureCta(card) {
     var cta = card.querySelector(".contact-now");
-    if (cta) { cta.focus(); return cta; }
+    if (cta) return cta;
 
     cta = document.createElement("button");
     cta.type = "button";
@@ -180,11 +180,26 @@
     return cta;
   }
 
+  // Single-select: only the most recently clicked tile keeps its CTA.
+  // Clicking another tile closes the previous one and moves the button.
+  function deactivateOthers(except) {
+    var opens = document.querySelectorAll(".pick.open");
+    for (var i = 0; i < opens.length; i++) {
+      if (opens[i] === except) continue;
+      opens[i].classList.remove("open");
+      opens[i].setAttribute("aria-expanded", "false");
+      var stale = opens[i].querySelector(".contact-now");
+      if (stale) stale.remove();
+    }
+  }
+
   function activateCard(card) {
+    deactivateOthers(card);
     var alreadyOpen = card.classList.contains("open");
     card.classList.add("open");
     card.setAttribute("aria-expanded", "true");
-    if (!alreadyOpen) ensureCta(card).focus();
+    ensureCta(card);
+    if (!alreadyOpen) card.querySelector(".contact-now").focus();
   }
 
   document.addEventListener("click", function (e) {

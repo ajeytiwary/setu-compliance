@@ -95,9 +95,10 @@ footer p:not(.muted){display:none}
 .pick:focus-visible{outline:2px solid var(--green);outline-offset:3px}
 .pick.open{border-color:var(--green);box-shadow:0 0 0 1px rgba(14,90,66,.3),var(--shadow)}
 .cards .featured.pick:hover,.cards .featured.pick.open{border-color:var(--lime);box-shadow:0 0 0 1px rgba(201,243,106,.45),var(--shadow)}
-.contact-now{display:inline-block;margin-top:14px;align-self:flex-start;background:var(--green);
+.contact-now{display:none;margin-top:14px;align-self:flex-start;background:var(--green);
   color:#fff;border:1px solid var(--green);border-radius:var(--radius-btn);padding:10px 16px;
   font:inherit;font-size:14px;font-weight:750;cursor:pointer}
+.pick.open .contact-now{display:inline-block}
 .contact-now:hover{background:var(--ink);border-color:var(--ink)}
 .proof .contact-now{margin-top:0;padding:6px 11px;font-size:11px;letter-spacing:.06em}
 
