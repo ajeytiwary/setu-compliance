@@ -31,11 +31,11 @@ The chrome never lies about where you are, and it never hides the disclaimer.
 
 - **Persistent header.** `nav` / `.topnav` is `position: sticky; top: 0` with an opaque
   backdrop. You can always reach Platform, Services, Pricing and the demo CTA.
-- **Persistent footer.** `footer` is `position: sticky; bottom: 0` and renders as a dark
-  ink assurance bar. The engineering-assurance disclaimer stays on screen at all times —
-  it is never scrolled away.
-- **Sticky, not fixed.** Both bars stay in normal flow, so no content is ever trapped
-  underneath them at the end of a page.
+- **Terminal footer.** `footer` is a normal-flow dark ink assurance bar at the
+  document end. It is only seen when scrolled all the way down — it never
+  overlays content mid-page.
+- **Sticky header, static footer.** Only the header is sticky, so no content is ever
+  trapped underneath chrome at the end of a page.
 - **Anchor-aware scrolling.** `scroll-padding-top: calc(var(--nav-h) + 20px)` keeps
   in-page anchors clear of the sticky header.
 

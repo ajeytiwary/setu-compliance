@@ -1,6 +1,8 @@
 /* EuroSetu public design system — principles
    1. Regulatory       one restrained radius scale (8 / 10 / 16 / 18px). No pill shapes, no playful geometry.
-   2. Trustworthy      opaque chrome. The brand header and the assurance disclaimer footer never leave the screen.
+   2. Trustworthy      opaque header. The brand header never leaves the screen;
+   the assurance disclaimer footer lives at the document end and is
+   only seen when scrolled all the way down.
    3. Professional     hairline 1px borders, a single accent green, depth reserved for featured surfaces only.
    4. Audit-grade      full keyboard focus rings, tabular figures, plain factual copy with no hype adjectives. */
 :root{--ink:#0b1f18;--green:#0e5a42;--lime:#c9f36a;--cream:#f5f2e8;--paper:#fffdf7;--card:#ffffff;--line:#d8d8cd;--red:#b83b2e;--muted:#64716b;--blue:#1f6feb;--amber:#9a6700;--shadow:0 1px 2px rgba(11,31,24,.06),0 8px 28px -12px rgba(11,31,24,.18);
@@ -69,7 +71,7 @@ ul{padding-left:20px;color:#4d5d56;flex:1}
 .team-grid small{color:var(--muted)}
 .hire-note{margin-top:16px;border-left:4px solid var(--lime);border-radius:var(--radius-chip);padding:18px 22px;background:var(--cream)}
 .vision p:last-child{font-size:21px;max-width:850px;color:#3c4d46}
-footer{position:sticky;bottom:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:26px;padding:14px var(--gutter);background:var(--ink);color:#c7d6ce;border-top:1px solid #1d3a30;font-size:12.5px;line-height:1.45}
+footer{display:flex;align-items:center;justify-content:space-between;gap:26px;padding:14px var(--gutter);background:var(--ink);color:#c7d6ce;border-top:1px solid #1d3a30;font-size:12.5px;line-height:1.45}
 footer .brand{color:#fff;white-space:nowrap}
 footer p{margin:0}
 footer .muted{color:#a9bcb3;text-align:right}
