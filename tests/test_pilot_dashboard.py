@@ -63,7 +63,8 @@ def test_pilot_evidence_cycle_end_to_end(monkeypatch):
     from app.rules import STEEL_EU_RULES
     from uuid import uuid4
     init_db()
-    client = TestClient(app)\n    headers=_auth(monkeypatch)
+    client = TestClient(app)
+    headers=_auth(monkeypatch)
     sid, sup = str(uuid4()), str(uuid4())
     now = "2026-09-29T00:00:00+00:00"
     with connect() as c:
