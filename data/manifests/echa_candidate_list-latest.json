@@ -1,18 +1,18 @@
 {
   "authority": "OFFICIAL",
-  "content_type": "text/csv",
+  "content_type": "text/plain",
   "dataset_id": "echa_candidate_list",
-  "effective_from": "2026-09-30",
+  "effective_from": "2026-10-01",
   "effective_to": null,
   "legal_authority": false,
-  "normalized_path": "data/normalized/echa_candidate_list/2026-09-30-eb462c11/normalized.json",
+  "normalized_path": "data/normalized/echa_candidate_list/2026-10-01-a70b1863/normalized.json",
   "normalizer_version": "source_normalizers/1.0",
   "parser_version": "source_resolvers/1.0",
   "provider_id": "echa_candidate_csv",
-  "raw_path": "data/raw/echa_candidate_list/2026-09-30-eb462c11/candidate_list_en.csv",
+  "raw_path": "data/raw/echa_candidate_list/2026-10-01-a70b1863/candidate_list_en.csv",
   "record_count": 507,
-  "retrieved_at": "2026-09-30T10:37:45.876182+00:00",
-  "sha256": "eb462c1122571850bbc54c67f35b148cea2b676eb063dddb884fa00473e780ac",
-  "source_url": "file:///tmp/echa_candidate_list_en_clean.csv",
-  "version": "2026-09-30-eb462c11"
+  "retrieved_at": "2026-10-01T09:53:15.737354+00:00",
+  "sha256": "a70b18635398e6a26fb08561264ca0d5c2d21444eca3ffa0f7030a37ef5a8413",
+  "source_url": "https://raw.githubusercontent.com/analeonescu/chemical-security-evals/main/data/chemicals_databases/candidate-list-of-svhc-for-authorisation-export.csv",
+  "version": "2026-10-01-a70b1863"
 }

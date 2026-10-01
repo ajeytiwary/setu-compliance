@@ -1,0 +1,18 @@
+{
+  "authority": "OFFICIAL",
+  "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "dataset_id": "cbam_benchmarks",
+  "effective_from": "2026-10-01",
+  "effective_to": null,
+  "legal_authority": false,
+  "normalized_path": "data/normalized/cbam_benchmarks/2026-10-01-b79108b0/normalized.json",
+  "normalizer_version": "source_normalizers/1.0",
+  "parser_version": "source_resolvers/1.0",
+  "provider_id": "eu_taxud_cbam_benchmarks",
+  "raw_path": "data/raw/cbam_benchmarks/2026-10-01-b79108b0/cbam-benchmarks.xlsx",
+  "record_count": 682,
+  "retrieved_at": "2026-10-01T09:53:15.289502+00:00",
+  "sha256": "b79108b025e697822f0f59de477fa68066c1c05c228fae2270cd230af84e8a7b",
+  "source_url": "https://taxation-customs.ec.europa.eu/document/download/9877523c-2a02-4926-a211-aefae7cf6d0d_en?filename=CBAM+Benchmarks_20260206.xlsx",
+  "version": "2026-10-01-b79108b0"
+}

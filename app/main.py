@@ -1,5 +1,5 @@
 from __future__ import annotations
-import hashlib,io,json,re,secrets,sqlite3,zipfile
+import hashlib,io,json,os,re,secrets,sqlite3,zipfile
 from datetime import datetime,timezone
 from pathlib import Path
 from uuid import uuid4
@@ -42,6 +42,16 @@ class LeadIn(BaseModel):
 class ContactIn(BaseModel):
  name:str; work_email:str; company:str|None=None; topic:str="General enquiry"; message:str|None=None; website:str|None=None
 EMAIL_RE=re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+def _notify_founder(payload:dict):
+ # Fire-and-forget: site button -> Worker /notify -> email FROM request@.
+ # Never blocks the signup; failures only audit-log.
+ import urllib.request
+ url=(os.getenv("EUROSETU_NOTIFY_URL") or "").strip()
+ if not url:return
+ body=dict(payload); secret=(os.getenv("EUROSETU_NOTIFY_SECRET") or "").strip()
+ if secret:body["secret"]=secret
+ try:req=urllib.request.Request(url,data=json.dumps(body).encode(),headers={"Content-Type":"application/json","User-Agent":"EuroSetu/1.0 (+https://eurosetu.trade)"},method="POST"); urllib.request.urlopen(req,timeout=6).read()
+ except Exception as e:print(f"[notify] worker notify failed: {e}",flush=True)
 def require_lead(request:Request):
  token=request.headers.get("x-eurosetu-lead-token") or request.query_params.get("lead_token")
  if not token:raise HTTPException(403,"Demo access requires the contact form (POST /api/leads) first")
@@ -87,6 +97,7 @@ def leads_create(x:LeadIn):
   lid=str(uuid4()); token=secrets.token_urlsafe(24)
   conn.execute("INSERT INTO leads(id,name,work_email,company,role,message,token,created_at) VALUES(?,?,?,?,?,?,?,?)",(lid,x.name.strip(),email,x.company.strip(),(x.role or "").strip() or None,(x.message or "").strip() or None,token,now))
   audit(conn,None,"lead.created",{"lead_id":lid,"company":x.company.strip()})
+  _notify_founder({"kind":"demo lead","email":email,"name":x.name.strip(),"company":x.company.strip(),"role":(x.role or "").strip(),"message":(x.message or "").strip()})
   return {"lead_id":lid,"token":token,"returning":False}
 @app.get("/api/leads/verify")
 def leads_verify(request:Request):
@@ -108,11 +119,56 @@ def contact_create(x:ContactIn):
  with connect() as conn:
   conn.execute("INSERT INTO contacts(id,name,work_email,company,topic,message,created_at) VALUES(?,?,?,?,?,?,?)",(cid,x.name.strip(),email,(x.company or "").strip() or None,topic,(x.message or "").strip() or None,now))
   audit(conn,None,"contact.created",{"contact_id":cid,"topic":topic})
+  _notify_founder({"kind":"contact","email":email,"name":x.name.strip(),"company":(x.company or "").strip(),"topic":topic,"message":(x.message or "").strip()})
  return {"received":True,"id":cid,"topic":topic}
-@app.get("/pilot",response_class=HTMLResponse)
-def pilot(request:Request):
+class AdminMintIn(BaseModel):
+ email:str; tenant:str|None=None; roles:list[str]|None=None; days:int|None=None
+@app.get("/admin",response_class=HTMLResponse)
+def admin_page():
+ p=STATIC/"admin.html"
+ return FileResponse(p) if p.exists() else HTMLResponse("<h1>Admin queue not deployed</h1>",status_code=503)
+@app.get("/api/admin/requests")
+def admin_requests(request:Request):
+ # Founder-only manual queue: every contact enquiry + demo lead, newest first,
+ # so pilot@eurosetu.trade mail can be matched to a one-click key mint.
+ # Also returns the pilot data-mode so /admin shows whether the live DB is
+ # still the JSW demo showcase or already holds client rows.
  from .security import require_request
- require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ require_request(request,"admin")
+ with connect() as conn:
+  contacts=rows(conn,"SELECT id,name,work_email,company,topic,message,created_at FROM contacts ORDER BY created_at DESC LIMIT 200")
+  leads=rows(conn,"SELECT id,name,work_email,company,role,message,created_at FROM leads ORDER BY created_at DESC LIMIT 200")
+ try:
+  from .pilot import pilot_overview as _ov
+  _o=_ov()
+  _mode={"data_mode":_o.get("data_mode"),"demo_shipment_count":_o.get("demo_shipment_count",0),"client_shipment_count":_o.get("client_shipment_count",0)}
+ except Exception:
+  _mode={"data_mode":"UNKNOWN","demo_shipment_count":0,"client_shipment_count":0}
+ return {"contacts":contacts,"leads":leads,**_mode}
+@app.post("/api/admin/mint",status_code=201)
+def admin_mint(x:AdminMintIn,request:Request):
+ # Manual issuance: founder copies the returned bearer key into Gmail and
+ # sends it to the requester. Nothing is auto-emailed from this endpoint.
+ from .security import require_request
+ p=require_request(request,"admin")
+ from .pilot_keys import DEFAULT_DAYS,DEFAULT_ROLES,DEFAULT_TENANT,mint_pilot_key
+ email=(x.email or "").strip().lower()
+ if not EMAIL_RE.match(email):raise HTTPException(422,"Valid requester email required")
+ tenant=(x.tenant or DEFAULT_TENANT or p.tenant_id).strip()
+ roles=list(x.roles) if x.roles else list(DEFAULT_ROLES)
+ days=int(x.days) if x.days else DEFAULT_DAYS
+ secret=os.getenv("EUROSETU_JWT_SECRET")
+ if not secret:raise HTTPException(503,"Production authentication is not configured")
+ try:token=mint_pilot_key(secret,tenant,roles,days,email)
+ except ValueError as e:raise HTTPException(422,str(e))
+ with connect() as conn:
+  audit(conn,None,"pilot.key_minted",{"email":email,"tenant":tenant,"roles":roles,"days":days,"issued_by":p.subject})
+ return {"email":email,"tenant":tenant,"roles":roles,"days":days,"token":token}
+@app.get("/pilot",response_class=HTMLResponse)
+def pilot():
+ # Public shell: the HTML loads for everyone so we can show a friendly
+ # "Pilot access required — contact us" popup. The data APIs below stay
+ # bearer-gated, so no pilot data leaks without a token.
  return FileResponse(STATIC/"pilot.html")
 @app.get("/pilot.js")
 def pilot_js():return FileResponse(STATIC/"pilot.js",media_type="application/javascript")

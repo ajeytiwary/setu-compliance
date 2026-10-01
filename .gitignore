@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .env
+.vscode/
+.workers/
+workers/.wrangler/
 data/*.db
 *.tmp
 .DS_Store
@@ -28,3 +31,9 @@ data/manifests/*
 !data/manifests/*.json
 data/manifests/*/*
 !data/manifests/**/*.json
+# Large generated demo snapshots: re-downloadable via sync scripts,
+# not source truth. Keep out of git (4-15MB each).
+data/normalized/industrial_telemetry_demo/
+data/normalized/cbam_defaults/
+data/manifests/industrial_telemetry_demo-latest.json
+data/manifests/cbam_defaults-latest.json

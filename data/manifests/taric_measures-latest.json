@@ -1,0 +1,18 @@
+{
+  "authority": "MIRROR",
+  "content_type": "application/zip",
+  "dataset_id": "taric_measures",
+  "effective_from": "2026-10-01",
+  "effective_to": null,
+  "legal_authority": false,
+  "normalized_path": "data/normalized/taric_measures/2026-10-01-3ae7a66a/normalized.json",
+  "normalizer_version": "source_normalizers/1.0",
+  "parser_version": "source_resolvers/1.0",
+  "provider_id": "taric_opendata_mirror",
+  "raw_path": "data/raw/taric_measures/2026-10-01-3ae7a66a/taric-delta-20260930.zip",
+  "record_count": 2477,
+  "retrieved_at": "2026-10-01T10:24:30.085967+00:00",
+  "sha256": "3ae7a66a6a25e9e1d7b965ce7784054a06a45cecc9082a024898eb7a3634d5d2",
+  "source_url": "https://github.com/rousseauxy/taric-opendata (daily delta Measures_20260930_1917.xlsx, 2026-10-01)",
+  "version": "2026-10-01-3ae7a66a"
+}

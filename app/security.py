@@ -49,7 +49,10 @@ def principal(request:Request)->Principal:
     auth=request.headers.get("authorization","")
     if not auth.lower().startswith("bearer "):
         raise HTTPException(401,"Bearer token required")
-    claims=_jwt(auth.split(None,1)[1])
+    parts=auth.split(None,1)
+    if len(parts)<2 or not parts[1].strip():
+        raise HTTPException(401,"Bearer token required")
+    claims=_jwt(parts[1].strip())
     subject=str(claims["sub"])
     requested_tenant=request.headers.get("x-eurosetu-tenant")
     memberships=claims.get("tenants") or {}

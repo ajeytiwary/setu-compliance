@@ -1,0 +1,18 @@
+{
+  "authority": "OFFICIAL_STATISTICS",
+  "content_type": "application/json",
+  "dataset_id": "comext_trade",
+  "effective_from": "2026-10-01",
+  "effective_to": null,
+  "legal_authority": false,
+  "normalized_path": "data/normalized/comext_trade/2026-10-01-5d038acb/normalized.json",
+  "normalizer_version": "source_normalizers/1.0",
+  "parser_version": "source_resolvers/1.0",
+  "provider_id": "eurostat_comext",
+  "raw_path": "data/raw/comext_trade/2026-10-01-5d038acb/comext.json",
+  "record_count": 24,
+  "retrieved_at": "2026-10-01T10:38:56.699675+00:00",
+  "sha256": "5d038acb4f3d86ebd88c90fcb46eaf9feca14c8477709602dda243b5f1e18fe2",
+  "source_url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/EXT_ST_EU27_2020SITC?format=JSON&lang=en&freq=M&stk_flow=IMP&indic_et=TRD_VAL&partner=IN&sitc06=SITC6&geo=EU27_2020&sinceTimePeriod=2024&untilTimePeriod=2025",
+  "version": "2026-10-01-5d038acb"
+}

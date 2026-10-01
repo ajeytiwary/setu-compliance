@@ -1,0 +1,779 @@
+{
+  "dataset_id": "steel_2026_1457",
+  "provider_id": "eurlex_2026_1457",
+  "version": "2026-09-30-dbdf81e7",
+  "source_url": "https://eur-lex.europa.eu/eli/reg_impl/2026/1457/oj/eng (Implementing Regulation (EU) 2026/1457, Annex I table captured 2026-09-30)",
+  "retrieved_at": "2026-10-01T10:24:30.299226+00:00",
+  "effective_from": "2026-09-30",
+  "effective_to": null,
+  "sha256": "dbdf81e7fae87814e4057b5b52bf9302730ede0e63efad412c562357e5749deb",
+  "content_type": "text/csv",
+  "record_count": 30,
+  "authority": "LEGAL",
+  "legal_authority": true,
+  "parser_version": "source_resolvers/1.0",
+  "normalizer_version": "source_normalizers/1.0",
+  "raw_path": "data/raw/steel_2026_1457/2026-09-30-dbdf81e7/steel-2026-1457-categories.csv",
+  "normalized_path": "data/normalized/steel_2026_1457/2026-09-30-dbdf81e7/normalized.json",
+  "transport": "PRIMARY",
+  "normalized_file": "data/normalized/steel_2026_1457/2026-09-30-dbdf81e7/normalized.json",
+  "records": [
+    {
+      "category": "1A",
+      "name": "Non Alloy and Other Alloy Hot Rolled Sheets and Strips",
+      "cn_codes": [
+        "72081000",
+        "72082500",
+        "72082600",
+        "72082700",
+        "72083600",
+        "72083700",
+        "72083800",
+        "72083900",
+        "72084000",
+        "72085210",
+        "72085299",
+        "72085310",
+        "72085390",
+        "72085400",
+        "72111300",
+        "72111400",
+        "72111900",
+        "72251910",
+        "72253010",
+        "72253030",
+        "72253090",
+        "72254015",
+        "72254090",
+        "72261910",
+        "72269120",
+        "72269191",
+        "72269199"
+      ],
+      "cn_count": 27,
+      "origin_country": "IN",
+      "order_number": "09.9803",
+      "period_quota_t": "597274.45",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "1B",
+      "name": "Non Alloy and Other Alloy Hot Rolled Sheets and Strips",
+      "cn_codes": [
+        "72126000"
+      ],
+      "cn_count": 1,
+      "origin_country": "OTHER",
+      "order_number": "09.9601",
+      "period_quota_t": "179.56",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "2",
+      "name": "Non Alloy and Other Alloy Cold Rolled Sheets",
+      "cn_codes": [
+        "72091500",
+        "72091690",
+        "72091790",
+        "72091891",
+        "72092500",
+        "72092690",
+        "72092790",
+        "72092890",
+        "72099020",
+        "72099080",
+        "72112320",
+        "72112330",
+        "72112380",
+        "72112900",
+        "72119020",
+        "72119080",
+        "72255020",
+        "72255080",
+        "72262000",
+        "72269200"
+      ],
+      "cn_count": 20,
+      "origin_country": "IN",
+      "order_number": "09.9818",
+      "period_quota_t": "269974.33",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "3A",
+      "name": "Electrical Sheets (other than GOES)",
+      "cn_codes": [
+        "72091610",
+        "72091710",
+        "72091810",
+        "72092610",
+        "72092710",
+        "72092810"
+      ],
+      "cn_count": 6,
+      "origin_country": "OTHER",
+      "order_number": "09.9603",
+      "period_quota_t": "29.08",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "3B",
+      "name": "Electrical Sheets (other than GOES)",
+      "cn_codes": [
+        "72251990",
+        "72261980"
+      ],
+      "cn_count": 2,
+      "origin_country": "OTHER",
+      "order_number": "09.9604",
+      "period_quota_t": "5915.02",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "4A",
+      "name": "Metallic Coated Sheets",
+      "cn_codes": [
+        "72125020",
+        "72104100",
+        "72104100",
+        "72104900",
+        "72104900",
+        "72106100",
+        "72106100",
+        "72106900",
+        "72106900",
+        "72123000",
+        "72123000",
+        "72125061",
+        "72125061",
+        "72125069",
+        "72125069",
+        "72259200",
+        "72259200",
+        "72259900",
+        "72259900",
+        "72259900",
+        "72259900",
+        "72259900",
+        "72259900",
+        "72259900",
+        "72259900",
+        "72269930",
+        "72269930",
+        "72269970",
+        "72269970",
+        "72269970",
+        "72269970",
+        "72269970"
+      ],
+      "cn_count": 32,
+      "origin_country": "IN",
+      "order_number": "09.9835",
+      "period_quota_t": "233183.38",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "4B",
+      "name": "Metallic Coated Sheets",
+      "cn_codes": [
+        "72102000",
+        "72103000",
+        "72109080",
+        "72122000",
+        "72125030",
+        "72125040",
+        "72125090",
+        "72259100",
+        "72269910",
+        "72104100",
+        "72104900",
+        "72106100",
+        "72106900",
+        "72123000",
+        "72125061",
+        "72125069",
+        "72259200",
+        "72259900",
+        "72259900",
+        "72269930",
+        "72269970",
+        "72269970"
+      ],
+      "cn_count": 22,
+      "origin_country": "IN",
+      "order_number": "09.9841",
+      "period_quota_t": "102043.66",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "5",
+      "name": "Organic Coated Sheets",
+      "cn_codes": [
+        "72107080",
+        "72124080"
+      ],
+      "cn_count": 2,
+      "origin_country": "IN",
+      "order_number": "09.9842",
+      "period_quota_t": "217337.73",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "6",
+      "name": "Tin Mill products",
+      "cn_codes": [
+        "72091899",
+        "72101100",
+        "72101220",
+        "72101280",
+        "72105000",
+        "72107010",
+        "72109040",
+        "72121010",
+        "72121090",
+        "72124020"
+      ],
+      "cn_count": 10,
+      "origin_country": "IN",
+      "order_number": "09.9853",
+      "period_quota_t": "47009.33",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "7",
+      "name": "Non Alloy and Other Alloy Quarto Plates",
+      "cn_codes": [
+        "72085120",
+        "72085191",
+        "72085198",
+        "72085291",
+        "72089020",
+        "72089080",
+        "72109030",
+        "72254012",
+        "72254040",
+        "72254060"
+      ],
+      "cn_count": 10,
+      "origin_country": "IN",
+      "order_number": "09.9856",
+      "period_quota_t": "210838.28",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "8",
+      "name": "Stainless Hot Rolled Sheets and Strips",
+      "cn_codes": [
+        "72191100",
+        "72191210",
+        "72191290",
+        "72191310",
+        "72191390",
+        "72191410",
+        "72191490",
+        "72192210",
+        "72192290",
+        "72192300",
+        "72192400",
+        "72201100",
+        "72201200"
+      ],
+      "cn_count": 13,
+      "origin_country": "IN",
+      "order_number": "09.9862",
+      "period_quota_t": "26019.13",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "9",
+      "name": "Stainless Cold Rolled Sheets and Strips",
+      "cn_codes": [
+        "72193100",
+        "72193210",
+        "72193290",
+        "72193310",
+        "72193390",
+        "72193410",
+        "72193490",
+        "72193510",
+        "72193590",
+        "72199020",
+        "72199080",
+        "72202021",
+        "72202029",
+        "72202041",
+        "72202049",
+        "72202081",
+        "72202089",
+        "72209020",
+        "72209080"
+      ],
+      "cn_count": 19,
+      "origin_country": "IN",
+      "order_number": "09.9873",
+      "period_quota_t": "38053.78",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "10",
+      "name": "Stainless Hot Rolled Quarto Plates",
+      "cn_codes": [
+        "72192110",
+        "72192190"
+      ],
+      "cn_count": 2,
+      "origin_country": "IN",
+      "order_number": "09.9875",
+      "period_quota_t": "5988.10",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "12",
+      "name": "Non Alloy and Other Alloy Merchant Bars and Light Sections",
+      "cn_codes": [
+        "72143000",
+        "72149110",
+        "72149190",
+        "72149931",
+        "72149939",
+        "72149950",
+        "72149971",
+        "72149979",
+        "72149995",
+        "72159000",
+        "72161000",
+        "72162100",
+        "72162200",
+        "72164010",
+        "72164090",
+        "72165010",
+        "72165091",
+        "72165099",
+        "72169900",
+        "72281020",
+        "72282010",
+        "72282091",
+        "72283020",
+        "72283041",
+        "72283049",
+        "72283061",
+        "72283070",
+        "72283089",
+        "72286020",
+        "72286080",
+        "72287010",
+        "72287090",
+        "72288000",
+        "72283069"
+      ],
+      "cn_count": 34,
+      "origin_country": "OTHER",
+      "order_number": "09.9613",
+      "period_quota_t": "47239.62",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "13",
+      "name": "Rebars",
+      "cn_codes": [
+        "72142000",
+        "72149910",
+        "72283069"
+      ],
+      "cn_count": 3,
+      "origin_country": "OTHER",
+      "order_number": "09.9614",
+      "period_quota_t": "63322.34",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "14",
+      "name": "Stainless Bars and Light Sections",
+      "cn_codes": [
+        "72221111",
+        "72221119",
+        "72221181",
+        "72221189",
+        "72221910",
+        "72221990",
+        "72222011",
+        "72222019",
+        "72222021",
+        "72222029",
+        "72222031",
+        "72222039",
+        "72222081",
+        "72222089",
+        "72223051",
+        "72223091",
+        "72223097",
+        "72224010",
+        "72224050",
+        "72224090"
+      ],
+      "cn_count": 20,
+      "origin_country": "IN",
+      "order_number": "09.9890",
+      "period_quota_t": "92556.79",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "15",
+      "name": "Stainless Wire Rod",
+      "cn_codes": [
+        "72210010",
+        "72210090"
+      ],
+      "cn_count": 2,
+      "origin_country": "IN",
+      "order_number": "09.9894",
+      "period_quota_t": "18772.33",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "16",
+      "name": "Non Alloy and Other Alloy Wire Rod",
+      "cn_codes": [
+        "72131000",
+        "72132000",
+        "72139110",
+        "72139120",
+        "72139141",
+        "72139149",
+        "72139170",
+        "72139190",
+        "72139910",
+        "72139990",
+        "72271000",
+        "72272000",
+        "72279010",
+        "72279050",
+        "72279095"
+      ],
+      "cn_count": 15,
+      "origin_country": "OTHER",
+      "order_number": "09.9617",
+      "period_quota_t": "153927.34",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "17",
+      "name": "Angles, Shapes and Sections of Iron or Non Alloy Steel",
+      "cn_codes": [
+        "72163110",
+        "72163190",
+        "72163211",
+        "72163219",
+        "72163291",
+        "72163299",
+        "72163310",
+        "72163390"
+      ],
+      "cn_count": 8,
+      "origin_country": "OTHER",
+      "order_number": "09.9618",
+      "period_quota_t": "12614.20",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "18",
+      "name": "Sheet Piling",
+      "cn_codes": [
+        "73011000"
+      ],
+      "cn_count": 1,
+      "origin_country": "OTHER",
+      "order_number": "09.9619",
+      "period_quota_t": "341.13",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "19",
+      "name": "Railway Material",
+      "cn_codes": [
+        "73021022",
+        "73021028",
+        "73021040",
+        "73021050",
+        "73024000"
+      ],
+      "cn_count": 5,
+      "origin_country": "OTHER",
+      "order_number": "09.9620",
+      "period_quota_t": "881.85",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "20",
+      "name": "Gas Pipes",
+      "cn_codes": [
+        "73063041",
+        "73063049",
+        "73063072",
+        "73063077"
+      ],
+      "cn_count": 4,
+      "origin_country": "IN",
+      "order_number": "09.9919",
+      "period_quota_t": "40147.55",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "21",
+      "name": "Hollow Sections",
+      "cn_codes": [
+        "73066110",
+        "73066192",
+        "73066199"
+      ],
+      "cn_count": 3,
+      "origin_country": "OTHER",
+      "order_number": "09.9622",
+      "period_quota_t": "28696.57",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "22",
+      "name": "Seamless Stainless Tubes and Pipes",
+      "cn_codes": [
+        "73041100",
+        "73042200",
+        "73042400",
+        "73044100",
+        "73044983",
+        "73044985",
+        "73044989"
+      ],
+      "cn_count": 7,
+      "origin_country": "IN",
+      "order_number": "09.9928",
+      "period_quota_t": "15328.50",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "24",
+      "name": "Other Seamless Tubes",
+      "cn_codes": [
+        "73041910",
+        "73041930",
+        "73041990",
+        "73042300",
+        "73042910",
+        "73042930",
+        "73042990",
+        "73043120",
+        "73043180",
+        "73043950",
+        "73043982",
+        "73043983",
+        "73043988",
+        "73045181",
+        "73045189",
+        "73045930",
+        "73045982",
+        "73045983",
+        "73045989",
+        "73049000"
+      ],
+      "cn_count": 20,
+      "origin_country": "OTHER",
+      "order_number": "09.9624",
+      "period_quota_t": "39299.94",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "25A",
+      "name": "Large welded tubes",
+      "cn_codes": [
+        "73051100",
+        "73051200"
+      ],
+      "cn_count": 2,
+      "origin_country": "IN",
+      "order_number": "09.9938",
+      "period_quota_t": "4364.78",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "25B",
+      "name": "Large welded tubes",
+      "cn_codes": [
+        "73051900",
+        "73052000",
+        "73053100",
+        "73053900",
+        "73059000"
+      ],
+      "cn_count": 5,
+      "origin_country": "OTHER",
+      "order_number": "09.9626",
+      "period_quota_t": "5608.92",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "26",
+      "name": "Other Welded Pipes",
+      "cn_codes": [
+        "73061100",
+        "73061900",
+        "73062100",
+        "73062900",
+        "73063012",
+        "73063018",
+        "73063080",
+        "73064020",
+        "73064080",
+        "73065021",
+        "73065029",
+        "73065080",
+        "73066910",
+        "73066990",
+        "73069000"
+      ],
+      "cn_count": 15,
+      "origin_country": "IN",
+      "order_number": "09.9946",
+      "period_quota_t": "24634.48",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "27",
+      "name": "Non-alloy and other alloy cold finished bars",
+      "cn_codes": [
+        "72151000",
+        "72155011",
+        "72155019",
+        "72155080",
+        "72281090",
+        "72282099",
+        "72285020",
+        "72285040",
+        "72285061",
+        "72285069",
+        "72285080"
+      ],
+      "cn_count": 11,
+      "origin_country": "OTHER",
+      "order_number": "09.9628",
+      "period_quota_t": "7354.33",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    },
+    {
+      "category": "28",
+      "name": "Non Alloy Wire",
+      "cn_codes": [
+        "72171010",
+        "72171031",
+        "72171039",
+        "72171050",
+        "72171090",
+        "72172010",
+        "72172030",
+        "72172050",
+        "72172090",
+        "72173041",
+        "72173049",
+        "72173050",
+        "72173090",
+        "72179020",
+        "72179050",
+        "72179090"
+      ],
+      "cn_count": 16,
+      "origin_country": "OTHER",
+      "order_number": "09.9629",
+      "period_quota_t": "28289.12",
+      "legal_basis": [
+        "Regulation (EU) 2026/1384",
+        "Implementing Regulation (EU) 2026/1457"
+      ]
+    }
+  ]
+}

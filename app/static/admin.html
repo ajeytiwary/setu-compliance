@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EuroSetu Admin · Pilot key queue</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/demo.css">
+<style>
+#adminGate{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(11,31,24,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#adminGate[hidden]{display:none}
+.req{border:1px solid var(--line);border-radius:var(--radius-chip);padding:10px 12px;margin:8px 0;background:#fff}
+.req .meta{font-size:12px;color:#5c6f66}
+.req .mint-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.req input{width:170px}
+.token-box{font-family:ui-monospace,monospace;font-size:11px;word-break:break-all;background:#0b1f18;color:#d7f0d8;border-radius:8px;padding:10px;margin-top:8px}
+main[hidden]{display:none}
+</style>
+</head>
+<body>
+<nav class="topnav"><a class="brand" href="/">EUROSETU</a><div class="navlinks"><a href="/">Public site</a><a href="/demo">Demo</a><a href="/pilot">Pilot dashboard</a><span class="demo-badge">Admin</span></div></nav>
+<!-- Founder-only gate: paste YOUR admin bearer key to unlock this browser. -->
+<div id="adminGate" hidden>
+  <div class="gate-card">
+    <p class="eyebrow">ADMIN · FOUNDER ONLY</p>
+    <h1>Pilot key queue</h1>
+    <p class="lede">Paste your admin bearer key to see contact enquiries and demo leads, then mint pilot keys and send them manually from Gmail. Nothing here auto-emails anyone.</p>
+    <div class="sim-row">
+      <input id="adminToken" type="password" autocomplete="off" placeholder="Paste admin bearer token" style="flex:1;min-width:220px">
+      <input id="adminTenant" placeholder="Tenant (default tenant-a)" style="width:200px">
+      <button type="button" id="unlockAdmin" class="secondary small">Unlock</button>
+    </div>
+    <p id="adminError" class="error" role="alert" hidden></p>
+  </div>
+</div>
+<main id="adminMain" hidden>
+  <header class="demo-head">
+    <div>
+      <p class="eyebrow">ADMIN · MANUAL KEY ISSUANCE</p>
+      <h1>Pilot key queue</h1>
+      <p class="lede">Newest first. Click <b>Mint key</b>, copy the token, and send it manually from Gmail to the requester. The requester pastes it on <a href="/pilot">/pilot</a>.</p>
+    </div>
+  </header>
+  <section class="panel">
+    <h2>Mint key for any email</h2>
+    <p class="muted">Works even when the queue below is empty. Type any requester email, mint, copy, send from Gmail.</p>
+    <div class="mint-row">
+      <input id="manualEmail" type="email" placeholder="requester@example.com" style="flex:1;min-width:220px">
+      <input id="manualTenant" placeholder="Tenant (default tenant-a)" style="width:190px">
+      <button type="button" id="manualMint" class="secondary small">Mint key →</button>
+    </div>
+    <div id="manualOut"></div>
+  </section>
+  <section class="panel">
+    <h2>Pilot data mode (<span id="dataMode">…</span>)</h2>
+    <p class="muted" id="dataModeLine">Loading…</p>
+  </section>
+  <section class="panel">
+    <h2>Contact enquiries (<span id="contactCount">0</span>)</h2>
+    <div id="contacts"><p class="muted">Loading…</p></div>
+  </section>
+  <section class="panel">
+    <h2>Demo leads (<span id="leadCount">0</span>)</h2>
+    <div id="leads"><p class="muted">Loading…</p></div>
+  </section>
+</main>
+<script>
+(function(){
+"use strict";
+var TOKEN_KEY="eurosetu_admin_token",TENANT_KEY="eurosetu_admin_tenant";
+function esc(s){return String(s??"").replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m];});}
+function headers(){var t=localStorage.getItem(TOKEN_KEY)||"",tn=localStorage.getItem(TENANT_KEY)||"tenant-a";return {"Authorization":"Bearer "+t,"x-eurosetu-tenant":tn};}
+function showGate(msg){document.querySelector("#adminGate").hidden=false;document.querySelector("#adminMain").hidden=true;if(msg){var e=document.querySelector("#adminError");e.textContent=msg;e.hidden=false;}}
+function hideGate(){document.querySelector("#adminGate").hidden=true;document.querySelector("#adminMain").hidden=false;}
+async function load(){
+  var res=await fetch("/api/admin/requests",{headers:headers()});
+  if(res.status===401||res.status===403){showGate("That key is missing or not an admin key. Paste your founder admin key.");return;}
+  if(!res.ok){showGate("Could not load the queue ("+res.status+").");return;}
+  hideGate();var d=await res.json();render(d);
+}
+function card(r,isLead){
+  var id="m-"+(isLead?"lead-":"")+r.id;
+  return '<div class="req"><b>'+esc(r.name)+'</b> · '+esc(r.work_email)+
+   '<div class="meta">'+esc(r.company||"")+(r.topic?" · "+esc(r.topic):"")+(r.role?" · "+esc(r.role):"")+' · '+esc(r.created_at||"")+'</div>'+
+   (r.message?'<div>'+esc(r.message)+'</div>':"")+
+   '<div class="mint-row"><input id="'+id+'-tenant" placeholder="Tenant (default tenant-a)" style="width:190px">'+
+   '<button class="secondary small" data-mint="'+esc(r.work_email)+'" data-prefix="'+id+'">Mint key →</button></div>'+
+   '<div id="'+id+'-out"></div></div>';
+}
+function render(d){
+  var c=d.contacts||[],l=d.leads||[];
+  document.querySelector("#contactCount").textContent=c.length;
+  document.querySelector("#leadCount").textContent=l.length;
+  var mode=d.data_mode||"UNKNOWN";
+  document.querySelector("#dataMode").textContent=mode;
+  document.querySelector("#dataModeLine").textContent=
+    mode==="DEMO_JSW_SYNTHETIC"?"Live DB holds the JSW demo showcase ("+(d.demo_shipment_count||0)+" demo, "+(d.client_shipment_count||0)+" client). /demo and /pilot both show it. Real pilot unlocks after client CSVs are imported.":
+    mode==="CLIENT_LIVE"?"Live DB holds client rows ("+(d.client_shipment_count||0)+" client). Clear demo rows before handover.":
+    mode==="EMPTY_NO_CLIENT_DATA"?"Live DB is a clean pilot shell. Import the 6 client CSVs to unlock.":"Unknown mode.";
+  document.querySelector("#contacts").innerHTML=c.map(function(r){return card(r,false);}).join("")||'<p class="muted">No contact enquiries yet.</p>';
+  document.querySelector("#leads").innerHTML=l.map(function(r){return card(r,true);}).join("")||'<p class="muted">No demo leads yet.</p>';
+  document.querySelectorAll("[data-mint]").forEach(function(b){b.onclick=function(){mint(b);};});
+}
+async function mint(btn){
+  var email=btn.getAttribute("data-mint"),p=btn.getAttribute("data-prefix");
+  var tenant=(document.getElementById(p+"-tenant")||{}).value||"tenant-a";
+  var out=document.getElementById(p+"-out");out.innerHTML='<p class="muted">Minting…</p>';
+  var res=await fetch("/api/admin/mint",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},headers()),body:JSON.stringify({email:email,tenant:tenant})});
+  var d=await res.json().catch(function(){return {};});
+  if(!res.ok){out.innerHTML='<p class="error">'+esc(d.detail||("Mint failed ("+res.status+")"))+'</p>';return;}
+  out.innerHTML='<p class="muted">Key for <b>'+esc(d.email)+'</b> · tenant <b>'+esc(d.tenant)+'</b> · roles '+esc((d.roles||[]).join(", "))+' · '+esc(d.days)+' days. Copy into Gmail:</p>'+
+   '<div class="token-box">'+esc(d.token)+'</div>'+
+   '<div class="mint-row"><button class="secondary small" data-copy="'+esc(d.token)+'">Copy key</button></div>';
+  out.querySelector("[data-copy]").onclick=function(){navigator.clipboard.writeText(d.token).then(function(){btn.textContent="Copied ✓";});};
+}
+document.querySelector("#unlockAdmin").onclick=function(){
+  var t=document.querySelector("#adminToken").value.trim(),tn=document.querySelector("#adminTenant").value.trim()||"tenant-a";
+  if(!t){var e=document.querySelector("#adminError");e.textContent="Paste your admin bearer token first.";e.hidden=false;return;}
+  localStorage.setItem(TOKEN_KEY,t);localStorage.setItem(TENANT_KEY,tn);load();
+};
+document.querySelector("#manualMint").onclick=function(){
+  var email=document.querySelector("#manualEmail").value.trim();
+  var tenant=document.querySelector("#manualTenant").value.trim()||"tenant-a";
+  var out=document.querySelector("#manualOut");
+  if(!email){out.innerHTML='<p class="error">Type a requester email first.</p>';return;}
+  out.innerHTML='<p class="muted">Minting…</p>';
+  fetch("/api/admin/mint",{method:"POST",headers:Object.assign({"Content-Type":"application/json"},headers()),body:JSON.stringify({email:email,tenant:tenant})})
+  .then(function(res){return res.json().then(function(d){return {ok:res.ok,status:res.status,d:d};});})
+  .then(function(r){
+    if(!r.ok){out.innerHTML='<p class="error">'+esc(r.d.detail||("Mint failed ("+r.status+")"))+'</p>';return;}
+    out.innerHTML='<p class="muted">Key for <b>'+esc(r.d.email)+'</b> · tenant <b>'+esc(r.d.tenant)+'</b> · roles '+esc((r.d.roles||[]).join(", "))+' · '+esc(r.d.days)+' days. Copy into Gmail:</p>'+
+     '<div class="token-box">'+esc(r.d.token)+'</div>'+
+     '<div class="mint-row"><button type="button" class="secondary small" id="manualCopy">Copy key</button></div>';
+    document.querySelector("#manualCopy").onclick=function(){navigator.clipboard.writeText(r.d.token).then(function(){document.querySelector("#manualMint").textContent="Copied ✓";});};
+  }).catch(function(err){out.innerHTML='<p class="error">'+esc(String(err))+'</p>';});
+};
+if(localStorage.getItem(TOKEN_KEY)){hideGate();load();}else{showGate();}
+})();
+</script>
+</body>
+</html>

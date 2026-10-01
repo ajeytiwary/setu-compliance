@@ -641,9 +641,13 @@ def normalize_steel_1457(html: str, source_url: str = "") -> list[dict]:
 
 # ---------------------------------------------------------------- COMEXT ----
 def normalize_comext(obj: dict, reporters: list[str] | None = None,
-                     partner: str = "IN", chapters: tuple[str, ...] = ("72", "73"),
+                     partner: str = "IN", chapters: tuple[str, ...] = ("72", "73", "SITC6", "SITC"),
                      years: tuple[str, ...] = ("2024", "2025", "2026")) -> list[dict]:
-    """Eurostat/Comext dissemination JSON(-stat) -> filtered India->EU rows."""
+    """Eurostat/Comext dissemination JSON(-stat) -> filtered India->EU rows.
+
+    Accepts HS chapters 72/73 (iron & steel) and the SITC aggregate SITC6
+    (manufactured goods classified chiefly by material, incl. iron & steel)
+    served by EXT_ST_EU27_2020SITC."""
     obs: list[dict] = []
     if isinstance(obj, dict) and "value" in obj and "dimension" in obj:
         dims = obj.get("dimension", {})
@@ -654,7 +658,11 @@ def normalize_comext(obj: dict, reporters: list[str] | None = None,
         import itertools
         idx_ranges = [range(s) for s in sizes]
         for combo in itertools.product(*idx_ranges):
-            key = " ".join(str(i) for i in combo)
+            # JSON-stat 2.0 uses a single running index when all but one
+            # dimension have size 1; full cartesian keys otherwise.
+            flat_key = str(sum(combo))
+            cart_key = " ".join(str(i) for i in combo)
+            key = flat_key if flat_key in values else cart_key
             if key not in values:
                 continue
             row = {}
@@ -662,6 +670,7 @@ def normalize_comext(obj: dict, reporters: list[str] | None = None,
                 cat_idx = dims[dim_name]["category"]["index"]
                 code = next((k for k, v in cat_idx.items() if v == combo[dim_i]), str(combo[dim_i]))
                 row[dim_name.lower()] = labels.get(dim_name, {}).get(code, code)
+                row[dim_name.lower() + "_code"] = code
             txt = json.dumps(row)
             if partner not in txt and "India" not in txt:
                 continue

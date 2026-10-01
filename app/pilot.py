@@ -237,8 +237,33 @@ def pilot_overview() -> dict:
         "genealogy_edges": genealogy_edges,
         "activity_rows": activity_rows,
     }
+    # Demo vs live-client split: /demo + /pilot both read this same DB today.
+    # Until per-client DB files land, flag the mode so the UI can banner it:
+    # - EMPTY_NO_CLIENT_DATA: no commercial rows yet (real pilot before import)
+    # - DEMO_JSW_SYNTHETIC: only the JSW demo portfolio + public seed marker
+    # - CLIENT_LIVE: at least one non-demo shipment (client CSVs imported)
+    with connect() as _conn2:
+        _all = rows(_conn2, "SELECT shipment_no, exporter FROM shipments")
+    _demo = [r for r in _all if str(r.get("shipment_no", "")).startswith("JSW-")
+             or "demo" in str(r.get("exporter", "")).lower()]
+    _public = [r for r in _all if str(r.get("shipment_no", "")).startswith("PUBLIC-")]
+    _client = [r for r in _all if r not in _demo and r not in _public]
+    if not _all:
+        _data_mode = "EMPTY_NO_CLIENT_DATA"
+    elif _client:
+        _data_mode = "CLIENT_LIVE"
+    else:
+        _data_mode = "DEMO_JSW_SYNTHETIC"
     return {
         "scope": {"audience": "pilot delivery team + pilot customer", "notice": SCOPE_NOTICE},
+        "data_mode": _data_mode,
+        "data_modes": {
+            "DEMO_JSW_SYNTHETIC": "Showcase only: 8 synthetic JSW Vijayanagar shipments (€7.79M) + public seed marker. No client data.",
+            "CLIENT_LIVE": "Live pilot: client-supplied rows present. Demo rows should be removed for a clean handover.",
+            "EMPTY_NO_CLIENT_DATA": "Clean pilot shell: no shipments yet. Import the 6 client CSVs to unlock.",
+        },
+        "demo_shipment_count": len(_demo),
+        "client_shipment_count": len(_client),
         "kpis": kpis,
         "risk": risk,
         "weeks": weeks,

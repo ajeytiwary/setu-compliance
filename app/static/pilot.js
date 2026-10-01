@@ -81,7 +81,7 @@ async function simulate(shipment,rule){
  const cost=Math.max(0,Number(costInput?.value)||0);
  box.classList.add("muted");
  box.textContent="Simulating…";
- const res=await fetch("/api/pilot/shipments/"+encodeURIComponent(shipment)+"/simulate-remediation",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({requirement_code:rule,estimated_cost_eur:cost})});
+ const res=await fetch("/api/pilot/shipments/"+encodeURIComponent(shipment)+"/simulate-remediation",{method:"POST",headers:pilotHeaders({"Content-Type":"application/json"}),body:JSON.stringify({requirement_code:rule,estimated_cost_eur:cost})});
  const s=await res.json();
  if(!res.ok){box.classList.remove("muted");box.textContent=s.detail||"Simulation failed";return;}
  box.classList.remove("muted");
@@ -139,6 +139,12 @@ function renderRank(){
 function renderStatic(){
  const d=overview;
  document.querySelector("#scope-line").textContent=d.scope.notice;
+ const dm=document.querySelector("#dataModeBanner"),dl=document.querySelector("#data-mode-line");
+ if(dm&&dl){
+  const mode=d.data_mode||"UNKNOWN";
+  const label={DEMO_JSW_SYNTHETIC:"DEMO — synthetic JSW Vijayanagar showcase ("+(d.demo_shipment_count||0)+" demo shipments, €7.79M). No client data yet. Real pilot unlocks after client CSVs are imported.",CLIENT_LIVE:"LIVE PILOT — client rows present ("+(d.client_shipment_count||0)+" client shipments). Demo rows should be cleared before handover.",EMPTY_NO_CLIENT_DATA:"CLEAN PILOT SHELL — no shipments yet. Import the 6 client CSVs to unlock."}[mode]||mode;
+  dl.textContent=label;dm.hidden=false;
+ }
  document.querySelector("#weeks").innerHTML=d.weeks.map(w=>'<div class="row"><b>W'+w.week+"</b> · "+esc(w.objective)+'<span style="float:right">'+statusPill(w.status)+'</span><div class="muted">Exit: '+esc(w.exit)+'</div><div class="muted">Signal: '+esc(w.signal)+" = "+esc(w.signal_value??"manual")+"</div></div>").join("");
  document.querySelector("#contracts").innerHTML=d.contracts.map(c=>'<div class="row"><b>'+esc(c.label)+'</b><span style="float:right">'+statusPill(c.status)+(c.sample_only?' <span class="pill">SAMPLE_ONLY</span>':"")+'</span><div class="muted">'+esc(c.rows)+" canonical rows · "+esc(c.unlocks)+'</div><div class="muted">Last run: '+esc(c.last_run||"never")+"</div></div>").join("");
  renderShipments();
@@ -166,7 +172,7 @@ function wireEvidenceCycle(){
   const content=(document.querySelector('[data-submit-content="'+reqId+'"]')||{}).value||"";
   const issuer=(document.querySelector('[data-submit-issuer="'+reqId+'"]')||{}).value||null;
   if(!content.trim()){alert("Enter the evidence content or file reference first.");return;}
-  const res=await fetch("/api/pilot/suppliers/"+encodeURIComponent(b.dataset.supplier)+"/evidence",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({evidence_type:b.dataset.evidenceType,content,issuer})});
+  const res=await fetch("/api/pilot/suppliers/"+encodeURIComponent(b.dataset.supplier)+"/evidence",{method:"POST",headers:pilotHeaders({"Content-Type":"application/json"}),body:JSON.stringify({evidence_type:b.dataset.evidenceType,content,issuer})});
   const out=await res.json();
   if(!res.ok){alert(out.detail||"Submit failed");return;}
   markStep(4);await load();
@@ -174,13 +180,13 @@ function wireEvidenceCycle(){
  document.querySelectorAll(".verify-ev").forEach(b=>b.onclick=async()=>{
   const name=(document.querySelector('[data-verify-name="'+b.dataset.evidence+'"]')||{}).value||"";
   if(!name.trim()){alert("Enter the verifier name first.");return;}
-  const res=await fetch("/api/pilot/evidence/"+encodeURIComponent(b.dataset.evidence)+"/verify",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({verifier:name})});
+  const res=await fetch("/api/pilot/evidence/"+encodeURIComponent(b.dataset.evidence)+"/verify",{method:"POST",headers:pilotHeaders({"Content-Type":"application/json"}),body:JSON.stringify({verifier:name})});
   const out=await res.json();
   if(!res.ok){alert(out.detail||"Verify failed");return;}
   markStep(4);await load();
  });
  document.querySelectorAll(".resolve-req").forEach(b=>b.onclick=async()=>{
-  const res=await fetch("/api/pilot/remediation/requests/"+encodeURIComponent(b.dataset.request)+"/resolve",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({evidence_id:b.dataset.evidence})});
+  const res=await fetch("/api/pilot/remediation/requests/"+encodeURIComponent(b.dataset.request)+"/resolve",{method:"POST",headers:pilotHeaders({"Content-Type":"application/json"}),body:JSON.stringify({evidence_id:b.dataset.evidence})});
   const out=await res.json();
   if(!res.ok){alert(out.detail||"Resolve failed");return;}
   markStep(5);await load();
@@ -203,7 +209,7 @@ document.querySelector("#requestForm").addEventListener("submit",async e=>{
   due_date:document.querySelector("#dueDate").value||null,
   message:document.querySelector("#message").value||null,
  };
- const res=await fetch("/api/pilot/remediation/requests",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+ const res=await fetch("/api/pilot/remediation/requests",{method:"POST",headers:pilotHeaders({"Content-Type":"application/json"}),body:JSON.stringify(payload)});
  const out=await res.json();
  status.textContent=res.ok?" Request created":" "+(out.detail||"Request failed");
  if(res.ok){
@@ -213,8 +219,60 @@ document.querySelector("#requestForm").addEventListener("submit",async e=>{
   await load();
  }
 });
+const TOKEN_KEY="eurosetu_pilot_token";
+const TENANT_KEY="eurosetu_pilot_tenant";
+const bearer=()=>localStorage.getItem(TOKEN_KEY)||"";
+const tenant=()=>localStorage.getItem(TENANT_KEY)||"tenant-a";
+function pilotHeaders(extra={}){
+ const h={...extra};
+ const t=bearer();
+ if(t)h["Authorization"]="Bearer "+t;
+ const tn=tenant();
+ if(tn)h["x-eurosetu-tenant"]=tn;
+ return h;
+}
+function showGate(){
+ const g=document.querySelector("#pilotGate");
+ if(g)g.hidden=false;
+ const m=document.querySelector("#pilotMain");
+ if(m)m.hidden=true;
+ wireUnlock();
+}
+function hideGate(){
+ const g=document.querySelector("#pilotGate");
+ if(g)g.hidden=true;
+ const m=document.querySelector("#pilotMain");
+ if(m)m.hidden=false;
+}
+function wireUnlock(){
+ const btn=document.querySelector("#unlockPilot");
+ if(!btn||btn.dataset.wired)return;
+ btn.dataset.wired="1";
+ btn.onclick=async()=>{
+  const err=document.querySelector("#unlockError");
+  const tok=(document.querySelector("#pilotToken")||{}).value||"";
+  const tn=((document.querySelector("#pilotTenant")||{}).value||"tenant-a").trim()||"tenant-a";
+  if(!tok.trim()){if(err){err.hidden=false;err.textContent="Paste your pilot access key first.";}return;}
+  localStorage.setItem(TOKEN_KEY,tok.trim());
+  localStorage.setItem(TENANT_KEY,tn);
+  if(err)err.hidden=true;
+  await load();
+ };
+}
 async function load(){
- overview=await fetch("/api/pilot/overview").then(r=>r.json());
+ let res;
+ try{
+  res=await fetch("/api/pilot/overview",{headers:pilotHeaders()});
+ }catch(e){
+  showGate();
+  return;
+ }
+ if(res.status===401||res.status===403){
+  showGate();
+  return;
+ }
+ overview=await res.json();
+ hideGate();
  renderKpis();
  renderRisk();
  renderStatic();

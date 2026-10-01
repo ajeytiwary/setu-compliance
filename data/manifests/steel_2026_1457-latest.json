@@ -1,0 +1,18 @@
+{
+  "authority": "LEGAL",
+  "content_type": "text/csv",
+  "dataset_id": "steel_2026_1457",
+  "effective_from": "2026-09-30",
+  "effective_to": null,
+  "legal_authority": true,
+  "normalized_path": "data/normalized/steel_2026_1457/2026-09-30-dbdf81e7/normalized.json",
+  "normalizer_version": "source_normalizers/1.0",
+  "parser_version": "source_resolvers/1.0",
+  "provider_id": "eurlex_2026_1457",
+  "raw_path": "data/raw/steel_2026_1457/2026-09-30-dbdf81e7/steel-2026-1457-categories.csv",
+  "record_count": 30,
+  "retrieved_at": "2026-10-01T10:24:30.299226+00:00",
+  "sha256": "dbdf81e7fae87814e4057b5b52bf9302730ede0e63efad412c562357e5749deb",
+  "source_url": "https://eur-lex.europa.eu/eli/reg_impl/2026/1457/oj/eng (Implementing Regulation (EU) 2026/1457, Annex I table captured 2026-09-30)",
+  "version": "2026-09-30-dbdf81e7"
+}

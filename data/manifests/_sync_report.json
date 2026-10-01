@@ -1,10 +1,10 @@
 {
-  "as_of": "2026-09-30",
+  "as_of": "2026-10-01",
   "results": {
-    "scip_schema": {
+    "industrial_telemetry_demo": {
       "status": "SYNCED",
-      "sha256": "7687a1e18195",
-      "records": 137834
+      "sha256": "9b1cee6f9cb9",
+      "records": 35040
     }
   }
 }

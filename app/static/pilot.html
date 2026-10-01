@@ -31,11 +31,39 @@
 .evidence-cycle .ev-list{margin:8px 0 0 0;padding:0;list-style:none;font-size:13px}
 .evidence-cycle .ev-list li{padding:6px 0;border-top:1px dashed var(--line)}
 @media(max-width:900px){.workflow{grid-template-columns:1fr}}
+/* Access gate: fixed popup overlay over the page when no bearer token. */
+#pilotGate{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:rgba(11,31,24,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#pilotGate[hidden]{display:none}
+#pilotGate .gate-card{max-width:560px}
+#pilotGate .gate-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+#pilotGate .gate-actions a{display:inline-block;text-decoration:none}
+#unlockError{margin:8px 0 0}
+main[hidden]{display:none}
 </style>
 </head>
 <body>
 <nav class="topnav"><a class="brand" href="/">EUROSETU</a><div class="navlinks"><a href="/">Public site</a><a href="/demo">Demo</a><a class="active" href="/pilot">Pilot dashboard</a><span class="demo-badge">Pilot</span></div></nav>
-<main>
+<!-- Access gate: friendly popup when the visitor has no pilot bearer token. -->
+<div id="pilotGate" hidden>
+  <div class="gate-card">
+    <p class="eyebrow">PILOT ACCESS REQUIRED</p>
+    <h1>Pilot access required</h1>
+    <p class="lede">The pilot dashboard is available to pilot customers and the EuroSetu team. Contact us to get access and we will issue your pilot access key.</p>
+    <div class="gate-actions">
+      <a href="/demo"><button type="button">Request demo access →</button></a>
+      <a href="/#contact"><button type="button" class="secondary">Contact us</button></a>
+    </div>
+    <p class="muted" style="margin-top:14px;font-size:13px">Already have a pilot access key? Paste it below to unlock this browser.</p>
+    <div class="sim-row">
+      <input id="pilotToken" type="password" autocomplete="off" placeholder="Paste pilot bearer token" style="flex:1;min-width:220px">
+      <input id="pilotTenant" placeholder="Tenant (default tenant-a)" style="width:200px">
+      <button type="button" id="unlockPilot" class="secondary small">Unlock</button>
+    </div>
+    <p id="unlockError" class="error" role="alert" hidden></p>
+  </div>
+</div>
+<main id="pilotMain" hidden>
 <header class="demo-head">
   <div>
     <p class="eyebrow">PILOT OPERATIONS · INTERNAL + PILOT CUSTOMER</p>
@@ -45,6 +73,7 @@
   <div class="access-chip">Pilot working view</div>
 </header>
 <div class="pilot-banner"><b>Boundary: </b><span id="scope-line">Loading pilot scope…</span></div>
+<div class="pilot-banner" id="dataModeBanner" hidden style="margin-top:0"><b>Data: </b><span id="data-mode-line"></span></div>
 
 <section aria-label="Pilot metrics">
   <div id="kpis" class="kpi-grid"><div class="card skeleton">Loading portfolio…</div></div>

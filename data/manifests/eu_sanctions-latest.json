@@ -1,0 +1,18 @@
+{
+  "authority": "OFFICIAL",
+  "content_type": "application/xml",
+  "dataset_id": "eu_sanctions",
+  "effective_from": "2026-10-01",
+  "effective_to": null,
+  "legal_authority": false,
+  "normalized_path": "data/normalized/eu_sanctions/2026-10-01-cd59eccb/normalized.json",
+  "normalizer_version": "source_normalizers/1.0",
+  "parser_version": "source_resolvers/1.0",
+  "provider_id": "eu_fsf_11_xml",
+  "raw_path": "data/raw/eu_sanctions/2026-10-01-cd59eccb/eu-sanctions-map-xml-all.xml",
+  "record_count": 6241,
+  "retrieved_at": "2026-10-01T09:53:30.780753+00:00",
+  "sha256": "cd59eccb0278d33181c1d87814236109287c9ea5925502f00acfd2e0fd7fe440",
+  "source_url": "https://webgate.ec.europa.eu/fsd/fsf/public/files/xmlFullSanctionsList_1_1/content?token=dG9rZW4tMjAxNw",
+  "version": "2026-10-01-cd59eccb"
+}

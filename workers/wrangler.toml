@@ -1,0 +1,24 @@
+name = "eurosetu-pilot-key-minter"
+main = "pilot-key-minter.js"
+compatibility_date = "2025-01-01"
+
+# Inbound email: request@eurosetu.trade -> Send to Worker (already Active
+# in dashboard, see screenshot). Worker mints the pilot key and emails it
+# in the BODY to the founder inbox so it is copy-paste ready.
+# pilot@/pilots@/hello@ stay plain "Send to email" Gmail routes.
+
+[[send_email]]
+name = "EMAIL"
+
+[vars]
+FORWARD_TO = "ajaynld13@gmail.com"
+NOTIFY_TO = "ajaynld13@gmail.com"
+EXTRA_NOTIFY_TO = "hello@eurosetu.trade"
+SENDER = "request@eurosetu.trade"
+DEFAULT_TENANT = "tenant-a"
+DEFAULT_ROLES = "pilot_viewer,pilot_contributor"
+DEFAULT_DAYS = "30"
+
+# Secrets (wrangler secret put ...):
+#   EUROSETU_JWT_SECRET  same value as the app's env (REQUIRED)
+#   NOTIFY_SECRET        shared secret the site uses to call POST /notify (optional but recommended)

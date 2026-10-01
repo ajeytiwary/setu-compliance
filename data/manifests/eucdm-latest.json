@@ -1,0 +1,18 @@
+{
+  "authority": "MIRROR",
+  "content_type": "application/zip",
+  "dataset_id": "eucdm",
+  "effective_from": "2026-10-01",
+  "effective_to": null,
+  "legal_authority": false,
+  "normalized_path": "data/normalized/eucdm/2026-10-01-1f12e357/normalized.json",
+  "normalizer_version": "source_normalizers/1.0",
+  "parser_version": "source_resolvers/1.0",
+  "provider_id": "eu_taxud_eucdm_annex_b",
+  "raw_path": "data/raw/eucdm/2026-10-01-1f12e357/eucdm-7.0.11.zip",
+  "record_count": 272,
+  "retrieved_at": "2026-10-01T09:53:11.613914+00:00",
+  "sha256": "1f12e357f82104ea4be54ceeb8f3ae60973269c89941845900842ea3771c86ae",
+  "source_url": "https://eucdm.softdev.eu.com/EUCDM/Download/EUCDM-HTML_v7p0p11_2026-08-19.zip",
+  "version": "2026-10-01-1f12e357"
+}

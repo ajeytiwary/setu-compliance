@@ -113,6 +113,27 @@ Visit `https://eurosetu.example.com` — you should see the landing page.
 Click a card: the "Contact now" button appears, opens the contact dialog,
 and submits to `POST /api/contact` through the tunnel.
 
+## 5b. Pilot key issuance (manual, founder-sent)
+
+Pilot access stays bearer-gated, but issuance is manual: the founder sends
+each key from Gmail. Two paths mint the **same** HS256 key
+(`app/pilot_keys.py` is the source of truth):
+
+- **/admin queue (daily driver):** open `https://eurosetu.trade/admin`,
+  unlock with your admin key, click **Mint key** on any contact/lead, copy
+  the token into Gmail. Endpoints `GET /api/admin/requests` and
+  `POST /api/admin/mint` both require the `admin` role.
+- **Email Worker (email-first requesters):** deploy `workers/` so mail to
+  `request@eurosetu.trade` mints a key and forwards to
+  `pilot@eurosetu.trade` (Gmail) with the key in `X-EuroSetu-Pilot-Key`.
+  Full steps in `workers/README.md`. Email Workers cannot rewrite the
+  forwarded body — only attach headers — which is why /admin stays the
+  easier copy-paste UI.
+
+Set the app secret once (same value the Worker uses):
+`docker run ... -e EUROSETU_JWT_SECRET=<long-random> ...`
+Mint your own admin key with `scripts/mint_pilot_token.py --roles admin`.
+
 ## 6. Harden it (recommended before sharing the link)
 
 1. **HTTPS is automatic.** Cloudflare terminates TLS at the edge; the
