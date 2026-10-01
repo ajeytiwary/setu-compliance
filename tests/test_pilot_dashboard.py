@@ -77,7 +77,7 @@ def test_pilot_evidence_cycle_end_to_end(monkeypatch):
                   (sup, "E2E Supplier", "Plant", "IN", "ACTIVE", now, now))
         c.execute("INSERT INTO supplier_shipment_links(id,supplier_id,shipment_id,material,quantity_t,required_evidence_type,created_at) VALUES(?,?,?,?,?,?,?)",
                   (str(uuid4()), sup, sid, "ferroalloy", 1, "CBAM_PRECURSOR", now))
-    sim = client.post(f"/api/pilot/shipments/{sid}/simulate-remediation",
+    sim = client.post(f"/api/pilot/shipments/{sid}/simulate-remediation", headers=headers,
                       json={"requirement_code": "SUPPLIER_DATA", "estimated_cost_eur": 2000})
     assert sim.status_code == 200
     assert sim.json()["proposed_solution"]["requirement_code"] == "SUPPLIER_DATA"
