@@ -61,6 +61,10 @@ def detailed(conn,s):
 def home():
  p=STATIC/"index.html"
  return FileResponse(p) if p.exists() else HTMLResponse("<h1>EuroSetu</h1>")
+@app.get("/trust",response_class=HTMLResponse)
+def trust():return FileResponse(STATIC/"trust.html")
+@app.get("/case-study",response_class=HTMLResponse)
+def case_study():return FileResponse(STATIC/"case-study.html")
 @app.get("/demo",response_class=HTMLResponse)
 def demo():
  p=STATIC/"demo.html"
