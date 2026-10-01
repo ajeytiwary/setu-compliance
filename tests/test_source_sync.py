@@ -17,3 +17,16 @@ def test_scip_zip_inventory():
 def test_validation_fails_closed():
  assert not validate("echa_candidate_list",[{"x":1}])["valid"]
  assert not validate("taric_measures",[])["valid"]
+
+
+def test_eucdm_upstream_failure_returns_explicit_stale_fallback(tmp_path,monkeypatch):
+ import json
+ import app.source_sync as ss
+ root=tmp_path/"normalized"; latest=root/"eucdm"/"latest.json";latest.parent.mkdir(parents=True)
+ latest.write_text(json.dumps({"dataset":"eucdm","sha256":"validated-sha","validation":{"valid":True},"transport":"PRIMARY"}))
+ monkeypatch.setattr(ss,"NORMALIZED",root)
+ monkeypatch.setattr(ss,"get",lambda *a,**k: (_ for _ in ()).throw(Exception("HTTP 403")))
+ out=ss.sync("eucdm")
+ assert out["sha256"]=="validated-sha"
+ assert out["transport"]=="STALE_VALIDATED_FALLBACK"
+ assert "Fresh EUCDM fetch failed" in out["sync_warning"]
