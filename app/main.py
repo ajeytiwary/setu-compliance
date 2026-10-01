@@ -39,6 +39,8 @@ class RegulatoryPayloadIn(BaseModel):payload:dict
 class ReferenceCSVIn(BaseModel):csv_content:str
 class LeadIn(BaseModel):
  name:str; work_email:str; company:str; role:str|None=None; message:str|None=None
+class ContactIn(BaseModel):
+ name:str; work_email:str; company:str|None=None; topic:str="General enquiry"; message:str|None=None; website:str|None=None
 EMAIL_RE=re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 def require_lead(request:Request):
  token=request.headers.get("x-eurosetu-lead-token") or request.query_params.get("lead_token")
@@ -93,6 +95,20 @@ def leads_verify(request:Request):
  with connect() as conn:
   hit=row(conn,"SELECT name,company FROM leads WHERE token=?",(token,))
  return {"valid":True,"name":hit["name"],"company":hit["company"]} if hit else {"valid":False}
+@app.post("/api/contact",status_code=201)
+def contact_create(x:ContactIn):
+ # Honeypot: a filled "website" field means a bot. Accept silently so the bot
+ # does not learn the trap, but never persist the submission.
+ if (x.website or "").strip():return {"received":True,"id":None}
+ email=x.work_email.strip().lower()
+ if not EMAIL_RE.match(email):raise HTTPException(422,"Valid work email required")
+ if not x.name.strip():raise HTTPException(422,"Name required")
+ topic=(x.topic or "General enquiry").strip()[:120] or "General enquiry"
+ cid=str(uuid4()); now=datetime.now(timezone.utc).isoformat()
+ with connect() as conn:
+  conn.execute("INSERT INTO contacts(id,name,work_email,company,topic,message,created_at) VALUES(?,?,?,?,?,?,?)",(cid,x.name.strip(),email,(x.company or "").strip() or None,topic,(x.message or "").strip() or None,now))
+  audit(conn,None,"contact.created",{"contact_id":cid,"topic":topic})
+ return {"received":True,"id":cid,"topic":topic}
 @app.get("/pilot",response_class=HTMLResponse)
 def pilot(request:Request):
  from .security import require_request
@@ -154,6 +170,8 @@ def js():return FileResponse(STATIC/"app.js",media_type="application/javascript"
 def css():return FileResponse(STATIC/"styles.css",media_type="text/css")
 @app.get("/public.css")
 def public_css():return FileResponse(STATIC/"public.css",media_type="text/css")
+@app.get("/public.js")
+def public_js():return FileResponse(STATIC/"public.js",media_type="application/javascript")
 @app.get("/api/dashboard")
 def dashboard(request:Request):
  require_lead(request)

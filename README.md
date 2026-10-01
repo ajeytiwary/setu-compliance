@@ -65,4 +65,15 @@ The scheduled GitHub workflow `.github/workflows/sync-eu-regulatory-data.yml` ru
 
 ## Executable TARIC measure stack
 
-A fresh TARIC snapshot can now be resolved by CN code + origin + import date through `POST /api/customs/taric/resolve`. The engine resolves third-country duty, eligible preference/suspension, tariff-quota treatment, additive anti-dumping/countervailing/safeguard duties, additional codes and required supporting-document conditions. Missing/stale TARIC or QUOTA data blocks entitlement. The result is compiled into `POST /api/compliance/active-entitlement` and exposes `customs_liability_eur`. National VAT/excise are intentionally excluded because they are not contained in TARIC.
+A fresh TARIC snapshot can now be resolved by CN code + origin + import date through `POST /api/customs/taric/resolve`. The engine resolves third-country duty, eligible preference/suspension, tariff-quota treatment, additive anti-dumping/countervailing/safeguard duties, additional codes and required supporting-document conditions. Missing/stale TARIC or QUOTA data blocks entitlement. The result is
+compiled into `POST /api/compliance/active-entitlement` and exposes `customs_liability_eur`. National VAT/excise are intentionally excluded because they are not contained in TARIC.
+
+## Deploy as a public website
+
+The same Docker image runs everywhere. Pick one manual:
+
+- [Cloudflare Tunnel (recommended for pilots)](docs/DEPLOY_CLOUDFLARE.md) — app runs on your machine, Cloudflare publishes it. No open ports.
+- [Google Cloud Run](docs/DEPLOY_GOOGLE_CLOUD.md) — fully managed, autoscales to zero, optional Cloud SQL persistence.
+- [AWS App Runner / ECS Fargate](docs/DEPLOY_AWS.md) — managed App Runner for speed, or ECS + ALB + EFS when the pilot needs persistence and VPC control.
+
+All three honour the `PORT` and `EUROSETU_DB_PATH` environment variables baked into the `Dockerfile` defaults (`8000`, `/app/data/eurosetu.db`). Mount a volume at `/app/data` wherever SQLite must survive restarts.

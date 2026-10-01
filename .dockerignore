@@ -1,0 +1,27 @@
+.git
+.gitignore
+.github
+.venv
+venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.mypy_cache
+.ruff_cache
+
+# Never ship local databases or credentials into an image.
+data/*.db
+data/*.db-journal
+.env
+.env.*
+!.env.example
+
+# Re-downloadable upstream materializations (see .gitignore for rationale).
+data/cache
+data/raw
+data/official
+data/sources
+
+*.tmp
+.DS_Store
+docs/**/*.png

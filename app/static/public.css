@@ -86,3 +86,56 @@ nav,footer{padding-left:20px;padding-right:20px}
 footer{gap:14px;font-size:11.5px}
 footer p:not(.muted){display:none}
 }
+
+/* ============ Clickable commercial cards + contact dialog ============
+   Principle: cards stay quiet until they are asked, then reveal a single
+   unmistakable next step. No persistent sales chrome over the content. */
+.pick{cursor:pointer;transition:border-color .16s,box-shadow .16s,transform .16s}
+.pick:hover{border-color:var(--green);box-shadow:0 0 0 1px rgba(14,90,66,.18),var(--shadow)}
+.pick:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.pick.open{border-color:var(--green);box-shadow:0 0 0 1px rgba(14,90,66,.3),var(--shadow)}
+.cards .featured.pick:hover,.cards .featured.pick.open{border-color:var(--lime);box-shadow:0 0 0 1px rgba(201,243,106,.45),var(--shadow)}
+.contact-now{display:inline-block;margin-top:14px;align-self:flex-start;background:var(--green);
+  color:#fff;border:1px solid var(--green);border-radius:var(--radius-btn);padding:10px 16px;
+  font:inherit;font-size:14px;font-weight:750;cursor:pointer}
+.contact-now:hover{background:var(--ink);border-color:var(--ink)}
+.proof .contact-now{margin-top:0;padding:6px 11px;font-size:11px;letter-spacing:.06em}
+
+/* Modal */
+html.modal-open{overflow:hidden}
+.modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
+.modal[hidden]{display:none}
+.modal-backdrop{position:absolute;inset:0;background:rgba(11,31,24,.6);backdrop-filter:blur(3px)}
+.modal-card{position:relative;z-index:1;width:100%;max-width:660px;max-height:calc(100vh - 48px);
+  overflow-y:auto;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:0 30px 90px rgba(11,31,24,.35);padding:34px}
+.modal-card h2{font-size:clamp(26px,3vw,34px);margin:8px 0 10px;letter-spacing:-.03em}
+.modal-card .lede{font-size:16px;color:#3c4d46;margin:0 0 6px;max-width:560px}
+.modal-close{position:absolute;top:14px;right:14px;width:36px;height:36px;padding:0;margin:0;
+  border-radius:var(--radius-chip);background:transparent;color:var(--muted);border:1px solid var(--line);
+  font-size:22px;line-height:1;cursor:pointer}
+.modal-close:hover{background:var(--cream);color:var(--ink);border-color:var(--ink)}
+.interest{font-size:13px;color:var(--muted);margin:14px 0 4px}
+.interest b{color:var(--green);font-weight:800}
+.modal form{margin-top:14px}
+.modal .form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.modal label{display:block;font-size:13px;font-weight:700;color:#3c4d46}
+.modal input,.modal textarea{width:100%;background:#fff;border:1px solid var(--line);color:var(--ink);
+  border-radius:var(--radius-btn);padding:11px 12px;font:inherit;font-weight:400;margin-top:6px}
+.modal input:focus,.modal textarea:focus{outline:2px solid rgba(14,90,66,.35);border-color:var(--green)}
+.modal textarea{min-height:84px;resize:vertical}
+.modal .full{display:block;margin-top:12px}
+.modal button[type=submit]{background:var(--ink);color:#fff;border:1px solid var(--ink);
+  border-radius:var(--radius-btn);padding:12px 20px;font:inherit;font-weight:750;cursor:pointer;margin-top:16px}
+.modal button[type=submit]:hover{background:var(--green);border-color:var(--green)}
+.modal button[type=submit]:disabled{opacity:.6;cursor:wait}
+.modal .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-status{margin:10px 0 0;font-size:14px;font-weight:650;min-height:20px}
+.form-status.good{color:var(--green)}
+.form-status.bad{color:var(--red)}
+
+@media(max-width:860px){
+  .modal{padding:14px}
+  .modal-card{padding:24px}
+  .modal .form-grid{grid-template-columns:1fr}
+}

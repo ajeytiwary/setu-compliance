@@ -1,8 +1,11 @@
 from __future__ import annotations
-import json, sqlite3
+import json, os, sqlite3
 from contextlib import contextmanager
 from pathlib import Path
-DB_PATH=Path(__file__).resolve().parents[1]/"data"/"eurosetu.db"
+# Local default. Container and production deploys override this to point at a mounted
+# volume so the database survives image restarts -- see docs/DEPLOY_CLOUDFLARE.md,
+# docs/DEPLOY_GOOGLE_CLOUD.md and docs/DEPLOY_AWS.md.
+DB_PATH=Path(os.getenv("EUROSETU_DB_PATH") or (Path(__file__).resolve().parents[1]/"data"/"eurosetu.db"))
 SCHEMA="""PRAGMA foreign_keys=ON;
 CREATE TABLE IF NOT EXISTS shipments(id TEXT PRIMARY KEY,shipment_no TEXT UNIQUE NOT NULL,exporter TEXT NOT NULL,facility TEXT NOT NULL,importer TEXT NOT NULL,destination_country TEXT NOT NULL,product TEXT NOT NULL,cn_code TEXT NOT NULL,tonnes REAL NOT NULL,value_eur REAL NOT NULL,emissions_method TEXT NOT NULL DEFAULT 'actual',embedded_emissions_tco2e_per_t REAL,supplier_required INTEGER NOT NULL DEFAULT 0,supplier_complete INTEGER NOT NULL DEFAULT 0,manual_hours REAL NOT NULL DEFAULT 0,created_at TEXT NOT NULL,updated_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS requirements(id INTEGER PRIMARY KEY AUTOINCREMENT,shipment_id TEXT NOT NULL,code TEXT NOT NULL,label TEXT NOT NULL,category TEXT NOT NULL,blocking INTEGER NOT NULL DEFAULT 1,status TEXT NOT NULL DEFAULT 'MISSING',required_evidence INTEGER NOT NULL DEFAULT 0,evidence_count INTEGER NOT NULL DEFAULT 0,notes TEXT,UNIQUE(shipment_id,code),FOREIGN KEY(shipment_id) REFERENCES shipments(id) ON DELETE CASCADE);
@@ -28,6 +31,8 @@ CREATE INDEX IF NOT EXISTS idx_supplier_evidence_supplier ON supplier_evidence(s
 CREATE INDEX IF NOT EXISTS idx_evidence_requests_shipment ON evidence_requests(shipment_id,status);
 CREATE TABLE IF NOT EXISTS audit_events(id INTEGER PRIMARY KEY AUTOINCREMENT,shipment_id TEXT,event_type TEXT NOT NULL,payload TEXT NOT NULL,created_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS leads(id TEXT PRIMARY KEY,name TEXT NOT NULL,work_email TEXT UNIQUE NOT NULL,company TEXT NOT NULL,role TEXT,message TEXT,token TEXT UNIQUE NOT NULL,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS contacts(id TEXT PRIMARY KEY,name TEXT NOT NULL,work_email TEXT NOT NULL,company TEXT,topic TEXT NOT NULL,message TEXT,created_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS idx_contacts_created ON contacts(created_at);
 CREATE TABLE IF NOT EXISTS regulatory_change_impacts(id TEXT PRIMARY KEY,dataset TEXT NOT NULL,old_sha TEXT,new_sha TEXT NOT NULL,shipment_id TEXT NOT NULL,shipment_no TEXT NOT NULL,rule_codes TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'REVIEW_REQUIRED',created_at TEXT NOT NULL);
 CREATE INDEX IF NOT EXISTS idx_reg_change_status ON regulatory_change_impacts(status,created_at);
 """
