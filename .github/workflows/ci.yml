@@ -15,7 +15,7 @@ jobs:
         env:
           PYTHONPATH: .
         run: pytest -q -m "not scale"
-      - name: P0 benchmarks (fail-closed gate, §9)
+      - name: Rebuild public trade evidence corpus offline\n        run: python scripts/build_public_evidence_corpus.py --clean\n      - name: Validate public evidence corpus\n        env:\n          PYTHONPATH: .\n        run: pytest -q tests/test_public_evidence_corpus.py tests/benchmarks/test_steel_100_demo.py\n      - name: P0 benchmarks (fail-closed gate, §9)
         env:
           PYTHONPATH: .
         run: pytest -q tests/benchmarks/test_eu_cbam_golden.py tests/benchmarks/test_cbam_2026.py tests/benchmarks/test_taric_live.py tests/benchmarks/test_sap_block.py tests/benchmarks/test_evidence_decay.py tests/benchmarks/test_time_travel.py tests/benchmarks/test_fail_closed.py
