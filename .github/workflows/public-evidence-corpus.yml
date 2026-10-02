@@ -1,0 +1,26 @@
+name: Public evidence corpus
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 5 1 * *"
+jobs:
+  corpus:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Build deterministic offline corpus
+        run: python scripts/build_public_evidence_corpus.py --clean
+      - name: Validate corpus and steel workflow
+        env:
+          PYTHONPATH: .
+        run: pytest -q tests/test_public_evidence_corpus.py tests/benchmarks/test_steel_100_demo.py
+      - name: Upload corpus manifest/evidence room
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-trade-evidence-corpus
+          path: data/public_trade_evidence/
+          retention-days: 30
