@@ -1,6 +1,6 @@
-"""TARIC-LIVE (P0, NORMATIVE): dated TARIC ingestion + applicability (§5.6).
+"""TARIC-LIVE (P0, SYNTHETIC): dated TARIC resolver regression using controlled snapshot fixtures (§5.6).
 
-Adapter: raw snapshot retention + parser version + normalized measure IDs.
+IMPORTANT: the test CSV below is controlled synthetic input. Official TARIC source sync is\nvalidated separately; this suite must not be described publicly as a normative TARIC oracle.\nAdapter: raw snapshot retention + parser version + normalized measure IDs.
 Queries carry CN/origin/destination/as-of. Quota balance never asserted
 unless the snapshot contains current balance state. Historical queries use
 historical snapshots; parser schema changes fail closed.
@@ -36,7 +36,7 @@ def _seed(tmp) -> dict:
 
 def test_taric_measures_resolve_exactly(tmp_path, monkeypatch):
     case = BenchmarkCase(suite_id="TARIC-LIVE", case_id="measures_001",
-                         evidence_class="NORMATIVE", as_of=AS_OF)
+                         evidence_class="SYNTHETIC", as_of=AS_OF)
     monkeypatch.setattr(pub, "CACHE", tmp_path)
     pub.store_snapshot("taric", pub.parse_csv(TARIC_CSV, "taric", AS_OF),
                        TARIC_CSV.encode())
@@ -54,7 +54,7 @@ def test_taric_measures_resolve_exactly(tmp_path, monkeypatch):
 def test_taric_historical_snapshot(tmp_path, monkeypatch):
     """Historical query uses the historical snapshot, not today's (§5.6)."""
     case = BenchmarkCase(suite_id="TARIC-LIVE", case_id="historical_001",
-                         evidence_class="NORMATIVE", as_of="2026-09-20")
+                         evidence_class="SYNTHETIC", as_of="2026-09-20")
     monkeypatch.setattr(pub, "CACHE", tmp_path)
     pub.store_snapshot("taric", pub.parse_csv(TARIC_CSV, "taric", "2026-09-20"),
                        TARIC_CSV.encode())
@@ -70,7 +70,7 @@ def test_taric_historical_snapshot(tmp_path, monkeypatch):
 def test_taric_quota_balance_not_asserted_without_state(tmp_path, monkeypatch):
     """Quota measure without balance state → BLOCKED with QUOTA_BALANCE (§5.6)."""
     case = BenchmarkCase(suite_id="TARIC-LIVE", case_id="quota_unknown_001",
-                         evidence_class="NORMATIVE", as_of=AS_OF)
+                         evidence_class="SYNTHETIC", as_of=AS_OF)
     monkeypatch.setattr(pub, "CACHE", tmp_path)
     csv = ("cn_code,origin_country,measure_type,duty_rate,quota_order_number,valid_from\n"
            "72083900,IN,TARIFF_QUOTA,0%,09.9803,2026-01-01\n")
@@ -85,7 +85,7 @@ def test_taric_quota_balance_not_asserted_without_state(tmp_path, monkeypatch):
 def test_taric_via_check_path(tmp_path, monkeypatch):
     """Production path: taric_payload through /v1/market-access/check."""
     case = BenchmarkCase(suite_id="TARIC-LIVE", case_id="check_path_001",
-                         evidence_class="NORMATIVE", as_of=AS_OF)
+                         evidence_class="SYNTHETIC", as_of=AS_OF)
     monkeypatch.setattr(pub, "CACHE", tmp_path)
     pub.store_snapshot("taric", pub.parse_csv(TARIC_CSV, "taric", AS_OF),
                        TARIC_CSV.encode())
