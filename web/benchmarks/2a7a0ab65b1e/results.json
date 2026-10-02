@@ -1,0 +1,2288 @@
+[
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": 5,
+        "expected": 5,
+        "name": "erp_lines",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 4,
+        "expected": 4,
+        "name": "linked",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 1,
+        "expected": 1,
+        "name": "unresolved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "unknown_queued",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "value_reconciles",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": [
+          "SUP-DEMO",
+          "SUP-JSW"
+        ],
+        "expected": [
+          "SUP-DEMO",
+          "SUP-JSW"
+        ],
+        "name": "lineage_suppliers",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "erp_link_001",
+    "code_commit": "local",
+    "duration_ms": 1,
+    "evidence_class": "COMPETITIVE-SCENARIO",
+    "generated_at": "2026-10-02T18:36:47.339479+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CARBMEE-SUPPLIER"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "CALCULATED",
+        "expected": "CALCULATED",
+        "name": "status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "ACTUAL",
+        "expected": "ACTUAL",
+        "name": "value_type",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 1.73,
+        "expected": 1.73,
+        "name": "see",
+        "pass": true,
+        "tolerance": 1e-09
+      },
+      {
+        "actual": 0.0429,
+        "expected": 0.0429,
+        "name": "faa",
+        "pass": true,
+        "tolerance": 1e-06
+      }
+    ],
+    "case_id": "actual_001",
+    "code_commit": "local",
+    "duration_ms": 1,
+    "evidence_class": "NORMATIVE",
+    "generated_at": "2026-10-02T18:36:47.686255+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CBAM-2026"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": 0.044,
+        "expected": 0.044,
+        "name": "benchmark",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "actual_above_benchmark",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 0.0429,
+        "expected": 0.0429,
+        "name": "faa_per_t",
+        "pass": true,
+        "tolerance": 1e-06
+      },
+      {
+        "actual": 0.975,
+        "expected": 0.975,
+        "name": "cbam_factor",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 1.0,
+        "expected": 1.0,
+        "name": "cscf",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "benchmark_compare_001",
+    "code_commit": "local",
+    "duration_ms": 1,
+    "evidence_class": "NORMATIVE",
+    "generated_at": "2026-10-02T18:36:48.370620+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CBAM-2026"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "CALCULATED",
+        "expected": "CALCULATED",
+        "name": "status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DEFAULT",
+        "expected": "DEFAULT",
+        "name": "value_type",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 4.708,
+        "expected": 4.708,
+        "name": "certificate_default_total",
+        "pass": true,
+        "tolerance": 1e-06
+      },
+      {
+        "actual": "2025/2621-corrected-2026/1740",
+        "expected": "2025/2621-corrected-2026/1740",
+        "name": "dataset_version",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "default_001",
+    "code_commit": "local",
+    "duration_ms": 31,
+    "evidence_class": "NORMATIVE",
+    "generated_at": "2026-10-02T18:36:48.047060+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CBAM-2026"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "orig_status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "replay_status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_linked",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "same_obligations",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "replay_stable_001",
+    "code_commit": "local",
+    "duration_ms": 90,
+    "evidence_class": "NORMATIVE",
+    "generated_at": "2026-10-02T18:36:48.791511+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CBAM-2026"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "UNVERIFIED",
+        "expected": "UNVERIFIED",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.136409+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "UNVERIFIED",
+        "expected": "UNVERIFIED",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-002",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.145545+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "UNVERIFIED",
+        "expected": "UNVERIFIED",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-003",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.155248+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "UNVERIFIED",
+        "expected": "UNVERIFIED",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-004",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.166059+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "MISSING",
+        "expected": "MISSING",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-005",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.176203+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "STALE",
+        "expected": "STALE",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-006",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.185827+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "CONFLICTING",
+        "expected": "CONFLICTING",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-007",
+    "code_commit": "local",
+    "duration_ms": 1,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.199331+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "CONFLICTING",
+        "expected": "CONFLICTING",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-008",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.209142+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "MISSING",
+        "expected": "MISSING",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-009",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.219582+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "EXPIRED",
+        "expected": "EXPIRED",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-010",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.229597+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "EXPIRED",
+        "expected": "EXPIRED",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-011",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.238558+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "SUPERSEDED",
+        "expected": "SUPERSEDED",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-012",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.248938+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "CONFLICTING",
+        "expected": "CONFLICTING",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-013",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.259084+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "CONFLICTING",
+        "expected": "CONFLICTING",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-014",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.268068+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "CONFLICTING",
+        "expected": "CONFLICTING",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "initial",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "remediated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "chaos-015",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.278116+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CLIENT-DATA-CHAOS"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": 3,
+        "expected": 3,
+        "name": "claims_attached",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "healthy",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "EXPIRED",
+        "expected": "EXPIRED",
+        "name": "shared_state_after_expiry",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "all_dependents_blocked",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "PASS",
+        "expected": "PASS",
+        "name": "unrelated_unchanged",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "partial_restore",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "shared_node_001",
+    "code_commit": "local",
+    "duration_ms": 26,
+    "evidence_class": "COMPETITIVE-SCENARIO",
+    "generated_at": "2026-10-02T18:36:49.663621+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "CROSSREG"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": 1.73,
+        "expected": 1.73,
+        "name": "specific_direct_embedded_emissions_tco2_per_t",
+        "pass": true,
+        "tolerance": 1e-09
+      },
+      {
+        "actual": "EU_CBAM_2026_2547",
+        "expected": "EU_CBAM_2026_2547",
+        "name": "methodology",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "direct_only",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 0.0,
+        "expected": 0.0,
+        "name": "indirect_included",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "steel_bf_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:49.991766+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "EU-CBAM-GOLDEN"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "PASS",
+        "expected": "PASS",
+        "name": "CBAM_EMISSIONS",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "steel_bf_check_001",
+    "code_commit": "local",
+    "duration_ms": 42,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:51.019210+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "EU-CBAM-GOLDEN"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": 0.38,
+        "expected": 0.38,
+        "name": "specific_direct_embedded_emissions_tco2_per_t",
+        "pass": true,
+        "tolerance": 1e-09
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "direct_only",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 0.0,
+        "expected": 0.0,
+        "name": "indirect_included",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "steel_eaf_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:50.313879+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "EU-CBAM-GOLDEN"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "ERROR",
+        "expected": "ERROR",
+        "name": "outcome",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "ValueError",
+        "expected": "ValueError",
+        "name": "reason",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "steel_malformed_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:50.637078+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "EU-CBAM-GOLDEN"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "CONFLICTING",
+        "expected": "CONFLICTING",
+        "name": "state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": [],
+        "expected": [],
+        "name": "usable",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "conflict_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:51.673721+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "EVIDENCE-DECAY"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "not_ready",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "propagation_001",
+    "code_commit": "local",
+    "duration_ms": 40,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:52.051516+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "EVIDENCE-DECAY"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "VALID",
+        "expected": "VALID",
+        "name": "valid",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "STALE",
+        "expected": "STALE",
+        "name": "stale",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "EXPIRED",
+        "expected": "EXPIRED",
+        "name": "expired",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "SUPERSEDED",
+        "expected": "SUPERSEDED",
+        "name": "superseded",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "CONFLICTING",
+        "expected": "CONFLICTING",
+        "name": "conflicting",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "UNVERIFIED",
+        "expected": "UNVERIFIED",
+        "name": "unverified",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "MISSING",
+        "expected": "MISSING",
+        "name": "missing",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "states_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:51.345142+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "EVIDENCE-DECAY"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": 0,
+        "expected": 0,
+        "name": "linked",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "queued_with_owner",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "auto_merged",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "identity_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:53.371808+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "FAIL-CLOSED"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "ready",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "missing_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:52.711525+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "FAIL-CLOSED"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": false,
+        "expected": false,
+        "name": "oracle_available",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "emitted_pass",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "oracle_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "EXTERNAL-ORACLE",
+    "generated_at": "2026-10-02T18:36:53.704239+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "FAIL-CLOSED"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "STALE",
+        "expected": "STALE",
+        "name": "evidence_state",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "status",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "stale_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:53.053621+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "FAIL-CLOSED"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "ERROR",
+        "expected": "ERROR",
+        "name": "status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "reused_prior",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "unknown_schema_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:52.372906+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "FAIL-CLOSED"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": 4590000.0,
+        "expected": 4590000.0,
+        "name": "gross",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 2890000.0,
+        "expected": 2890000.0,
+        "name": "unique",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 1700000.0,
+        "expected": 1700000.0,
+        "name": "double_counted",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 2550000.0,
+        "expected": 2550000.0,
+        "name": "residual_unique",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "A2",
+        "expected": "A2",
+        "name": "top_action",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "unlock_value",
+        "expected": "unlock_value",
+        "name": "objective_exposed",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "overlap_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:54.028193+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "REVENUE-IMPACT"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": null,
+        "expected": null,
+        "name": "technical_origin_preview",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "CURRENT_MFN",
+        "expected": "CURRENT_MFN",
+        "name": "legal_regime",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "preference_available",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "insufficient_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "EXTERNAL-ORACLE",
+    "generated_at": "2026-10-02T18:36:55.000036+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "ROSA-ORIGIN"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": false,
+        "expected": false,
+        "name": "technical_origin_preview",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "CURRENT_MFN",
+        "expected": "CURRENT_MFN",
+        "name": "legal_regime",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "preference_available",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "nonqualify_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "EXTERNAL-ORACLE",
+    "generated_at": "2026-10-02T18:36:54.669557+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "ROSA-ORIGIN"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": true,
+        "expected": true,
+        "name": "technical_origin_preview",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "CURRENT_MFN",
+        "expected": "CURRENT_MFN",
+        "name": "legal_regime",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "preference_available",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "qualify_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "EXTERNAL-ORACLE",
+    "generated_at": "2026-10-02T18:36:54.349497+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "ROSA-ORIGIN"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "not_ready",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "names_quota",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "initial_001",
+    "code_commit": "local",
+    "duration_ms": 45,
+    "evidence_class": "COMPETITIVE-SCENARIO",
+    "generated_at": "2026-10-02T18:36:55.384554+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "SAP-BLOCK"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "second_status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_linked",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessor_still_blocked",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "recompile_001",
+    "code_commit": "local",
+    "duration_ms": 57,
+    "evidence_class": "COMPETITIVE-SCENARIO",
+    "generated_at": "2026-10-02T18:36:55.769865+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "SAP-BLOCK"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": false,
+        "expected": false,
+        "name": "pass",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "silently_originating",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "missing_evidence_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "COMPETITIVE-SCENARIO",
+    "generated_at": "2026-10-02T18:36:56.780571+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "SAP-ORIGIN"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": true,
+        "expected": true,
+        "name": "technical_pass",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "cth",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "maxnom",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "CURRENT_MFN",
+        "expected": "CURRENT_MFN",
+        "name": "legal_regime",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "preference_available",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "v1",
+        "expected": "v1",
+        "name": "rule_version",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "qualifies_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "COMPETITIVE-SCENARIO",
+    "generated_at": "2026-10-02T18:36:56.104497+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "SAP-ORIGIN"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": true,
+        "expected": true,
+        "name": "before",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "after",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "rule_unchanged",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "recalc_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "COMPETITIVE-SCENARIO",
+    "generated_at": "2026-10-02T18:36:56.458387+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "SAP-ORIGIN"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": 100000,
+        "expected": 100000,
+        "name": "shipments",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "single_ready",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 100,
+        "expected": 100,
+        "name": "batch_count",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 10,
+        "expected": 10,
+        "name": "batch_blocked",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 1000,
+        "expected": 1000,
+        "name": "lookup_affected",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "single_lt_1s",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "batch_lt_10s",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "lookup_lt_5s",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "update_lt_60s",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "perf_001",
+    "code_commit": "local",
+    "duration_ms": 22,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T14:15:55.919537+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "SCALE-100K"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": 169500.0,
+        "expected": 169500.0,
+        "name": "a_landed",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "a_pass",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "b_pass",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": [
+          "ORIGIN"
+        ],
+        "expected": [
+          "ORIGIN"
+        ],
+        "name": "b_unresolved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": null,
+        "expected": null,
+        "name": "selection",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "rfq_unmutated",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "assumptions_separated",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "compare_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "COMPETITIVE-SCENARIO",
+    "generated_at": "2026-10-02T18:36:57.116465+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "SPAETER-STYLE"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "OPT-A-IN",
+        "expected": "OPT-A-IN",
+        "name": "selected",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": {
+          "minimize": "comparable_landed_compliance_cost_eur"
+        },
+        "expected": {
+          "minimize": "comparable_landed_compliance_cost_eur"
+        },
+        "name": "objective",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "select_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "COMPETITIVE-SCENARIO",
+    "generated_at": "2026-10-02T18:36:57.448103+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "SPAETER-STYLE"
+  },
+  {
+    "as_of": "2026-09-29",
+    "assertions": [
+      {
+        "actual": 100,
+        "expected": 100,
+        "name": "transactions",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 25,
+        "expected": 25,
+        "name": "blocked_before",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 75,
+        "expected": 75,
+        "name": "ready_before",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 100,
+        "expected": 100,
+        "name": "ready_after",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 25,
+        "expected": 25,
+        "name": "remediated_to_ready",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "predecessors_preserved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "source_provenance",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "evidence_provenance",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "decision_hash_changed",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "total_value_positive",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "blocked_value_positive",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 5,
+        "expected": 5,
+        "name": "fault_types",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "portfolio_100_001",
+    "code_commit": "local",
+    "duration_ms": 11,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:57.794124+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "STEEL-100-DEMO"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": 500,
+        "expected": 500,
+        "name": "total",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 0,
+        "expected": 0,
+        "name": "missed_hard_faults",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 0,
+        "expected": 0,
+        "name": "false_blocked_clean",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 500,
+        "expected": 500,
+        "name": "blocked_plus_ready_plus_conditional",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 100,
+        "expected": 100,
+        "name": "truth_count",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "export_deterministic",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "DECISION_POLICY_V1",
+        "expected": "DECISION_POLICY_V1",
+        "name": "policy",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "ingest_500_001",
+    "code_commit": "local",
+    "duration_ms": 29,
+    "evidence_class": "COMPETITIVE-SCENARIO",
+    "generated_at": "2026-10-02T18:36:58.167197+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "STEELFORCE-STYLE"
+  },
+  {
+    "as_of": "2026-09-29",
+    "assertions": [
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "PASS",
+        "expected": "PASS",
+        "name": "TARIC_DUTY",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "check_path_001",
+    "code_commit": "local",
+    "duration_ms": 43,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:59.495268+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "TARIC-LIVE"
+  },
+  {
+    "as_of": "2026-09-20",
+    "assertions": [
+      {
+        "actual": true,
+        "expected": true,
+        "name": "fresh_resolved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "TARIC_SNAPSHOT_REQUIRED",
+        "expected": "TARIC_SNAPSHOT_REQUIRED",
+        "name": "stale_status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": false,
+        "expected": false,
+        "name": "stale_resolved",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "historical_001",
+    "code_commit": "local",
+    "duration_ms": 1,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:58.810901+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "TARIC-LIVE"
+  },
+  {
+    "as_of": "2026-09-29",
+    "assertions": [
+      {
+        "actual": true,
+        "expected": true,
+        "name": "resolved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "RESOLVED",
+        "expected": "RESOLVED",
+        "name": "status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 5000.0,
+        "expected": 5000,
+        "name": "base",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 10000.0,
+        "expected": 10000,
+        "name": "defence",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": 15000.0,
+        "expected": 15000,
+        "name": "total",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "2026-09-29",
+        "expected": "2026-09-29",
+        "name": "snapshot_as_of",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "measures_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:58.489022+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "TARIC-LIVE"
+  },
+  {
+    "as_of": "2026-09-29",
+    "assertions": [
+      {
+        "actual": false,
+        "expected": false,
+        "name": "resolved",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "has_quota_blocker",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "quota_unknown_001",
+    "code_commit": "local",
+    "duration_ms": 0,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:59.133145+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "TARIC-LIVE"
+  },
+  {
+    "as_of": "2026-08-28",
+    "assertions": [
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "t1_status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "BLOCKED",
+        "expected": "BLOCKED",
+        "name": "t2_status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "READY",
+        "expected": "READY",
+        "name": "replay_status",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "replay_matches_t1",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "v1",
+        "expected": "v1",
+        "name": "t1_snapshot_version",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": "v2",
+        "expected": "v2",
+        "name": "t2_snapshot_version",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "causal_change",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "t1_effective_has_v1",
+        "pass": true,
+        "tolerance": null
+      },
+      {
+        "actual": true,
+        "expected": true,
+        "name": "t2_effective_has_v2",
+        "pass": true,
+        "tolerance": null
+      }
+    ],
+    "case_id": "t1_t2_001",
+    "code_commit": "local",
+    "duration_ms": 80,
+    "evidence_class": "SYNTHETIC",
+    "generated_at": "2026-10-02T18:36:59.896527+00:00",
+    "result": "PASS",
+    "schema_version": "EUROSETU_CANONICAL_V1",
+    "suite_id": "TIME-TRAVEL"
+  }
+]

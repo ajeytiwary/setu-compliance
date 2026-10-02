@@ -13,11 +13,13 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - name: Build deterministic offline corpus
-        run: python scripts/build_public_evidence_corpus.py --clean
+        run: python scripts/build_public_evidence_corpus.py --clean && python scripts/build_evidence_room_2026.py --clean
+      - name: Probe public source health (non-blocking)
+        run: python scripts/probe_public_sources.py || true
       - name: Validate corpus and steel workflow
         env:
           PYTHONPATH: .
-        run: pytest -q tests/test_public_evidence_corpus.py tests/benchmarks/test_steel_100_demo.py
+        run: pytest -q tests/test_public_evidence_corpus.py tests/benchmarks/test_steel_100_demo.py tests/benchmarks/test_client_data_chaos.py
       - name: Upload corpus manifest/evidence room
         uses: actions/upload-artifact@v4
         with:

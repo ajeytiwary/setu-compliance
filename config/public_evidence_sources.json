@@ -2,6 +2,23 @@
   "schema_version": 1,
   "sources": [
     {
+      "id": "ec_cbam_operator_guidance",
+      "title": "European Commission CBAM operator guidance + worked steel example (BF/BOF)",
+      "source_class": "OFFICIAL",
+      "kind": "landing_page",
+      "url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+      "license": "EU reuse terms / verify at acquisition",
+      "use": [
+        "cbam_template",
+        "installation",
+        "precursor",
+        "worked_example"
+      ],
+      "expected_use": "Layer-1 regulatory golden: reconstruct installation → processes → products → embedded emissions",
+      "provenance_note": "Guidance PDF also kept locally under docs/ (gitignored). Never redistribute EU PDFs; link + hash only.",
+      "redistribute": false
+    },
+    {
       "id": "ec_cbam_examples",
       "title": "European Commission CBAM communication template examples",
       "source_class": "OFFICIAL",
@@ -13,6 +30,7 @@
         "installation",
         "precursor"
       ],
+      "expected_use": "Layer-1 goldens: 7 filled XLSX workbooks incl. steel BF, steel EAF, screws/nuts",
       "redistribute": false
     },
     {
@@ -115,6 +133,86 @@
         "taric",
         "customs"
       ],
+      "expected_use": "Layer-1 goldens: CN to measures, restrictions, documents; versioned snapshots",
+      "redistribute": false
+    },
+    {
+      "id": "un_comtrade",
+      "title": "UN Comtrade API — trade flows by commodity/partner/period",
+      "source_class": "OFFICIAL_STATISTICS",
+      "kind": "api",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS",
+      "license": "UN Comtrade terms of use / verify at acquisition",
+      "use": ["transaction_distribution"],
+      "expected_use": "Layer-2 real-world: realistic India-EU steel transaction distributions (value, quantity, partner)",
+      "redistribute": false
+    },
+    {
+      "id": "worldsteel_lci",
+      "title": "worldsteel 2026 Life Cycle Inventory (160+ sites, 356 Mt, 16 products)",
+      "source_class": "ACADEMIC_OPEN_DATA",
+      "kind": "landing_page",
+      "url": "https://worldsteel.org/steel-topics/life-cycle-thinking/life-cycle-inventory-lci-study/",
+      "license": "dataset-specific; detailed datasets on request, eco-profiles direct",
+      "use": ["ems", "energy", "co2", "installation"],
+      "expected_use": "Layer-2 real-world: BF/BOF vs EAF intensity priors for installation evidence",
+      "redistribute": false
+    },
+    {
+      "id": "voestalpine_epds",
+      "title": "voestalpine steel EPDs (heavy plate, hot-rolled, cold-rolled strip)",
+      "source_class": "PUBLIC_COMPANY",
+      "kind": "landing_page",
+      "url": "https://www.voestalpine.com/group/en/group/environment/environmental-product-declarations/",
+      "license": "public PDFs; verify reuse before acquisition",
+      "use": ["epd", "pcf", "evidence_document"],
+      "expected_use": "Layer-2 real-world: evidence-document inputs (EPD/PCF) linked to heat/batch/facility",
+      "redistribute": false
+    },
+    {
+      "id": "cord_receipts",
+      "title": "CORD — 1,000 annotated receipt documents (CC BY 4.0)",
+      "source_class": "ACADEMIC_OPEN_DATA",
+      "kind": "landing_page",
+      "url": "https://github.com/clovaai/cord",
+      "license": "CC BY 4.0",
+      "use": ["invoice", "receipt", "line_items"],
+      "expected_use": "Layer-2 real-world: document-AI extraction accuracy for invoices/receipts",
+      "redistribute": false
+    },
+    {
+      "id": "quest_tables",
+      "title": "QUEST / DocILE tables — 954 annotated business-document tables",
+      "source_class": "ACADEMIC_OPEN_DATA",
+      "kind": "landing_page",
+      "url": "https://github.com/rossumai/docile",
+      "license": "dataset-specific; verify before acquisition",
+      "use": ["invoice", "purchase_order", "line_items", "tables"],
+      "expected_use": "Layer-2 real-world: table-structure extraction for invoice/PO line items",
+      "redistribute": false
+    },
+    {
+      "id": "cbamreturn_worked_example",
+      "title": "CBAMReturn worked example — import transactions + intentionally messy supplier files",
+      "source_class": "COMPETITOR_CASE",
+      "kind": "landing_page",
+      "url": "https://cbamreturn.com/",
+      "license": "scenario metadata only; do not redistribute page",
+      "use": ["scenario_spec", "ingestion_chaos"],
+      "expected_use": "Layer-3/4: messy-supplier chaos patterns (renamed sheets, decimal comma, kg-tonne, stale formulas)",
+      "provenance_note": "Patterns re-implemented as synthetic CHAOS-001..015; never copy vendor files verbatim",
+      "redistribute": false
+    },
+    {
+      "id": "terlouw_steel_cbam",
+      "title": "Terlouw, Harpprecht & Bauer Steel_CBAM research dataset/code (2025)",
+      "source_class": "ACADEMIC_OPEN_DATA",
+      "kind": "landing_page",
+      "url": "https://doi.org/10.1016/j.jclepro.2025.145000",
+      "license": "paper + dataset-specific; verify before acquisition",
+      "use": ["ems", "energy", "co2", "installation", "research"],
+      "expected_use": "Layer-2 real-world: regional steel production + prospective LCA for CBAM carbon accounting",
+      "provenance_note": "Resolve DOI to publisher/supplement at acquisition; record exact URL + sha256 in manifest",
       "redistribute": false
     }
   ]

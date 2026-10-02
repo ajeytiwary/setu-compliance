@@ -51,6 +51,8 @@ Internal `POST /internal/benchmarks/run` for CI orchestration.
 | CARBMEE-SUPPLIER | `test_carbmee_supplier.py` | COMPETITIVE-SCENARIO | P1 — every PR |
 | REVENUE-IMPACT | `test_revenue_impact.py` | SYNTHETIC | P1 — every PR |
 | SPAETER-STYLE | `test_spaeter_style.py` | COMPETITIVE-SCENARIO | P1 — every PR |
+| CLIENT-DATA-CHAOS | `test_client_data_chaos.py` | SYNTHETIC | P1 — every PR (CHAOS-001..015, §9.2) |
+| STEEL-100-DEMO | `test_steel_100_demo.py` | SYNTHETIC | P1 — every PR (evidence-room portfolio) |
 | SCALE-100K | `test_scale_100k.py` | SYNTHETIC | nightly + release only (`@pytest.mark.scale`) |
 
 Fail-closed rules (§9.1), enforced by `test_fail_closed.py`:

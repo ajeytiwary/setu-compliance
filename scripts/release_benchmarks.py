@@ -32,6 +32,7 @@ SECTIONS = {
     "Evidence engine": ["EVIDENCE-DECAY", "CROSSREG", "TIME-TRAVEL", "SAP-BLOCK"],
     "Commercial engine": ["STEELFORCE-STYLE", "CARBMEE-SUPPLIER",
                           "REVENUE-IMPACT", "SPAETER-STYLE"],
+    "Real-world evidence corpus": ["CLIENT-DATA-CHAOS", "STEEL-100-DEMO"],
     "Scale": ["SCALE-100K"],
     "Fail-closed gate": ["FAIL-CLOSED"],
 }

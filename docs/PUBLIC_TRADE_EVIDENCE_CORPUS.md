@@ -32,10 +32,22 @@ Every acquired original is immutable and addressed by SHA-256. `manifest.json` r
 Source classes:
 - OFFICIAL / OFFICIAL_STATISTICS
 - ACADEMIC_OPEN_DATA
+- PUBLIC_COMPANY
 - COMPETITOR_CASE
 - SYNTHETIC
 
 Competitor case studies are **scenario specifications**, not calculation goldens unless underlying inputs and expected outputs are actually published.
+
+## Four layers
+
+1. **Regulatory goldens (Layer 1):** EC CBAM examples/defaults/benchmarks, operator guidance, TARIC. Only direct authoritative expected outputs qualify as normative calculation oracles. Never redistributed; link + hash only.
+2. **Public real-world (Layer 2):** UCI steel telemetry, DocILE/CORD/QUEST, worldsteel LCI, voestalpine EPDs, Eurostat COMEXT, UN Comtrade, Terlouw Steel_CBAM. Real inputs with provenance; landing pages/APIs never scraped. Health: `python scripts/probe_public_sources.py`.
+3. **Competitor scenarios (Layer 3):** Steelforce/Spaeter/CBAMReturn workflow shapes re-implemented synthetically (COMPETITIVE-SCENARIO). Never copy vendor files verbatim.
+4. **Synthetic corrupted packs (Layer 4):** `EU-STEEL-EXPORT-2026/` evidence room built by `scripts/build_evidence_room_2026.py` — ERP/LOGISTICS/QUALITY/CARBON/REGULATORY/expected layout, 2,000-row energy telemetry, corrupted derivatives with parent hashes, CHAOS-001..015 mapping, expected initial/remediation/final decisions.
+
+## /benchmarks section
+
+The "Real-world evidence corpus" section surfaces CLIENT-DATA-CHAOS (15 messy-supplier ingestion cases, each BLOCKED → remediated → READY) and STEEL-100-DEMO (100-transaction portfolio with provenance) alongside the legal goldens.
 
 ## Adding a prospect dataset
 
