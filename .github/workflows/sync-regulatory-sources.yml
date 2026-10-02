@@ -1,6 +1,12 @@
 name: Sync pluggable regulatory sources
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "app/source_sync.py"
+      - "app/source_resolvers.py"
+      - "scripts/sync_sources.py"
+      - ".github/workflows/sync-regulatory-sources.yml"
   schedule:
     - cron: "17 4 * * *"
 permissions:
