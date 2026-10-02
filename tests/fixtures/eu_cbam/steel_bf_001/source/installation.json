@@ -46,7 +46,8 @@
   "production_route": "BF-BOF",
   "reporting_period": 2026,
   "verification": {
-    "status": "IN_REVIEW",
-    "verifier": "PILOT-VERIFIER"
+    "status": "VERIFIED",
+    "verifier": "SYNTHETIC-ACCREDITED-VERIFIER",
+    "verification_ref": "GOLDEN-VERIFICATION-001"
   }
 }
