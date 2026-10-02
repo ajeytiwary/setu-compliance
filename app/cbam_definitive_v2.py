@@ -116,6 +116,26 @@ def free_allocation_adjustment(cn_code,mass_t,reporting_year,production_route=No
  if cscf_val is None:return {"available":False,"reason":cscf_src,"benchmark":bm}
  sefa=CBAM_FACTOR[reporting_year]*cscf_val*bm["benchmark"]
  return {"available":True,"cbam_factor":CBAM_FACTOR[reporting_year],"cscf":cscf_val,"cscf_source":cscf_src,"benchmark":bm,"specific_embedded_free_allocation_tco2e_per_t":round(sefa,9),"free_allocation_adjustment_tco2e":round(sefa*float(mass_t),9),"legal_basis":"Implementing Regulation (EU) 2025/2620"}
+def certificate_obligation(specific_emissions_tco2e_per_t,mass_t,free_allocation,certificate_price_eur=None,carbon_price_reduction_certificates=None):
+ """Calculate the shipment-level certificate-equivalent obligation.
+
+ Free-allocation adjustment is deducted from embedded emissions. A third-country
+ carbon-price deduction is accepted only as an already converted number of CBAM
+ certificates; EuroSetu deliberately does not invent the Article 9 conversion
+ while the implementing methodology is not represented by a versioned source.
+ """
+ mass=float(mass_t or 0)
+ if mass<=0:raise ValueError("mass_t/activity_level_t must be > 0")
+ embedded=max(0.0,float(specific_emissions_tco2e_per_t))*mass
+ faa=float((free_allocation or {}).get("free_allocation_adjustment_tco2e") or 0)
+ after_faa=max(0.0,embedded-faa)
+ reduction=0.0
+ if carbon_price_reduction_certificates is not None:
+  reduction=max(0.0,float(carbon_price_reduction_certificates))
+ net=max(0.0,after_faa-reduction)
+ price=None if certificate_price_eur is None else float(certificate_price_eur)
+ return {"embedded_emissions_tco2e":round(embedded,9),"free_allocation_adjustment_tco2e":round(faa,9),"certificates_before_carbon_price_reduction":round(after_faa,9),"carbon_price_reduction_certificates":round(reduction,9),"certificates_to_surrender_estimate":round(net,9),"certificate_price_eur":price,"estimated_certificate_cost_eur":round(net*price,2) if price is not None else None,"price_basis":"CALLER_OR_OFFICIAL_SNAPSHOT_REQUIRED","legal_basis":["Regulation (EU) 2023/956 Articles 9, 21, 22","Implementing Regulation (EU) 2025/2548","Implementing Regulation (EU) 2025/2620"]}
+
 def calculate(payload):
  mode=str(payload.get("value_type","ACTUAL")).upper(); year=int(payload.get("reporting_period") or payload.get("year") or 2026)
  if mode=="ACTUAL":
@@ -126,4 +146,13 @@ def calculate(payload):
   emissions={"specific_embedded_emissions_tco2e_per_t":d["certificate_default_total"],"default":d}
  faa=free_allocation_adjustment(payload["cn_code"],payload.get("activity_level_t") or payload.get("mass_t"),year,payload.get("production_route"),payload.get("cscf"))
  blockers=[] if faa["available"] else [faa]
- return {"status":"CALCULATED" if not blockers else "BLOCKED","value_type":mode,"emissions":emissions,"free_allocation":faa,"blockers":blockers,"rule_version":"CBAM_DEFINITIVE_V2_2547_2620_2621_1740"}
+ mass=payload.get("activity_level_t") or payload.get("mass_t")
+ obligation=None
+ if faa["available"]:
+  obligation=certificate_obligation(emissions["specific_embedded_emissions_tco2e_per_t"],mass,faa,payload.get("certificate_price_eur"),payload.get("carbon_price_reduction_certificates"))
+ if mode=="ACTUAL":
+  verification_status=str((payload.get("verification") or {}).get("status") or "").upper()
+  if verification_status!="VERIFIED":blockers.append({"reason":"ACTUAL_EMISSIONS_VERIFICATION_REQUIRED","legal_basis":"Regulation (EU) 2023/956 Article 8"})
+ if payload.get("carbon_price_paid") is not None and payload.get("carbon_price_reduction_certificates") is None:
+  blockers.append({"reason":"CARBON_PRICE_CONVERSION_EVIDENCE_REQUIRED","legal_basis":"Regulation (EU) 2023/956 Article 9","detail":"Provide the legally converted certificate reduction and supporting evidence; raw carbon-price currency values are not converted heuristically."})
+ return {"status":"CALCULATED" if not blockers else "BLOCKED","declaration_ready":not blockers,"value_type":mode,"emissions":emissions,"free_allocation":faa,"certificate_obligation":obligation,"blockers":blockers,"rule_version":"CBAM_DEFINITIVE_V2_2547_2548_2620_2621_1740","guardrail":"Certificate cost is an estimate using a supplied/official price snapshot. Registry surrender and authority acceptance remain external."}
