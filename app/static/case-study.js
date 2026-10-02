@@ -43,8 +43,8 @@
       var tr = document.createElement("tr");
       tr.appendChild(el("td", "mono", o.obligation_id));
       tr.appendChild(el("td", null, o.status));
-      tr.appendChild(el("td", null, o.severity || "—"));
-      tr.appendChild(el("td", null, (o.reasons || []).join("; ") || "—"));
+      tr.appendChild(el("td", null, o.severity || "n/a"));
+      tr.appendChild(el("td", null, (o.reasons || []).join("; ") || "n/a"));
       t.appendChild(tr);
     });
     return t;
@@ -101,7 +101,7 @@
     [["Decision", d.decision_id + "  (hash " + short(d.decision_hash) + ")"],
      ["as_of", d.as_of + " (reproducible point-in-time)"],
      ["Policy", d.policy_version],
-     ["Predecessor", d.predecessor_id ? short(d.predecessor_id) + " (supersedes — original retained)" : "none (first decision)"]
+     ["Predecessor", d.predecessor_id ? short(d.predecessor_id) + " (supersedes; original retained)" : "none (first decision)"]
     ].forEach(function (kv) {
       meta.appendChild(el("dt", null, kv[0]));
       meta.appendChild(el("dd", "mono", kv[1]));
@@ -128,13 +128,13 @@
       tr.appendChild(el("td", null, d.status));
       tr.appendChild(el("td", "mono", short(d.decision_hash)));
       tr.appendChild(el("td", "mono", d.policy_version));
-      tr.appendChild(el("td", "mono", d.predecessor_id ? short(d.predecessor_id) : "—"));
+      tr.appendChild(el("td", "mono", d.predecessor_id ? short(d.predecessor_id) : "n/a"));
       t.appendChild(tr);
     });
     host.appendChild(t);
     host.appendChild(el("p", "note",
       "Decisions are immutable: recompiles create new rows linked by predecessor_id. " +
-      "Replay re-aggregates pinned obligation snapshots — never current mutable state."));
+      "Replay re-aggregates pinned obligation snapshots, never current mutable state."));
     $("replayBtn").disabled = false;
   }
 
@@ -165,12 +165,12 @@
     var snaps = [
       { source_id: "CBAM_REG_2026_2547", authority: "European Commission", title: "CBAM definitive-period rules", version: "2026-06", effective_from: "2026-01-01", content: "definitive period methodology ref" },
       { source_id: "TARIC_NL_HRC", authority: "European Commission (TARIC)", title: "TARIC measures HRC 7208 39 00", version: "2026-08-27", effective_from: "2026-08-27", content: "duty + safeguard quota snapshot ref" },
-      { source_id: "EU_IN_FTA_STATUS", authority: "European Commission (DG Trade)", title: "EU–India FTA status", version: "2026-08-01", effective_from: "2026-08-01", content: "negotiated, not in force — MFN applies" }
+      { source_id: "EU_IN_FTA_STATUS", authority: "European Commission (DG Trade)", title: "EU–India FTA status", version: "2026-08-01", effective_from: "2026-08-01", content: "negotiated, not in force; MFN applies" }
     ];
     state.snapshots = [];
     for (var i = 0; i < snaps.length; i++) {
       try { state.snapshots.push(await post("/v1/sources/snapshots", snaps[i])); }
-      catch (e) { /* already registered — refetch effective list */ }
+      catch (e) { /* already registered, refetch effective list */ }
     }
     var refs = state.snapshots.map(function (s) {
       return { source_id: s.source_id, version: s.version, snapshot_id: s.content_hash };
@@ -184,7 +184,7 @@
         { obligation_id: "TARIC_DUTY", applicable: true, status: "MISSING",
           reasons: ["current steel quota balance snapshot required"], severity: "BLOCKING", required_for_release: true },
         { obligation_id: "ORIGIN_STATEMENT", applicable: false, status: "NOT_APPLICABLE",
-          reasons: ["EU–IN FTA negotiated, not in force — MFN applies"], severity: "NON_BLOCKING", required_for_release: false }
+          reasons: ["EU–IN FTA negotiated, not in force; MFN applies"], severity: "NON_BLOCKING", required_for_release: false }
       ]
     });
     state.decisions.push(d);
@@ -214,7 +214,7 @@
       state.evidence.push(e1, e2);
       renderEvidence(state.decisions[state.decisions.length - 1]);
       $("recompileBtn").disabled = false;
-      btn.textContent = "Evidence added ✓ — now recompile";
+      btn.textContent = "Evidence added. Now recompile";
     } catch (e) {
       btn.textContent = "Failed: " + e.message;
       btn.disabled = false;
@@ -239,7 +239,7 @@
           { obligation_id: "TARIC_DUTY", applicable: true, status: "PASS",
             reasons: [], evidence_refs: [evIds[1]], severity: "BLOCKING", required_for_release: true },
           { obligation_id: "ORIGIN_STATEMENT", applicable: false, status: "NOT_APPLICABLE",
-            reasons: ["EU–IN FTA negotiated, not in force — MFN applies"], severity: "NON_BLOCKING", required_for_release: false }
+            reasons: ["EU–IN FTA negotiated, not in force; MFN applies"], severity: "NON_BLOCKING", required_for_release: false }
         ]
       });
       state.decisions.push(d);
@@ -247,7 +247,7 @@
       renderDecision(d);
       renderAudit();
       showCausal(prev, d);
-      btn.textContent = "Recompiled ✓ — see causal change";
+      btn.textContent = "Recompiled. See causal change";
     } catch (e) {
       btn.textContent = "Failed: " + e.message;
       btn.disabled = false;

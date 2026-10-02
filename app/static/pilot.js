@@ -142,7 +142,7 @@ function renderStatic(){
  const dm=document.querySelector("#dataModeBanner"),dl=document.querySelector("#data-mode-line");
  if(dm&&dl){
   const mode=d.data_mode||"UNKNOWN";
-  const label={DEMO_JSW_SYNTHETIC:"DEMO — synthetic JSW Vijayanagar showcase ("+(d.demo_shipment_count||0)+" demo shipments, €7.79M). No client data yet. Real pilot unlocks after client CSVs are imported.",CLIENT_LIVE:"LIVE PILOT — client rows present ("+(d.client_shipment_count||0)+" client shipments). Demo rows should be cleared before handover.",EMPTY_NO_CLIENT_DATA:"CLEAN PILOT SHELL — no shipments yet. Import the 6 client CSVs to unlock."}[mode]||mode;
+  const label={DEMO_JSW_SYNTHETIC:"DEMO: synthetic JSW Vijayanagar showcase ("+(d.demo_shipment_count||0)+" demo shipments, €7.79M). No client data yet. Real pilot unlocks after client CSVs are imported.",CLIENT_LIVE:"LIVE PILOT: client rows present ("+(d.client_shipment_count||0)+" client shipments). Demo rows should be cleared before handover.",EMPTY_NO_CLIENT_DATA:"CLEAN PILOT SHELL: no shipments yet. Import the 6 client CSVs to unlock."}[mode]||mode;
   dl.textContent=label;dm.hidden=false;
  }
  document.querySelector("#weeks").innerHTML=d.weeks.map(w=>'<div class="row"><b>W'+w.week+"</b> · "+esc(w.objective)+'<span style="float:right">'+statusPill(w.status)+'</span><div class="muted">Exit: '+esc(w.exit)+'</div><div class="muted">Signal: '+esc(w.signal)+" = "+esc(w.signal_value??"manual")+"</div></div>").join("");
