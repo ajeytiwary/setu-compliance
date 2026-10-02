@@ -1,6 +1,11 @@
 name: Live regulatory source integrity
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "app/live_source_probe.py"
+      - "scripts/sync_live_sources.py"
+      - ".github/workflows/live-regulatory-integrity.yml"
   schedule:
     - cron: "43 5 * * *"
 jobs:
