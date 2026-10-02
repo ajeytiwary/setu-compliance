@@ -22,7 +22,7 @@ jobs:
       - name: P1 benchmarks (competitive scenarios + oracles, §9)
         env:
           PYTHONPATH: .
-        run: pytest -q tests/benchmarks/test_steelforce_style.py tests/benchmarks/test_sap_origin.py tests/benchmarks/test_rosa_origin.py tests/benchmarks/test_crossreg.py tests/benchmarks/test_carbmee_supplier.py tests/benchmarks/test_revenue_impact.py tests/benchmarks/test_spaeter_style.py
+        run: pytest -q tests/benchmarks/test_steelforce_style.py tests/benchmarks/test_sap_origin.py tests/benchmarks/test_rosa_origin.py tests/benchmarks/test_crossreg.py tests/benchmarks/test_carbmee_supplier.py tests/benchmarks/test_revenue_impact.py tests/benchmarks/test_spaeter_style.py tests/benchmarks/test_steel_100_demo.py
       - name: Claim lint (benchmark + public copy, §9/§15)
         run: python scripts/lint_claims.py
       - name: Source-hash check (if regulatory sources touched, §9)

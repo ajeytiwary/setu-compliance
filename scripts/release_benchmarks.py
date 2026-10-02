@@ -37,7 +37,7 @@ SECTIONS = {
 }
 
 CLASS_LABELS = {
-    "NORMATIVE": "Checked against named European Commission reference material.",
+    "NORMATIVE": "Expected result derived directly from a named authoritative source artifact.",
     "EXTERNAL-ORACLE": "Compared with a captured third-party tool output, not live data.",
     "COMPETITIVE-SCENARIO": "Competitor-inspired workflow scenario with synthetic data.",
     "SYNTHETIC": "Fully synthetic data exercising product behaviour.",
