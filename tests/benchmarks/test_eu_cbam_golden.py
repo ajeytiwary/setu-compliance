@@ -1,4 +1,4 @@
-"""EU-CBAM-GOLDEN (P0, NORMATIVE): EC filled-communication examples as golden fixtures.
+"""EU-CBAM-GOLDEN (P0, SYNTHETIC): internal calculation regression fixtures pending direct EC workbook oracle ingestion.
 
 Proves (§5.1): official steel examples parse without manual edits, calculated
 fields match within tolerance, malformed cells fail closed (ERROR, never
@@ -58,7 +58,7 @@ def _ensure_fixtures() -> dict:
 def test_eu_cbam_golden_bf_bof():
     manifest = _ensure_fixtures()
     case = BenchmarkCase(suite_id="EU-CBAM-GOLDEN", case_id="steel_bf_001",
-                         evidence_class="NORMATIVE", as_of=AS_OF,
+                         evidence_class="SYNTHETIC", as_of=AS_OF,
                          manifest={"fixture_sha256": manifest["steel_bf_001"]})
     payload = json.loads((FIX / "steel_bf_001" / "source" / "installation.json").read_text())
     out = calculate_actual_steel(payload)
@@ -78,7 +78,7 @@ def test_eu_cbam_golden_bf_bof():
 def test_eu_cbam_golden_eaf():
     manifest = _ensure_fixtures()
     case = BenchmarkCase(suite_id="EU-CBAM-GOLDEN", case_id="steel_eaf_001",
-                         evidence_class="NORMATIVE", as_of=AS_OF,
+                         evidence_class="SYNTHETIC", as_of=AS_OF,
                          manifest={"fixture_sha256": manifest["steel_eaf_001"]})
     payload = json.loads((FIX / "steel_eaf_001" / "source" / "installation.json").read_text())
     out = calculate_actual_steel(payload)
@@ -96,7 +96,7 @@ def test_eu_cbam_golden_eaf():
 def test_eu_cbam_golden_malformed_fails_closed():
     """Missing activity level → ERROR, never a guessed value (§5.1, §9.1)."""
     case = BenchmarkCase(suite_id="EU-CBAM-GOLDEN", case_id="steel_malformed_001",
-                         evidence_class="NORMATIVE", as_of=AS_OF)
+                         evidence_class="SYNTHETIC", as_of=AS_OF)
     payload = json.loads((FIX / "steel_bf_001" / "source" / "installation.json").read_text())
     payload = {**payload, "activity_level_t": 0}
     try:
@@ -112,7 +112,7 @@ def test_eu_cbam_golden_via_check_path():
     from tests.benchmarks.helpers import check
     _ensure_fixtures()
     case = BenchmarkCase(suite_id="EU-CBAM-GOLDEN", case_id="steel_bf_check_001",
-                         evidence_class="NORMATIVE", as_of=AS_OF)
+                         evidence_class="SYNTHETIC", as_of=AS_OF)
     client = TestClient(app)
     payload = json.loads((FIX / "steel_bf_001" / "source" / "installation.json").read_text())
     cbam_payload = {**payload, "origin_country": "IN",
