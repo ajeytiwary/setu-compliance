@@ -205,6 +205,21 @@
           "enabled": true
         }
       ]
+    },
+    "cbam_examples": {
+      "purpose": "European Commission filled CBAM communication-template examples used as authoritative source fixtures",
+      "authority_required": true,
+      "refresh": "on_change",
+      "providers": [
+        {
+          "id": "eu_taxud_cbam_communication_examples",
+          "kind": "zip",
+          "authority": "OFFICIAL",
+          "legal_authority": false,
+          "url": "https://taxation-customs.ec.europa.eu/document/download/8d00a979-e57d-4e53-a11f-8b01370236a9_en?filename=Communication-template-examples.zip",
+          "enabled": true
+        }
+      ]
     }
   }
 }
