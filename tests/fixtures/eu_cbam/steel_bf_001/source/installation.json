@@ -1,0 +1,52 @@
+{
+  "activity_level_t": 1000.0,
+  "boundary_adjustments": [
+    {
+      "emissions_tco2": -20.0,
+      "evidence_ref": "MP-2026-001/TRANSFER-01",
+      "type": "operator_supplied_monitoring_plan_adjustment"
+    }
+  ],
+  "cn_code": "72083900",
+  "direct_emission_sources": [
+    {
+      "evidence_ref": "EMS/BF/2026",
+      "measured_emissions_tco2": 1450.0,
+      "method": "approved_mass_balance_or_measurement",
+      "source_id": "BF_PROCESS"
+    },
+    {
+      "evidence_ref": "EMS/BOF/2026",
+      "measured_emissions_tco2": 120.0,
+      "method": "approved_mass_balance_or_measurement",
+      "source_id": "BOF_PROCESS"
+    }
+  ],
+  "electricity": {
+    "consumption_kwh": 120000.0,
+    "emission_factor_tco2_per_kwh": 0.0007,
+    "note": "Retained for audit. Current CBAM steel scope includes direct emissions only."
+  },
+  "installation_id": "PILOT-INSTALLATION-001",
+  "methodology_id": "EU_CBAM_2026_2547",
+  "monitoring_plan_ref": "MP-2026-001",
+  "precursors": [
+    {
+      "installation_id": "SUPPLIER-INSTALLATION-01",
+      "name": "semi-finished steel precursor",
+      "precursor_cn": "72071210",
+      "quantity_t": 100.0,
+      "specific_embedded_emissions_tco2_per_t": 1.8,
+      "value_type": "ACTUAL",
+      "verification_status": "VERIFIED"
+    }
+  ],
+  "production_date": "2026-06-30",
+  "production_process": "HRC integrated route",
+  "production_route": "BF-BOF",
+  "reporting_period": 2026,
+  "verification": {
+    "status": "IN_REVIEW",
+    "verifier": "PILOT-VERIFIER"
+  }
+}

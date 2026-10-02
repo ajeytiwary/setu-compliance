@@ -10,7 +10,10 @@ from .db import init_db,connect,rows,row,audit
 from .metrics import shipment_score,portfolio_metrics
 from .rules import STEEL_EU_RULES,initial_status
 from .seed import seed_if_empty
+from .v1_api import router as v1_router, internal as internal_router
 app=FastAPI(title="EuroSetu EU Market Access OS",version="0.2.0")
+app.include_router(v1_router)
+app.include_router(internal_router)
 STATIC=Path(__file__).parent/"static"
 class ShipmentIn(BaseModel):
  shipment_no:str; exporter:str="Indian steel exporter"; facility:str; importer:str; destination_country:str; product:str="Hot Rolled Coil"; cn_code:str="7208"; tonnes:float=Field(gt=0); value_eur:float=Field(gt=0); emissions_method:str="actual"; embedded_emissions_tco2e_per_t:float|None=None; supplier_required:int=0; supplier_complete:int=0; manual_hours:float=0
@@ -77,6 +80,34 @@ def home():
 def trust():return FileResponse(STATIC/"trust.html")
 @app.get("/case-study",response_class=HTMLResponse)
 def case_study():return FileResponse(STATIC/"case-study.html")
+@app.get("/benchmarks",response_class=HTMLResponse)
+def benchmarks_page():return FileResponse(STATIC/"benchmarks.html")
+@app.get("/benchmarks.js")
+def benchmarks_js():return FileResponse(STATIC/"benchmarks.js",media_type="application/javascript")
+@app.get("/case-study.js")
+def case_study_js():return FileResponse(STATIC/"case-study.js",media_type="application/javascript")
+WEB_BENCH=Path(__file__).resolve().parents[1]/"web"/"benchmarks"
+def _read_release_json(commit:str,name:str):
+ p=(WEB_BENCH/commit/name).resolve()
+ if WEB_BENCH.resolve() not in p.parents:raise HTTPException(400,"invalid release ref")
+ if not p.exists():raise HTTPException(404,"release artifact not found")
+ return json.loads(p.read_text())
+@app.get("/api/benchmarks/releases")
+def benchmark_releases():
+ idx=WEB_BENCH/"releases.json"
+ if not idx.exists():return []
+ return json.loads(idx.read_text())
+@app.get("/api/benchmarks/releases/{commit}")
+def benchmark_release_summary(commit:str):
+ return _read_release_json(commit,"summary.json")
+@app.get("/api/benchmarks/releases/{commit}/results")
+def benchmark_release_results(commit:str):
+ return _read_release_json(commit,"results.json")
+@app.get("/api/benchmarks/releases/{commit}/cases/{suite_id}/{case_id}")
+def benchmark_release_case(commit:str,suite_id:str,case_id:str):
+ for r in _read_release_json(commit,"results.json"):
+  if r.get("suite_id")==suite_id and r.get("case_id")==case_id:return r
+ raise HTTPException(404,"case not in this release")
 @app.get("/demo",response_class=HTMLResponse)
 def demo():
  p=STATIC/"demo.html"
@@ -219,7 +250,7 @@ def favicon_svg():return FileResponse(STATIC/"favicon.svg",media_type="image/svg
 @app.get("/robots.txt")
 def robots():return Response("User-agent: *\nAllow: /\nSitemap: /sitemap.xml\n",media_type="text/plain")
 @app.get("/sitemap.xml")
-def sitemap():return Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>/</loc></url><url><loc>/demo</loc></url><url><loc>/pilot</loc></url></urlset>',media_type="application/xml")
+def sitemap():return Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>/</loc></url><url><loc>/demo</loc></url><url><loc>/pilot</loc></url><url><loc>/case-study</loc></url><url><loc>/benchmarks</loc></url><url><loc>/trust</loc></url></urlset>',media_type="application/xml")
 @app.get("/app.js")
 def js():return FileResponse(STATIC/"app.js",media_type="application/javascript")
 @app.get("/styles.css")

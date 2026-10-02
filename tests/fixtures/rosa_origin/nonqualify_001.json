@@ -1,0 +1,10 @@
+{
+  "captured_at": "2026-08-20",
+  "input_ref": "hrc_maxnom_fail",
+  "oracle": {
+    "legal_regime": "CURRENT_MFN",
+    "preference_available": false,
+    "technical_origin_preview": false
+  },
+  "provenance": "ROSA self-assessment capture (manual)"
+}

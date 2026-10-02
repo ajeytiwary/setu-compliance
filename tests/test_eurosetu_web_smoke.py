@@ -15,6 +15,12 @@ def test_eurosetu_public_to_demo_journey():
         assert trust.status_code == 200 and "Trust & Security" in trust.text
         case = c.get("/case-study")
         assert case.status_code == 200 and "SYNTHETIC COMMERCIAL DATA" in case.text
+        assert c.get("/case-study.js").status_code == 200
+        bench = c.get("/benchmarks")
+        assert bench.status_code == 200 and "released code commit" in bench.text
+        assert c.get("/benchmarks.js").status_code == 200
+        assert c.get("/api/benchmarks/releases").status_code == 200
+        assert "/benchmarks" in c.get("/sitemap.xml").text
         assert 'name="viewport"' in home.text
         assert 'name="viewport"' in trust.text
         assert 'name="viewport"' in case.text

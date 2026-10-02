@@ -37,3 +37,9 @@ data/normalized/industrial_telemetry_demo/
 data/normalized/cbam_defaults/
 data/manifests/industrial_telemetry_demo-latest.json
 data/manifests/cbam_defaults-latest.json
+# Benchmark run artifacts: local machine materializations (re-generable via
+# pytest tests/benchmarks). Only the released bundles web/benchmarks/<sha>/
+# are committed for the public /benchmarks page.
+benchmark_artifacts/
+# Local evidence blobs from smoke tests / walkthroughs (re-creatable).
+data/evidence/

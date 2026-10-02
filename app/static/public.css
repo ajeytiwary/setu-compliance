@@ -103,6 +103,24 @@ footer p:not(.muted){display:none}
 .contact-now:hover{background:var(--ink);border-color:var(--ink)}
 .proof .contact-now{margin-top:0;padding:6px 11px;font-size:11px;letter-spacing:.06em}
 
+/* Benchmarks page: one section header, one card grid per engine. */
+.bench-section{margin:34px 0 8px}
+.bench-section-title{font-size:22px;letter-spacing:-.02em;margin:0 0 14px}
+.bench-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.bench-card{min-width:0}
+.bench-card h3{overflow-wrap:anywhere}
+.bench-tags{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+.bench-cases{list-style:none;margin:12px 0 0;padding:0}
+.bench-cases li{padding:12px 0;border-bottom:1px solid var(--line)}
+.bench-cases li:last-child{border-bottom:0}
+.bench-case-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bench-case-row a{font-weight:700;overflow-wrap:anywhere}
+.bench-pill{flex:none;font-size:11px;font-weight:800;letter-spacing:.06em;border:1px solid var(--line);border-radius:var(--radius-chip);padding:4px 9px;background:var(--cream)}
+.bench-pill.pass{color:var(--green);border-color:var(--green)}
+.bench-pill.fail{color:var(--red);border-color:var(--red)}
+.bench-case-meta{margin:6px 0 0;font-size:13px}
+@media(max-width:860px){.bench-cards{grid-template-columns:1fr}}
+
 /* Modal */
 html.modal-open{overflow:hidden}
 .modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}

@@ -35,6 +35,15 @@ CREATE TABLE IF NOT EXISTS contacts(id TEXT PRIMARY KEY,name TEXT NOT NULL,work_
 CREATE INDEX IF NOT EXISTS idx_contacts_created ON contacts(created_at);
 CREATE TABLE IF NOT EXISTS regulatory_change_impacts(id TEXT PRIMARY KEY,dataset TEXT NOT NULL,old_sha TEXT,new_sha TEXT NOT NULL,shipment_id TEXT NOT NULL,shipment_no TEXT NOT NULL,rule_codes TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'REVIEW_REQUIRED',created_at TEXT NOT NULL);
 CREATE INDEX IF NOT EXISTS idx_reg_change_status ON regulatory_change_impacts(status,created_at);
+CREATE TABLE IF NOT EXISTS canonical_decisions(decision_id TEXT PRIMARY KEY,transaction_ref TEXT NOT NULL,as_of TEXT NOT NULL,status TEXT NOT NULL,policy_version TEXT NOT NULL DEFAULT 'DECISION_POLICY_V1',predecessor_id TEXT,decision_hash TEXT NOT NULL,payload_json TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS idx_decisions_txn ON canonical_decisions(transaction_ref,created_at);
+CREATE TABLE IF NOT EXISTS evidence_objects(evidence_id TEXT PRIMARY KEY,tenant_id TEXT NOT NULL DEFAULT 'default',type TEXT NOT NULL,subject_ref TEXT NOT NULL,issuer TEXT,source_uri_ref TEXT,content_hash TEXT NOT NULL,collected_at TEXT NOT NULL,valid_from TEXT,valid_to TEXT,verification_status TEXT NOT NULL DEFAULT 'UNVERIFIED',supersedes TEXT,superseded_by TEXT,conflicting INTEGER NOT NULL DEFAULT 0,confidentiality TEXT NOT NULL DEFAULT 'internal',payload_json TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS idx_evidence_subject ON evidence_objects(subject_ref,type);
+CREATE TABLE IF NOT EXISTS evidence_claim_edges(evidence_id TEXT NOT NULL,obligation_id TEXT NOT NULL,transaction_ref TEXT NOT NULL,rule_family TEXT NOT NULL,created_at TEXT NOT NULL,PRIMARY KEY(evidence_id,obligation_id,transaction_ref));
+CREATE INDEX IF NOT EXISTS idx_claim_txn ON evidence_claim_edges(transaction_ref);
+CREATE TABLE IF NOT EXISTS source_snapshots(source_id TEXT NOT NULL,version TEXT NOT NULL,content_hash TEXT NOT NULL,payload_json TEXT NOT NULL,created_at TEXT NOT NULL,PRIMARY KEY(source_id,version,content_hash));
+CREATE TABLE IF NOT EXISTS benchmark_runs(run_id TEXT PRIMARY KEY,suite_id TEXT NOT NULL,case_id TEXT NOT NULL,result TEXT NOT NULL,code_commit TEXT,schema_version TEXT NOT NULL,source_snapshots_json TEXT NOT NULL DEFAULT '[]',assertions_json TEXT NOT NULL DEFAULT '[]',decision_id TEXT,duration_ms INTEGER NOT NULL DEFAULT 0,generated_at TEXT NOT NULL,artifact_path TEXT);
+CREATE INDEX IF NOT EXISTS idx_benchmark_suite ON benchmark_runs(suite_id,case_id,generated_at);
 """
 @contextmanager
 def connect():

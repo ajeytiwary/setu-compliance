@@ -1,0 +1,30 @@
+name: Benchmark release bundle
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Full suite (fail-closed, no --skip-tests)
+        run: pytest -q
+      - name: Build released benchmark bundle
+        run: python scripts/release_benchmarks.py
+      - name: Claim lint on release bundle
+        run: python scripts/lint_claims.py
+      - name: Upload benchmark bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmarks-${{ github.sha }}
+          path: web/benchmarks/
+# To publish /benchmarks: commit the generated web/benchmarks/<sha>/ bundle
+# from this run and push. The public page reads released bundles only.

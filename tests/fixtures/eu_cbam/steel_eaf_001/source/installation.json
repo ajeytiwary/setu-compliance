@@ -1,0 +1,29 @@
+{
+  "activity_level_t": 1000.0,
+  "boundary_adjustments": [],
+  "cn_code": "72083900",
+  "direct_emission_sources": [
+    {
+      "evidence_ref": "EMS/EAF/2026",
+      "measured_emissions_tco2": 380.0,
+      "source_id": "EAF_PROCESS"
+    }
+  ],
+  "electricity": {
+    "consumption_kwh": 120000.0,
+    "emission_factor_tco2_per_kwh": 0.0007,
+    "note": "Retained for audit. Current CBAM steel scope includes direct emissions only."
+  },
+  "installation_id": "PILOT-INSTALLATION-001",
+  "methodology_id": "EU_CBAM_2026_2547",
+  "monitoring_plan_ref": "MP-2026-001",
+  "precursors": [],
+  "production_date": "2026-06-30",
+  "production_process": "EAF scrap route",
+  "production_route": "EAF",
+  "reporting_period": 2026,
+  "verification": {
+    "status": "IN_REVIEW",
+    "verifier": "PILOT-VERIFIER"
+  }
+}

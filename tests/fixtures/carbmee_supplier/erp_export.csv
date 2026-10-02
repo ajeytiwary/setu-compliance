@@ -1,0 +1,6 @@
+po_line,erp_supplier_name,installation_ref,product_cn,qty_t,line_value_eur,customer
+PO-001/1,JSW Steel Vijayanagar,INST-JSW-VJ-01,72083900,100,170000,Customer-NL
+PO-002/1,jsw steel vijayanagar ,INST-JSW-VJ-01,72083900,50,85000,Customer-DE
+PO-003/1,Demo Ferroalloys,INST-DEMO-01,72083900,20,34000,Customer-IT
+PO-004/1,Unknown Traders LLC,INST-UNK-09,72083900,10,17000,Customer-FR
+PO-005/1,J S W Steel (Vijayanagar),INST-JSW-VJ-01,72083900,30,51000,Customer-BE
