@@ -1,0 +1,19 @@
+{
+  "dataset": "taric_measures",
+  "provider": "eu_taxud_taric",
+  "authority": "OFFICIAL",
+  "legal_authority": false,
+  "source": "https://release-assets.githubusercontent.com/github-production-release-asset/1282524294/2a90267b-2640-4c7e-88c4-4bea67cda30c?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-02T15%3A52%3A12Z&rscd=attachment%3B+filename%3DTARIC_20261001_1915.zip&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-02T14%3A51%3A42Z&ske=2026-10-02T15%3A52%3A12Z&sks=b&skv=2018-11-09&sig=5blaXa2gmkjD9QL1iqWPIOJOklj%2BJe9QxThEKuHPtLs%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MDk1MzMyOCwibmJmIjoxNzkwOTUzMDI4LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.HCxOcYPdZtWtfT2yMhC1yZgg9ff_uIdtiMset-wOI7Q&response-content-disposition=attachment%3B%20filename%3DTARIC_20261001_1915.zip&response-content-type=application%2Foctet-stream",
+  "retrieved_at": "2026-10-02T14:57:08+00:00",
+  "sha256": "c7eaf467aaaf0ac418a92405dae51df875c46d48e7f5b9aee738c4cdd25186fb",
+  "content_type": "application/octet-stream",
+  "etag": "\"0x8DF200B6DE02279\"",
+  "last_modified": "Thu, 01 Oct 2026 22:29:17 GMT",
+  "parser_version": "setu-source-sync-0.8",
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "record_count": 126
+  },
+  "raw_file": "data/raw/taric_measures/c7eaf467aaaf0ac418a92405dae51df875c46d48e7f5b9aee738c4cdd25186fb/2a90267b-2640-4c7e-88c4-4bea67cda30c"
+}
