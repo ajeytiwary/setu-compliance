@@ -44,3 +44,6 @@ benchmark_artifacts/
 # Local evidence blobs from smoke tests / walkthroughs (re-creatable).
 data/evidence/
 docs/Guidance document on CBAM implementation for installation operators outside the EU.pdf
+
+# Reproducible public/client-like evidence corpus; regenerate with scripts/build_public_evidence_corpus.py
+data/public_trade_evidence/

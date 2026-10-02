@@ -15,25 +15,28 @@ jobs:
         env:
           PYTHONPATH: .
         run: pytest -q -m "not scale"
-      - name: P0 benchmarks (fail-closed gate, §9)
+      - name: Rebuild public trade evidence corpus offline
+        run: python scripts/build_public_evidence_corpus.py --clean
+      - name: Validate public evidence corpus
+        env:
+          PYTHONPATH: .
+        run: pytest -q tests/test_public_evidence_corpus.py tests/benchmarks/test_steel_100_demo.py
+      - name: P0 benchmarks (fail-closed gate)
         env:
           PYTHONPATH: .
         run: pytest -q tests/benchmarks/test_eu_cbam_golden.py tests/benchmarks/test_cbam_2026.py tests/benchmarks/test_taric_live.py tests/benchmarks/test_sap_block.py tests/benchmarks/test_evidence_decay.py tests/benchmarks/test_time_travel.py tests/benchmarks/test_fail_closed.py
-      - name: P1 benchmarks (competitive scenarios + oracles, §9)
+      - name: P1 benchmarks (competitive scenarios and oracles)
         env:
           PYTHONPATH: .
         run: pytest -q tests/benchmarks/test_steelforce_style.py tests/benchmarks/test_sap_origin.py tests/benchmarks/test_rosa_origin.py tests/benchmarks/test_crossreg.py tests/benchmarks/test_carbmee_supplier.py tests/benchmarks/test_revenue_impact.py tests/benchmarks/test_spaeter_style.py tests/benchmarks/test_steel_100_demo.py
-      - name: Claim lint (benchmark + public copy, §9/§15)
+      - name: Claim lint
         run: python scripts/lint_claims.py
-      - name: Source-hash check (if regulatory sources touched, §9)
+      - name: Source-hash check
         env:
           PYTHONPATH: .
         run: |
           if git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- app/eu_public_data.py app/source_sync.py app/regulatory_registry.py config/data_sources.json | grep -q .; then
             pytest -q tests/test_regulatory_content.py tests/test_source_sync.py
           else
-            echo "no regulatory source files touched — skipping content validation"
+            echo "no regulatory source files touched - skipping content validation"
           fi
-# External regulatory feeds have a separate, strict scheduled workflow:
-# .github/workflows/live-regulatory-integrity.yml
-# Its failures must be investigated; never substitute metadata for missing content.

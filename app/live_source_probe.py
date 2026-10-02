@@ -88,12 +88,24 @@ def _assert_content(name,records,transport="PRIMARY"):
  for r in records:
   if set(r)=={"catalogue_page"} or set(r)=={"source_metadata"}:
    raise RuntimeError(name+": transport placeholder record leaked into payload")
+def _validated_fallback(name,warning):
+ p=OUT/name/"latest.json"
+ if not p.exists():raise RuntimeError(f"{name}: live fetch failed and no validated fallback exists: {warning}")
+ obj=json.loads(p.read_text())
+ validation=obj.get("validation") or {}
+ if not validation.get("valid") or not obj.get("sha256") or not obj.get("records"):
+  raise RuntimeError(f"{name}: fallback snapshot is not validated")
+ obj={**obj,"transport":"STALE_VALIDATED_FALLBACK","sync_warning":str(warning),
+      "checked_at":datetime.now(timezone.utc).isoformat()}
+ return obj
+
 def sync(name):
  cfg=SOURCES[name]
  if name=="taric_measures":
   url=_taric_delta_url();raw,final=fetch(url);transport="PRIMARY"
  elif name=="eucdm":
-  raw,final=fetch(cfg["url"],headers=BROWSER_UA);transport="PRIMARY"
+  try:raw,final=fetch(cfg["url"],headers=BROWSER_UA);transport="PRIMARY"
+  except Exception as exc:return _validated_fallback(name,exc)
  elif name=="eu_sanctions":
   url=_fsf_payload_url()
   try:raw,final=fetch(url)
@@ -109,7 +121,9 @@ def sync(name):
  else:
   raw,final=fetch(cfg["url"]);transport="PRIMARY"
  records=normalize(name,raw)
- if not records:raise RuntimeError(name+" normalized zero records")
+ if not records:
+  if name=="eu_sanctions":return _validated_fallback(name,"live FSF payload normalized zero records")
+  raise RuntimeError(name+" normalized zero records")
  _assert_content(name,records,transport)
  sha=hashlib.sha256(raw).hexdigest();p=OUT/name;p.mkdir(parents=True,exist_ok=True)
  obj={"dataset":name,"source":final,"authority":cfg["authority"],"upstream":cfg.get("upstream"),"transport":transport,"sha256":sha,"retrieved_at":datetime.now(timezone.utc).isoformat(),"validation":{"valid":True,"record_count":len(records)},"records":records}

@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "ec_cbam_examples",
+      "title": "European Commission CBAM communication template examples",
+      "source_class": "OFFICIAL",
+      "kind": "zip",
+      "url": "https://taxation-customs.ec.europa.eu/document/download/8d00a979-e57d-4e53-a11f-8b01370236a9_en?filename=Communication-template-examples.zip",
+      "license": "EU reuse terms / verify at acquisition",
+      "use": [
+        "cbam_template",
+        "installation",
+        "precursor"
+      ],
+      "redistribute": false
+    },
+    {
+      "id": "ec_cbam_defaults",
+      "title": "European Commission CBAM definitive default values",
+      "source_class": "OFFICIAL",
+      "kind": "xlsx",
+      "url": "https://taxation-customs.ec.europa.eu/document/download/1c05d211-80cb-4aaa-8ef0-e08005a95d7e_en?filename=DV+correcting+act_final+update_06.08.xlsx",
+      "license": "EU reuse terms / verify at acquisition",
+      "use": [
+        "cbam_defaults"
+      ],
+      "redistribute": false
+    },
+    {
+      "id": "ec_cbam_benchmarks",
+      "title": "European Commission CBAM benchmark reference table",
+      "source_class": "OFFICIAL",
+      "kind": "xlsx",
+      "url": "https://taxation-customs.ec.europa.eu/document/download/9877523c-2a02-4926-a211-aefae7cf6d0d_en?filename=CBAM+Benchmarks_20260206.xlsx",
+      "license": "EU reuse terms / verify at acquisition",
+      "use": [
+        "cbam_benchmarks"
+      ],
+      "redistribute": false
+    },
+    {
+      "id": "uci_steel_energy",
+      "title": "Steel Industry Energy Consumption",
+      "source_class": "ACADEMIC_OPEN_DATA",
+      "kind": "landing_page",
+      "url": "https://archive.ics.uci.edu/dataset/851/steel+industry+energy+consumption",
+      "license": "CC BY 4.0",
+      "use": [
+        "ems",
+        "energy",
+        "co2"
+      ],
+      "redistribute": false
+    },
+    {
+      "id": "docile",
+      "title": "DocILE business document benchmark",
+      "source_class": "ACADEMIC_OPEN_DATA",
+      "kind": "landing_page",
+      "url": "https://docile.rossum.ai/",
+      "license": "dataset-specific; verify before acquisition",
+      "use": [
+        "invoice",
+        "purchase_order",
+        "line_items"
+      ],
+      "redistribute": false
+    },
+    {
+      "id": "carbonchain_steelforce",
+      "title": "CarbonChain / Steelforce public case study",
+      "source_class": "COMPETITOR_CASE",
+      "kind": "landing_page",
+      "url": "https://www.carbonchain.com/case-study/steelforce-cbam",
+      "license": "scenario metadata only; do not redistribute page",
+      "use": [
+        "scenario_spec"
+      ],
+      "redistribute": false
+    },
+    {
+      "id": "carbonchain_spaeter",
+      "title": "CarbonChain / Spaeter public case study",
+      "source_class": "COMPETITOR_CASE",
+      "kind": "landing_page",
+      "url": "https://www.carbonchain.com/case-study/how-spaeter-won-a-7-figure-steel-sale-with-carbonchain-scenario-analysis",
+      "license": "scenario metadata only; do not redistribute page",
+      "use": [
+        "scenario_spec",
+        "commercial_scenario"
+      ],
+      "redistribute": false
+    },
+    {
+      "id": "eurostat_comext",
+      "title": "Eurostat COMEXT international trade data",
+      "source_class": "OFFICIAL_STATISTICS",
+      "kind": "api",
+      "url": "https://ec.europa.eu/eurostat/web/international-trade-in-goods/database",
+      "license": "Eurostat reuse policy",
+      "use": [
+        "transaction_distribution"
+      ],
+      "redistribute": false
+    },
+    {
+      "id": "taric",
+      "title": "EU TARIC",
+      "source_class": "OFFICIAL",
+      "kind": "landing_page",
+      "url": "https://taxation-customs.ec.europa.eu/online-services/online-services-and-databases-customs/eu-customs-tariff-taric_en",
+      "license": "EU reuse terms",
+      "use": [
+        "taric",
+        "customs"
+      ],
+      "redistribute": false
+    }
+  ]
+}

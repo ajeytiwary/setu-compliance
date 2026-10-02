@@ -140,6 +140,8 @@ def calculate(payload):
  mode=str(payload.get("value_type","ACTUAL")).upper(); year=int(payload.get("reporting_period") or payload.get("year") or 2026)
  if mode=="ACTUAL":
   emissions=calculate_actual_steel(payload)
+  if "specific_embedded_emissions_tco2e_per_t" not in emissions:
+   emissions["specific_embedded_emissions_tco2e_per_t"]=emissions.get("specific_direct_embedded_emissions_tco2_per_t")
  else:
   d=select_default(payload["origin_country"],payload["cn_code"],payload.get("production_route"),year)
   if not d["available"]:return {"status":"BLOCKED","blockers":[d],"value_type":"DEFAULT"}
