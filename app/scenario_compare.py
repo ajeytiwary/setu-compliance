@@ -45,5 +45,5 @@ def compare_options(options: list[dict], *, buyer_carbon_threshold: float | None
                                 "reason": "no option passes buyer constraints"}
     else:
         out["selection"] = {"selected_option": None,
-                            "reason": "no configured objective — comparison only, no recommendation"}
+                            "reason": "no configured objective - comparison only, no recommendation"}
     return out

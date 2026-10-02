@@ -13,7 +13,7 @@ from uuid import uuid4
 import json
 from .db import connect, rows, audit
 
-AGREEMENTS={"EU_IN_FTA_2026_NEGOTIATED":{"id":"EU_IN_FTA_2026_NEGOTIATED","parties":["EU","IN"],"status":"NEGOTIATED_NOT_IN_FORCE","negotiations_concluded":"2026-01-27","effective_from":None,"source":"https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/india/eu-india-agreements/text-agreements_en","origin_chapter":"Chapter 3 – Rules of Origin and Origin Procedures","proof_model":"statement_on_origin / certification provisions in published negotiated text","warning":"Published texts are for information and may change through legal revision; no preferential claim is available until entry into force."}}
+AGREEMENTS={"EU_IN_FTA_2026_NEGOTIATED":{"id":"EU_IN_FTA_2026_NEGOTIATED","parties":["EU","IN"],"status":"NEGOTIATED_NOT_IN_FORCE","negotiations_concluded":"2026-01-27","effective_from":None,"source":"https://policy.trade.ec.europa.eu/eu-trade-relationships-country-and-region/countries-and-regions/india/eu-india-agreements/text-agreements_en","origin_chapter":"Chapter 3 - Rules of Origin and Origin Procedures","proof_model":"statement_on_origin / certification provisions in published negotiated text","warning":"Published texts are for information and may change through legal revision; no preferential claim is available until entry into force."}}
 
 def ncn(code:str)->str: return "".join(ch for ch in str(code) if ch.isdigit())
 def tariff_heading(code:str,level:int)->str: return ncn(code)[:level]

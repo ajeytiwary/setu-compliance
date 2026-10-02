@@ -56,7 +56,7 @@
     var rows = [
       ["CBAM emissions (Reg. 2026/2547)", "Applies: CN 7208 39 00 is a CBAM good; India is a third country. Requires installation-level actual emissions or versioned defaults.", "CBAM_EMISSIONS"],
       ["TARIC duty + steel safeguard quota", "Applies: EU import of Indian HRC. Requires current TARIC measure snapshot and quota balance at shipment date.", "TARIC_DUTY"],
-      ["Origin statement (EU–IN FTA)", "Not applicable for preference: agreement negotiated, not in force. MFN applies; no origin evidence blocks release.", "ORIGIN_STATEMENT"]
+      ["Origin statement (EU-IN FTA)", "Not applicable for preference: agreement negotiated, not in force. MFN applies; no origin evidence blocks release.", "ORIGIN_STATEMENT"]
     ];
     var t = el("table", "grid");
     var head = document.createElement("tr");
@@ -165,7 +165,7 @@
     var snaps = [
       { source_id: "CBAM_REG_2026_2547", authority: "European Commission", title: "CBAM definitive-period rules", version: "2026-06", effective_from: "2026-01-01", content: "definitive period methodology ref" },
       { source_id: "TARIC_NL_HRC", authority: "European Commission (TARIC)", title: "TARIC measures HRC 7208 39 00", version: "2026-08-27", effective_from: "2026-08-27", content: "duty + safeguard quota snapshot ref" },
-      { source_id: "EU_IN_FTA_STATUS", authority: "European Commission (DG Trade)", title: "EU–India FTA status", version: "2026-08-01", effective_from: "2026-08-01", content: "negotiated, not in force; MFN applies" }
+      { source_id: "EU_IN_FTA_STATUS", authority: "European Commission (DG Trade)", title: "EU-India FTA status", version: "2026-08-01", effective_from: "2026-08-01", content: "negotiated, not in force; MFN applies" }
     ];
     state.snapshots = [];
     for (var i = 0; i < snaps.length; i++) {
@@ -184,7 +184,7 @@
         { obligation_id: "TARIC_DUTY", applicable: true, status: "MISSING",
           reasons: ["current steel quota balance snapshot required"], severity: "BLOCKING", required_for_release: true },
         { obligation_id: "ORIGIN_STATEMENT", applicable: false, status: "NOT_APPLICABLE",
-          reasons: ["EU–IN FTA negotiated, not in force; MFN applies"], severity: "NON_BLOCKING", required_for_release: false }
+          reasons: ["EU-IN FTA negotiated, not in force; MFN applies"], severity: "NON_BLOCKING", required_for_release: false }
       ]
     });
     state.decisions.push(d);
@@ -239,7 +239,7 @@
           { obligation_id: "TARIC_DUTY", applicable: true, status: "PASS",
             reasons: [], evidence_refs: [evIds[1]], severity: "BLOCKING", required_for_release: true },
           { obligation_id: "ORIGIN_STATEMENT", applicable: false, status: "NOT_APPLICABLE",
-            reasons: ["EU–IN FTA negotiated, not in force; MFN applies"], severity: "NON_BLOCKING", required_for_release: false }
+            reasons: ["EU-IN FTA negotiated, not in force; MFN applies"], severity: "NON_BLOCKING", required_for_release: false }
         ]
       });
       state.decisions.push(d);

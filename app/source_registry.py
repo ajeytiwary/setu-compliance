@@ -1,6 +1,6 @@
 """Source registry (§2.1): immutable versioned regulatory snapshots.
 
-Never overwrites a historical snapshot — new retrieval = new row with new hash.
+Never overwrites a historical snapshot - new retrieval = new row with new hash.
 """
 from __future__ import annotations
 from datetime import datetime, timezone
@@ -36,7 +36,7 @@ def snapshot_ref(source_id: str, version: str) -> dict | None:
 
 
 def effective_at(as_of: str) -> list[dict]:
-    """All snapshots effective on a date — for point-in-time compile (§5.12)."""
+    """All snapshots effective on a date - for point-in-time compile (§5.12)."""
     with connect() as conn:
         try:
             all_snaps = rows(conn, "SELECT payload_json FROM source_snapshots")

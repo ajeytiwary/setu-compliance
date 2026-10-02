@@ -198,7 +198,7 @@ def admin_mint(x:AdminMintIn,request:Request):
 @app.get("/pilot",response_class=HTMLResponse)
 def pilot():
  # Public shell: the HTML loads for everyone so we can show a friendly
- # "Pilot access required — contact us" popup. The data APIs below stay
+ # "Pilot access required - contact us" popup. The data APIs below stay
  # bearer-gated, so no pilot data leaks without a token.
  return FileResponse(STATIC/"pilot.html")
 @app.get("/pilot.js")
@@ -250,7 +250,128 @@ def favicon_svg():return FileResponse(STATIC/"favicon.svg",media_type="image/svg
 @app.get("/robots.txt")
 def robots():return Response("User-agent: *\nAllow: /\nSitemap: /sitemap.xml\n",media_type="text/plain")
 @app.get("/sitemap.xml")
-def sitemap():return Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>/</loc></url><url><loc>/demo</loc></url><url><loc>/pilot</loc></url><url><loc>/case-study</loc></url><url><loc>/benchmarks</loc></url><url><loc>/trust</loc></url></urlset>',media_type="application/xml")
+def sitemap():return Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>/</loc></url><url><loc>/demo</loc></url><url><loc>/pilot</loc></url><url><loc>/case-study</loc></url><url><loc>/benchmarks</loc></url><url><loc>/trust</loc></url><url><loc>/product</loc></url><url><loc>/workflow</loc></url><url><loc>/pricing</loc></url><url><loc>/brokers</loc></url><url><loc>/liability-preview</loc></url><url><loc>/threshold-checker</loc></url><url><loc>/carbon-price-relief</loc></url><url><loc>/cbam-rate</loc></url><url><loc>/guides</loc></url><url><loc>/faq</loc></url><url><loc>/sectors</loc></url><url><loc>/account</loc></url><url><loc>/changelog</loc></url><url><loc>/worked-example</loc></url><url><loc>/supplier-data-template</loc></url><url><loc>/security</loc></url><url><loc>/privacy</loc></url><url><loc>/terms</loc></url><url><loc>/dpa</loc></url></urlset>',media_type="application/xml")
+@app.get("/product",response_class=HTMLResponse)
+def product():
+ from .content_hub import shell as _shell
+ from .content_pages import product_page
+ t,d,b=product_page(); return HTMLResponse(_shell(t,d,b))
+@app.get("/workflow",response_class=HTMLResponse)
+def workflow():
+ from .content_hub import shell as _shell
+ from .content_pages import workflow_page
+ t,d,b=workflow_page(); return HTMLResponse(_shell(t,d,b))
+@app.get("/pricing",response_class=HTMLResponse)
+def pricing():
+ from .content_hub import shell as _shell
+ from .content_pages import pricing_page
+ t,d,b=pricing_page(); return HTMLResponse(_shell(t,d,b))
+@app.get("/brokers",response_class=HTMLResponse)
+def brokers():
+ from .content_hub import shell as _shell
+ from .content_pages import brokers_page
+ t,d,b=brokers_page(); return HTMLResponse(_shell(t,d,b))
+@app.get("/liability-preview",response_class=HTMLResponse)
+def liability_preview():
+ from .content_hub import shell as _shell
+ from .content_pages import liability_page
+ t,d,b,x=liability_page(); return HTMLResponse(_shell(t,d,b,x))
+@app.get("/threshold-checker",response_class=HTMLResponse)
+def threshold_checker():
+ from .content_hub import shell as _shell
+ from .content_pages import threshold_page
+ t,d,b,x=threshold_page(); return HTMLResponse(_shell(t,d,b,x))
+@app.get("/carbon-price-relief",response_class=HTMLResponse)
+def carbon_relief():
+ from .content_hub import shell as _shell
+ from .content_pages import relief_page
+ t,d,b,x=relief_page(); return HTMLResponse(_shell(t,d,b,x))
+@app.get("/cbam-rate",response_class=HTMLResponse)
+def cbam_rate():
+ from .content_hub import shell as _shell
+ from .content_pages import rate_page
+ t,d,b=rate_page(); return HTMLResponse(_shell(t,d,b))
+@app.get("/guides",response_class=HTMLResponse)
+def guides_index():
+ from .content_hub import shell as _shell
+ from .content_pages import guides_index_page
+ t,d,b=guides_index_page(); return HTMLResponse(_shell(t,d,b))
+@app.get("/guides/{slug}",response_class=HTMLResponse)
+def guide_detail(slug:str):
+ from .content_hub import shell as _shell
+ from .content_pages import guide_page
+ r=guide_page(slug)
+ if not r:raise HTTPException(404,"guide not found")
+ t,d,b=r; return HTMLResponse(_shell(t,d,b))
+@app.get("/worked-example",response_class=HTMLResponse)
+def worked_example():
+ from .content_hub import shell as _shell
+ from .content_pages import worked_example_page
+ t,d,b=worked_example_page(); return HTMLResponse(_shell(t,d,b))
+@app.get("/supplier-data-template",response_class=HTMLResponse)
+def supplier_template():
+ from .content_hub import shell as _shell
+ from .content_pages import supplier_template_page
+ t,d,b=supplier_template_page(); return HTMLResponse(_shell(t,d,b))
+@app.get("/security",response_class=HTMLResponse)
+def security_page():
+ from .content_hub import shell as _shell
+ from .content_pages import security_page as _sp
+ t,d,b=_sp(); return HTMLResponse(_shell(t,d,b))
+@app.get("/privacy",response_class=HTMLResponse)
+def privacy():
+ from .content_hub import shell as _shell
+ from .content_pages import legal_page
+ t,d,b=legal_page("privacy"); return HTMLResponse(_shell(t,d,b))
+@app.get("/dpa",response_class=HTMLResponse)
+def dpa():
+ from .content_hub import shell as _shell
+ from .content_pages import legal_page
+ t,d,b=legal_page("dpa"); return HTMLResponse(_shell(t,d,b))
+@app.get("/terms",response_class=HTMLResponse)
+def terms():
+ from .content_hub import shell as _shell
+ from .content_pages import legal_page
+ t,d,b=legal_page("terms"); return HTMLResponse(_shell(t,d,b))
+@app.get("/faq",response_class=HTMLResponse)
+def faq():
+ from .content_hub import shell as _shell
+ from .content_pages import faq_page
+ t,d,b=faq_page(); return HTMLResponse(_shell(t,d,b))
+@app.get("/sectors",response_class=HTMLResponse)
+def sectors():
+ from .content_hub import shell as _shell
+ from .content_pages import sectors_page
+ t,d,b=sectors_page(); return HTMLResponse(_shell(t,d,b))
+@app.get("/account",response_class=HTMLResponse)
+def account():
+ from .content_hub import shell as _shell
+ from .content_pages import account_page
+ t,d,b=account_page(); return HTMLResponse(_shell(t,d,b))
+@app.get("/changelog",response_class=HTMLResponse)
+def changelog():
+ from .content_hub import shell as _shell
+ from .content_pages import changelog_page
+ t,d,b=changelog_page(); return HTMLResponse(_shell(t,d,b))
+class ToolLedgerIn(BaseModel):lines:list=[]; year:int=2026; certificate_price_eur:float|None=None; default_origin:str="IN"
+class ToolThresholdIn(BaseModel):mass_t:float=0; uk_value_gbp:float|None=None
+class ToolReliefIn(BaseModel):embedded_tco2e:float=0; certificate_price_eur:float=85; reduction_certificates:float=0; faa_tco2e:float=0
+@app.post("/api/tools/liability-preview")
+def tool_liability(x:ToolLedgerIn):
+ from .content_pages import api_liability_preview
+ return api_liability_preview(x.model_dump())
+@app.post("/api/tools/threshold")
+def tool_threshold(x:ToolThresholdIn):
+ from .content_pages import api_threshold
+ return api_threshold(x.model_dump())
+@app.post("/api/tools/relief-estimate")
+def tool_relief(x:ToolReliefIn):
+ from .content_pages import api_relief_estimate
+ return api_relief_estimate(x.model_dump())
+@app.get("/api/tools/supplier-template.csv")
+def tool_supplier_csv():
+ from .content_pages import SUPPLIER_CSV
+ return Response(SUPPLIER_CSV,media_type="text/csv",headers={"Content-Disposition":"attachment; filename=eurosetu-supplier-template.csv"})
 @app.get("/app.js")
 def js():return FileResponse(STATIC/"app.js",media_type="application/javascript")
 @app.get("/styles.css")

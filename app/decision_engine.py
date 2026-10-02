@@ -12,7 +12,7 @@ from .canonical_models import SCHEMA_VERSION, canonical_hash, decision_hash
 
 POLICY_VERSION = "DECISION_POLICY_V1"
 
-# §6.1 aggregation — versioned, explicit, fail-closed.
+# §6.1 aggregation - versioned, explicit, fail-closed.
 def aggregate(obligations: list[dict], policy_version: str = POLICY_VERSION) -> dict:
     if policy_version != POLICY_VERSION:
         raise ValueError(f"Unknown decision policy: {policy_version}")
@@ -82,7 +82,7 @@ def get_decision(decision_id: str) -> dict | None:
 def replay_decision(decision_id: str) -> dict:
     """Historical replay: re-aggregate the pinned obligation snapshot (§12 P0-C).
 
-    Uses the stored obligation/source/evidence refs — never mutable current state.
+    Uses the stored obligation/source/evidence refs - never mutable current state.
     Byte-for-byte decision-equivalent except run metadata (new decision_id /
     generated_at); predecessor links the replay chain.
     """

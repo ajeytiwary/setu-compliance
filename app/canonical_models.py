@@ -195,7 +195,7 @@ try:
              "Decision": Decision, "RemediationAction": RemediationAction}[name]
         return m.model_json_schema()
 
-except ImportError:  # pragma: no cover — pydantic always present in practice
+except ImportError:  # pragma: no cover - pydantic always present in practice
     pass
 
 

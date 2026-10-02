@@ -110,13 +110,13 @@ class BenchmarkCase:
             {"duration_ms": duration_ms, "assertion_count": len(assertions),
              "pass_count": sum(1 for a in assertions if a["pass"]),
              "code_commit": CODE_COMMIT, "schema_version": SCHEMA_VERSION}, indent=2))
-        lines = [f"# {self.suite_id} / {self.case_id} — {result['result']}",
+        lines = [f"# {self.suite_id} / {self.case_id} - {result['result']}",
                  f"run {self.run_id} · {result['generated_at']} · commit {CODE_COMMIT}", ""]
         for a in assertions:
             mark = "✓" if a["pass"] else "✕"
             lines.append(f"- {mark} `{a['name']}` expected={a['expected']!r} actual={a['actual']!r}"
                          + (f" tol={a['tolerance']}" if a.get("tolerance") else "")
-                         + (f" — {a['detail']}" if not a["pass"] and a.get("detail") else ""))
+                         + (f" - {a['detail']}" if not a["pass"] and a.get("detail") else ""))
         (dest / "report.md").write_text("\n".join(lines) + "\n")
         try:
             from .db import connect

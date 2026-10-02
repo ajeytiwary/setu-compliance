@@ -3,7 +3,7 @@
 Thin deterministic layer: callers evaluate domain engines (CBAM/TARIC/origin)
 then POST obligation results; the server aggregates via the versioned
 DecisionPolicy, pins source/evidence snapshot refs + as_of, and persists an
-immutable decision. Replay uses only pinned refs — never mutable state.
+immutable decision. Replay uses only pinned refs - never mutable state.
 """
 from __future__ import annotations
 import json

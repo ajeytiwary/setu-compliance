@@ -3,7 +3,7 @@
 Overlapping failures: one order blocked by multiple issues counts once in the
 unique total. Removing one issue recomputes the residual correctly. Action
 ranking uses an explicit configurable objective (default unlock_value) and
-exposes formula + inputs — never a bare 'recommended' label.
+exposes formula + inputs - never a bare 'recommended' label.
 """
 from __future__ import annotations
 

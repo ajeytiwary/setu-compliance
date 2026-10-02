@@ -117,7 +117,9 @@ def test_eu_cbam_golden_via_check_path():
     payload = json.loads((FIX / "steel_bf_001" / "source" / "installation.json").read_text())
     cbam_payload = {**payload, "origin_country": "IN",
                     "value_type": "ACTUAL", "reporting_period": 2026,
-                    "mass_t": payload["activity_level_t"]}
+                    "mass_t": payload["activity_level_t"],
+                    "verification": {"status": "VERIFIED",
+                                     "verifier": payload.get("verification", {}).get("verifier", "PILOT-VERIFIER")}}
     txn = {"transaction_ref": "TXN-EUCBAM-BF-001", "order_id": "PO-EU-000342",
            "shipment_id": "SHP-001", "line_id": "L1", "origin_country": "IN",
            "destination_country": "NL", "shipment_date": AS_OF,

@@ -34,7 +34,9 @@ def test_cbam2026_actual_path():
     payload = json.loads(open("examples/cbam_actual_steel.json").read().replace(
         '"reporting_period":2026', '"reporting_period": 2026'))
     payload = {**payload, "origin_country": "IN", "value_type": "ACTUAL",
-               "reporting_period": 2026, "mass_t": 1000.0}
+               "reporting_period": 2026, "mass_t": 1000.0,
+               "verification": {"status": "VERIFIED",
+                               "verifier": payload.get("verification", {}).get("verifier", "PILOT-VERIFIER")}}
     r = v2.calculate(payload)
     case.assert_and_emit(
         {"status": r["status"], "value_type": r["value_type"],

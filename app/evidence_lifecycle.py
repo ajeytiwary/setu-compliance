@@ -26,7 +26,7 @@ def classify(ev: dict, *, as_of: str | None = None, freshness_days: int = 365,
         return "EXPIRED"
     vf = ev.get("valid_from")
     if vf and today < date.fromisoformat(str(vf)[:10]):
-        return "UNVERIFIED"  # not yet effective — cannot be relied upon
+        return "UNVERIFIED"  # not yet effective - cannot be relied upon
     status = str(ev.get("status", ev.get("verification_status", "UNVERIFIED"))).upper()
     if status not in ("VERIFIED", "VALID", "APPROVED", "ACCEPTED"):
         # verification below obligation policy

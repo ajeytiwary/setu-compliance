@@ -15,7 +15,7 @@ from .db import connect, rows
 
 PILOT_WEEKS = [
     {"week": 1, "objective": "Pilot boundary, security and data contracts",
-     "exit": "10–30 representative EU shipments selected; owners and access approved",
+     "exit": "10-30 representative EU shipments selected; owners and access approved",
      "signal": "shipments"},
     {"week": 2, "objective": "Live SAP SD/FI",
      "exit": "≥95% invoice-value reconciliation for selected shipments",
@@ -38,7 +38,7 @@ PILOT_WEEKS = [
     {"week": 8, "objective": "TARIC/current MFN + customs",
      "exit": "Date/CN-specific customs treatment and required docs evaluated",
      "signal": "customs_snapshot"},
-    {"week": 9, "objective": "EU–India origin readiness",
+    {"week": 9, "objective": "EU-India origin readiness",
      "exit": "BOM/origin evaluable against authoritative PSRs; no premature FTA preference",
      "signal": "origin_evaluations"},
     {"week": 10, "objective": "ESPR/DPP outputs",

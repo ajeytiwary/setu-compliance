@@ -4,7 +4,7 @@ Single source of truth for the JWT shape verified by ``app/security.py``.
 Used by:
 - ``POST /api/admin/mint`` (in-app manual queue)
 - ``scripts/mint_pilot_token.py`` (local CLI)
-- ``workers/pilot-key-minter.js`` (Cloudflare Email Worker, WebCrypto port —
+- ``workers/pilot-key-minter.js`` (Cloudflare Email Worker, WebCrypto port -
   keep claims identical; see workers/README.md for the parity test vector).
 
 Claims: {"sub": requester email, "exp": now+days*86400, "iat": now,

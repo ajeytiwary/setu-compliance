@@ -58,22 +58,31 @@ def select_default(country,cn_code,production_route=None,year=2026):
  def _rn(v):return str(v or "").replace("(","").replace(")","").strip().upper()
  want=_rn(production_route)
  # Official default tables list aggregated goods categories (4/6-digit).
- # Fall back from full CN to 6-digit then 4-digit prefix.
+ # Fall back from full CN to 6-digit then 4-digit prefix; some sectors
+ # (e.g. cement 2523 10 00) list only 10-digit children, so also match
+ # records whose code starts with the prefix when no exact row exists.
  prefixes=[cn]+([cn[:6]] if len(cn)>6 else [])+([cn[:4]] if len(cn)>4 else [])
- r=None
- for p in prefixes:
-  cand=[x for x in ds["records"] if x["cn_code"]==p and (x["country"] in countries or x["country"]=="OTHER COUNTRIES AND TERRITORIES")]
+ def _pick(cand):
   exact=[x for x in cand if x["country"] in countries]
-  # Prefer exact production-route match (route-normalized: C == (C));
-  # fall back to any route for that country+code (official tables are
-  # route-specific, callers often omit it).
-  r=(next((x for x in exact if _rn(x["production_route"])==want),None)
+  return (next((x for x in exact if _rn(x["production_route"])==want),None)
      or next((x for x in exact if not x["production_route"]),None)
      or next((x for x in exact),None)
      or next((x for x in cand if x["country"]=="OTHER COUNTRIES AND TERRITORIES" and (_rn(x["production_route"])==want or not x["production_route"])),None)
      or next((x for x in cand if x["country"]=="OTHER COUNTRIES AND TERRITORIES"),None))
+ r=None
+ for p in prefixes:
+  cand=[x for x in ds["records"] if x["cn_code"]==p and (x["country"] in countries or x["country"]=="OTHER COUNTRIES AND TERRITORIES")]
+  r=_pick(cand)
   if r and r["total"] is not None:break
   r=None
+ if (not r) and len(cn)>=4:
+  for p in prefixes:
+   cand=[x for x in ds["records"] if x["cn_code"].startswith(p) and len(x["cn_code"])>len(p) and (x["country"] in countries or x["country"]=="OTHER COUNTRIES AND TERRITORIES")]
+   # Prefer shortest (closest) child code, then route match order.
+   cand=sorted(cand,key=lambda x:len(x["cn_code"]))
+   r=_pick(cand)
+   if r and r["total"] is not None:break
+   r=None
  if not r or r["total"] is None:return {"available":False,"reason":"DEFAULT_NOT_FOUND","dataset_version":ds["version"]}
  markup=0.10 if year==2026 else 0.20 if year==2027 else 0.30
  return {"available":True,**r,"year":year,"markup":markup,"certificate_default_total":round(r["total"]*(1+markup),9),"dataset_version":ds["version"]}
@@ -151,7 +160,10 @@ def calculate(payload):
  mass=payload.get("activity_level_t") or payload.get("mass_t")
  obligation=None
  if faa["available"]:
-  obligation=certificate_obligation(emissions["specific_embedded_emissions_tco2e_per_t"],mass,faa,payload.get("certificate_price_eur"),payload.get("carbon_price_reduction_certificates"))
+  _see = emissions.get("specific_embedded_emissions_tco2e_per_t")
+  if _see is None:
+   _see = emissions.get("specific_embedded_emissions_tco2_per_t")
+  obligation=certificate_obligation(_see,mass,faa,payload.get("certificate_price_eur"),payload.get("carbon_price_reduction_certificates"))
  if mode=="ACTUAL":
   verification_status=str((payload.get("verification") or {}).get("status") or "").upper()
   if verification_status!="VERIFIED":blockers.append({"reason":"ACTUAL_EMISSIONS_VERIFICATION_REQUIRED","legal_basis":"Regulation (EU) 2023/956 Article 8"})

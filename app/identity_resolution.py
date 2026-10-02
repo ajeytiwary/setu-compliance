@@ -27,13 +27,13 @@ def resolve(supplier_master: list[dict], erp_names: list[str],
             linked.append({"erp_name": name, "supplier_id": sid,
                            "rule": "EXACT_OR_ALIAS", "auto_merged": True})
         else:
-            # fuzzy hint only — never auto-merge
+            # fuzzy hint only - never auto-merge
             hint = next((s["supplier_id"] for s in supplier_master
                          if _norm(name)[:6] and _norm(name)[:6] in _norm(s["legal_name"])), None)
             queue.append({"erp_name": name, "supplier_id": None,
                           "suggested_hint": hint, "auto_merged": False,
                           "owner_role": "procurement",
-                          "reason": "no exact/alias match — human confirmation required"})
+                          "reason": "no exact/alias match - human confirmation required"})
     return {"linked": linked, "unresolved_queue": queue,
             "completeness": {"erp_names": len(erp_names), "linked": len(linked),
                              "unresolved": len(queue)}}
