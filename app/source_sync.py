@@ -204,6 +204,15 @@ def sync(dataset):
   sha=hashlib.sha256(raw).hexdigest();stamp=datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
  rawdir=RAW/dataset/sha;rawdir.mkdir(parents=True,exist_ok=True);filename=safe_name(final,"source."+fmt);(rawdir/filename).write_bytes(raw)
  records=normalizer(raw);check=validate(dataset,records)
+ if dataset=="eu_sanctions" and not check["valid"]:
+  latest=NORMALIZED/"eu_sanctions"/"latest.json"
+  if latest.exists():
+   snap=json.loads(latest.read_text())
+   prior=snap.get("validation") or {}
+   if prior.get("valid") and snap.get("sha256") and snap.get("records"):
+    snap["transport"]="STALE_VALIDATED_FALLBACK"
+    snap["sync_warning"]="Fresh EU sanctions payload failed validation: "+",".join(check["errors"])
+    return snap
  manifest={"dataset":dataset,"provider":p.id,"authority":p.authority,"legal_authority":p.legal_authority,"source":final,"retrieved_at":now(),"sha256":sha,"content_type":resp_headers.get("Content-Type"),"etag":resp_headers.get("ETag"),"last_modified":resp_headers.get("Last-Modified"),"parser_version":"setu-source-sync-0.8","validation":check,"raw_file":str((rawdir/filename).relative_to(ROOT))}
  mdir=MANIFESTS/dataset;mdir.mkdir(parents=True,exist_ok=True);(mdir/(sha+".json")).write_text(json.dumps(manifest,indent=2))
  if not check["valid"]:raise RuntimeError(dataset+" validation failed: "+",".join(check["errors"]))
