@@ -64,7 +64,7 @@ cloudflared tunnel login
 # Create a named tunnel
 cloudflared tunnel create eurosetu
 
-# Note the tunnel ID it prints, e.g. 6f9a…-… — you need it below.
+# Note the tunnel ID it prints, e.g. 6f9a…-… - you need it below.
 ```
 
 ## 4. Route your domain to the tunnel
@@ -109,7 +109,7 @@ sudo cloudflared service install
 sudo systemctl enable --now cloudflared
 ```
 
-Visit `https://eurosetu.example.com` — you should see the landing page.
+Visit `https://eurosetu.example.com` - you should see the landing page.
 Click a card: the "Contact now" button appears, opens the contact dialog,
 and submits to `POST /api/contact` through the tunnel.
 
@@ -127,7 +127,7 @@ each key from Gmail. Two paths mint the **same** HS256 key
   `request@eurosetu.trade` mints a key and forwards to
   `pilot@eurosetu.trade` (Gmail) with the key in `X-EuroSetu-Pilot-Key`.
   Full steps in `workers/README.md`. Email Workers cannot rewrite the
-  forwarded body — only attach headers — which is why /admin stays the
+  forwarded body - only attach headers - which is why /admin stays the
   easier copy-paste UI.
 
 Set the app secret once (same value the Worker uses):
@@ -139,7 +139,7 @@ Mint your own admin key with `scripts/mint_pilot_token.py --roles admin`.
 1. **HTTPS is automatic.** Cloudflare terminates TLS at the edge; the
    tunnel itself is encrypted end-to-end. Leave "SSL/TLS → Full (strict)".
 2. **Lock down the demo gate.** The `/demo` page is behind a lead form
-   (`require_lead`), but rotate nothing secret — there are no static
+   (`require_lead`), but rotate nothing secret - there are no static
    credentials in this build. If you add any, put them in environment
    variables (`-e NAME=value`), never in the image.
 3. **Back up the database volume** on a schedule:
@@ -162,7 +162,7 @@ Mint your own admin key with `scripts/mint_pilot_token.py --roles admin`.
 |---|---|
 | `502 Bad Gateway` from Cloudflare | App container is down or not on port 8000: `docker logs eurosetu`, `curl http://127.0.0.1:8000/robots.txt`. |
 | Tunnel shows "inactive" | `cloudflared tunnel list`; re-run with the right `--config` path and tunnel name. |
-| Contact form returns 500 | Check `docker logs eurosetu` — usually the DB volume is unwritable; ensure `/app/data` is owned by uid 10001 (the image handles this by default). |
+| Contact form returns 500 | Check `docker logs eurosetu` - usually the DB volume is unwritable; ensure `/app/data` is owned by uid 10001 (the image handles this by default). |
 | CSS/JS not loading | They are served by the app itself (`/public.css`, `/public.js`); if `/` loads, they load. Hard-refresh (`Ctrl+Shift+R`). |
 
 ## When to move off this path
@@ -170,4 +170,4 @@ Mint your own admin key with `scripts/mint_pilot_token.py --roles admin`.
 Cloudflare Tunnel is ideal for pilots and demos. If you need autoscaling,
 zero-downtime deploys, or a managed database, move to
 [Google Cloud Run](DEPLOY_GOOGLE_CLOUD.md) or [AWS App Runner / ECS](DEPLOY_AWS.md)
-— the same Docker image works on all three without changes.
+- the same Docker image works on all three without changes.

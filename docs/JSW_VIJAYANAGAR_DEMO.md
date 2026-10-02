@@ -1,11 +1,11 @@
 # JSW Vijayanagar HRC → EU, Demo Guide
 
-**Demo ID:** `JSW-VIJAYANAGAR-HRC-EU-2026` · **Server:** `http://localhost:8765` · **Duration:** 30–45 min
+**Demo ID:** `JSW-VIJAYANAGAR-HRC-EU-2026` · **Server:** `http://localhost:8765` · **Duration:** 30-45 min
 
 > **Honesty header (read first on the call).** Shipment identifiers (`JSW-HRC-NL-001` …),
 > counterparties, tonnages, invoice values and margins are **synthetic demo rows** shaped like a
 > Vijayanagar BF-BOF → caster → hot-strip-mill HRC flow. Regulatory context (CBAM tables, steel
-> safeguard categories under 2026/1384 + 2026/1457, EU–India FTA status) comes from configured
+> safeguard categories under 2026/1384 + 2026/1457, EU-India FTA status) comes from configured
 > source snapshots. This demo does **not** claim access to JSW private SAP/MES/EMS and does **not**
 > claim to be deployed by JSW Steel. Publicly substantiated facts live in `docs/PUBLIC_CASE_STUDY.md`
 > (2.80 MnT FY26 exports, 66.8% Europe, 1.13 MnT HRC, EPD `EPD-IES-0005172:001`, plant-wise
@@ -125,7 +125,7 @@ gates pass, customs/CBAM/verifier acceptance stays external. That boundary is th
 
 ## Pilot scoping checklist
 
-- [ ] Confirm 2–3 real CN codes + routes (benchmark granularity)
+- [ ] Confirm 2-3 real CN codes + routes (benchmark granularity)
 - [ ] List SAP/MES/EMS export formats vs `connectors/connector-contracts.json`
 - [ ] Name the verifier (maps to `CBAM_VERIFICATION` + verification pack)
 - [ ] EU importer EORI + customs broker

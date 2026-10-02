@@ -32,7 +32,7 @@ The chrome never lies about where you are, and it never hides the disclaimer.
 - **Persistent header.** `nav` / `.topnav` is `position: sticky; top: 0` with an opaque
   backdrop. You can always reach Platform, Services, Pricing and the demo CTA.
 - **Terminal footer.** `footer` is a normal-flow dark ink assurance bar at the
-  document end. It is only seen when scrolled all the way down — it never
+  document end. It is only seen when scrolled all the way down - it never
   overlays content mid-page.
 - **Sticky header, static footer.** Only the header is sticky, so no content is ever
   trapped underneath chrome at the end of a page.
@@ -45,7 +45,7 @@ Restraint reads as competence.
 
 - Hairline borders (`--line`) instead of heavy dividers.
 - Elevation is earned: only `.featured` and primary surfaces carry `--shadow`.
-- Type does the hierarchy work — `clamp()` display sizes, tight letter-spacing on
+- Type does the hierarchy work - `clamp()` display sizes, tight letter-spacing on
   headings, uppercase micro-labels for eyebrows and tags.
 - Tabular figures for money and quantities so columns align.
 
@@ -55,7 +55,7 @@ Trust is also an accessibility property.
 
 - Full `:focus-visible` outline (`2px solid var(--green)`, 2px offset) on all
   interactive elements. Never remove focus styling.
-- Never rely on colour alone — pair `--red` / `--green` with a glyph or label.
+- Never rely on colour alone - pair `--red` / `--green` with a glyph or label.
 - Disclaimer and methodology copy is always visible, verbatim, and never truncated by
   layout. Shortening it for aesthetics is not an option.
 - Copy avoids hype adjectives. State what the system does, what it does not do, and
@@ -81,6 +81,6 @@ Use `padding: 0 var(--gutter)` on full-bleed bars so their contents line up exac
 |---|---|
 | `app/static/public.css` | Public marketing site (`index.html`) |
 | `app/static/demo.css` | Demo (`demo.html`) and pilot (`pilot.html`) |
-| `app/static/pilot.html` | Inline `<style>` uses the tokens from `demo.css` — no hard-coded radii |
+| `app/static/pilot.html` | Inline `<style>` uses the tokens from `demo.css` - no hard-coded radii |
 
 Both stylesheets declare the same token names. If you add a radius, add it to both.

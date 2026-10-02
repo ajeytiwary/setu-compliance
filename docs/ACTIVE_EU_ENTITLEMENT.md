@@ -5,7 +5,7 @@ As of 29 September 2026, EuroSetu treats an entitlement as **active** only when 
 ## Active public-law sources
 
 - Regulation (EU) 2026/1384, EU steel tariff quotas; 18,345,922 t annual total and 50% out-of-quota duty.
-- Implementing Regulation (EU) 2026/1457, distribution applicable 1 July–31 December 2026. The checked-in public snapshot includes official CN mappings for category 1A and official India quota/order-number examples for categories 7, 8 and 14.
+- Implementing Regulation (EU) 2026/1457, distribution applicable 1 July-31 December 2026. The checked-in public snapshot includes official CN mappings for category 1A and official India quota/order-number examples for categories 7, 8 and 14.
 - Regulation (EU) 2023/956 as amended, definitive CBAM from 1 January 2026.
 - Implementing Regulation (EU) 2025/2547, definitive embedded-emissions methodology.
 - Implementing Regulation (EU) 2025/2546 and Delegated Regulation (EU) 2025/2551, verification/reporting and reasonable assurance.
@@ -18,7 +18,7 @@ Official Commission information files for defaults and benchmarks are intentiona
 
 Current tariff-quota balances change as customs declarations are allocated. The European Commission QUOTA database publishes current balances. EuroSetu therefore **fails closed** when a balance has not been refreshed: it returns `QUOTA_BALANCE_REQUIRED` instead of assuming quota availability.
 
-## EU–India FTA
+## EU-India FTA
 
 The Commission's published 2026 text states that negotiations concluded on 27 January 2026 but that the text is for information, may change during legal revision, becomes final on signature, and becomes binding only after the Parties complete the procedures necessary for entry into force.
 

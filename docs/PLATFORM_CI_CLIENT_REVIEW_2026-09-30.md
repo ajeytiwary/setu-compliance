@@ -1,4 +1,4 @@
-# EuroSetu Compliance — CI, Platform and Client-Facing Website Review
+# EuroSetu Compliance - CI, Platform and Client-Facing Website Review
 **Review date:** 30 September 2026  
 **Repository:** ajeytiwary/setu-compliance  
 **Branch reviewed:** main  
@@ -16,9 +16,9 @@ The largest production-readiness gap is no longer basic functionality. It is the
 
 ### Green CI
 At the time of review, these recent CI runs on `main` were successful:
-- Run 36766659244 — success
-- Run 36764157346 — success
-- Run 36752580048 — success
+- Run 36766659244 - success
+- Run 36764157346 - success
+- Run 36752580048 - success
 
 The current CI performs:
 1. checkout;
@@ -97,7 +97,7 @@ These distinctions are already visible in the repository and should remain visib
 
 ### High-risk gaps before production
 
-**P0 — Production identity and tenant enforcement**
+**P0 - Production identity and tenant enforcement**
 `app/security.py` accepts identity, tenant and role information from headers. This is suitable as an internal abstraction but not as an authentication mechanism. A production deployment needs an upstream trusted identity provider or signed token validation. Untrusted clients must never be allowed to assert their own `x-eurosetu-subject`, `x-eurosetu-tenant` or role headers.
 
 Recommended minimum:
@@ -107,7 +107,7 @@ Recommended minimum:
 - role resolution server-side;
 - route-level authorization tests for cross-tenant reads/writes.
 
-**P0 — Multi-tenant database proof**
+**P0 - Multi-tenant database proof**
 `production_db.py` sets a PostgreSQL tenant context, but production safety requires proving that every tenant-owned table is protected by row-level security or an equivalent repository/service-layer invariant.
 
 Add a cross-tenant regression suite:
@@ -117,15 +117,15 @@ Add a cross-tenant regression suite:
 - export endpoints respect tenant scope;
 - background jobs preserve tenant context.
 
-**P0 — Public/pilot mutation boundaries**
+**P0 - Public/pilot mutation boundaries**
 The demo and pilot include remediation and evidence actions. Confirm that public lead-gated users cannot access pilot-only mutation endpoints or privileged state merely by discovering the endpoint.
 
 ### Medium-priority platform gaps
 
-**P1 — Idempotency and concurrency**
+**P1 - Idempotency and concurrency**
 Evidence requests, imports and regulatory snapshot publication should have explicit idempotency semantics. Duplicate browser submits, retrying workers and scheduled jobs should not create duplicate records or conflicting state.
 
-**P1 — Observability**
+**P1 - Observability**
 Add structured logging for:
 - correlation/request ID;
 - tenant ID;
@@ -138,7 +138,7 @@ Add structured logging for:
 
 Never log sensitive source payloads or credentials.
 
-**P1 — Regulatory change impact**
+**P1 - Regulatory change impact**
 The source-sync architecture should trigger deterministic impact analysis:
 `new source hash -> affected rule pack -> affected shipments -> changed readiness -> review queue`.
 This should become a first-class product feature rather than only an ingestion concern.
@@ -152,7 +152,7 @@ The current homepage has a much clearer proposition than a general compliance si
 
 That is strong because it sells an operational/commercial outcome rather than regulation itself.
 
-The three-step framing — Compile obligations, Trace evidence, Prioritise by money — is also good. It aligns compliance activity to revenue-at-risk, which is likely to resonate with export/commercial leadership more strongly than a generic GRC message.
+The three-step framing - Compile obligations, Trace evidence, Prioritise by money - is also good. It aligns compliance activity to revenue-at-risk, which is likely to resonate with export/commercial leadership more strongly than a generic GRC message.
 
 ### Strong elements
 - Clear India -> EU first wedge.
@@ -165,7 +165,7 @@ The three-step framing — Compile obligations, Trace evidence, Prioritise by mo
 
 ### Client-conversion issues
 
-**P0 — The primary CTA currently terminates at GitHub**
+**P0 - The primary CTA currently terminates at GitHub**
 The "Bring one real EU-bound shipment" section ends with "View EuroSetu on GitHub" and says the commercial contact channel is still being finalised.
 
 For a client-facing site, this is the biggest conversion leak. A commercial buyer should be able to:
@@ -176,7 +176,7 @@ For a client-facing site, this is the biggest conversion leak. A commercial buye
 
 GitHub should be a trust/transparency secondary link, not the principal sales action.
 
-**P1 — Primary navigation is too broad for conversion**
+**P1 - Primary navigation is too broad for conversion**
 The top navigation exposes Platform, Services, Pricing, Team and Demo. "Team" is less commercially important than:
 - Case study;
 - Security & trust;
@@ -185,11 +185,11 @@ The top navigation exposes Platform, Services, Pricing, Team and Demo. "Team" is
 
 For early enterprise sales, move hiring/team content off the primary buyer path.
 
-**P1 — Pricing precision may create false certainty**
+**P1 - Pricing precision may create false certainty**
 The current public pricing is highly specific:
-- Diagnostic ₹2–3 lakh / €2–3k;
-- Pilot ₹6.5–7.5 lakh / €6.5–7.5k;
-- Enterprise validation ₹18–25 lakh / €18–25k;
+- Diagnostic ₹2-3 lakh / €2-3k;
+- Pilot ₹6.5-7.5 lakh / €6.5-7.5k;
+- Enterprise validation ₹18-25 lakh / €18-25k;
 - recurring tiers thereafter.
 
 This can help qualify leads, but the scope varies materially by ERP/MES/EMS access, facility count, supplier count, evidence quality and legal/customs review needs.
@@ -199,7 +199,7 @@ Recommended copy:
 - state what drives variation;
 - distinguish software/license from implementation/integration services.
 
-**P1 — Missing proof surface**
+**P1 - Missing proof surface**
 The website should include one concise, explicitly synthetic/public-data case:
 - one HRC shipment;
 - one CBAM blocker;
@@ -211,7 +211,7 @@ The website should include one concise, explicitly synthetic/public-data case:
 
 Do not use fabricated customer outcomes. A transparent "worked example" is safer and more credible.
 
-**P1 — Trust and security page**
+**P1 - Trust and security page**
 For customers being asked to provide ERP, MES, EMS, supplier and verifier data, the site needs a trust page covering:
 - data residency;
 - encryption;
@@ -366,7 +366,7 @@ Add the following release-critical tests:
 - Build regulatory-change impact queue.
 
 ### Next 30 days
-- Run 3–5 design-partner workflows on customer-authorised exports.
+- Run 3-5 design-partner workflows on customer-authorised exports.
 - Measure:
   - time to map one shipment;
   - evidence-chasing hours avoided;

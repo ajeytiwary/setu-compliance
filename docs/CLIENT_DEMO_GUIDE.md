@@ -1,7 +1,7 @@
 # EuroSetu EU Market Access OS, Client Demo Guide (Real-Data Walkthrough)
 
 **Audience:** EU importer / Indian steel exporter pilot stakeholder (commercial + compliance).
-**Duration:** 45–60 min. **Server:** `http://localhost:8765` (UI at `/`).
+**Duration:** 45-60 min. **Server:** `http://localhost:8765` (UI at `/`).
 **Repo:** `ajeytiwary/setu-compliance`, branch `main`.
 
 > **Honesty header (read this first on the call).** Commercial entities, invoice
@@ -21,7 +21,7 @@
 | 1 | CBAM default values (corrected 2025/2621 + 2026/1740) | EU TAXUD (OFFICIAL, not legal authority) | ✅ LOADED, 11,469 rows, `data/cbam/defaults.csv` + `data/cbam/defaults.json` | Snapshot `data/sources/cbam_defaults/latest.json`, 13,367 raw records, sha `90058381…` |
 | 2 | CBAM benchmarks (2025/2620) | EU TAXUD (OFFICIAL) | ✅ LOADED, 570 rows, `data/cbam/benchmarks.csv` + `data/cbam/benchmarks.json` | Snapshot `data/sources/cbam_benchmarks/latest.json`, 1,815 raw records, sha `b79108b0…` |
 | 3 | EU steel safeguard categories + CN mapping (2026/1384 + 2026/1457) | EUR-Lex (LEGAL) | ✅ CHECKED-IN, `data/eu_steel_measure_2026.json` (live EUR-Lex fetch returns empty via urllib; ELI URLs recorded in API response) | `legal_basis` in every `/regulatory/steel/evaluate` response |
-| 4 | EU–India FTA status | EU Trade policy page (OFFICIAL) | ✅ CHECKED-IN, `EU_IN_FTA_2026_NEGOTIATED`, `NEGOTIATED_NOT_IN_FORCE`, concluded 2026-01-27 | Every FTA response carries `guardrail` + source URL |
+| 4 | EU-India FTA status | EU Trade policy page (OFFICIAL) | ✅ CHECKED-IN, `EU_IN_FTA_2026_NEGOTIATED`, `NEGOTIATED_NOT_IN_FORCE`, concluded 2026-01-27 | Every FTA response carries `guardrail` + source URL |
 | 5 | ERP/MES/EMS/LIMS/GST/DGFT/ICEGATE/verifier/logistics samples | Synthetic (14 CSVs in `connectors/samples/`) | ✅ IMPORTED, 14/14 connectors SUCCESS | `GET /api/integrations/canonical/summary` |
 | 6 | 12-shipment client portfolio (`HRC-NL-001` … `HRC-IT-012`) | Synthetic commercial | ✅ LOADED via `POST /api/shipments` | `examples/client_portfolio_12_shipments.json` |
 | 7 | TARIC measures, quota balances, EUCDM, ECHA, SCIP, sanctions, COMEXT, telemetry | EU TAXUD/ECHA/Eurostat (OFFICIAL) | ✅ VERSIONED PIPELINE, auto resolvers (`python scripts/sync_sources.py --strict`, 5 sources via link-discovery) + weekly/manual materialization (`--dataset/--all/--file/--url/--force`, raw→normalized→manifest with SHA-256; bot-blocked publishers via browser `--file`) | `GET /api/data-sources` (manifest pointers) + `POST /api/data-sources/{ds}/sync` manual refresh; see `docs/SOURCE_SYNC.md` |
@@ -243,7 +243,7 @@ is parsing landing pages as law."
 
 ## 5. After the call, pilot scoping checklist
 
-- [ ] Confirm 2–3 real CN codes + routes (resolves benchmark granularity question)
+- [ ] Confirm 2-3 real CN codes + routes (resolves benchmark granularity question)
 - [ ] List SAP/MES/EMS export formats (CSV column mapping vs `connectors/connector-contracts.json`)
 - [ ] Name the verifier (maps to `CBAM_VERIFICATION` requirement + verification pack endpoint)
 - [ ] EU importer EORI + customs broker (TARIC/quota live lookup credentials)

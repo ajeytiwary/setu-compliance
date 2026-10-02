@@ -2,7 +2,7 @@
 
 Fully managed option: Google runs the container, autoscales it (including to
 zero when idle), terminates TLS, and gives you a public `https://…run.app`
-URL. Same Docker image as everywhere else — no code changes.
+URL. Same Docker image as everywhere else - no code changes.
 
 **Cost sketch:** Cloud Run's free tier usually covers a pilot site; beyond
 that you pay per request/vCPU-second. A Cloud SQL database is the main
@@ -51,7 +51,7 @@ Cloud Run prints a public URL like
 `https://eurosetu-abc123-uc.a.run.app`. Open it: `/`, `/trust`,
 `/case-study`, `/demo` should all respond.
 
-> **SQLite caveat:** Cloud Run's filesystem is ephemeral — `/tmp/eurosetu.db`
+> **SQLite caveat:** Cloud Run's filesystem is ephemeral - `/tmp/eurosetu.db`
 > resets on each cold start. That is fine for the marketing site and demo,
 > but **contact submissions and demo leads will not persist**. For a pilot
 > that must keep them, do §4 (Cloud SQL + Postgres) instead of `/tmp`.
@@ -113,7 +113,7 @@ gcloud run services update-traffic eurosetu --region "$REGION" --to-revisions <P
 - **Logs:** `gcloud run logs read eurosetu --region "$REGION"` (or Cloud Logging console).
 - **Health:** the image's `HEALTHCHECK` hits `/robots.txt`; Cloud Run's own
   startup probe uses the same port contract.
-- **Secrets:** never bake credentials into the image — use
+- **Secrets:** never bake credentials into the image - use
   `--update-secrets` / Secret Manager. `.dockerignore` already keeps
   `.env` and local `*.db` files out of builds.
 - **EU data residency:** choose `europe-west1` (Belgium) or `europe-west3`

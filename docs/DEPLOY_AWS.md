@@ -8,7 +8,7 @@ Two options, same Docker image:
   scheduled `eurosetu-sync` tasks). Use it when the pilot grows teeth.
 
 **Prerequisites:** an AWS account, AWS CLI v2 configured
-(`aws configure`), and a region — `ap-south-1` (Mumbai) or `eu-central-1`
+(`aws configure`), and a region - `ap-south-1` (Mumbai) or `eu-central-1`
 (Frankfurt) for EU data residency.
 
 ```bash
@@ -18,7 +18,7 @@ export ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
 
 ---
 
-## Option A — App Runner (15 minutes to public URL)
+## Option A - App Runner (15 minutes to public URL)
 
 ### 1. Push the image to ECR
 
@@ -72,7 +72,7 @@ add the DNS validation records it shows → associate. TLS is automatic.
 
 ---
 
-## Option B — ECS Fargate + ALB (persistent, VPC-controlled)
+## Option B - ECS Fargate + ALB (persistent, VPC-controlled)
 
 ### 1. Network and storage
 
@@ -98,7 +98,7 @@ aws efs create-file-system --region "$REGION" \
 
 - ALB listener 443 (ACM certificate for your domain) → target group on
   port 8000, health-check path `/robots.txt`.
-- ECS service: 1–2 tasks, `awsvpc` networking, spread across two AZs.
+- ECS service: 1-2 tasks, `awsvpc` networking, spread across two AZs.
 - Security groups: ALB open to 443 from the world; tasks accept 8000
   **only from the ALB security group**.
 
@@ -117,7 +117,7 @@ without a second service.
 - **Logs:** App Runner console logs, or CloudWatch `/aws/apprunner/...`;
   ECS → CloudWatch log group on the task definition.
 - **Secrets:** use SSM Parameter Store / Secrets Manager injected as
-  environment variables — never bake them into the image (`.dockerignore`
+  environment variables - never bake them into the image (`.dockerignore`
   already excludes `.env` and local `*.db` files).
 - **Updates:** `docker build/push` new tag → App Runner auto-deploys, or
   ECS → register new task-definition revision → update service
@@ -126,4 +126,4 @@ without a second service.
   automated snapshots with a 7-day retention minimum for pilots.
 - **Cost:** App Runner charges per vCPU/GB-hour while provisioned
   (pause the service when idle); Fargate + ALB + EFS is roughly
-  $40–70/month in `ap-south-1` for a single-task pilot.
+  $40-70/month in `ap-south-1` for a single-task pilot.

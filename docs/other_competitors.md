@@ -1,6 +1,6 @@
 Take **publicly documented competitor customer problems** and construct equivalent EuroSetu benchmark scenarios.
 
-## Benchmark A — CarbonChain / Steelforce
+## Benchmark A - CarbonChain / Steelforce
 
 This is almost perfect for you.
 
@@ -177,7 +177,7 @@ That last test proves your **regulation versioning architecture**.
 
 ---
 
-# 6. Benchmark B — CarbonChain Spaeter
+# 6. Benchmark B - CarbonChain Spaeter
 
 This is actually an even better commercial demo.
 
@@ -237,7 +237,7 @@ CarbonChain has already demonstrated that carbon intelligence can contribute dir
 
 ---
 
-# 7. Benchmark C — SAP GTS
+# 7. Benchmark C - SAP GTS
 
 Build a deliberately SAP-like transaction.
 
@@ -395,7 +395,7 @@ This would make EuroSetu substantially more credible.
 
 ---
 
-# 9. Benchmark D — SAP preference/origin
+# 9. Benchmark D - SAP preference/origin
 
 This is a harder benchmark and therefore more impressive.
 
@@ -445,7 +445,7 @@ That gives you another external oracle against which to test EuroSetu.
 
 ---
 
-# 10. Benchmark E — osapiens
+# 10. Benchmark E - osapiens
 
 This should test your **multi-regulation architecture**, not CBAM.
 
@@ -480,7 +480,7 @@ That proves the **evidence graph**, rather than just another collection of compl
 
 ---
 
-# 11. Benchmark F — Carbmee
+# 11. Benchmark F - Carbmee
 
 Carbmee's Everllence case is another good benchmark.
 
@@ -524,7 +524,7 @@ That's the EuroSetu angle.
 
 ---
 
-# 12. Benchmark G — supplier-network stress test
+# 12. Benchmark G - supplier-network stress test
 
 CarbonChain has now set a meaningful benchmark here.
 

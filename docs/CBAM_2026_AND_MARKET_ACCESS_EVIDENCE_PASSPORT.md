@@ -18,11 +18,11 @@ The definitive CBAM regime applies from 1 January 2026. For non-electricity good
 
 Primary references:
 - Regulation (EU) 2023/956 consolidated: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02023R0956-20251020
-- Implementing Regulation (EU) 2025/2547 — embedded-emissions methodology
-- Implementing Regulation (EU) 2025/2548 — CBAM certificate price
-- Implementing Regulation (EU) 2025/2620 — free-allocation adjustment
-- Implementing Regulation (EU) 2025/2621 and 2026/1740 — definitive default values
-- Implementing Regulation (EU) 2025/2546 and Delegated Regulation (EU) 2025/2551 — verification
+- Implementing Regulation (EU) 2025/2547 - embedded-emissions methodology
+- Implementing Regulation (EU) 2025/2548 - CBAM certificate price
+- Implementing Regulation (EU) 2025/2620 - free-allocation adjustment
+- Implementing Regulation (EU) 2025/2621 and 2026/1740 - definitive default values
+- Implementing Regulation (EU) 2025/2546 and Delegated Regulation (EU) 2025/2551 - verification
 
 ## 3. Function-by-function assessment
 
@@ -49,9 +49,9 @@ Primary references:
 | `/api/cbam/verification/pack` | Verification readiness | Valuable | Link pack IDs/hashes into passport |
 | `/api/market-access/v2/compile` | READY/BLOCKED decision | Product-level wedge | Return passport ID, reused evidence and € revenue-at-risk |
 
-## 4. Missing 2026 capabilities — prioritized implementation backlog
+## 4. Missing 2026 capabilities - prioritized implementation backlog
 
-### P0 — required before claiming a production CBAM engine
+### P0 - required before claiming a production CBAM engine
 1. **Official reference-data ingestion.** Parse Commission default/benchmark workbooks directly; store URL, CELEX, publication/effective date, SHA-256 and parser version.
 2. **Golden legal fixtures.** At least 20 representative steel CN/origin/route cases manually reconciled to official tables.
 3. **Actual-emissions system-boundary validation.** Encode production process, source stream, precursor and allocation constraints from 2025/2547 instead of accepting arbitrary arithmetic inputs.
@@ -61,7 +61,7 @@ Primary references:
 7. **Annual declarant aggregation.** Aggregate imports by reporting year/goods/origin/installation with retained calculation and verification provenance.
 8. **Declaration output.** Generate and validate the applicable CBAM Registry exchange format when its definitive schema is pinned and tested.
 
-### P1 — pilot-grade
+### P1 - pilot-grade
 9. Official certificate-price snapshot ingestion and versioning.
 10. 50-tonne de-minimis/authorisation screening with electricity/hydrogen exceptions handled separately.
 11. Data-quality scoring and uncertainty flags.
@@ -69,7 +69,7 @@ Primary references:
 13. Tenant-scoped immutable audit history.
 14. Postgres production integration tests.
 
-### P2 — scale
+### P2 - scale
 15. Extend beyond steel to aluminium, cement, fertilisers, hydrogen and electricity.
 16. Scenario engine: actual vs default, supplier A/B, production-route and price sensitivity.
 17. Portfolio certificate forecasting and cash planning.
@@ -152,7 +152,7 @@ Organisation / Facility
 
 ## 6. Evidence Passport implementation plan
 
-### Phase 1 — 2 weeks: canonical passport
+### Phase 1 - 2 weeks: canonical passport
 - Add `passports`, `passport_claims`, `passport_evidence_bindings`, `evidence_permissions`.
 - Generate facility and product passports from existing supplier/evidence/canonical tables.
 - Every evidence object gets hash, issuer, validity, scope and status.
@@ -161,21 +161,21 @@ Organisation / Facility
 
 **Acceptance:** same verified installation evidence can satisfy two eligible shipments without file re-upload, while a scope mismatch fails closed.
 
-### Phase 2 — 2 weeks: CBAM passport
+### Phase 2 - 2 weeks: CBAM passport
 - Bind monitoring plan, installation, production route, precursor data, actual/default calculation, verifier report and certificate obligation.
 - Recompile affected shipments whenever an evidence/calculation version changes.
 - Generate buyer-facing CBAM evidence bundle with selective disclosure.
 
 **Acceptance:** change one verified installation intensity and show every affected shipment/order and changed certificate exposure.
 
-### Phase 3 — 2–3 weeks: cross-regulation passport
+### Phase 3 - 2-3 weeks: cross-regulation passport
 - Bind TARIC document codes, origin proofs, REACH/SCIP, sanctions, PPWR and DPP claims.
 - Add rule-specific applicability predicates.
 - Add `evidence reuse reason`: SAME_FACILITY, SAME_PRODUCT, SAME_PERIOD, SAME_SUPPLIER, etc.
 
 **Acceptance:** one shipment compiles across CBAM + customs + origin + product-compliance gates from one evidence graph.
 
-### Phase 4 — 2 weeks: external sharing
+### Phase 4 - 2 weeks: external sharing
 - Buyer/verifier share links with expiry and purpose limitation.
 - Evidence redaction/selective disclosure.
 - Downloadable signed manifest: evidence IDs + hashes + versions, not necessarily confidential source files.
@@ -183,7 +183,7 @@ Organisation / Facility
 
 **Acceptance:** exporter can share a buyer-specific passport without exposing unrelated customer/commercial information.
 
-## 7. Feature sheet — advantage and competitive pressure
+## 7. Feature sheet - advantage and competitive pressure
 
 Legend: **Core advantage** = where EuroSetu should differentiate; **Parity** = needed because competitors already do it.
 
@@ -267,7 +267,7 @@ automatic recompile
 **Sprint B:** passport schema/API + scope-aware evidence reuse.  
 **Sprint C:** bind CBAM calculation/verification to passport and market-access compiler.  
 **Sprint D:** buyer/verifier selective sharing + immutable manifest.  
-**Sprint E:** SAP/MES pilot on 10–25 real anonymised shipments.
+**Sprint E:** SAP/MES pilot on 10-25 real anonymised shipments.
 
 ### Pilot success metrics
 - ≥95% of shipment requirements trace to a rule/source version.
