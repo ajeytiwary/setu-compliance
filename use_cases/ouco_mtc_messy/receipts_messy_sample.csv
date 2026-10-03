@@ -1,0 +1,5 @@
+receipt_id,vendor,total_raw,qty_raw,defect_kind,note
+RCPT-01,OUCO chandlery,"1,9",2,decimal_comma,"total '1,9' must not parse as 19 (CHAOS-002 shape)"
+RCPT-02,OUCO chandlery,"412 EUR",2,units_embedded,"currency embedded in amount (CHAOS-003 shape)"
+RCPT-03,OUCO chandlery,412.00,2 vs 3,qty_mismatch,"receipt qty disagrees with PO (CHAOS-014 shape)"
+RCPT-04,OUCO chandlery,412.00,2,duplicate,"same receipt posted twice (CHAOS-013 shape)"

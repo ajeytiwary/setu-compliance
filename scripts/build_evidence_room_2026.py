@@ -103,6 +103,151 @@ def load_base() -> tuple[list[dict], list[dict], list[dict], dict]:
     return tx, suppliers, evidence, truth
 
 
+def load_uci_telemetry(max_rows: int) -> tuple[list[dict], dict]:
+    """Load real UCI Steel Industry Energy Consumption telemetry if acquired.
+
+    Returns (rows, meta). Falls back to ([], {source: synthetic}) when the
+    acquired zip is absent (offline deterministic path). Real rows map:
+      date -> timestamp (ISO), Usage_kWh -> energy_kwh,
+      Lagging+Leading kVarh -> reactive_kvarh, CO2(tCO2) -> co2_t,
+      Load_Type -> load_type. facility_id round-robins FAC-01..25 so the
+      telemetry -> facility -> installation -> product -> shipment chain
+      stays joinable. CC BY 4.0 — attribution kept in meta + provenance.
+    """
+    import zipfile
+    meta: dict = {"source": "synthetic fallback (seed 20261002)",
+                  "source_type": "SYNTHETIC", "real_rows": 0}
+    zips = sorted((BASE / "originals/uci_steel_energy_zip").glob("*.zip"))
+    if not zips:
+        return [], meta
+    zpath = zips[0]
+    with zipfile.ZipFile(zpath) as z:
+        raw = z.read("Steel_industry_data.csv").decode("utf-8-sig")
+    reader = csv.DictReader(raw.splitlines())
+    rows: list[dict] = []
+    for i, r in enumerate(reader):
+        if i >= max_rows:
+            break
+        # date format "01/01/2018 00:15" -> "2018-01-01T00:15:00"
+        day, rest = r["date"].split(" ", 1)
+        dd, mm, yyyy = day.split("/")
+        rows.append({
+            "timestamp": f"{yyyy}-{mm}-{dd}T{rest}:00",
+            "facility_id": f"FAC-{(i % 25) + 1:02d}",
+            "energy_kwh": float(r["Usage_kWh"]),
+            "reactive_kvarh": round(float(r["Lagging_Current_Reactive.Power_kVarh"])
+                                    + float(r["Leading_Current_Reactive_Power_kVarh"]), 2),
+            "co2_t": float(r["CO2(tCO2)"]),
+            "load_type": r["Load_Type"],
+            "source_row": i + 1,
+        })
+    meta = {"source": "UCI Steel Industry Energy Consumption — DAEWOO Steel Gwangyang (CC BY 4.0, DOI 10.24432/C52G8C)",
+            "source_type": "ACADEMIC_OPEN_DATA",
+            "source_url": "https://archive.ics.uci.edu/static/public/851/steel+industry+energy+consumption.zip",
+            "license": "CC BY 4.0 (attribute Sathishkumar V E, Shin, Cho 2021)",
+            "original_filename": "Steel_industry_data.csv",
+            "parent_artifact_sha256": sha(zpath.read_bytes()),
+            "real_rows": len(rows),
+            "columns": ["date", "Usage_kWh", "Lagging_Current_Reactive.Power_kVarh",
+                        "Leading_Current_Reactive_Power_kVarh", "CO2(tCO2)",
+                        "Lagging_Current_Power_Factor", "Leading_Current_Power_Factor",
+                        "NSM", "WeekStatus", "Day_of_week", "Load_Type"]}
+    return rows, meta
+
+
+def write_terlouw_research_summary() -> dict:
+    """Materialize the Terlouw Steel_CBAM research-corpus pointer (Layer-2).
+
+    Never a normative oracle: records the Zenodo record structure, license,
+    and expected research use so telemetry -> LCA-prior linkage is traceable.
+    Returns the summary dict (also written to CARBON/research/)."""
+    import zipfile
+    zips = sorted((BASE / "originals/terlouw_steel_cbam_zenodo").glob("*.zip"))
+    summary: dict = {
+        "record": "Terlouw, Harpprecht & Bauer (2025) — Steel_CBAM",
+        "doi_data": "10.5281/zenodo.17236022",
+        "doi_paper": "10.1016/j.jclepro.2025.145000",
+        "license": "BSD-3-Clause (code+data); paper via publisher",
+        "repo_layout": ["steel_cbam_assessment/data/", "figs/", "logs/", "results/",
+                        "notebooks 0-5", "config.py", "db_functions.py", "functions.py",
+                        "mapping.py", "plotting.py", "regionalization.py"],
+        "expected_use": ("Layer-2 research corpus: regionalized steel production + "
+                         "prospective LCA inputs as installation intensity priors. "
+                         "Research only — never a normative calculation oracle."),
+        "chain": "plant telemetry (UCI) -> emissions evidence -> CBAM installation workbook -> product -> shipment; Terlouw provides regional/LCA priors",
+    }
+    if zips:
+        zpath = zips[0]
+        with zipfile.ZipFile(zpath) as z:
+            names = sorted(z.namelist())
+            try:
+                readme = z.read("tomterlouw-Steel_CBAM-cfab341/README.md").decode("utf-8", "replace")
+            except KeyError:
+                readme = ""
+        summary.update({
+            "source_url": "https://zenodo.org/api/records/17236022/files/tomterlouw/Steel_CBAM-v.1.0.0.alpha.zip/content",
+            "parent_artifact_sha256": sha(zpath.read_bytes()),
+            "file_count": len(names),
+            "readme_head": readme[:2000],
+        })
+    else:
+        summary["note"] = "acquired zip absent — run build_public_evidence_corpus.py --acquire"
+    write_json(ROOM / "CARBON/research/terlouw_steel_cbam_summary.json", summary)
+    return summary
+
+
+def write_sample_mtc(tx: list[dict]) -> dict:
+    """Write a synthetic EN 10204 3.1-shaped sample MTC (Layer-4).
+
+    Shape inspired by public plate mill certificates (e.g. 200 pieces /
+    ~542 t heat lots); all values synthetic, linked to room heat numbers.
+    The Scribd example is shape reference only — never copied/redistributed."""
+    rng = random.Random(SEED + 7)
+    grades = ["S355J2+N", "S355JR", "P355GH", "S690QL", "DX51D+Z"]
+    rows = []
+    for i, t in enumerate(tx[:10]):
+        heat = f"HEAT-{abs(hash(t['transaction_id'])) % 9000 + 1000}"
+        pieces = rng.choice([120, 200, 240])
+        tonnes = round(pieces * rng.uniform(2.4, 2.9), 3)
+        rows.append({
+            "certificate_no": f"MTC-2026-{1000 + i}",
+            "transaction_id": t["transaction_id"],
+            "heat_number": heat,
+            "standard": "EN 10204 3.1",
+            "grade": grades[i % len(grades)],
+            "dimensions_mm": f"{rng.choice([8, 10, 12, 16, 20])}x{rng.choice([1500, 2000, 2500])}x{rng.choice([6000, 12000])}",
+            "pieces": pieces,
+            "quantity_t": tonnes,
+            "c_pct": round(rng.uniform(0.12, 0.20), 3),
+            "mn_pct": round(rng.uniform(1.1, 1.6), 2),
+            "yield_mpa": rng.choice([355, 360, 372, 690]),
+            "tensile_mpa": rng.choice([490, 510, 530, 770]),
+            "inspector": "synthetic",
+        })
+    write_csv(ROOM / "QUALITY/mill_test_certificates/sample_mtc_en10204_31.csv", rows)
+    write_json(ROOM / "QUALITY/mill_test_certificates/shape_note.json", {
+        "note": ("Synthetic EN 10204 3.1-shaped sample. Public plate certificates "
+                 "(e.g. 200-piece / ~542 t lots) used as shape reference only; "
+                 "no third-party document copied or redistributed."),
+        "linked_manifest": "QUALITY/mill_test_certificates/manifest.csv",
+    })
+    return {"sample_mtc_rows": len(rows)}
+
+
+def write_epd_pointer() -> dict:
+    """Write the voestalpine EPD pointer (link + expected use, no PDF copied)."""
+    pointer = {
+        "source": "voestalpine steel EPDs (heavy plate, hot-rolled, cold-rolled strip)",
+        "source_url": "https://www.voestalpine.com/group/en/group/environment/environmental-product-declarations/",
+        "license": "public PDFs; verify reuse before acquisition — link only, never redistributed",
+        "expected_use": ("Layer-2 real-world: EPD/PCF evidence-document inputs linked "
+                         "to heat/batch/facility; see CARBON/epds/manifest.csv"),
+        "linked_manifest": "CARBON/epds/manifest.csv",
+    }
+    write_json(ROOM / "CARBON/epds/epd_sources.json", pointer)
+    return pointer
+
+
 def build(n_tx: int = 0, ems_rows: int = 2000) -> dict:
     rng = random.Random(SEED)
     tx_all, suppliers, evidence, truth = load_base()
@@ -135,18 +280,29 @@ def build(n_tx: int = 0, ems_rows: int = 2000) -> dict:
                  "sha256": sha(f"{typ}|{t['transaction_id']}".encode())} for t in tx]
         write_csv(ROOM / f"{folder}/manifest.csv", rows)
 
-    # ---- CARBON telemetry (UCI-shaped: kWh, reactive power, CO2, load; deterministic) ----
-    ems = [{"timestamp": f"2026-07-{(i % 28) + 1:02d}T{(i % 24):02d}:00:00",
-            "facility_id": f"FAC-{(i % 25) + 1:02d}",
-            "energy_kwh": round(rng.uniform(800, 5200), 2),
-            "reactive_kvarh": round(rng.uniform(50, 900), 2),
-            "co2_t": round(rng.uniform(0.4, 4.2), 4),
-            "load_type": rng.choice(["Light_Load", "Medium_Load", "Maximum_Load"])} for i in range(ems_rows)]
+    # ---- CARBON telemetry (real UCI rows when acquired; synthetic fallback) ----
+    real_ems, ems_meta = load_uci_telemetry(ems_rows)
+    if real_ems:
+        ems = real_ems
+        ems_source = ems_meta["source"]
+    else:
+        ems = [{"timestamp": f"2026-07-{(i % 28) + 1:02d}T{(i % 24):02d}:00:00",
+                "facility_id": f"FAC-{(i % 25) + 1:02d}",
+                "energy_kwh": round(rng.uniform(800, 5200), 2),
+                "reactive_kvarh": round(rng.uniform(50, 900), 2),
+                "co2_t": round(rng.uniform(0.4, 4.2), 4),
+                "load_type": rng.choice(["Light_Load", "Medium_Load", "Maximum_Load"])} for i in range(ems_rows)]
+        ems_source = "synthetic fallback (seed 20261002)"
     write_csv(ROOM / "CARBON/energy_meter.csv", ems)
+    write_json(ROOM / "CARBON/energy_meter_meta.json", {**ems_meta, "rows": len(ems),
+               "chain": "plant telemetry -> emissions evidence -> CBAM installation workbook -> product -> shipment"})
     fac = [{"facility_id": f"FAC-{i:02d}", "route": "BF-BOF" if i % 3 else "EAF",
             "default_intensity_tco2e_per_t": 1.73 if i % 3 else 0.38,
             "source": "EC CBAM defaults/benchmarks (Layer-1 golden reference)"} for i in range(1, 26)]
     write_csv(ROOM / "CARBON/facility_emissions.csv", fac)
+    terlouw = write_terlouw_research_summary()
+    mtc = write_sample_mtc(tx)
+    epd = write_epd_pointer()
 
     # ---- REGULATORY snapshots (versioned pointers, not live data) ----
     for name, payload in [
@@ -195,7 +351,7 @@ def build(n_tx: int = 0, ems_rows: int = 2000) -> dict:
         if not p.is_file() or p.name == "provenance.json":
             continue
         rel = str(p.relative_to(ROOT))
-        prov.append({"path": rel, "sha256": sha(p.read_bytes()), "bytes": p.stat().st_size,
+        entry = {"path": rel, "sha256": sha(p.read_bytes()), "bytes": p.stat().st_size,
                      "source_type": "SYNTHETIC", "source_url": "",
                      "license": "synthetic demo data; no reuse restriction",
                      "retrieved_at": datetime.now(timezone.utc).isoformat(),
@@ -204,7 +360,41 @@ def build(n_tx: int = 0, ems_rows: int = 2000) -> dict:
                                               if d["derivative_id"] in rel), ""),
                      "expected_use": "Layer-4 ingestion/error-handling benchmark; not a normative oracle",
                      "registry_refs": ["cbamreturn_worked_example", "carbonchain_steelforce",
-                                       "uci_steel_energy", "ec_cbam_examples"]})
+                                       "uci_steel_energy", "ec_cbam_examples"]}
+        # Real-data overlays: correct source_type/license/parent for Layer-2 artifacts.
+        if rel.endswith("CARBON/energy_meter.csv") and ems_meta.get("source_type") == "ACADEMIC_OPEN_DATA":
+            entry.update({"source_type": "ACADEMIC_OPEN_DATA",
+                          "source_url": ems_meta["source_url"], "license": ems_meta["license"],
+                          "original_filename": ems_meta["original_filename"],
+                          "synthetic_transform": f"column-mapped from acquired zip ({ems_meta['real_rows']} rows); facility_id round-robin FAC-01..25",
+                          "parent_artifact": ems_meta["parent_artifact_sha256"],
+                          "expected_use": "Layer-2 real-world: plant telemetry -> emissions evidence -> CBAM installation workbook -> product -> shipment",
+                          "registry_refs": ["uci_steel_energy", "uci_steel_energy_zip"]})
+        if rel.endswith("CARBON/energy_meter_meta.json") and ems_meta.get("source_type") == "ACADEMIC_OPEN_DATA":
+            entry.update({"source_type": "ACADEMIC_OPEN_DATA",
+                          "source_url": ems_meta["source_url"], "license": ems_meta["license"],
+                          "synthetic_transform": "column-mapping record for UCI telemetry",
+                          "parent_artifact": ems_meta["parent_artifact_sha256"],
+                          "expected_use": "Layer-2 provenance for energy_meter.csv; CC BY 4.0 attribution",
+                          "registry_refs": ["uci_steel_energy", "uci_steel_energy_zip"]})
+        if rel.endswith("CARBON/research/terlouw_steel_cbam_summary.json") and terlouw.get("parent_artifact_sha256"):
+            entry.update({"source_type": "ACADEMIC_OPEN_DATA",
+                          "source_url": terlouw["source_url"], "license": terlouw["license"],
+                          "original_filename": "tomterlouw/Steel_CBAM-v.1.0.0.alpha.zip",
+                          "synthetic_transform": "research-corpus pointer; repo structure + README head extracted, no code executed",
+                          "parent_artifact": terlouw["parent_artifact_sha256"],
+                          "expected_use": terlouw["expected_use"],
+                          "registry_refs": ["terlouw_steel_cbam", "terlouw_steel_cbam_zenodo"]})
+        if rel.endswith("CARBON/epds/epd_sources.json"):
+            entry.update({"source_type": "PUBLIC_COMPANY", "source_url": epd["source_url"],
+                          "license": "public PDFs; link only, never redistributed",
+                          "synthetic_transform": "link pointer only; no PDF copied",
+                          "expected_use": epd["expected_use"],
+                          "registry_refs": ["voestalpine_epds"]})
+        if rel.endswith("QUALITY/mill_test_certificates/sample_mtc_en10204_31.csv"):
+            entry.update({"synthetic_transform": "synthetic EN 10204 3.1-shaped rows linked to room heat numbers (seed 20261002+7); public plate certs used as shape reference only",
+                          "expected_use": "Layer-4 evidence-document input: MTC heat/batch linkage; not a normative oracle"})
+        prov.append(entry)
     prov.append({"path": "config/public_evidence_sources.json",
                  "source_type": "REGISTRY", "source_url": "",
                  "license": "registry of Layer-1/2/3 pointers; see per-source license",
@@ -218,7 +408,10 @@ def build(n_tx: int = 0, ems_rows: int = 2000) -> dict:
                                                      "competitor-scenarios", "synthetic-corrupted"],
                                           "artifacts": prov})
     return {"transactions": len(tx), "blocked": len(blocked_ids),
-            "derivatives": len(derivs), "ems_rows": len(ems), "provenance_entries": len(prov)}
+            "derivatives": len(derivs), "ems_rows": len(ems), "ems_source": ems_source,
+            "ems_real_rows": ems_meta.get("real_rows", 0),
+            "terlouw_files": terlouw.get("file_count", 0), **mtc,
+            "provenance_entries": len(prov)}
 
 
 def main() -> None:

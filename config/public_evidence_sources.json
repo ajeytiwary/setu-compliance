@@ -59,16 +59,33 @@
     },
     {
       "id": "uci_steel_energy",
-      "title": "Steel Industry Energy Consumption",
+      "title": "Steel Industry Energy Consumption — DAEWOO Steel Gwangyang telemetry (35,040 obs)",
       "source_class": "ACADEMIC_OPEN_DATA",
       "kind": "landing_page",
       "url": "https://archive.ics.uci.edu/dataset/851/steel+industry+energy+consumption",
-      "license": "CC BY 4.0",
+      "download_url": "https://archive.ics.uci.edu/static/public/851/steel+industry+energy+consumption.zip",
+      "doi": "10.24432/C52G8C",
+      "license": "CC BY 4.0 (attribute Sathishkumar V E, Shin, Cho 2021)",
       "use": [
         "ems",
         "energy",
         "co2"
       ],
+      "expected_use": "Layer-2 real-world: plant telemetry -> emissions evidence -> CBAM installation workbook -> product -> shipment. 35,040 rows; columns Usage_kWh, Lagging_Current_Reactive.Power_kVarh, Leading_Current_Reactive_Power_kVarh, CO2(tCO2), Lagging/Leading_Current_Power_Factor, NSM, WeekStatus, Day_of_week, Load_Type (Light/Medium/Maximum). Acquire the direct zip, never scrape the landing page.",
+      "provenance_note": "Direct zip ~2.6 MB (Steel_industry_data.csv). Record sha256 in manifest at acquisition; CC BY 4.0 attribution required in derived docs.",
+      "redistribute": false
+    },
+    {
+      "id": "uci_steel_energy_zip",
+      "title": "Steel Industry Energy Consumption — direct ZIP (Steel_industry_data.csv, 2.6 MB)",
+      "source_class": "ACADEMIC_OPEN_DATA",
+      "kind": "zip",
+      "url": "https://archive.ics.uci.edu/static/public/851/steel+industry+energy+consumption.zip",
+      "doi": "10.24432/C52G8C",
+      "license": "CC BY 4.0 (attribute Sathishkumar V E, Shin, Cho 2021)",
+      "use": ["ems", "energy", "co2"],
+      "expected_use": "Layer-2 real-world: plant telemetry -> emissions evidence -> CBAM installation workbook -> product -> shipment",
+      "provenance_note": "Direct ZIP verified HTTP 200. Inner file Steel_industry_data.csv (35,040 rows). Record sha256; CC BY 4.0 attribution required.",
       "redistribute": false
     },
     {
@@ -209,10 +226,24 @@
       "source_class": "ACADEMIC_OPEN_DATA",
       "kind": "landing_page",
       "url": "https://doi.org/10.1016/j.jclepro.2025.145000",
-      "license": "paper + dataset-specific; verify before acquisition",
+      "doi": "10.5281/zenodo.17236022",
+      "license": "BSD-3-Clause (code+data); paper via publisher",
       "use": ["ems", "energy", "co2", "installation", "research"],
-      "expected_use": "Layer-2 real-world: regional steel production + prospective LCA for CBAM carbon accounting",
-      "provenance_note": "Resolve DOI to publisher/supplement at acquisition; record exact URL + sha256 in manifest",
+      "expected_use": "Layer-2 real-world: regional steel production + prospective LCA for CBAM carbon accounting. Research corpus only — never a normative calculation oracle.",
+      "provenance_note": "Zenodo record 17236022 v1.0.0.alpha (2025-09-30), repo steel_cbam_assessment/{data,figs,logs,results,notebooks 0-5,config.py,db_functions.py,functions.py,mapping.py,plotting.py,regionalization.py}. Record exact file URL + sha256 in manifest.",
+      "redistribute": false
+    },
+    {
+      "id": "terlouw_steel_cbam_zenodo",
+      "title": "Steel_CBAM v1.0.0.alpha direct ZIP (18.5 MB, md5 a339bba595c1591b8d36d5d9e4843945)",
+      "source_class": "ACADEMIC_OPEN_DATA",
+      "kind": "zip",
+      "url": "https://zenodo.org/api/records/17236022/files/tomterlouw/Steel_CBAM-v.1.0.0.alpha.zip/content",
+      "doi": "10.5281/zenodo.17236022",
+      "license": "BSD-3-Clause",
+      "use": ["ems", "energy", "co2", "installation", "research"],
+      "expected_use": "Layer-2 real-world research corpus: regionalized production data + prospective LCA inputs for CBAM carbon accounting. Research priors only.",
+      "provenance_note": "Verified via Zenodo API. Record sha256 of downloaded bytes in manifest; keep upstream md5 for cross-check.",
       "redistribute": false
     }
   ]

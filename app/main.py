@@ -250,7 +250,7 @@ def favicon_svg():return FileResponse(STATIC/"favicon.svg",media_type="image/svg
 @app.get("/robots.txt")
 def robots():return Response("User-agent: *\nAllow: /\nSitemap: /sitemap.xml\n",media_type="text/plain")
 @app.get("/sitemap.xml")
-def sitemap():return Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>/</loc></url><url><loc>/demo</loc></url><url><loc>/pilot</loc></url><url><loc>/case-study</loc></url><url><loc>/benchmarks</loc></url><url><loc>/trust</loc></url><url><loc>/product</loc></url><url><loc>/workflow</loc></url><url><loc>/pricing</loc></url><url><loc>/brokers</loc></url><url><loc>/liability-preview</loc></url><url><loc>/threshold-checker</loc></url><url><loc>/carbon-price-relief</loc></url><url><loc>/cbam-rate</loc></url><url><loc>/guides</loc></url><url><loc>/faq</loc></url><url><loc>/sectors</loc></url><url><loc>/account</loc></url><url><loc>/changelog</loc></url><url><loc>/worked-example</loc></url><url><loc>/supplier-data-template</loc></url><url><loc>/security</loc></url><url><loc>/privacy</loc></url><url><loc>/terms</loc></url><url><loc>/dpa</loc></url></urlset>',media_type="application/xml")
+def sitemap():return Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>/</loc></url><url><loc>/demo</loc></url><url><loc>/pilot</loc></url><url><loc>/case-study</loc></url><url><loc>/benchmarks</loc></url><url><loc>/trust</loc></url><url><loc>/product</loc></url><url><loc>/workflow</loc></url><url><loc>/pricing</loc></url><url><loc>/brokers</loc></url><url><loc>/workflow-run</loc></url><url><loc>/liability-preview</loc></url><url><loc>/threshold-checker</loc></url><url><loc>/carbon-price-relief</loc></url><url><loc>/cbam-rate</loc></url><url><loc>/guides</loc></url><url><loc>/faq</loc></url><url><loc>/sectors</loc></url><url><loc>/account</loc></url><url><loc>/changelog</loc></url><url><loc>/worked-example</loc></url><url><loc>/supplier-data-template</loc></url><url><loc>/security</loc></url><url><loc>/privacy</loc></url><url><loc>/terms</loc></url><url><loc>/dpa</loc></url></urlset>',media_type="application/xml")
 @app.get("/product",response_class=HTMLResponse)
 def product():
  from .content_hub import shell as _shell
@@ -372,6 +372,28 @@ def tool_relief(x:ToolReliefIn):
 def tool_supplier_csv():
  from .content_pages import SUPPLIER_CSV
  return Response(SUPPLIER_CSV,media_type="text/csv",headers={"Content-Disposition":"attachment; filename=eurosetu-supplier-template.csv"})
+@app.get("/workflow-run",response_class=HTMLResponse)
+def workflow_run():
+ from .content_hub import shell as _shell
+ from .content_pages import workflow_run_page
+ t,d,b,x=workflow_run_page(); return HTMLResponse(_shell(t,d,b,x))
+@app.post("/api/workflow-run/parse")
+async def workflow_run_parse(request:Request):
+ from .content_pages import api_workflow_run_parse
+ form=await request.form()
+ files: list[tuple[str, bytes]] = []
+ for v in form.getlist("files"):
+  fn = getattr(v, "filename", None)
+  if fn is not None:
+   files.append((fn or "upload", await v.read()))
+ pasted=str(form.get("pasted_csv") or ""); doc_url=str(form.get("doc_url") or "")
+ from .content_pages import api_workflow_run_parse as _p
+ return _p(files, pasted, doc_url)
+class WorkflowRunCompileIn(BaseModel):lines:list=[]; importer_cbam_mass_ytd_t:float=0; seed_demo_taric:bool=True; demo_cbam_pack:bool=False; authorised_cbam_declarant:bool=True; cbam_emissions_verified:bool=True
+@app.post("/api/workflow-run/compile")
+def workflow_run_compile(x:WorkflowRunCompileIn):
+ from .content_pages import api_workflow_run_compile
+ return api_workflow_run_compile(x.model_dump())
 @app.get("/app.js")
 def js():return FileResponse(STATIC/"app.js",media_type="application/javascript")
 @app.get("/styles.css")

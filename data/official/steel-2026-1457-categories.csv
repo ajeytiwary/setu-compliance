@@ -1,2 +1,338 @@
-category,cn_code,origin_country,yearly_quota_t,mfn_part_t,fta_part_t,q3_t,q4_t,additional_duty_rate,order_number,legal_basis
-1A,72083900,IN,597274.45,299196.82,298077.63,149318.61,149318.61,0.50,09.9803,EU 2026/1457 Annex I
+category,name,cn_code,origin_country,order_number,period_quota_t
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72081000,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72082500,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72082600,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72082700,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72083600,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72083700,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72083800,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72083900,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72084000,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72085210,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72085299,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72085310,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72085390,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72085400,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72111300,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72111400,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72111900,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72251910,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72253010,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72253030,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72253090,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72254015,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72254090,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72261910,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72269120,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72269191,IN,09.9803,597274.45
+1A,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72269199,IN,09.9803,597274.45
+1B,Non Alloy and Other Alloy Hot Rolled Sheets and Strips,72126000,OTHER,09.9601,179.56
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72091500,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72091690,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72091790,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72091891,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72092500,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72092690,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72092790,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72092890,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72099020,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72099080,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72112320,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72112330,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72112380,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72112900,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72119020,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72119080,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72255020,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72255080,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72262000,IN,09.9818,269974.33
+2,Non Alloy and Other Alloy Cold Rolled Sheets,72269200,IN,09.9818,269974.33
+3A,Electrical Sheets (other than GOES),72091610,OTHER,09.9603,29.08
+3A,Electrical Sheets (other than GOES),72091710,OTHER,09.9603,29.08
+3A,Electrical Sheets (other than GOES),72091810,OTHER,09.9603,29.08
+3A,Electrical Sheets (other than GOES),72092610,OTHER,09.9603,29.08
+3A,Electrical Sheets (other than GOES),72092710,OTHER,09.9603,29.08
+3A,Electrical Sheets (other than GOES),72092810,OTHER,09.9603,29.08
+3B,Electrical Sheets (other than GOES),72251990,OTHER,09.9604,5915.02
+3B,Electrical Sheets (other than GOES),72261980,OTHER,09.9604,5915.02
+4A,Metallic Coated Sheets,72125020,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72104100,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72104100,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72104900,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72104900,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72106100,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72106100,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72106900,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72106900,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72123000,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72123000,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72125061,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72125061,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72125069,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72125069,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72259200,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72259200,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72259900,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72259900,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72259900,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72259900,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72259900,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72259900,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72259900,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72259900,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72269930,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72269930,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72269970,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72269970,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72269970,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72269970,IN,09.9835,233183.38
+4A,Metallic Coated Sheets,72269970,IN,09.9835,233183.38
+4B,Metallic Coated Sheets,72102000,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72103000,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72109080,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72122000,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72125030,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72125040,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72125090,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72259100,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72269910,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72104100,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72104900,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72106100,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72106900,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72123000,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72125061,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72125069,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72259200,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72259900,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72259900,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72269930,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72269970,IN,09.9841,102043.66
+4B,Metallic Coated Sheets,72269970,IN,09.9841,102043.66
+5,Organic Coated Sheets,72107080,IN,09.9842,217337.73
+5,Organic Coated Sheets,72124080,IN,09.9842,217337.73
+6,Tin Mill products,72091899,IN,09.9853,47009.33
+6,Tin Mill products,72101100,IN,09.9853,47009.33
+6,Tin Mill products,72101220,IN,09.9853,47009.33
+6,Tin Mill products,72101280,IN,09.9853,47009.33
+6,Tin Mill products,72105000,IN,09.9853,47009.33
+6,Tin Mill products,72107010,IN,09.9853,47009.33
+6,Tin Mill products,72109040,IN,09.9853,47009.33
+6,Tin Mill products,72121010,IN,09.9853,47009.33
+6,Tin Mill products,72121090,IN,09.9853,47009.33
+6,Tin Mill products,72124020,IN,09.9853,47009.33
+7,Non Alloy and Other Alloy Quarto Plates,72085120,IN,09.9856,210838.28
+7,Non Alloy and Other Alloy Quarto Plates,72085191,IN,09.9856,210838.28
+7,Non Alloy and Other Alloy Quarto Plates,72085198,IN,09.9856,210838.28
+7,Non Alloy and Other Alloy Quarto Plates,72085291,IN,09.9856,210838.28
+7,Non Alloy and Other Alloy Quarto Plates,72089020,IN,09.9856,210838.28
+7,Non Alloy and Other Alloy Quarto Plates,72089080,IN,09.9856,210838.28
+7,Non Alloy and Other Alloy Quarto Plates,72109030,IN,09.9856,210838.28
+7,Non Alloy and Other Alloy Quarto Plates,72254012,IN,09.9856,210838.28
+7,Non Alloy and Other Alloy Quarto Plates,72254040,IN,09.9856,210838.28
+7,Non Alloy and Other Alloy Quarto Plates,72254060,IN,09.9856,210838.28
+8,Stainless Hot Rolled Sheets and Strips,72191100,IN,09.9862,26019.13
+8,Stainless Hot Rolled Sheets and Strips,72191210,IN,09.9862,26019.13
+8,Stainless Hot Rolled Sheets and Strips,72191290,IN,09.9862,26019.13
+8,Stainless Hot Rolled Sheets and Strips,72191310,IN,09.9862,26019.13
+8,Stainless Hot Rolled Sheets and Strips,72191390,IN,09.9862,26019.13
+8,Stainless Hot Rolled Sheets and Strips,72191410,IN,09.9862,26019.13
+8,Stainless Hot Rolled Sheets and Strips,72191490,IN,09.9862,26019.13
+8,Stainless Hot Rolled Sheets and Strips,72192210,IN,09.9862,26019.13
+8,Stainless Hot Rolled Sheets and Strips,72192290,IN,09.9862,26019.13
+8,Stainless Hot Rolled Sheets and Strips,72192300,IN,09.9862,26019.13
+8,Stainless Hot Rolled Sheets and Strips,72192400,IN,09.9862,26019.13
+8,Stainless Hot Rolled Sheets and Strips,72201100,IN,09.9862,26019.13
+8,Stainless Hot Rolled Sheets and Strips,72201200,IN,09.9862,26019.13
+9,Stainless Cold Rolled Sheets and Strips,72193100,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72193210,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72193290,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72193310,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72193390,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72193410,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72193490,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72193510,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72193590,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72199020,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72199080,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72202021,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72202029,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72202041,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72202049,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72202081,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72202089,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72209020,IN,09.9873,38053.78
+9,Stainless Cold Rolled Sheets and Strips,72209080,IN,09.9873,38053.78
+10,Stainless Hot Rolled Quarto Plates,72192110,IN,09.9875,5988.10
+10,Stainless Hot Rolled Quarto Plates,72192190,IN,09.9875,5988.10
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72143000,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72149110,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72149190,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72149931,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72149939,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72149950,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72149971,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72149979,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72149995,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72159000,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72161000,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72162100,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72162200,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72164010,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72164090,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72165010,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72165091,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72165099,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72169900,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72281020,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72282010,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72282091,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72283020,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72283041,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72283049,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72283061,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72283070,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72283089,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72286020,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72286080,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72287010,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72287090,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72288000,OTHER,09.9613,47239.62
+12,Non Alloy and Other Alloy Merchant Bars and Light Sections,72283069,OTHER,09.9613,47239.62
+13,Rebars,72142000,OTHER,09.9614,63322.34
+13,Rebars,72149910,OTHER,09.9614,63322.34
+13,Rebars,72283069,OTHER,09.9614,63322.34
+14,Stainless Bars and Light Sections,72221111,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72221119,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72221181,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72221189,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72221910,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72221990,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72222011,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72222019,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72222021,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72222029,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72222031,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72222039,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72222081,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72222089,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72223051,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72223091,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72223097,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72224010,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72224050,IN,09.9890,92556.79
+14,Stainless Bars and Light Sections,72224090,IN,09.9890,92556.79
+15,Stainless Wire Rod,72210010,IN,09.9894,18772.33
+15,Stainless Wire Rod,72210090,IN,09.9894,18772.33
+16,Non Alloy and Other Alloy Wire Rod,72131000,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72132000,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72139110,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72139120,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72139141,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72139149,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72139170,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72139190,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72139910,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72139990,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72271000,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72272000,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72279010,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72279050,OTHER,09.9617,153927.34
+16,Non Alloy and Other Alloy Wire Rod,72279095,OTHER,09.9617,153927.34
+17,"Angles, Shapes and Sections of Iron or Non Alloy Steel",72163110,OTHER,09.9618,12614.20
+17,"Angles, Shapes and Sections of Iron or Non Alloy Steel",72163190,OTHER,09.9618,12614.20
+17,"Angles, Shapes and Sections of Iron or Non Alloy Steel",72163211,OTHER,09.9618,12614.20
+17,"Angles, Shapes and Sections of Iron or Non Alloy Steel",72163219,OTHER,09.9618,12614.20
+17,"Angles, Shapes and Sections of Iron or Non Alloy Steel",72163291,OTHER,09.9618,12614.20
+17,"Angles, Shapes and Sections of Iron or Non Alloy Steel",72163299,OTHER,09.9618,12614.20
+17,"Angles, Shapes and Sections of Iron or Non Alloy Steel",72163310,OTHER,09.9618,12614.20
+17,"Angles, Shapes and Sections of Iron or Non Alloy Steel",72163390,OTHER,09.9618,12614.20
+18,Sheet Piling,73011000,OTHER,09.9619,341.13
+19,Railway Material,73021022,OTHER,09.9620,881.85
+19,Railway Material,73021028,OTHER,09.9620,881.85
+19,Railway Material,73021040,OTHER,09.9620,881.85
+19,Railway Material,73021050,OTHER,09.9620,881.85
+19,Railway Material,73024000,OTHER,09.9620,881.85
+20,Gas Pipes,73063041,IN,09.9919,40147.55
+20,Gas Pipes,73063049,IN,09.9919,40147.55
+20,Gas Pipes,73063072,IN,09.9919,40147.55
+20,Gas Pipes,73063077,IN,09.9919,40147.55
+21,Hollow Sections,73066110,OTHER,09.9622,28696.57
+21,Hollow Sections,73066192,OTHER,09.9622,28696.57
+21,Hollow Sections,73066199,OTHER,09.9622,28696.57
+22,Seamless Stainless Tubes and Pipes,73041100,IN,09.9928,15328.50
+22,Seamless Stainless Tubes and Pipes,73042200,IN,09.9928,15328.50
+22,Seamless Stainless Tubes and Pipes,73042400,IN,09.9928,15328.50
+22,Seamless Stainless Tubes and Pipes,73044100,IN,09.9928,15328.50
+22,Seamless Stainless Tubes and Pipes,73044983,IN,09.9928,15328.50
+22,Seamless Stainless Tubes and Pipes,73044985,IN,09.9928,15328.50
+22,Seamless Stainless Tubes and Pipes,73044989,IN,09.9928,15328.50
+24,Other Seamless Tubes,73041910,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73041930,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73041990,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73042300,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73042910,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73042930,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73042990,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73043120,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73043180,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73043950,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73043982,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73043983,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73043988,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73045181,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73045189,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73045930,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73045982,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73045983,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73045989,OTHER,09.9624,39299.94
+24,Other Seamless Tubes,73049000,OTHER,09.9624,39299.94
+25A,Large welded tubes,73051100,IN,09.9938,4364.78
+25A,Large welded tubes,73051200,IN,09.9938,4364.78
+25B,Large welded tubes,73051900,OTHER,09.9626,5608.92
+25B,Large welded tubes,73052000,OTHER,09.9626,5608.92
+25B,Large welded tubes,73053100,OTHER,09.9626,5608.92
+25B,Large welded tubes,73053900,OTHER,09.9626,5608.92
+25B,Large welded tubes,73059000,OTHER,09.9626,5608.92
+26,Other Welded Pipes,73061100,IN,09.9946,24634.48
+26,Other Welded Pipes,73061900,IN,09.9946,24634.48
+26,Other Welded Pipes,73062100,IN,09.9946,24634.48
+26,Other Welded Pipes,73062900,IN,09.9946,24634.48
+26,Other Welded Pipes,73063012,IN,09.9946,24634.48
+26,Other Welded Pipes,73063018,IN,09.9946,24634.48
+26,Other Welded Pipes,73063080,IN,09.9946,24634.48
+26,Other Welded Pipes,73064020,IN,09.9946,24634.48
+26,Other Welded Pipes,73064080,IN,09.9946,24634.48
+26,Other Welded Pipes,73065021,IN,09.9946,24634.48
+26,Other Welded Pipes,73065029,IN,09.9946,24634.48
+26,Other Welded Pipes,73065080,IN,09.9946,24634.48
+26,Other Welded Pipes,73066910,IN,09.9946,24634.48
+26,Other Welded Pipes,73066990,IN,09.9946,24634.48
+26,Other Welded Pipes,73069000,IN,09.9946,24634.48
+27,Non-alloy and other alloy cold finished bars,72151000,OTHER,09.9628,7354.33
+27,Non-alloy and other alloy cold finished bars,72155011,OTHER,09.9628,7354.33
+27,Non-alloy and other alloy cold finished bars,72155019,OTHER,09.9628,7354.33
+27,Non-alloy and other alloy cold finished bars,72155080,OTHER,09.9628,7354.33
+27,Non-alloy and other alloy cold finished bars,72281090,OTHER,09.9628,7354.33
+27,Non-alloy and other alloy cold finished bars,72282099,OTHER,09.9628,7354.33
+27,Non-alloy and other alloy cold finished bars,72285020,OTHER,09.9628,7354.33
+27,Non-alloy and other alloy cold finished bars,72285040,OTHER,09.9628,7354.33
+27,Non-alloy and other alloy cold finished bars,72285061,OTHER,09.9628,7354.33
+27,Non-alloy and other alloy cold finished bars,72285069,OTHER,09.9628,7354.33
+27,Non-alloy and other alloy cold finished bars,72285080,OTHER,09.9628,7354.33
+28,Non Alloy Wire,72171010,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72171031,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72171039,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72171050,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72171090,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72172010,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72172030,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72172050,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72172090,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72173041,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72173049,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72173050,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72173090,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72179020,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72179050,OTHER,09.9629,28289.12
+28,Non Alloy Wire,72179090,OTHER,09.9629,28289.12

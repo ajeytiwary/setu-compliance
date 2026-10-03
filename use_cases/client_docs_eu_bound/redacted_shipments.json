@@ -1,0 +1,124 @@
+{
+  "as_of_clock": "2026-09-29",
+  "evidence_policy": "app.evidence_lifecycle (freshness_days 365, deterministic as_of) + app.decision_engine (DECISION_POLICY_V1, fail-closed)",
+  "legal_windows": {
+    "cbam_definitive_from": "2026-01-01",
+    "eu_india_fta": "NEGOTIATED_NOT_IN_FORCE \u2014 preference_claimable false",
+    "steel_measure": "ACTIVE 2026-07-01 to 2026-12-31 (Reg 2026/1384 + 2026/1457, out-of-quota 0.50)"
+  },
+  "redaction_rule": "Amounts/weights/CNs/routes/dates kept. Dropped: exporter/importer registration numbers, tax identifiers, bank accounts, seals, container numbers, agent/job references, personal names, company legal names.",
+  "seed": 20261003,
+  "shipments": [
+    {
+      "cbam_scope": {
+        "direct_only": true,
+        "in_scope": true,
+        "sector": "iron_and_steel"
+      },
+      "cn_code": "72221119",
+      "customs_value_eur": 47823.69,
+      "dest_country": "DE",
+      "discharge_port": "Antwerp (BE)",
+      "gross_mass_kg": 24415.0,
+      "import_date_for_pipeline": "2026-09-29",
+      "line_items": [
+        {
+          "line": 1,
+          "qty_mts": 5.048,
+          "unit_price_eur_per_mt": 2030.0,
+          "value_eur": 10247.44
+        },
+        {
+          "line": 2,
+          "qty_mts": 2.01,
+          "unit_price_eur_per_mt": 2030.0,
+          "value_eur": 4080.3
+        },
+        {
+          "line": 3,
+          "qty_mts": 1.995,
+          "unit_price_eur_per_mt": 2030.0,
+          "value_eur": 4049.85
+        },
+        {
+          "line": 4,
+          "qty_mts": 5.0,
+          "unit_price_eur_per_mt": 2030.0,
+          "value_eur": 10150.0
+        },
+        {
+          "line": 5,
+          "qty_mts": 5.125,
+          "unit_price_eur_per_mt": 2030.0,
+          "value_eur": 10403.75
+        },
+        {
+          "line": 6,
+          "qty_mts": 5.193,
+          "unit_price_eur_per_mt": 2030.0,
+          "value_eur": 10541.79
+        }
+      ],
+      "loading_port": "Dadri ICD (IN)",
+      "net_mass_kg": 24371.0,
+      "origin_country": "IN",
+      "parent_doc": "data/client_data/scribd-927038715.pdf (local only, never copied into repo)",
+      "pipeline_quantity_t": 24.371,
+      "quality_note": "Line-item FOB sum (~49473 EUR) exceeds header FOB (47823.69 EUR); header total used as customs value and variance flagged as data-quality note, never auto-corrected.",
+      "sb_date_on_doc": "2025-09-30",
+      "shipment_ref": "CLIENT-AMBICA-01",
+      "shipping_bill_total_fob_eur": 47823.69,
+      "shipping_bill_total_fob_inr": 4885189.93,
+      "steel_category": {
+        "india_order_number": "09.9890",
+        "name": "Stainless Bars and Light Sections",
+        "number": "14"
+      },
+      "why_relevant": "EU-bound IN stainless bars: CBAM in-scope + steel safeguard category 14 + TARIC/valuation/origin all exercisable. Primary pipeline case."
+    },
+    {
+      "cbam_scope": {
+        "in_scope": false,
+        "sector": null
+      },
+      "cn_code": "40111010",
+      "customs_value_eur": 15429.06,
+      "dest_country": "HU",
+      "discharge_port": "Hamburg (DE)",
+      "final_dest": "Budapest (HU)",
+      "gross_mass_kg": 6716.641,
+      "import_date_for_pipeline": "2026-09-29",
+      "invoice_value_eur": 17429.06,
+      "line_items": [
+        {
+          "line": "1/1",
+          "qty_mts": 1.056,
+          "value_eur": 2795.79
+        },
+        {
+          "line": "1/2",
+          "qty_mts": 4.974,
+          "value_eur": 12881.44
+        },
+        {
+          "line": "1/3",
+          "qty_mts": 0.687,
+          "value_eur": 1751.83
+        }
+      ],
+      "loading_port": "Hazira (IN)",
+      "net_mass_kg": 6716.641,
+      "origin_country": "IN",
+      "parent_doc": "data/client_data/scribd-1047251010.pdf (local only, never copied into repo)",
+      "pipeline_quantity_t": 6.717,
+      "sb_date_on_doc": "2026-06-01",
+      "shipment_ref": "CLIENT-APOLLO-01",
+      "special_schemes_on_doc": [
+        "duty-remission licence (number withheld)",
+        "multilateral origin-basis annotation (acronym withheld, no registration numbers)",
+        "export incentive claim noted"
+      ],
+      "why_relevant": "EU-bound IN passenger tyres: non-CBAM / non-steel contrast case. Exercises TARIC + UCC valuation + origin + PPWR/REACH/sanctions without steel/CBAM blockers."
+    }
+  ]
+}

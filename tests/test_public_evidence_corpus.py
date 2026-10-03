@@ -16,7 +16,7 @@ def test_public_evidence_corpus_builds_offline_and_is_deterministic():
 def test_source_registry_has_required_provenance():
  cfg=json.loads((ROOT/"config/public_evidence_sources.json").read_text())
  ids={x["id"] for x in cfg["sources"]}
- assert {"ec_cbam_examples","ec_cbam_defaults","ec_cbam_benchmarks","ec_cbam_operator_guidance","uci_steel_energy","docile","carbonchain_steelforce","carbonchain_spaeter","eurostat_comext","taric","un_comtrade","worldsteel_lci","voestalpine_epds","cord_receipts","quest_tables","cbamreturn_worked_example","terlouw_steel_cbam"}<=ids
+ assert {"ec_cbam_examples","ec_cbam_defaults","ec_cbam_benchmarks","ec_cbam_operator_guidance","uci_steel_energy","uci_steel_energy_zip","docile","carbonchain_steelforce","carbonchain_spaeter","eurostat_comext","taric","un_comtrade","worldsteel_lci","voestalpine_epds","cord_receipts","quest_tables","cbamreturn_worked_example","terlouw_steel_cbam","terlouw_steel_cbam_zenodo"}<=ids
  assert all(x["source_class"] and x["license"] and x["url"] for x in cfg["sources"])
 def test_evidence_room_2026_layout_and_expected():
  subprocess.run([sys.executable,"scripts/build_public_evidence_corpus.py","--clean"],cwd=ROOT,check=True)
@@ -32,3 +32,28 @@ def test_evidence_room_2026_layout_and_expected():
  der=json.loads((room/"corrupted_derivatives.json").read_text())
  assert len(der)==25 and all(d["parent_artifact_sha256"] for d in der)
  assert {d["chaos_id"] for d in der}<={f"CHAOS-{i:03d}" for i in range(1,16)}
+ # Layer-2 real-world overlays: research pointer, MTC-shaped sample, EPD pointer
+ assert (room/"CARBON/research/terlouw_steel_cbam_summary.json").exists()
+ assert (room/"QUALITY/mill_test_certificates/sample_mtc_en10204_31.csv").exists()
+ assert (room/"CARBON/epds/epd_sources.json").exists()
+ assert (room/"CARBON/energy_meter_meta.json").exists()
+ with (room/"QUALITY/mill_test_certificates/sample_mtc_en10204_31.csv").open() as f:
+  mtc=list(csv.DictReader(f))
+ assert len(mtc)==10 and all(r["standard"]=="EN 10204 3.1" and r["heat_number"].startswith("HEAT-") for r in mtc)
+ tl=json.loads((room/"CARBON/research/terlouw_steel_cbam_summary.json").read_text())
+ assert tl["doi_data"]=="10.5281/zenodo.17236022" and "never a normative" in tl["expected_use"].lower()
+ epd=[a for a in prov["artifacts"] if a["path"].endswith("CARBON/epds/epd_sources.json")][0]
+ assert epd["source_type"]=="PUBLIC_COMPANY" and "voestalpine" in epd["source_url"]
+def test_uci_telemetry_loader_fallback_and_mapping():
+ import importlib.util
+ spec=importlib.util.spec_from_file_location("room_builder",ROOT/"scripts/build_evidence_room_2026.py")
+ mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+ rows,meta=mod.load_uci_telemetry(5)
+ orig_dir=ROOT/"data/public_trade_evidence/originals/uci_steel_energy_zip"
+ if list(orig_dir.glob("*.zip")):
+  assert len(rows)==5 and meta["source_type"]=="ACADEMIC_OPEN_DATA"
+  assert rows[0]["timestamp"]=="2018-01-01T00:15:00" and rows[0]["energy_kwh"]==3.17
+  assert rows[0]["facility_id"]=="FAC-01" and rows[0]["load_type"]=="Light_Load"
+  assert "CC BY 4.0" in meta["license"] and meta["parent_artifact_sha256"]
+ else:
+  assert rows==[] and meta["source_type"]=="SYNTHETIC"

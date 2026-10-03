@@ -1,0 +1,6 @@
+row_id,heat_number,batch_no,grade,c_pct_raw,mn_pct_raw,yield_mpa_raw,tensile_mpa_raw,el_pct_raw,defect_kind,note
+MESSY-01,HEAT-3303,B-3766,QStE340TM,"0,16","0,65",303,412,34,decimal_comma,"C/Mn with comma decimals (CHAOS-002 shape); parser must reject, never guess"
+MESSY-02,HEAT-3304,B-3767,QStE340TM,0.16,0.65,"303 MPa","412 MPa","34 %",units_embedded,"units embedded in numeric cells (CHAOS-003 shape)"
+MESSY-03,HEAT-3303-vs-3304,B-3768,QStE340TM,0.16,0.65,303,412,34,heat_mismatch,"heat on MTC disagrees with packing list (CHAOS-015 shape)"
+MESSY-04,HEAT-3305,B-3769,QStE340TM,0.16,0.65,303,412,34,duplicate_supplier,"same legal entity twice with different supplier_ids (CHAOS-007 shape)"
+MESSY-05,HEAT-3306,B-3770,QStE340TM,0.16,0.65,303,412,34,duplicate_invoice,"same invoice number posted twice (CHAOS-013 shape)"

@@ -50,6 +50,7 @@ SECTORS = [
 ]
 
 TOOLS = [
+    ("Workflow run", "/workflow-run", "Upload PDFs/CSVs/Excel: parse, map to steps, run the engines."),
     ("Liability preview", "/liability-preview", "Price an import ledger line by line on real defaults."),
     ("Threshold checker", "/threshold-checker", "EU 50 t declarant test + UK £50k note, instant read."),
     ("Carbon price relief", "/carbon-price-relief", "Article 9 deduction: what counts and what evidence."),
@@ -213,6 +214,35 @@ GUIDES: list[dict] = [
 <p>EORI, establishment, contact and compliance history, plus the monitoring and data-collection arrangements behind the declaration. Until the registry interaction completes, EuroSetu flags <span class="mono">CBAM_DECLARANT_AUTHORISATION</span> as a blocker rather than assuming coverage.</p>
 <h2>Records from day one</h2>
 <p>Keep per-consignment CN codes, masses, origins, values, supplier declarations with monitoring-period and verification references, and the audit trail of every save, upload and export - six-year horizon. The <a href="/product">records vault</a> files each document against its supplier line with checksums and a completeness view.</p>
+""",
+    },
+    {
+        "slug": "client-docs-pipeline-output",
+        "title": "Checking the pipeline on redacted EU-bound shipments: BLOCKED to READY, step by step",
+        "date": "2026-10-03", "read": "9 min read",
+        "summary": "How to run the redacted client-docs demo, read its four-row output, and map each row back to the three workflow steps - compile obligations, trace evidence, price and pack.",
+        "body": """
+<h2>What you are looking at</h2>
+<p>Two hand-redacted EU-bound shipments - <b>CLIENT-AMBICA-01</b> (stainless bars 72221119, 24.371 t, steel + CBAM in-scope) and <b>CLIENT-APOLLO-01</b> (passenger tyres 40111010, 6.717 t, non-steel contrast) - run through the real engines at a pinned clock (<span class="mono">as_of=2026-09-29</span>, <span class="mono">DECISION_POLICY_V1</span>). Source PDFs stay local and untracked; only CNs, quantities, values, routes and dates enter the repo. MTC heats are synthetic. This is a <b>scenario demo</b>, not a customer result.</p>
+<h2>Step 0 - Run it and check the exit code</h2>
+<pre class="template">.venv/bin/python use_cases/client_docs_eu_bound/run_client_docs_demo.py
+echo "EXIT:$?"
+.venv/bin/python -m pytest tests/test_client_docs_use_case.py -q</pre>
+<p>Exit 0 plus <span class="mono">2 passed</span> is the green signal. The demo prints one header, four data rows, and a guardrail line. If any row deviates from the expected decision, the runner prints a <span class="mono">FAIL:</span> line and exits non-zero - read the blocker code first, not the decision word.</p>
+<h2>Step 1 - Compile obligations (workflow step 1)</h2>
+<p>Each shipment declares CN code, origin IN, import date, customs value and quantity. The compiler resolves which rule families apply: TARIC duty on a synthetic snapshot with <span class="mono">as_of == import_date</span>, steel safeguard category (14 / order 09.9890 for the stainless case), CBAM scope (in-scope for 72221119, out for 40111010), plus valuation method 1, non-preferential origin, PPWR, REACH/SCIP and sanctions. Missing or stale snapshots block with named codes - nothing is assumed. <a href="/workflow">Workflow step 1 →</a></p>
+<h2>Step 2 - Trace evidence (workflow step 2)</h2>
+<p>Phase A holds evidence as extracted: invoice <span class="mono">UNPARSED</span>, MTC without heat trace <span class="mono">UNVERIFIED</span>, no CBAM pack - so <span class="mono">app.evidence_lifecycle</span> returns <span class="mono">UNVERIFIED</span> and <span class="mono">app.decision_engine</span> returns <b>BLOCKED</b>. Phase B supplies verified invoice + heat-traced MTC + full CBAM verification pack (monitoring plan, emissions report with ACTUAL precursors, verifier statement) - evidence turns <span class="mono">VALID</span>, decision turns <b>READY</b>, chained by <span class="mono">predecessor_id</span>. One object per requirement: bundling would trip the duplicate-hash rule. <a href="/case-study">See the decision chain →</a></p>
+<h2>Step 3 - Price, prioritise, pack (workflow step 3)</h2>
+<p>The market-access compiler and the entitlement check read the same pinned inputs. The steel case moves <b>BLOCKED → READY_FOR_SUBMISSION / ENTITLED</b> once the CBAM pack lands; the tyres case stays compiler-<b>BLOCKED</b> on <span class="mono">STEEL_CN_MAPPING</span> by design (the steel-aware compiler never asserts unmapped CNs through the steel path) while entitlement still returns <b>ENTITLED</b> via the base measure. Remediation ranks by revenue at risk - the stainless line carries the money, so it gets the chase first. <a href="/liability-preview">Price your own lines →</a></p>
+<h2>Reading the four output rows</h2>
+<pre class="template">CLIENT-AMBICA-01   A   INVOICE,MTC_HEAT_TRACE   BLOCKED   BLOCKED                -           ['CBAM_VERIFICATION_PACK']
+CLIENT-AMBICA-01   B   INVOICE,MTC_HEAT_TRACE   READY     READY_FOR_SUBMISSION   ENTITLED    []
+CLIENT-APOLLO-01   A   INVOICE                  BLOCKED   BLOCKED                -           ['STEEL_CN_MAPPING']
+CLIENT-APOLLO-01   B   INVOICE                  READY     BLOCKED                ENTITLED    ['STEEL_CN_MAPPING']</pre>
+<p>Columns left to right: shipment, phase (A as-extracted, B remediated), evidence requirements evaluated, decision-engine status, compiler decision, entitlement decision, blocker codes. Row 1 blocks on the missing CBAM pack. Row 2 is the clean pass. Rows 3-4 document the boundary: evidence can be READY while the steel compiler still blocks a non-steel CN - that split is the engine telling you which path a shipment belongs on.</p>
+<h2>What READY does and does not mean</h2>
+<p><b>READY / READY_FOR_SUBMISSION / ENTITLED</b> means EuroSetu rule and evidence gates pass on pinned inputs - nothing more. Customs acceptance, CBAM registry surrender and verifier sign-off remain external. Treat the output as a blocker queue with exact causal change (add the pack, watch the code clear), not as clearance.</p>
 """,
     },
 ]

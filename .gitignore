@@ -19,6 +19,7 @@ data/official/
 data/sources/
 data/cache/
 data/raw/
+data/client_data
 # Normalized + manifests: ignore everything EXCEPT the tracked CI snapshots
 # (latest.json payloads + manifest pointers). Parent dirs must stay
 # un-ignored for the negations below to take effect.
@@ -47,3 +48,4 @@ docs/Guidance document on CBAM implementation for installation operators outside
 
 # Reproducible public/client-like evidence corpus; regenerate with scripts/build_public_evidence_corpus.py
 data/public_trade_evidence/
+docs/dc39aec1969b4b04.pdf

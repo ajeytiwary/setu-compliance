@@ -8,3 +8,20 @@ openpyxl>=3.1,<4
 sqlalchemy>=2.0,<3
 psycopg[binary]>=3.2,<4
 PyJWT[crypto]>=2.9,<3
+pypdf>=5.9,<7
+polars>=1.30,<2
+firecrawl-py>=1.17,<3
+python-multipart>=0.0.18,<1
+paddleocr>=3.7,<4
+paddlepaddle==3.2.0
+# PP-StructureV3 transformers engine (PP-OCRv6_medium_det/rec safetensors):
+# install torch/torchvision from the GPU index (or CPU index), then transformers+safetensors.
+#   GPU (CUDA 13.2, RTX 3060): uv pip install --python .venv/bin/python --index-url https://download.pytorch.org/whl/cu132 "torch==2.14.1+cu132" "torchvision==0.29.1+cu132"
+#   CPU:                        uv pip install --python .venv/bin/python --index-url https://download.pytorch.org/whl/cpu torch torchvision
+#   uv pip install --python .venv/bin/python transformers safetensors
+# Device selection (app/document_ingest.py::_paddle_device): auto-detects CUDA and
+# uses gpu:0; set EUROSETU_PADDLE_DEVICE=cpu to force CPU (or cuda:0/gpu:0 to force GPU).
+torch>=2.8
+torchvision>=0.23
+transformers>=4.40,<6
+safetensors>=0.4,<1
