@@ -25,6 +25,8 @@ async def production_api_boundary(request:Request,call_next):
   expected=os.getenv("EUROSETU_APP_HOST","app.eurosetu.trade").lower().rstrip(".")
   if host!=expected:return Response(status_code=421,content="Wrong application host")
   path=request.url.path
+  if path=="/case-study":return RedirectResponse("https://eurosetu.trade/case-study",status_code=302)
+  if path.startswith("/api/benchmarks/releases"):return Response(status_code=404)
   if path in PUBLIC_PAGE_PATHS or path.startswith("/guides/") or path in {"/benchmarks.js","/robots.txt","/sitemap.xml"}:return Response(status_code=404)
   if path in {"/api/leads","/api/leads/verify"}:return Response(status_code=404)
   if path.startswith("/api/tools/") or path=="/api/contact":

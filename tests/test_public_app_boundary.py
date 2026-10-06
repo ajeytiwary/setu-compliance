@@ -11,6 +11,8 @@ def test_split_host_rejects_wrong_host_and_public_pages(monkeypatch):
     assert client.get("/pilot", headers={"host": "eurosetu.trade"}).status_code == 421
     assert client.get("/pilot", headers={"host": "app.eurosetu.trade"}, follow_redirects=False).headers["location"] == "/real-dossier"
     assert client.get("/trust", headers={"host": "app.eurosetu.trade"}).status_code == 404
+    assert client.get("/api/benchmarks/releases", headers={"host": "app.eurosetu.trade"}).status_code == 404
+    assert client.get("/case-study", headers={"host": "app.eurosetu.trade"}, follow_redirects=False).headers["location"] == "https://eurosetu.trade/case-study"
     assert client.get("/", headers={"host": "app.eurosetu.trade"}, follow_redirects=False).headers["location"] == "/pilot"
 
 
