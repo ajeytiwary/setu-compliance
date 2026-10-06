@@ -4,7 +4,7 @@
   "authority": "OFFICIAL",
   "legal_authority": false,
   "source": "https://raw.githubusercontent.com/analeonescu/chemical-security-evals/main/data/chemicals_databases/candidate-list-of-svhc-for-authorisation-export.csv",
-  "retrieved_at": "2026-10-02T14:58:51+00:00",
+  "retrieved_at": "2026-10-06T11:21:47+00:00",
   "sha256": "a70b18635398e6a26fb08561264ca0d5c2d21444eca3ffa0f7030a37ef5a8413",
   "content_type": "text/plain; charset=utf-8",
   "etag": "\"6776786f2c906bbdc3c9490cc793951b8761de7f65cbeac5072f860626a3983e\"",
