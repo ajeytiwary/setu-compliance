@@ -12,7 +12,7 @@
 
 ## Open release gates
 
-1. The Git-sourced Pages build `9d53ef1e-9448-44bf-a780-c30d0feddae2` cloned commit `fe4f000` but remained active at the `build` stage with no further log lines at the last check. The verified preview was deployed through Wrangler. Automatic push-to-deploy has therefore **not** been proven.
+1. The Git-sourced Pages build `9d53ef1e-9448-44bf-a780-c30d0feddae2` cloned commit `fe4f000` and completed successfully after a long build stage. It was triggered through the Pages API. Git pushes to both `public-split-preview` and `public-split-validation` created no deployment, so automatic push-to-deploy remains **unproven**; verify the Cloudflare GitHub App/webhook installation before enabling production auto-deployment.
 2. `app.eurosetu.trade` is not yet published. The active tunnel ingress serves only `eurosetu.trade` and `www.eurosetu.trade`. The running `eurosetu` container is an older image and lacks `EUROSETU_ENV`, split-host settings, and the public proxy secret.
 3. The current app volume contains 12 lead records. An approved private backup destination and tested restore are required before replacing the container or migrating its database. The old app and root-domain DNS remain unchanged.
 4. A Pages `PUBLIC_PROXY_SECRET` and matching app secret, plus Cloudflare WAF rate rules for public form/calculator routes, must be configured before the public domain moves. Contact persistence and notification through the Pages proxy have not yet been live-tested.
