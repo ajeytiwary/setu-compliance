@@ -26,7 +26,8 @@ async def production_api_boundary(request:Request,call_next):
   if host!=expected:return Response(status_code=421,content="Wrong application host")
   path=request.url.path
   if path in PUBLIC_PAGE_PATHS or path.startswith("/guides/") or path in {"/benchmarks.js","/robots.txt","/sitemap.xml"}:return Response(status_code=404)
-  if path.startswith("/api/tools/") or path in {"/api/contact","/api/leads","/api/leads/verify"}:
+  if path in {"/api/leads","/api/leads/verify"}:return Response(status_code=404)
+  if path.startswith("/api/tools/") or path=="/api/contact":
    proxy_secret=os.getenv("EUROSETU_PUBLIC_PROXY_SECRET","")
    given=request.headers.get("x-eurosetu-public-proxy-secret","")
    if not proxy_secret:return Response(status_code=503,content="Public proxy unconfigured")
@@ -271,6 +272,7 @@ def admin_mint(x:AdminMintIn,request:Request):
  return {"email":email,"tenant":tenant,"roles":roles,"days":days,"token":token}
 @app.get("/pilot",response_class=HTMLResponse)
 def pilot():
+ if os.getenv("EUROSETU_ENV")=="production" and os.getenv("EUROSETU_SPLIT_HOSTS")=="1":return RedirectResponse("/real-dossier",status_code=302)
  # Public shell: the HTML loads for everyone so we can show a friendly
  # "Pilot access required - contact us" popup. The data APIs below stay
  # bearer-gated, so no pilot data leaks without a token.

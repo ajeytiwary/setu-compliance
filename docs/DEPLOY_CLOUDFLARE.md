@@ -43,7 +43,7 @@ The email key worker in `workers/` sends recipients to `https://app.eurosetu.tra
 1. Crawl the Pages preview navigation, footer, sitemap, guides, legal pages, calculator pages, `/demo`, `/case-study`, and `/benchmarks`. Every linked page and benchmark artifact must load. Check the canonical host and contact address.
 2. Inspect the complete `dist/public` artifact for client data, secrets, private code, and app-only assets. Treat any unexpected file as a failed build.
 3. Submit a test contact request through Pages and verify persistence and delivery. Exercise all public calculators through the Pages Functions, including rejected inputs and upstream failures.
-4. Complete an authenticated app journey: secure dossier workflow, pilot dashboard, document upload, evidence review, blocker remediation, decision replay, and audit traceback. Verify that no anonymous visitor can access client data.
+4. Complete an authenticated app journey: secure dossier workflow (also reached from `/pilot`), document upload, evidence review, blocker remediation, decision replay, and audit traceback. Verify that no anonymous visitor can access client data.
 5. Only then move the apex/root DNS from the old tunnel to Pages. Preserve the old DNS and deployment settings for rollback. Keep temporary redirects for old `/pilot`, `/admin`, and document-workflow bookmarks. Monitor 404s, form failures, auth failures, and API errors after the switch.
 
 DNS cutover follows the preview and app-host gates; preserve the existing tunnel and prior DNS settings for rollback.
