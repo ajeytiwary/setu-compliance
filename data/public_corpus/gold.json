@@ -1,0 +1,207 @@
+{
+  "method": "Manually transcribed selected visible fields from the named source pages; this is a selected-field recall benchmark, not an exhaustive field-level precision score.",
+  "documents": [
+    {
+      "id": "916073792",
+      "role": "MTC",
+      "url": "https://www.scribd.com/document/916073792/4-316L-50-45-24-LOT27792",
+      "fields": {
+        "invoice_number": [
+          "EXP/23-24/01244"
+        ],
+        "certificate_number": [
+          "EXP/23-24/01244-23"
+        ],
+        "purchase_order": [
+          "102833"
+        ],
+        "hs_code": [
+          "7222.11"
+        ],
+        "heat_number": [
+          "CH-20376"
+        ],
+        "net_weight_kg": [
+          "2252"
+        ]
+      },
+      "rows": {
+        "mtc_heat_items": 1
+      },
+      "row_cells": {
+        "mtc_heat_items": [
+          {
+            "heat_number": "CH-20376",
+            "material_grade": "316/316L",
+            "size_mm": "50.00"
+          }
+        ]
+      }
+    },
+    {
+      "id": "1069041631",
+      "role": "SHIPPING_BILL",
+      "url": "https://www.scribd.com/document/1069041631/333156818052026INAPL6SB22200520261616",
+      "fields": {
+        "shipping_bill_number": [
+          "3331568"
+        ],
+        "shipping_date": [
+          "18-MAY-26"
+        ],
+        "destination_country": [
+          "UNITED KINGDOM"
+        ]
+      }
+    },
+    {
+      "id": "725614266",
+      "role": "SAD_CASE_STUDY",
+      "url": "https://www.scribd.com/document/725614266/DV1-Import-SAD",
+      "fields": {
+        "invoice_number": [
+          "INKPL-151/12-13"
+        ],
+        "bill_of_lading": [
+          "INMSCUI7310411"
+        ],
+        "taric_code": [
+          "090931.00.00"
+        ],
+        "sad_date": [
+          "01/02/2020"
+        ],
+        "origin_country": [
+          "INDIA"
+        ],
+        "gross_weight_kg": [
+          "25000"
+        ],
+        "net_weight_kg": [
+          "24650"
+        ],
+        "invoice_value": [
+          "78125"
+        ],
+        "eori": [
+          "ESA 52946767"
+        ]
+      }
+    },
+    {
+      "id": "975352350",
+      "role": "INVOICE",
+      "url": "https://www.scribd.com/document/975352350/SPP-ExportInvoice-SPR-502423",
+      "fields": {
+        "invoice_number": [
+          "SPR2526E1692"
+        ],
+        "invoice_date": [
+          "03-01-2026"
+        ],
+        "container_number": [
+          "TGHU6127284"
+        ],
+        "origin_country": [
+          "INDIA"
+        ],
+        "destination_country": [
+          "UNITED STATES"
+        ],
+        "net_weight_kg": [
+          "17360.77"
+        ],
+        "gross_weight_kg": [
+          "18710.78"
+        ]
+      },
+      "rows": {
+        "invoice_items": 1
+      },
+      "row_cells": {
+        "invoice_items": [
+          {
+            "hs_code": "73071120",
+            "pieces": "214",
+            "net_weight_kg_raw": "17360.77",
+            "value_raw": "30670.32",
+            "currency": "USD"
+          }
+        ]
+      }
+    },
+    {
+      "id": "975352352",
+      "role": "CUSTOMS_ANNEXURE",
+      "url": "https://www.scribd.com/document/975352352/SPP-ExportInvoiceAnnexureC1-SPR-502426",
+      "fields": {
+        "invoice_number": [
+          "SPR2526E1692"
+        ],
+        "container_number": [
+          "TGHU6127284"
+        ],
+        "net_weight_kg": [
+          "17360.78"
+        ],
+        "gross_weight_kg": [
+          "18710.78"
+        ]
+      },
+      "rows": {
+        "customs_c1_containers": 1
+      },
+      "row_cells": {
+        "customs_c1_containers": [
+          {
+            "container_number": "TGHU6127284",
+            "packages": "45",
+            "gross_weight_kg_raw": "18710.78",
+            "net_weight_kg_raw": "17360.78"
+          }
+        ]
+      }
+    },
+    {
+      "id": "574284615",
+      "role": "BILL_OF_LADING",
+      "url": "https://www.scribd.com/document/574284615/Bill-of-Lading-SLDH00054055",
+      "fields": {
+        "bill_of_lading": [
+          "SLDH00054055"
+        ],
+        "hs_code": [
+          "72283029"
+        ],
+        "invoice_number": [
+          "COM210000154",
+          "COM210000155"
+        ],
+        "container_number": [
+          "MSDU1239509",
+          "UETU2626377"
+        ],
+        "shipping_bill_number": [
+          "4240917",
+          "4240922"
+        ],
+        "net_weight_kg": [
+          "53265"
+        ]
+      }
+    }
+  ],
+  "cbam_workbook": {
+    "source": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism/cbam-communication-and-news_en",
+    "archive": "Communication-template-examples.zip",
+    "member": "2 CBAM SEE V2.1_Example Steel 1 Blast furnace_final.xlsx",
+    "historical_template": true,
+    "installation_name": "Example Blast Steelworks",
+    "products": {
+      "72081000": 1.7425300470578653,
+      "72122000": 1.7425300470578653,
+      "72139120": 1.7425300470578653,
+      "73021028": 1.7425300470578653
+    }
+  }
+}

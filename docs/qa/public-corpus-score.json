@@ -1,0 +1,111 @@
+{
+  "selected_field_recall": 1.0,
+  "field_hits": 38,
+  "field_total": 38,
+  "page_line_quote_coverage_of_hits": 0.9474,
+  "bounding_box_coverage_of_hits": 0.6053,
+  "selected_row_cell_accuracy": 1.0,
+  "row_cell_hits": 12,
+  "row_cell_total": 12,
+  "expected_positive_link_present": true,
+  "expected_negative_link_absent": true,
+  "weight_conflict_detected": true,
+  "documents": [
+    {
+      "id": "916073792",
+      "role": "MTC",
+      "source_sha256": "03cc651939c00f5a0b36797314da8fbacb513c099cfddc381897aeca61b345b7",
+      "selected_field_hits": 6,
+      "selected_field_total": 6,
+      "missing": [],
+      "row_cell_missing": [],
+      "row_counts": {
+        "mtc_heat_items": 1
+      },
+      "expected_row_counts": {
+        "mtc_heat_items": 1
+      },
+      "processing_time_ms": 522.6
+    },
+    {
+      "id": "1069041631",
+      "role": "SHIPPING_BILL",
+      "source_sha256": "5263fb6fe563333df4e25c802e72ab4ff345afad16999a3a9f2d045f0c2a3e19",
+      "selected_field_hits": 3,
+      "selected_field_total": 3,
+      "missing": [],
+      "row_cell_missing": [],
+      "row_counts": {},
+      "expected_row_counts": {},
+      "processing_time_ms": 1263.7
+    },
+    {
+      "id": "725614266",
+      "role": "SAD_CASE_STUDY",
+      "source_sha256": "0253ad45aa3f64ab8cc87493e01761b974f4dafeb9c46d77d1f1c38034f7ba18",
+      "selected_field_hits": 9,
+      "selected_field_total": 9,
+      "missing": [],
+      "row_cell_missing": [],
+      "row_counts": {},
+      "expected_row_counts": {},
+      "processing_time_ms": 114.0
+    },
+    {
+      "id": "975352350",
+      "role": "INVOICE",
+      "source_sha256": "04ff2c6705393d61af6811b2e624eb1c8ba6784f0942d57dc61a74f367cc5da3",
+      "selected_field_hits": 7,
+      "selected_field_total": 7,
+      "missing": [],
+      "row_cell_missing": [],
+      "row_counts": {
+        "invoice_items": 1
+      },
+      "expected_row_counts": {
+        "invoice_items": 1
+      },
+      "processing_time_ms": 171.4
+    },
+    {
+      "id": "975352352",
+      "role": "CUSTOMS_ANNEXURE",
+      "source_sha256": "cf26e16c4739b5fdbc1ca0f371f46ce90e4b618b97d4308bdef4ee5737c5b988",
+      "selected_field_hits": 4,
+      "selected_field_total": 4,
+      "missing": [],
+      "row_cell_missing": [],
+      "row_counts": {
+        "customs_c1_containers": 1
+      },
+      "expected_row_counts": {
+        "customs_c1_containers": 1
+      },
+      "processing_time_ms": 131.4
+    },
+    {
+      "id": "574284615",
+      "role": "BILL_OF_LADING",
+      "source_sha256": "6f17364e190654fbb1aced4d0755f0d6aa58aca97d6d3a83599528f37552b4e7",
+      "selected_field_hits": 9,
+      "selected_field_total": 9,
+      "missing": [],
+      "row_cell_missing": [],
+      "row_counts": {},
+      "expected_row_counts": {},
+      "processing_time_ms": 303.5
+    }
+  ],
+  "cbam": {
+    "source_sha256": "51645dac9442237bf3d202321d2ee38e978f526538d36f445ed28eae8725684d",
+    "installation_name_correct": true,
+    "product_see_total_checks": {
+      "72081000": true,
+      "72122000": true,
+      "72139120": true,
+      "73021028": true
+    },
+    "processing_time_ms": 270.2,
+    "historical_template": true
+  }
+}

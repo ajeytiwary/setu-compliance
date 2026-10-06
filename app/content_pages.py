@@ -61,17 +61,15 @@ def workflow_page() -> tuple[str, str]:
 
 
 def pricing_page() -> tuple[str, str]:
-    body = hero("PRICING", "One tier. Priced like infrastructure, not consultancy.",
-        "Start with a paid pilot on your own shipments. Stay for the control plane.")
+    body = hero("PRICING", "Start with a reviewed steel evidence diagnostic.",
+        "A fixed-scope engagement on your own shipments, with source-linked findings and human review.")
     body += '''<section><div class="tool-grid">
-<article><h3>Diagnostic - ₹2-3L</h3><p>Two-week evidence and liability diagnostic on your 12-month EU-bound book. Shipment-level blockers, revenue at risk, supplier chase list. Fixed fee, fixed scope.</p></article>
-<article><h3>Pilot - ₹6.5-7.5L</h3><p>90-day paid pilot: live control plane on your shipments, supplier portal, verification workflow, declaration pack. Converts to production on success.</p></article>
-<article><h3>Enterprise - ₹18-25L</h3><p>Multi-facility, multi-importer rollout with integrations (SAP SD/MM, MES, EMS), SSO, and verifier workflows.</p></article>
-<article><h3>Production - €6-150k/yr</h3><p>Annual platform by EU-bound shipment volume and importer count. Includes versioned rule updates, audit exports and support. Certificate costs themselves are always pass-through to the registry.</p></article>
-</div>
-<p style="margin-top:18px"><b>Every tier includes:</b> versioned EU rule tables (TARIC, safeguard, CBAM, origin), supplier portal, evidence graph, records vault with checksums, threshold monitor, audit log, declaration-pack export. No per-certificate margin. No success fees.</p></section>'''
+<article><h3>Diagnostic - scoped proposal</h3><p>We agree the shipment set, document types, review effort and deliverables before quoting. The output is a source-linked exception register, reconciliation findings and remediation plan.</p></article>
+<article><h3>Design-partner pilot - scoped proposal</h3><p>Run real shipments with named reviewers, an agreed acceptance test and a signed data-handling agreement. The pilot does not imply that a customs authority or verifier has accepted a declaration.</p></article>
+<article><h3>Recurring platform - not yet for sale</h3><p>Production subscriptions open only after a real same-shipment dossier has reached an auditable, reviewer-approved READY decision and tenant isolation, recovery and operational acceptance tests have passed.</p></article>
+</div><p style="margin-top:18px">Synthetic demonstrations are labelled as such. Actual-data calculations and release decisions require verified source evidence and human approval.</p></section>'''
     body += _cta_row() + _rules_footer()
-    return ("Pricing - EuroSetu", "Diagnostic, pilot, enterprise and production pricing.", body)
+    return ("Pricing - EuroSetu", "Reviewed diagnostics and design-partner pilots; production subscription release gate.", body)
 
 
 def brokers_page() -> tuple[str, str]:
@@ -460,14 +458,21 @@ SUPPLIER_CSV = ("installation_name,production_route,monitoring_period,cn_code,ac
 def workflow_run_page() -> tuple[str, str]:
     body = hero("TOOLS · WORKFLOW RUN", "Run the workflow on your documents",
         "Upload PDFs, CSVs, Excel workbooks or text files - or paste a CSV ledger. EuroSetu parses them in-session (nothing stored), maps each document to its workflow step, and runs the real evidence → decision → compiler → entitlement engines. Fail-closed throughout: missing data blocks with a named code, never a guess.")
-    body += '''<section class="form-card"><h2>1 · Add documents</h2>
+    body += '''<section><p class="meta"><b>PILOT REVIEW:</b> PDF observations and document links are candidates. This page does not issue customs or CBAM release decisions for uploaded PDFs.</p></section><section class="form-card"><h2>1 · Add documents</h2>
 <p class="meta">PDF · CSV · XLSX/XLS · TXT · UP TO 8 MB PER FILE · PROCESSED IN-SESSION, NOTHING STORED</p>
 <label for="files">Upload files</label>
 <input id="files" type="file" multiple accept=".pdf,.csv,.xlsx,.xls,.txt">
 <label for="paste">Or paste a CSV ledger (same shape as the <a href="/api/tools/supplier-template.csv">supplier template</a> or the diagnostic: transaction_id,po_number,cn_code,origin,destination,shipment_date,quantity_t,line_value_eur)</label>
 <textarea id="paste" placeholder="transaction_id,po_number,cn_code,origin,destination,shipment_date,quantity_t,line_value_eur&#10;TX-001,PO-1,72221119,IN,DE,2026-09-29,24.371,47823.69"></textarea>
+<label style="font-weight:400"><input type="checkbox" id="compare-ocr" style="width:auto"> Compare image OCR (Tesseract, first 3 pages; review-only)</label>
 <label for="docurl">Or a hosted document URL (firecrawl comparison path - needs FIRECRAWL_API_KEY on the server)</label>
 <input id="docurl" placeholder="https://example.com/supplier-emissions.pdf">
+<div style="margin:14px 0;padding:14px;border:1px solid #d7e2e7;border-radius:8px">
+<label style="font-weight:400"><input type="checkbox" id="use-llm" style="width:auto"> Use a model to propose PDF fields (pilot access required)</label>
+<label for="model-id">OpenAI-compatible model ID</label>
+<input id="model-id" value="deepseek/deepseek-v4-flash" autocomplete="off">
+<p class="meta">PDF text is sent to the configured model gateway. The gateway URL and API key stay on the server. Model fields must cite exact PDF lines and remain blocked until reviewed. CSV/XLSX use deterministic parsing.</p>
+</div>
 <button class="btn" id="parse">Parse documents →</button>
 <div class="result" id="parseout" style="display:none"></div>
 </section>
@@ -478,10 +483,10 @@ def workflow_run_page() -> tuple[str, str]:
 <div><label for="ytd">Importer CBAM mass YTD (t, before these lines)</label><input id="ytd" value="30" inputmode="decimal"></div>
 <div><label for="impdate">Default import date (YYYY-MM-DD)</label><input id="impdate" value="2026-09-29"></div>
 </div>
-<p style="margin-top:12px"><label style="display:inline;font-weight:400"><input type="checkbox" id="seed" checked style="width:auto"> Seed demo TARIC snapshot (synthetic 0% rows, as_of = import date - clearly labelled, same pattern as the redacted demo)</label><br>
+<p style="margin-top:12px"><label style="display:inline;font-weight:400"><input type="checkbox" id="seed" style="width:auto"> Seed demo TARIC snapshot (synthetic 0% rows, as_of = import date - clearly labelled, same pattern as the redacted demo)</label><br>
 <label style="display:inline;font-weight:400"><input type="checkbox" id="cbampack" style="width:auto"> Attach synthetic verified CBAM pack (demo only - real runs need the supplier's monitoring plan + verifier statement)</label><br>
 <label style="display:inline;font-weight:400"><input type="checkbox" id="declarant" checked style="width:auto"> Authorised CBAM declarant confirmed</label>
-<label style="display:inline;font-weight:400;margin-left:14px"><input type="checkbox" id="emiv" checked style="width:auto"> CBAM emissions verified / lawful-default treatment</label></p>
+<label style="display:inline;font-weight:400;margin-left:14px"><input type="checkbox" id="emiv" style="width:auto"> CBAM emissions verified / lawful-default treatment</label></p>
 <button class="btn" id="compile">Run workflow →</button>
 <div class="result" id="compileout" style="display:none"></div>
 </section>
@@ -489,11 +494,15 @@ def workflow_run_page() -> tuple[str, str]:
 <article><h3>🧭 Step 1 - Compile obligations</h3><p>Commercial invoices, shipping bills, packing lists, ledgers (CSV/XLSX): CN code + quantity + customs value + origin → TARIC duty scope, steel safeguard category, CBAM scope. This is where out-of-scope lines (scrap, non-CBAM chapters) are flagged.</p></article>
 <article><h3>🔍 Step 2 - Trace evidence</h3><p>Mill test certificates, supplier emissions statements, verifier reports: each becomes an evidence object with a lifecycle state (VALID only when VERIFIED and fresh; otherwise UNVERIFIED / STALE / MISSING) feeding the fail-closed decision.</p></article>
 <article><h3>📦 Step 3 - Price, prioritise, pack</h3><p>Resolved lines run the full compiler (customs pack + PPWR + REACH + sanctions + valuation + origin) and the active-entitlement check → READY_FOR_SUBMISSION / ENTITLED or BLOCKED with named blockers ranked by money.</p></article>
-<article><h3>⚖️ Parser comparison</h3><p>PDFs parse three ways - <b>PaddleOCR PP-StructureV3</b> (primary: layout + OCR + tables → markdown, handles scans) vs <b>pypdf</b> (fast text layer) vs <b>pdftotext</b> baseline - timed, with CN hits per parser; best pick = most CN hits, tie-break V3 first. Firecrawl compares on hosted URLs only. CSV/XLSX parse via <b>polars</b> with column mapping shown. The table under each file shows exactly what each parser saw.</p></article>
+<article><h3>⚖️ Parser comparison</h3><p>PDFs compare <b>pypdf</b> and <b>pdftotext</b> text layers with optional <b>Tesseract image OCR</b> (automatic on image-only scans, review-only) and <b>PaddleOCR PP-StructureV3</b> when other paths fail - timed, with CN hits per parser; best pick = most CN hits, tie-break V3 first. Firecrawl compares on hosted URLs only. CSV/XLSX parse via <b>polars</b> with column mapping shown. The table under each file shows exactly what each parser saw.</p></article>
 </div></section>'''
     body += _rules_footer()
     extra = '''<script>
 let LINES = [];
+let SOURCE_CONFLICTS = [];
+fetch('/api/workflow-run/model-config').then(r=>r.json()).then(c=>{
+  if (c.default_model) document.getElementById('model-id').value=c.default_model;
+}).catch(()=>{});
 const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;');
 document.getElementById('parse').onclick = async () => {
   const out = document.getElementById('parseout'); out.style.display='block'; out.innerHTML='<p style="padding:18px">Parsing…</p>';
@@ -501,9 +510,20 @@ document.getElementById('parse').onclick = async () => {
   for (const f of document.getElementById('files').files) fd.append('files', f);
   fd.append('pasted_csv', document.getElementById('paste').value);
   fd.append('doc_url', document.getElementById('docurl').value);
-  const res = await fetch('/api/workflow-run/parse',{method:'POST',body:fd}).then(r=>r.json());
+  if (document.getElementById('compare-ocr').checked) fd.append('compare_ocr','true');
+  const useLlm = document.getElementById('use-llm').checked;
+  if (useLlm) { fd.append('use_llm','true'); fd.append('model_id',document.getElementById('model-id').value); }
+  const pilotToken = localStorage.getItem('eurosetu_pilot_token') || '';
+  const headers = useLlm && pilotToken ? {'Authorization':'Bearer '+pilotToken,
+    'x-eurosetu-tenant':localStorage.getItem('eurosetu_pilot_tenant')||'tenant-a'} : {};
+  const response = await fetch('/api/workflow-run/parse',{method:'POST',headers,body:fd});
+  const res = await response.json();
+  if (!response.ok) { out.innerHTML='<p style="padding:18px" class="mono">'+esc(res.detail||'Parse request failed')+'</p>'; return; }
   LINES = [];
+  SOURCE_CONFLICTS = res.reconciliation?.conflicts || [];
   let h = '';
+  if (SOURCE_CONFLICTS.length) h += `<p style="padding:14px 18px" class="mono"><b>BLOCKED: ${SOURCE_CONFLICTS.length} source conflict(s)</b> · ${esc(SOURCE_CONFLICTS.map(x=>x.field+': '+x.left.join('/')+' vs '+x.right.join('/')).join('; '))}. Reconcile the source documents before release.</p>`;
+  if (res.reconciliation?.edges?.length) h += `<p style="padding:0 18px" class="meta">${res.reconciliation.edges.length} document link candidate(s), all requiring review.</p>`;
   res.documents.forEach((d,di)=>{
     h += `<p style="padding:14px 18px 0"><b>${esc(d.filename)}</b> <span class="pill ${d.ok?'ok':'bad'}">${d.ok?'PARSED':'BLOCKED'}</span> <span class="meta">${esc(d.kind)}${d.pii_codes&&d.pii_codes.length?' · PII REDACTED: '+d.pii_codes.join(','):''}</span></p>`;
     if (!d.ok) { h += `<p style="padding:0 18px" class="mono">${esc(d.code)} - ${esc(d.reason)}</p>`; return; }
@@ -513,11 +533,13 @@ document.getElementById('parse').onclick = async () => {
         // advisory = a fallback/limit note, not a failed parse. Painting it red
         // made a 348-page doc's healthy pypdf result look like an error.
         const adv = !p.ok && p.advisory;
-        const pill = p.ok ? 'ok' : (adv ? 'warn' : 'bad');
-        const label = p.ok ? 'OK' : (adv ? 'FALLBACK' : 'GATED');
+        const lowText = p.ok && d.kind==='pdf' && (p.chars||0)<20;
+        const pill = lowText ? 'warn' : (p.ok ? 'ok' : (adv ? 'warn' : 'bad'));
+        const label = lowText ? 'LOW TEXT' : (p.ok ? 'OK' : (adv ? 'FALLBACK' : 'GATED'));
         h += `<tr><td class="mono">${esc(p.parser)}</td><td><span class="pill ${pill}">${label}</span></td><td>${p.pages ?? p.rows ?? '-'}</td><td>${p.chars ?? '-'}</td><td>${p.time_ms ?? '-'} ms</td><td class="mono">${(p.cns_found||[]).join(', ')||'-'}</td><td class="mono">${esc(note)}</td></tr>`; });
       h += '</table>';
     }
+    if (d.selected_parser) h += `<p style="padding:0 18px" class="meta">SELECTED TEXT SOURCE: ${esc(d.selected_parser)} · OCR output requires review</p>`;
     if (d.mapped_columns) h += `<p style="padding:0 18px" class="meta">POLARS COLUMN MAP: ${esc(JSON.stringify(d.mapped_columns))}</p>`;
     const rc = d.receipts;
     if (rc && rc.rows) {
@@ -527,9 +549,27 @@ document.getElementById('parse').onclick = async () => {
         h += `<tr><td class="mono">${esc(r.receipt_id||'?')}</td><td>${esc(r.vendor||'?')}</td><td>${num(r.total_raw,r.total)}</td><td>${num(r.qty_raw,r.quantity)}</td><td class="mono">${esc(r.date||'-')}</td><td class="mono">${esc((r.codes||[]).join(', ')||'OK')}</td><td class="mono">${esc(r.duplicate_of||'-')}</td></tr>`; });
       h += '</table>';
     }
+    if (d.ocr_review) {
+      const o=d.ocr_review;
+      h += `<details style="margin:0 18px 8px"><summary>IMAGE OCR · ${esc(o.code||((o.pages||[]).length+' page(s)'))} · ${esc(o.processing_time_ms??'?')} ms · review-only</summary>`;
+      (o.pages||[]).forEach(p=>{h += `<p class="meta">Page ${p.page} · confidence ${esc(p.mean_confidence??'?')}</p><pre class="mono" style="white-space:pre-wrap">${esc((p.lines||[]).map(l=>l.text+'  [box '+l.bbox.join(', ')+']').join('\\n'))}</pre>`;});
+      h += '</details>';
+    }
+    if (d.observations) {
+      const o=d.observations;
+      h += `<p style="padding:0 18px" class="meta">PDF OBSERVATIONS · ${o.fields.length} fields · ${o.tables.reduce((n,t)=>n+t.rows.length,0)} table rows · ${esc(o.processing_time_ms)} ms · review required</p>`;
+      if (o.fields.length) {
+        h += '<table><tr><th>Field</th><th>Source value</th><th>Page</th><th>Box</th></tr>';
+        o.fields.forEach(f=>{h += `<tr><td>${esc(f.field)}</td><td class="mono">${esc(f.raw)}</td><td>${esc(f.page)}</td><td class="mono">${esc(f.bbox?f.bbox.join(', '):'Unavailable')}</td></tr>`;});
+        h += '</table>';
+      }
+      o.tables.forEach(t=>{h += `<details style="margin:0 18px 8px"><summary>${esc(t.kind)} · page ${t.page} · ${t.rows.length} rows</summary><pre class="mono" style="white-space:pre-wrap">${esc(JSON.stringify(t.rows,null,2))}</pre></details>`;});
+    }
+    if (d.llm_proposal && !d.llm_proposal.ok) h += `<p style="padding:0 18px" class="mono">MODEL: ${esc(d.llm_proposal.code||'NO_VERIFIABLE_LINES')}</p>`;
+    if (d.structured_ingestion?.issues?.length) h += `<p style="padding:0 18px" class="mono">INGEST ISSUES: ${esc(JSON.stringify(d.structured_ingestion.issues))}</p>`;
     (d.candidates||[]).forEach((c,ci)=>{
       const id = LINES.length;
-      LINES.push({shipment_ref:c.shipment_ref||`${esc(d.filename)}-${ci+1}`,cn_code:c.cn_code||'',quantity_t:c.quantity_t??'',customs_value_eur:c.customs_value_eur??'',origin_country:c.origin_country||'IN',import_date:c.import_date||document.getElementById('impdate').value,evidence:[{id:`E-${di}-${ci}`,evidence_type:'COMMERCIAL_INVOICE',verified:false}],doc:di});
+      LINES.push({issues:c.issues||[],field_provenance:c.field_provenance||{},review_confirmed:false,invoice_number:c.invoice_number||'',destination_country:c.destination_country||'',shipment_ref:c.shipment_ref||`${esc(d.filename)}-${ci+1}`,cn_code:c.cn_code||'',quantity_t:c.quantity_t??'',customs_value_eur:c.customs_value_eur??'',origin_country:c.origin_country||'',import_date:c.import_date||'',evidence:[{id:`E-${di}-${ci}`,evidence_type:'COMMERCIAL_INVOICE',verified:false}],doc:di});
       h += `<p style="padding:0 18px" class="meta">CANDIDATE ${id+1}: CN <b class="mono">${esc(c.cn_code||'?')}</b> · qty ${esc(c.quantity_t??'?')} t · €${esc(c.customs_value_eur??'?')} · origin ${esc(c.origin_country||'?')} · date ${esc(c.import_date||'(default below)')}</p>`;
     });
     h += `<p style="padding:0 18px"><b>Step 1 - compile:</b> ${esc((d.steps.step_1_compile_obligations||[]).join(' · '))}<br><b>Step 2 - evidence:</b> ${esc((d.steps.step_2_trace_evidence||[]).join(' · '))}<br><b>Step 3 - pack:</b> ${esc((d.steps.step_3_price_prioritise_pack||[]).join(' · '))}</p>`;
@@ -541,21 +581,21 @@ document.getElementById('parse').onclick = async () => {
 function renderLines(){
   const el = document.getElementById('linesout');
   if (!LINES.length) return;
-  let h = '<table><tr><th>#</th><th>Ref</th><th>CN</th><th>Qty t</th><th>Value €</th><th>Origin</th><th>Date</th><th>Evidence verified?</th></tr>';
-  LINES.forEach((l,i)=>{ h += `<tr><td>${i+1}</td><td class="mono"><input data-i="${i}" data-k="shipment_ref" value="${esc(l.shipment_ref)}" style="width:130px"></td><td><input data-i="${i}" data-k="cn_code" value="${esc(l.cn_code)}" style="width:90px"></td><td><input data-i="${i}" data-k="quantity_t" value="${esc(l.quantity_t)}" style="width:70px"></td><td><input data-i="${i}" data-k="customs_value_eur" value="${esc(l.customs_value_eur)}" style="width:90px"></td><td><input data-i="${i}" data-k="origin_country" value="${esc(l.origin_country)}" style="width:44px"></td><td><input data-i="${i}" data-k="import_date" value="${esc(l.import_date)}" style="width:100px"></td><td><input type="checkbox" data-i="${i}" data-k="verified" ${l.evidence[0].verified?'checked':''}></td></tr>`; });
+  let h = '<table><tr><th>#</th><th>Ref</th><th>Invoice</th><th>CN</th><th>Qty t</th><th>Value €</th><th>Origin</th><th>Destination</th><th>Date</th><th>Evidence verified?</th><th>Fields reviewed?</th></tr>';
+  LINES.forEach((l,i)=>{ h += `<tr><td>${i+1}</td><td class="mono"><input data-i="${i}" data-k="shipment_ref" value="${esc(l.shipment_ref)}" style="width:130px"></td><td><input data-i="${i}" data-k="invoice_number" value="${esc(l.invoice_number)}" style="width:100px"></td><td><input data-i="${i}" data-k="cn_code" value="${esc(l.cn_code)}" style="width:90px"></td><td><input data-i="${i}" data-k="quantity_t" value="${esc(l.quantity_t)}" style="width:70px"></td><td><input data-i="${i}" data-k="customs_value_eur" value="${esc(l.customs_value_eur)}" style="width:90px"></td><td><input data-i="${i}" data-k="origin_country" value="${esc(l.origin_country)}" style="width:44px"></td><td><input data-i="${i}" data-k="destination_country" value="${esc(l.destination_country)}" style="width:44px"></td><td><input data-i="${i}" data-k="import_date" value="${esc(l.import_date)}" style="width:100px"></td><td><input type="checkbox" data-i="${i}" data-k="verified" ${l.evidence[0].verified?'checked':''}></td><td><input type="checkbox" data-i="${i}" data-k="review_confirmed" ${l.review_confirmed?'checked':''}></td></tr>`; });
   h += '</table>';
   el.innerHTML = h;
   el.querySelectorAll('input').forEach(inp=>{ inp.onchange = ()=>{
     const l = LINES[+inp.dataset.i];
     if (inp.dataset.k==='verified') l.evidence[0].verified = inp.checked;
+    else if (inp.dataset.k==="review_confirmed") l.review_confirmed = inp.checked;
     else l[inp.dataset.k] = inp.value;
   };});
 }
 document.getElementById('compile').onclick = async () => {
   const out = document.getElementById('compileout'); out.style.display='block'; out.innerHTML='<p style="padding:18px">Compiling…</p>';
-  LINES.forEach(l=>{ if(!l.import_date) l.import_date = document.getElementById('impdate').value; });
   const res = await fetch('/api/workflow-run/compile',{method:'POST',headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({lines:LINES, importer_cbam_mass_ytd_t:parseFloat(document.getElementById('ytd').value)||0,
+    body: JSON.stringify({lines:LINES, source_conflicts:SOURCE_CONFLICTS, importer_cbam_mass_ytd_t:parseFloat(document.getElementById('ytd').value)||0,
       seed_demo_taric:document.getElementById('seed').checked, demo_cbam_pack:document.getElementById('cbampack').checked,
       authorised_cbam_declarant:document.getElementById('declarant').checked, cbam_emissions_verified:document.getElementById('emiv').checked})}).then(r=>r.json());
   let h = '<table><tr><th>Line</th><th>Evidence</th><th>Decision</th><th>Compiler</th><th>Entitlement</th><th>Blockers</th></tr>';
@@ -569,8 +609,10 @@ document.getElementById('compile').onclick = async () => {
 
 
 def api_workflow_run_parse(files: list[tuple[str, bytes]], pasted_csv: str = "",
-                           doc_url: str = "") -> dict:
+                           doc_url: str = "", compare_ocr: bool = False) -> dict:
     from . import document_ingest as ing
+    from . import document_lines as line_ingest
+    from .pdf_observations import extract_pdf_observations, invoice_candidates, reconcile_documents
     docs: list[dict] = []
 
     def one(filename: str, data: bytes) -> dict:
@@ -580,9 +622,29 @@ def api_workflow_run_parse(files: list[tuple[str, bytes]], pasted_csv: str = "",
                     "code": "FILE_TOO_LARGE",
                     "reason": "8 MB per-file limit for the in-session tool."}
         if lower.endswith(".pdf"):
-            comp = ing.compare_pdf_parsers(data)
-            _prio = {"paddle-structure-v3": 3, "pypdf": 2, "pdftotext-baseline": 1}
-            _ok = [r for r in comp if r.get("ok")]
+            structured = line_ingest.ingest_pdf(data, filename)
+            observations = extract_pdf_observations(data, filename)
+            comp = ing.compare_pdf_parsers(data, include_paddle=False)
+            text_ok = any(r.get("ok") and (r.get("chars") or 0) >= 20 for r in comp)
+            ocr_review = None
+            if compare_ocr or not text_ok:
+                from .pdf_image_ocr import extract_image_ocr
+                ocr = extract_image_ocr(data, filename)
+                ocr_review = {"ok": ocr["ok"], "code": ocr.get("code"),
+                              "processing_time_ms": ocr.get("processing_time_ms"),
+                              "pages": [{"page": p["page"], "mean_confidence": p.get("mean_confidence"),
+                                         "lines": p["lines"][:120]} for p in ocr.get("pages", [])]}
+                comp.insert(0, {"parser": "tesseract-image-ocr", "ok": ocr["ok"],
+                                "pages": ocr.get("page_count"), "chars": ocr.get("chars",0),
+                                "time_ms": ocr.get("processing_time_ms"), "text": ocr.get("text", ""),
+                                "code": ocr.get("code"), "cns_found": [],
+                                "reason": "Raster OCR; numeric strings are not classified as CN. Review field and row joins."})
+            if not any(r.get("ok") and (r.get("chars") or 0) >= 20 for r in comp):
+                comp = ing.compare_pdf_parsers(data, include_paddle=True) + comp
+            _prio = {"paddle-structure-v3": 3, "pypdf": 2, "pdftotext-baseline": 1,
+                     "tesseract-image-ocr": 0}
+            _ok = [r for r in comp if r.get("ok") and (r.get("chars") or 0) >= 20
+                   and (not text_ok or r.get("parser") != "tesseract-image-ocr")]
             best = max(_ok, key=lambda r: (len(r.get("cns_found") or []),
                                            _prio.get(r.get("parser"), 0),
                                            r.get("chars", 0))) if _ok else None
@@ -599,16 +661,21 @@ def api_workflow_run_parse(files: list[tuple[str, bytes]], pasted_csv: str = "",
                 r.pop("text", None)
             red, pii = ing.redact_preview(text)
             ext = ing.extract_candidates(text, filename)
-            cands = [dict(ext["candidate"],
-                           shipment_ref=f"{filename}-1")] if ext["candidate"]["cn_code"] else []
+            if best["parser"] == "tesseract-image-ocr":
+                ext["cn_codes_found"] = []
+                ext["candidate"]["cn_code"] = None
+            cands = structured["lines"] or invoice_candidates(observations)
             receipts = ing.extract_receipt_records(text, filename)
             return {"filename": filename, "kind": "pdf", "ok": True,
+                    "selected_parser": best["parser"],
+                    "observations": observations, "ocr_review": ocr_review,
                     "parser_comparison": comp, "redacted_preview": red,
                     "pii_codes": pii, "extracted": ext, "candidates": cands,
-                    "receipts": receipts, "steps": ing.map_to_steps(filename, ext)}
+                    "receipts": receipts, "structured_ingestion": structured,
+                    "steps": ing.map_to_steps(filename, ext)}
         if lower.endswith(".csv") or (pasted_csv and filename == "pasted-ledger.csv"):
             r = ing.parse_csv_polars(data)
-        elif lower.endswith((".xlsx", ".xls")):
+        elif lower.endswith((".xlsx", ".xls", ".xlsm")):
             r = ing.parse_excel_polars(data)
         elif lower.endswith(".txt"):
             r = ing.parse_txt(data)
@@ -633,31 +700,36 @@ def api_workflow_run_parse(files: list[tuple[str, bytes]], pasted_csv: str = "",
                     "code": "UNSUPPORTED_TYPE",
                     "reason": "Supported: .pdf .csv .xlsx/.xls .txt",
                     "steps": ing.map_to_steps(filename, {})}
-        # tabular path (polars frame)
+        # The strict extractor owns decisions; polars remains an advisory comparison.
+        structured = line_ingest.ingest_tabular(data, filename) if lower.endswith((".csv", ".xlsx", ".xlsm")) else {"lines": [], "issues": [{"code": "LEGACY_XLS_REQUIRES_CONVERSION"}]}
         if not r.get("ok"):
             return {"filename": filename,
-                    "kind": "excel" if lower.endswith((".xlsx", ".xls")) else "csv",
-                    "ok": False, "code": r["code"], "reason": r["reason"],
+                    "kind": "excel" if lower.endswith((".xlsx", ".xls", ".xlsm")) else "csv",
+                    "ok": structured.get("ok", False), "code": r["code"],
+                    "reason": r["reason"], "parser_comparison": [r],
+                    "candidates": structured.get("lines", []),
+                    "structured_ingestion": structured,
                     "steps": ing.map_to_steps(filename, {})}
         frame = r.pop("frame")
         mapped = ing.dataframe_candidates(frame, filename)
         red, pii = ing.redact_preview(r.get("text", ""))
         pseudo = {"cn_codes_found": [c["cn_code"] for c in mapped.get("candidates", []) if c.get("cn_code")][:5]}
-        if not mapped.get("candidates"):
+        if not structured.get("lines"):
             return {"filename": filename,
-                    "kind": "excel" if lower.endswith((".xlsx", ".xls")) else "csv",
+                    "kind": "excel" if lower.endswith((".xlsx", ".xls", ".xlsm")) else "csv",
                     "ok": False, "code": "NO_USABLE_ROWS",
-                    "reason": "polars read the file but no rows mapped to shipment candidates - check the header row names.",
+                    "reason": "No non-empty trade lines found - check the header row and file format.",
                     "parser_comparison": [{**r, "cns_found": []}],
                     "mapped_columns": mapped.get("mapped_columns"),
                     "steps": ing.map_to_steps(filename, {})}
         return {"filename": filename,
-                "kind": "excel" if lower.endswith((".xlsx", ".xls")) else "csv",
+                "kind": "excel" if lower.endswith((".xlsx", ".xls", ".xlsm")) else "csv",
                 "ok": True,
                 "parser_comparison": [{**r, "cns_found": pseudo["cn_codes_found"]}],
                 "mapped_columns": mapped.get("mapped_columns"),
                 "redacted_preview": red, "pii_codes": pii,
-                "candidates": mapped.get("candidates", []),
+                "candidates": structured.get("lines", []),
+                "structured_ingestion": structured,
                 "steps": ing.map_to_steps(filename, pseudo)}
 
     for name, data in files:
@@ -673,11 +745,12 @@ def api_workflow_run_parse(files: list[tuple[str, bytes]], pasted_csv: str = "",
                      "parser_comparison": [{**r, "cns_found": []}],
                      "candidates": [], "steps": {"step_1_compile_obligations": [],
                      "step_2_trace_evidence": [], "step_3_price_prioritise_pack": []}})
-    return {"documents": docs,
+    return {"documents": docs, "reconciliation": reconcile_documents(docs),
             "note": "Parsed in-session; nothing stored. Confirm every candidate before compiling - extraction never invents missing fields."}
 
 
 def api_workflow_run_compile(payload: dict) -> dict:
+    import re
     from . import decision_engine as de
     from . import eu_public_data as pub
     from . import evidence_lifecycle as ev
@@ -691,18 +764,47 @@ def api_workflow_run_compile(payload: dict) -> dict:
             return 0.0
 
     lines = payload.get("lines", [])
+    source_conflicts = payload.get("source_conflicts") or []
     ytd = _f(payload.get("importer_cbam_mass_ytd_t"))
     seed = bool(payload.get("seed_demo_taric"))
     demo_pack = bool(payload.get("demo_cbam_pack", payload.get("demo_pack")))
     out: list[dict] = []
     for ln in lines:
         ref = str(ln.get("shipment_ref") or "LINE")
+        if source_conflicts and ln.get("field_provenance"):
+            out.append({"shipment_ref": ref, "decision": "BLOCKED",
+                        "compiler_decision": "BLOCKED", "entitlement_decision": "BLOCKED",
+                        "evidence_states": [], "blockers": [{"engine": "reconciliation", "code": "SOURCE_VALUE_CONFLICT"}]})
+            continue
         cn = "".join(ch for ch in str(ln.get("cn_code") or "") if ch.isdigit())
         qty = _f(ln.get("quantity_t"))
         val = _f(ln.get("customs_value_eur"))
-        org = str(ln.get("origin_country") or "IN").upper()
+        org = str(ln.get("origin_country") or "").upper()
         imp = str(ln.get("import_date") or "")
-        if not cn or qty <= 0 or val <= 0 or not imp:
+        destination = str(ln.get("destination_country") or "").upper()
+        if ln.get("field_provenance") and destination not in {"AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE"}:
+            out.append({"shipment_ref": ref, "decision": "BLOCKED",
+                        "evidence_states": {"DOCUMENT_FIELDS": "UNVERIFIED"},
+                        "compiler_decision": "BLOCKED", "entitlement_decision": "BLOCKED",
+                        "blockers": [{"engine": "INGEST", "code": "DESTINATION_NOT_EU_OR_MISSING"}]})
+            continue
+        ingestion_issues = ln.get("issues") or []
+        hard_ingest = {"EUR_CONVERSION_REQUIRES_RATE_SNAPSHOT",
+                       "PDF_BOUNDING_BOX_UNAVAILABLE", "PDF_SOURCE_REQUIRES_REVIEW", "RAGGED_CSV_ROW",
+                       "DUPLICATE_CSV_HEADERS", "ROW_LIMIT_EXCEEDED",
+                       "SHEET_LIMIT_EXCEEDED"}
+        if ingestion_issues and (not ln.get("review_confirmed") or
+                                 hard_ingest.intersection(ingestion_issues)):
+            out.append({"shipment_ref": ref, "decision": "BLOCKED",
+                        "evidence_states": {"DOCUMENT_FIELDS": "UNVERIFIED"},
+                        "compiler_decision": "BLOCKED", "entitlement_decision": "BLOCKED",
+                        "blockers": [{"engine": "INGEST", "code": code,
+                                      "reason": "Review and correct this source field before compiling."}
+                                     for code in ingestion_issues]})
+            continue
+        if (len(cn) not in (8, 10) or qty <= 0 or val <= 0 or
+                not re.fullmatch(r"20\d{2}-\d{2}-\d{2}", imp) or len(org) != 2 or
+                (ln.get("field_provenance") and not str(ln.get("invoice_number") or "").strip())):
             out.append({"shipment_ref": ref, "decision": "BLOCKED",
                         "evidence_states": {}, "compiler_decision": "BLOCKED",
                         "entitlement_decision": "BLOCKED",
@@ -809,9 +911,14 @@ def api_workflow_run_compile(payload: dict) -> dict:
         except ValueError as e:
             ent_d = "BLOCKED"
             comp_b = comp_b + [{"engine": "INPUT", "code": "ENTITLEMENT_INPUT", "reason": str(e)}]
+        evidence_blockers = [
+            {"engine": "EVIDENCE", "code": f"{kind}_{state}",
+             "reason": f"{kind} evidence is {state.lower()}; attach and verify the required source."}
+            for kind, state in states.items() if state != "VALID"
+        ]
         out.append({"shipment_ref": ref, "evidence_states": states,
                     "decision": decision["status"], "compiler_decision": comp_d,
-                    "entitlement_decision": ent_d, "blockers": comp_b})
+                    "entitlement_decision": ent_d, "blockers": evidence_blockers + comp_b})
     return {"lines": out, "seed_demo_taric": seed,
             "note": ("Demo TARIC rows are synthetic 0% (as_of = import date) - replace via the regulatory import API before any real filing. "
                      "READY means EuroSetu gates pass; customs/CBAM/verifier acceptance remains external.")}
