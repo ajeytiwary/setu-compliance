@@ -54,3 +54,9 @@ docs/dc39aec1969b4b04.pdf
 # Public benchmark source downloads (retain URLs and hashes in gold.json)
 data/public_corpus/downloads/
 data/demo_dossier/bl_initial.pdf
+
+# Generated Cloudflare Pages artifact.
+dist/
+
+# Local Cloudflare development state.
+.wrangler/

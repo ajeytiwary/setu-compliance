@@ -3,6 +3,9 @@ services:
     build: .
     environment:
       EUROSETU_ENV: production
+      EUROSETU_SPLIT_HOSTS: ${EUROSETU_SPLIT_HOSTS:-0}
+      EUROSETU_APP_HOST: ${EUROSETU_APP_HOST:-app.eurosetu.trade}
+      EUROSETU_PUBLIC_PROXY_SECRET: ${EUROSETU_PUBLIC_PROXY_SECRET:-}
       EUROSETU_DB_PATH: /app/data/eurosetu.db
       EUROSETU_DEPLOYMENT_TENANT: ${EUROSETU_DEPLOYMENT_TENANT:?Set the sole tenant ID for this isolated deployment}
       EUROSETU_BACKUP_BUCKET: ${EUROSETU_BACKUP_BUCKET:-}

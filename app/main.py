@@ -4,7 +4,7 @@ from datetime import datetime,timezone
 from pathlib import Path
 from uuid import uuid4
 from fastapi import FastAPI,HTTPException,Request,Response
-from fastapi.responses import FileResponse,HTMLResponse
+from fastapi.responses import FileResponse,HTMLResponse,RedirectResponse
 from pydantic import BaseModel,Field
 from .db import init_db,connect,rows,row,audit
 from .metrics import shipment_score,portfolio_metrics
@@ -15,17 +15,31 @@ app=FastAPI(title="EuroSetu EU Market Access OS",version="0.2.0")
 app.include_router(v1_router)
 app.include_router(internal_router)
 STATIC=Path(__file__).parent/"static"
+PUBLIC_PAGE_PATHS={"/trust","/benchmarks","/product","/workflow","/pricing","/brokers","/liability-preview","/threshold-checker","/carbon-price-relief","/cbam-rate","/guides","/worked-example","/supplier-data-template","/security","/privacy","/dpa","/terms","/faq","/sectors","/account","/changelog"}
 # The legacy demo API stores records without tenant keys. Expose only the
 # tenant-scoped dossier workflow and stateless/public endpoints in production.
 @app.middleware("http")
 async def production_api_boundary(request:Request,call_next):
- if os.getenv("EUROSETU_ENV")=="production" and request.url.path.startswith(("/v1/","/internal/","/admin")):
+ if os.getenv("EUROSETU_ENV")=="production" and os.getenv("EUROSETU_SPLIT_HOSTS")=="1":
+  host=request.headers.get("host","").split(":",1)[0].lower().rstrip(".")
+  expected=os.getenv("EUROSETU_APP_HOST","app.eurosetu.trade").lower().rstrip(".")
+  if host!=expected:return Response(status_code=421,content="Wrong application host")
+  path=request.url.path
+  if path in PUBLIC_PAGE_PATHS or path.startswith("/guides/") or path in {"/benchmarks.js","/robots.txt","/sitemap.xml"}:return Response(status_code=404)
+  if path.startswith("/api/tools/") or path in {"/api/contact","/api/leads","/api/leads/verify"}:
+   proxy_secret=os.getenv("EUROSETU_PUBLIC_PROXY_SECRET","")
+   given=request.headers.get("x-eurosetu-public-proxy-secret","")
+   if not proxy_secret:return Response(status_code=503,content="Public proxy unconfigured")
+   if not secrets.compare_digest(given,proxy_secret):return Response(status_code=403)
+ if os.getenv("EUROSETU_ENV")=="production" and request.url.path.startswith(("/v1/","/internal/")):
   return Response(status_code=404)
+ if os.getenv("EUROSETU_ENV")=="production" and request.url.path=="/admin" and os.getenv("EUROSETU_SPLIT_HOSTS")!="1":return Response(status_code=404)
  if os.getenv("EUROSETU_ENV")=="production" and request.url.path.startswith("/api/"):
   path=request.url.path
   allowed=(path.startswith("/api/real-dossiers") or
            path == "/api/commercial/readiness" or
            path == "/api/admin/revoke-principal" or
+           (os.getenv("EUROSETU_SPLIT_HOSTS")=="1" and path in ("/api/admin/requests","/api/admin/mint")) or
            path.startswith("/api/benchmarks/releases") or
            path.startswith("/api/tools/") or
            path in ("/api/leads","/api/leads/verify","/api/contact"))
@@ -128,12 +142,17 @@ def detailed(conn,s):
  return {**s,"requirements":req,"public_sources":rows(conn,"SELECT * FROM public_sources WHERE shipment_id=? ORDER BY id",(s["id"],)),"verification":ver,"verification_cycle_days":round(cycle,1) if cycle is not None else None,"score":shipment_score(s,req,ver)}
 @app.get("/",response_class=HTMLResponse)
 def home():
+ if os.getenv("EUROSETU_ENV")=="production" and os.getenv("EUROSETU_SPLIT_HOSTS")=="1":return RedirectResponse("/pilot",status_code=302)
  p=STATIC/"index.html"
  return FileResponse(p) if p.exists() else HTMLResponse("<h1>EuroSetu</h1>")
 @app.get("/trust",response_class=HTMLResponse)
 def trust():return FileResponse(STATIC/"trust.html")
 @app.get("/case-study",response_class=HTMLResponse)
 def case_study():return FileResponse(STATIC/"case-study.html")
+@app.get("/case-study-run",response_class=HTMLResponse)
+def case_study_run():
+ if os.getenv("EUROSETU_ENV")=="production":return RedirectResponse("/real-dossier",status_code=302)
+ return FileResponse(STATIC/"case-study-run.html")
 @app.get("/benchmarks",response_class=HTMLResponse)
 def benchmarks_page():return FileResponse(STATIC/"benchmarks.html",headers={"Cache-Control":"no-cache, no-store, must-revalidate"})
 @app.get("/benchmarks.js")
@@ -164,6 +183,7 @@ def benchmark_release_case(commit:str,suite_id:str,case_id:str):
  raise HTTPException(404,"case not in this release")
 @app.get("/demo",response_class=HTMLResponse)
 def demo():
+ if os.getenv("EUROSETU_ENV")=="production" and os.getenv("EUROSETU_SPLIT_HOSTS")=="1":return RedirectResponse("/real-dossier",status_code=302)
  p=STATIC/"demo.html"
  return FileResponse(p) if p.exists() else FileResponse(STATIC/"dashboard.html")
 @app.get("/demo.js")
