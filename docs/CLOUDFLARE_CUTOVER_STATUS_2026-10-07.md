@@ -7,7 +7,7 @@
 - A bearer-gated synthetic dossier completed `BLOCKED → reviewer approval → corrected MTC and CBAM evidence → READY`, with source, event-chain, and decision-snapshot integrity checks passing. This READY status is explicitly a synthetic demonstration.
 - Three public trade PDFs uploaded through the real dossier API created three evidence nodes, one candidate link, and a net-weight conflict. Link approval returned `UNRESOLVED_SOURCE_CONFLICT`; the dossier remained BLOCKED. Anonymous access, wrong host, expired token, cross-tenant token, and missing Pages proxy secret were denied in direct pilot tests. An administrator revoked a test bearer key; its next request returned 401. The commercial readiness endpoint returned false.
 - The pilot database was uploaded to R2 and downloaded with matching SHA-256. A fresh restore passed SQLite integrity and tenant checks. Restored SQLite file bytes may differ from backup bytes due to page layout, so the recovery code verifies logical database contents after restore.
-- The Pages public artifact build was scanned for private files. Pages production and preview encrypted proxy secrets were configured with the same value as the pilot app.
+- The Pages public artifact build contains 137 allowlisted files and no private files. Pages production and preview encrypted proxy secrets were configured with the same value as the pilot app. A manual release preview at `https://79b280ad.eurosetu-public.pages.dev` passed a 34/34 sitemap and public route crawl; FAQ, benchmarks, demo, and case study rendered without browser errors. App-only APIs returned 404. While app DNS is absent, contact and calculator requests now return a clear JSON 503 `UPSTREAM_UNAVAILABLE`.
 
 ## Gates still pending
 
