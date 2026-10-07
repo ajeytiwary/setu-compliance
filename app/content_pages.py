@@ -115,7 +115,8 @@ document.getElementById('run').onclick = async () => {
   const res = await fetch('/api/tools/liability-preview',{method:'POST',headers:{'Content-Type':'application/json'},
     body: JSON.stringify({lines, year: +document.getElementById('year').value,
       certificate_price_eur: parseFloat(document.getElementById('price').value)||null,
-      default_origin: document.getElementById('origin').value||'IN'})}).then(r=>r.json());
+      default_origin: document.getElementById('origin').value||'IN'})}).then(async r => { const data = await r.json().catch(() => ({})); if (!r.ok) throw new Error(data.message || data.detail || 'Calculator temporarily unavailable'); return data; }).catch(e => { out.textContent = e.message || 'Calculator temporarily unavailable'; return null; });
+  if (!res) return;
   let h = '<table><tr><th>Line</th><th>CN</th><th>Outcome</th><th>tCO₂e</th><th>Certs</th><th>Est. cost</th><th>Basis</th></tr>';
   res.lines.forEach((l,i)=>{ h += `<tr><td>${i+1}</td><td class="mono">${l.cn_code}</td>
     <td><span class="pill ${l.outcome==='PRICED'?'ok':(l.outcome==='OUT_OF_SCOPE'?'':'warn')}">${l.outcome}</span></td>
@@ -137,7 +138,7 @@ def threshold_page() -> tuple[str, str]:
 <input id="ukval" inputmode="decimal" placeholder="e.g. 38000">
 <button class="btn" id="run">Check my position →</button>
 <div class="result" id="out" style="display:none"></div>
-<p class="meta" style="margin-top:14px">BROWSER-ONLY. NOTHING YOU TYPE LEAVES THIS PAGE.</p></section>
+<p class="meta" style="margin-top:14px">THE INPUTS ARE SENT TO THE EUROSETU CALCULATOR SERVICE FOR THIS RESULT; THIS PUBLIC TOOL DOES NOT CREATE A DOSSIER.</p></section>
 <section class="faq"><h2>The rules behind the read</h2>
 <details><summary>EU: the 50-tonne test</summary><p>Per importer of record, per calendar year, mass of CBAM goods released for free circulation. Above 50 t: authorised CBAM declarant status + verified embedded emissions. Scrap and out-of-scope codes don't count; downstream in-scope products (fasteners 7318, structures 7308, tube 7304-7306) do. <a href="/guides/cbam-50t-threshold">Full guide →</a></p></details>
 <details><summary>UK: the £50,000 test (for reference)</summary><p>UK CBAM (Finance Act 2026, from 1 Jan 2027) registers at £50,000 of CBAM-goods customs value in a rolling 12 months (or £50,000 expected in the next 30 days). Different instrument, different threshold - same evidence discipline.</p></details>
@@ -148,7 +149,8 @@ document.getElementById('run').onclick = async () => {
   const out = document.getElementById('out'); out.style.display='block';
   const res = await fetch('/api/tools/threshold',{method:'POST',headers:{'Content-Type':'application/json'},
     body: JSON.stringify({mass_t: parseFloat(document.getElementById('mass').value)||0,
-      uk_value_gbp: parseFloat(document.getElementById('ukval').value)||null})}).then(r=>r.json());
+      uk_value_gbp: parseFloat(document.getElementById('ukval').value)||null})}).then(async r => { const data = await r.json().catch(() => ({})); if (!r.ok) throw new Error(data.message || data.detail || 'Calculator temporarily unavailable'); return data; }).catch(e => { out.textContent = e.message || 'Calculator temporarily unavailable'; return null; });
+  if (!res) return;
   out.innerHTML = `<p style="padding:16px 18px"><span class="pill ${res.eu.in_scope?'bad':'ok'}">${res.eu.verdict}</span> ${res.eu.detail}<br><br><span class="pill">${res.uk.verdict}</span> ${res.uk.detail}</p>`;
 };\n</script>'''
     return ("CBAM threshold checker - EuroSetu", "EU 50-tonne and UK £50,000 CBAM threshold instant read.", body, extra)
@@ -178,7 +180,8 @@ document.getElementById('run').onclick = async () => {
   const out = document.getElementById('out'); out.style.display='block';
   const g = id => parseFloat(document.getElementById(id).value)||0;
   const res = await fetch('/api/tools/relief-estimate',{method:'POST',headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({embedded_tco2e: g('emb'), certificate_price_eur: g('price'), reduction_certificates: g('red'), faa_tco2e: g('faa')})}).then(r=>r.json());
+    body: JSON.stringify({embedded_tco2e: g('emb'), certificate_price_eur: g('price'), reduction_certificates: g('red'), faa_tco2e: g('faa')})}).then(async r => { const data = await r.json().catch(() => ({})); if (!r.ok) throw new Error(data.message || data.detail || 'Calculator temporarily unavailable'); return data; }).catch(e => { out.textContent = e.message || 'Calculator temporarily unavailable'; return null; });
+  if (!res) return;
   out.innerHTML = `<p style="padding:16px 18px">Gross <b>€${res.gross_cost.toLocaleString()}</b> → net surrender <b>${res.net_certificates} certificates ≈ €${res.net_cost.toLocaleString()}</b><br><span class="meta">${res.note}</span></p>`;
 };\n</script>'''
     return ("Carbon price relief - EuroSetu", "Article 9 CBAM deduction mechanics, evidence kit and estimator.", body, extra)

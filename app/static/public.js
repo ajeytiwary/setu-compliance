@@ -140,7 +140,7 @@
         return;
       }
       return res.json().catch(function () { return {}; }).then(function (body) {
-        throw new Error(typeof body.detail === "string" ? body.detail : "Request failed");
+        throw new Error(typeof body.detail === "string" ? body.detail : (typeof body.message === "string" ? body.message : "Request failed"));
       });
     }).catch(function (err) {
       btn.disabled = false;
