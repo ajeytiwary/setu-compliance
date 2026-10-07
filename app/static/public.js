@@ -206,6 +206,12 @@
     var t = e.target;
     if (!t || !t.closest) return;
 
+    var contactLink = t.closest("[data-contact]");
+    if (contactLink) {
+      e.preventDefault();
+      openModal(contactLink.getAttribute("data-topic"));
+      return;
+    }
     var cta = t.closest(".contact-now");
     if (cta) {
       e.preventDefault();
