@@ -1,0 +1,20 @@
+# Cloudflare cutover gate record — 2026-10-07
+
+## Verified on this host
+
+- The old `eurosetu` container and root tunnel ingress remain running. Its SQLite volume was copied using the SQLite online backup API, uploaded to the private R2 bucket, downloaded, hash checked, and restored to a fresh local database. The archived database contains 12 leads; its unscoped shipment rows have not been imported into the tenant deployment.
+- A separate `eurosetu-pilot` Docker container runs with a clean tenant-scoped volume on `127.0.0.1:8002`. Production mode and split-host middleware are on, recurring SaaS is off. The new image includes Poppler for PDF layout extraction and stores synthetic demonstration PDFs outside the database volume. The image scan found no client document directory, local database, credential file, or untracked PaddleOCR checkout.
+- A bearer-gated synthetic dossier completed `BLOCKED → reviewer approval → corrected MTC and CBAM evidence → READY`, with source, event-chain, and decision-snapshot integrity checks passing. This READY status is explicitly a synthetic demonstration.
+- Three public trade PDFs uploaded through the real dossier API created three evidence nodes, one candidate link, and a net-weight conflict. Link approval returned `UNRESOLVED_SOURCE_CONFLICT`; the dossier remained BLOCKED. Anonymous access, wrong host, expired token, cross-tenant token, and missing Pages proxy secret were denied in direct pilot tests.
+- The pilot database was uploaded to R2 and downloaded with matching SHA-256. A fresh restore passed SQLite integrity and tenant checks. Restored SQLite file bytes may differ from backup bytes due to page layout, so the recovery code verifies logical database contents after restore.
+- The Pages public artifact build was scanned for private files. Pages production and preview encrypted proxy secrets were configured with the same value as the pilot app.
+
+## Gates still pending
+
+1. **App DNS:** The EuroSetu tunnel ingress includes `app.eurosetu.trade → 127.0.0.1:8002`, but a DNS CNAME in the `eurosetu.trade` zone is still required. The local `cloudflared` certificate selected another zone and the available Wrangler OAuth token has no DNS write scope. Confirm the exact zone and tunnel ID before adding the record. Do not change root DNS yet.
+2. **Git-driven Pages preview:** A release branch push must create a Pages deployment with source `github:push`; inspect the preview and crawl all public routes. An API-triggered build is insufficient.
+3. **End-to-end public enquiry:** After app DNS and preview are live, submit the contact form through Pages, verify persistence and notification, and exercise all calculator Functions plus upstream failure behavior.
+4. **Production controls:** Configure zone-level rate limits for contact and calculator endpoints and monitoring for health, form failures, authentication failures, 404s, backup age, and source-refresh failures. Complete a scheduled recovery drill using scoped R2 S3 credentials.
+5. **Commercial release:** Keep `EUROSETU_RECURRING_SAAS_ENABLED=0`. A genuine reviewer-approved client READY dossier, customer signoff, scoped automated backup, and commercial readiness assessment are separate paid SaaS gates.
+
+The existing root DNS and old app are the rollback path. Cut over only after all public and pilot gates pass.

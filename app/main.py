@@ -16,8 +16,8 @@ app.include_router(v1_router)
 app.include_router(internal_router)
 STATIC=Path(__file__).parent/"static"
 PUBLIC_PAGE_PATHS={"/trust","/benchmarks","/product","/workflow","/pricing","/brokers","/liability-preview","/threshold-checker","/carbon-price-relief","/cbam-rate","/guides","/worked-example","/supplier-data-template","/security","/privacy","/dpa","/terms","/faq","/sectors","/account","/changelog"}
-# The legacy demo API stores records without tenant keys. Expose only the
-# tenant-scoped dossier workflow and stateless/public endpoints in production.
+# Keep legacy shipment APIs closed. The synthetic /api/dossiers workflow and
+# real evidence API both enforce tenant ownership and role checks.
 @app.middleware("http")
 async def production_api_boundary(request:Request,call_next):
  if os.getenv("EUROSETU_ENV")=="production" and os.getenv("EUROSETU_SPLIT_HOSTS")=="1":
@@ -39,7 +39,10 @@ async def production_api_boundary(request:Request,call_next):
  if os.getenv("EUROSETU_ENV")=="production" and request.url.path=="/admin" and os.getenv("EUROSETU_SPLIT_HOSTS")!="1":return Response(status_code=404)
  if os.getenv("EUROSETU_ENV")=="production" and request.url.path.startswith("/api/"):
   path=request.url.path
-  allowed=(path.startswith("/api/real-dossiers") or
+  allowed=(path == "/api/dossiers/demo" or
+           path.startswith("/api/dossiers/") or
+           path.startswith("/api/real-dossiers") or
+           path.startswith("/api/regulatory-feed") or
            path == "/api/commercial/readiness" or
            path == "/api/admin/revoke-principal" or
            (os.getenv("EUROSETU_SPLIT_HOSTS")=="1" and path in ("/api/admin/requests","/api/admin/mint")) or
@@ -76,6 +79,10 @@ class SupplierEvidenceSubmitIn(BaseModel):evidence_type:str; content:str; issuer
 class SupplierEvidenceVerifyIn(BaseModel):verifier:str
 class RemediationSimulationIn(BaseModel):requirement_code:str; estimated_cost_eur:float=Field(default=0,ge=0)
 class ActiveEntitlementIn(BaseModel):payload:dict
+class RegulatoryWatchIn(BaseModel):
+ cn_code:str; origin_country:str; label:str=""
+class RegulatoryFeedReviewIn(BaseModel):
+ disposition:str; reason:str
 class CBAMVerificationReportIn(BaseModel):payload:dict
 class PublicDataImportIn(BaseModel):csv_content:str; as_of:str|None=None
 class PublicDataSyncIn(BaseModel):url:str; as_of:str|None=None
@@ -763,6 +770,63 @@ def regulatory_change_impact(request:Request,status:str|None=None):
  require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
  from .regulatory_impact import queue
  return {"impacts":queue(status),"model":"source hash change -> affected shipment -> rule family -> review queue"}
+@app.get("/api/regulatory-feed/watches")
+def regulatory_feed_watches(request:Request):
+ from .security import require_request
+ from .regulatory_feed import watches
+ p=require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ return {"watches":watches(p.tenant_id)}
+
+@app.post("/api/regulatory-feed/watches")
+def regulatory_feed_add_watch(request:Request,x:RegulatoryWatchIn):
+ from .security import require_request
+ from .regulatory_feed import add_watch
+ p=require_request(request,"pilot_contributor","admin")
+ try:return add_watch(p.tenant_id,x.cn_code,x.origin_country,x.label)
+ except ValueError as e:raise HTTPException(422,str(e))
+
+@app.delete("/api/regulatory-feed/watches/{watch_id}")
+def regulatory_feed_remove_watch(request:Request,watch_id:str):
+ from .security import require_request
+ from .regulatory_feed import remove_watch
+ p=require_request(request,"pilot_contributor","admin")
+ if not remove_watch(p.tenant_id,watch_id):raise HTTPException(404,"Watch not found")
+ return {"deleted":True}
+
+@app.get("/api/regulatory-feed/events")
+def regulatory_feed_events(request:Request,as_of:str|None=None,since:str|None=None,limit:int=100):
+ from .security import require_request
+ from .regulatory_feed import events
+ p=require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ try:return {"events":events(p.tenant_id,as_of=as_of,since=since,limit=limit),
+             "scope":"TARIC normalized measure changes matching tenant CN/origin watchlists"}
+ except ValueError:raise HTTPException(422,"as_of and since must be YYYY-MM-DD")
+
+@app.post("/api/regulatory-feed/events/{event_id}/reviews")
+def regulatory_feed_review(request:Request,event_id:str,x:RegulatoryFeedReviewIn):
+ from .security import require_request
+ from .regulatory_feed import review_event
+ p=require_request(request,"pilot_contributor","admin")
+ try:return review_event(p.tenant_id,event_id,p.subject,x.disposition,x.reason)
+ except KeyError:raise HTTPException(404,"Event not found")
+ except ValueError as e:raise HTTPException(422,str(e))
+
+@app.get("/api/regulatory-feed/events.csv")
+def regulatory_feed_csv(request:Request,as_of:str|None=None,since:str|None=None):
+ from .security import require_request
+ from .regulatory_feed import csv_export
+ p=require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ try:body=csv_export(p.tenant_id,as_of,since)
+ except ValueError:raise HTTPException(422,"as_of must be YYYY-MM-DD")
+ return Response(content=body,media_type="text/csv",headers={"Content-Disposition":"attachment; filename=regulatory-changes.csv"})
+
+@app.get("/api/regulatory-feed/status")
+def regulatory_feed_status(request:Request):
+ from .security import require_request
+ from .regulatory_feed import refresh_status
+ require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ return refresh_status()
+
 @app.get("/api/regulatory/registry")
 def regulatory_registry(as_of:str|None=None):
  from .regulatory_registry import registry

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from .db import connect
 
-TENANT_TABLES = ('real_dossiers', 'real_release_packets', 'recovery_drills', 'pilot_dossiers', 'evidence_objects', 'principal_revocations', 'real_source_signoffs')
+TENANT_TABLES = ('real_dossiers', 'real_release_packets', 'recovery_drills', 'pilot_dossiers', 'evidence_objects', 'principal_revocations', 'real_source_signoffs', 'regulatory_watchlists', 'regulatory_feed_events', 'regulatory_feed_reviews')
 LEGACY_OPERATIONAL_TABLES = (
     'shipments', 'requirements', 'evidence', 'verifications', 'suppliers',
     'integration_runs', 'canonical_records', 'genealogy_edges', 'activity_records',

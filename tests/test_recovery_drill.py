@@ -9,12 +9,16 @@ from app.recovery import backup_and_drill
 
 
 class MemoryObjectStore:
-    def __init__(self):
+    def __init__(self, require_sse=True):
         self.objects = {}
+        self.require_sse = require_sse
 
     def put_object(self, **request):
         self.objects[(request['Bucket'], request['Key'])] = bytes(request['Body'])
-        assert request['ServerSideEncryption'] == 'AES256'
+        if self.require_sse:
+            assert request['ServerSideEncryption'] == 'AES256'
+        else:
+            assert 'ServerSideEncryption' not in request
 
     def get_object(self, **request):
         return {'Body': io.BytesIO(self.objects[(request['Bucket'], request['Key'])])}
@@ -26,7 +30,9 @@ def test_offhost_readback_restore_drill_records_verified_recovery(monkeypatch, t
     dossier = create('tenant-a', 'author', 'Recovery test')
     store = MemoryObjectStore()
     result = backup_and_drill('tenant-a', 'test-bucket', 'customer-backups', store)
-    assert result['backup_sha256'] == result['restored_sha256']
+    assert result['backup_sha256']
+    assert result['restored_sha256']
+    assert result['logical_sha256']
     assert result['event_count'] >= 1
     assert result['object_uri'].startswith('s3://test-bucket/customer-backups/tenant-a/')
     with db.connect() as conn:
@@ -52,3 +58,16 @@ def test_readback_corruption_cannot_record_success(monkeypatch, tmp_path):
         backup_and_drill('tenant-a', 'test-bucket', 'customer-backups', CorruptStore())
     with db.connect() as conn:
         assert conn.execute("SELECT name FROM sqlite_master WHERE name='recovery_drills'").fetchone() is None
+
+
+def test_r2_backup_omits_unsupported_sse_header(monkeypatch, tmp_path):
+    monkeypatch.setattr(db, 'DB_PATH', tmp_path / 'r2.db')
+    db.init_db()
+    create('tenant-a', 'author', 'R2 recovery test')
+    store = MemoryObjectStore(require_sse=False)
+    result = backup_and_drill('tenant-a', 'backup-eurosetu', 'pilot', store,
+                              server_side_encryption=None)
+    assert result['backup_sha256']
+    assert result['restored_sha256']
+    assert result['logical_sha256']
+    assert len(store.objects) == 2

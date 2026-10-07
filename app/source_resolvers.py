@@ -729,6 +729,18 @@ def publish_normalized(dataset: str, provider_id: str, source_url: str, raw: byt
                 "raw_path": f"data/raw/{dataset}/{version}/{filename}",
                 "normalized_path": f"data/normalized/{dataset}/{version}/normalized.json"}
     (folder / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True))
+    # Persist tenant events before advancing the latest pointer. A failed feed
+    # write leaves the prior pointer in place, so a retry can replay safely.
+    previous = latest_manifest(dataset)
+    old_records = None
+    if previous and previous.get("normalized_path"):
+        prior_path = ROOT / previous["normalized_path"]
+        if prior_path.is_file():
+            old_records = json.loads(prior_path.read_text()).get("records")
+    from .regulatory_feed import publish_change
+    feed = publish_change(dataset, previous.get("sha256") if previous else None,
+                          manifest["sha256"], old_records, records, source_url,
+                          norm["as_of"], delta=dataset == "taric_measures" and raw[:2] == b"PK")
     MANIFESTS.mkdir(parents=True, exist_ok=True)
     (MANIFESTS / f"{dataset}-latest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True))
     # Keep data/normalized/<dataset>/latest.json in sync so tests and engines
@@ -742,7 +754,7 @@ def publish_normalized(dataset: str, provider_id: str, source_url: str, raw: byt
                                "records": latest_records if latest_records is not None else records},
                               indent=2, default=str))
     os.replace(tmp, latest)
-    return manifest
+    return {**manifest, "feed": feed}
 
 
 def latest_manifest(dataset: str) -> dict | None:

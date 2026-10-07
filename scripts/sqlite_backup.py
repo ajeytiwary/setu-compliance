@@ -22,6 +22,16 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _logical_sha256(path: Path) -> str:
+    """Hash SQLite's logical dump; page layout may change during restore."""
+    digest = hashlib.sha256()
+    with sqlite3.connect(f'file:{path}?mode=ro', uri=True) as conn:
+        for statement in conn.iterdump():
+            digest.update(statement.encode('utf-8'))
+            digest.update(b'\n')
+    return digest.hexdigest()
+
+
 def _check(path: Path, tenant_id: str) -> None:
     with sqlite3.connect(f'file:{path}?mode=ro', uri=True) as conn:
         result = conn.execute('PRAGMA integrity_check').fetchone()[0]
@@ -46,7 +56,8 @@ def backup(source: Path, destination: Path, tenant_id: str) -> dict:
             src.backup(dst)
         _check(destination, tenant_id)
         manifest = {'tenant_id': tenant_id, 'created_at': datetime.now(timezone.utc).isoformat(),
-                    'sha256': _sha256(destination), 'bytes': destination.stat().st_size,
+                    'sha256': _sha256(destination), 'logical_sha256': _logical_sha256(destination),
+                    'bytes': destination.stat().st_size,
                     'format': 'sqlite3-online-backup-v1'}
         destination.with_suffix(destination.suffix + '.json').write_text(json.dumps(manifest, sort_keys=True) + '\n')
         return manifest
@@ -70,8 +81,9 @@ def restore(backup_path: Path, destination: Path, tenant_id: str) -> dict:
         with sqlite3.connect(f'file:{backup_path}?mode=ro', uri=True) as src, sqlite3.connect(destination) as dst:
             src.backup(dst)
         _check(destination, tenant_id)
-        if _sha256(destination) != manifest['sha256']:
-            raise ValueError('RESTORE_HASH_MISMATCH')
+        expected_logical = manifest.get('logical_sha256') or _logical_sha256(backup_path)
+        if _logical_sha256(destination) != expected_logical:
+            raise ValueError('RESTORE_LOGICAL_HASH_MISMATCH')
         return manifest
     except Exception:
         destination.unlink(missing_ok=True)

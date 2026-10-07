@@ -28,7 +28,8 @@ def _counts(path: Path) -> tuple[int, int]:
                      for name in ('real_documents', 'real_events'))
 
 
-def backup_and_drill(tenant_id: str, bucket: str, prefix: str, client=None) -> dict:
+def backup_and_drill(tenant_id: str, bucket: str, prefix: str, client=None, *,
+                     server_side_encryption: str | None = "AES256") -> dict:
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{1,79}', tenant_id):
         raise ValueError('INVALID_TENANT_ID')
     if not bucket or not db.DB_PATH.is_file():
@@ -43,10 +44,12 @@ def backup_and_drill(tenant_id: str, bucket: str, prefix: str, client=None) -> d
         local_backup = root / 'source.db'
         manifest = backup(db.DB_PATH, local_backup, tenant_id)
         manifest_file = local_backup.with_suffix('.db.json')
-        client.put_object(Bucket=bucket, Key=key, Body=local_backup.read_bytes(), ServerSideEncryption='AES256',
-                          ContentType='application/vnd.sqlite3', Metadata={'tenant-id': tenant_id, 'sha256': manifest['sha256']})
+        encryption = {'ServerSideEncryption': server_side_encryption} if server_side_encryption else {}
+        client.put_object(Bucket=bucket, Key=key, Body=local_backup.read_bytes(),
+                          ContentType='application/vnd.sqlite3', Metadata={'tenant-id': tenant_id, 'sha256': manifest['sha256']},
+                          **encryption)
         client.put_object(Bucket=bucket, Key=key + '.json', Body=manifest_file.read_bytes(),
-                          ServerSideEncryption='AES256', ContentType='application/json')
+                          ContentType='application/json', **encryption)
         fetched = root / 'fetched.db'
         fetched.write_bytes(client.get_object(Bucket=bucket, Key=key)['Body'].read())
         fetched.with_suffix('.db.json').write_bytes(client.get_object(Bucket=bucket, Key=key + '.json')['Body'].read())
@@ -55,12 +58,14 @@ def backup_and_drill(tenant_id: str, bucket: str, prefix: str, client=None) -> d
         source_counts, restored_counts = _counts(local_backup), _counts(recovered)
         if source_counts != restored_counts:
             raise ValueError('RECOVERY_ROW_COUNT_MISMATCH')
-        from scripts.sqlite_backup import _sha256
+        from scripts.sqlite_backup import _sha256, _logical_sha256
         restored_sha = _sha256(recovered)
-        if restored_sha != manifest['sha256']:
-            raise ValueError('RECOVERY_HASH_MISMATCH')
+        logical_sha = _logical_sha256(recovered)
+        if logical_sha != manifest['logical_sha256']:
+            raise ValueError('RECOVERY_LOGICAL_HASH_MISMATCH')
         result = {'id': str(uuid4()), 'tenant_id': tenant_id, 'object_uri': f's3://{bucket}/{key}',
                   'backup_sha256': manifest['sha256'], 'restored_sha256': restored_sha,
+                  'logical_sha256': logical_sha,
                   'document_count': source_counts[0], 'event_count': source_counts[1],
                   'completed_at': datetime.now(timezone.utc).isoformat()}
         with db.connect() as conn:

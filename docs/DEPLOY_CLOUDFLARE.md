@@ -25,7 +25,7 @@ Pages Functions proxy only the explicitly allowed public contact and calculator 
 
 ## Publish the app through Cloudflare Tunnel
 
-Create or reuse a named tunnel with an ingress rule for the app host:
+Create or reuse a named tunnel with an ingress rule for the app host. During a parallel pilot deployment, the app may use a separate localhost port such as `8002`; keep the root ingress unchanged until cutover:
 
 ```yaml
 ingress:
@@ -34,7 +34,7 @@ ingress:
   - service: http_status:404
 ```
 
-Route `app.eurosetu.trade` to the tunnel in Cloudflare DNS. Configure the app's production environment, signed bearer-token secret, allowed host, proxy secret, and private database path. Start with `docker-compose.production.yml` and confirm `/health/ready` locally before opening the tunnel. The backend must reject unexpected hosts and keep privileged APIs bearer-gated. Public links from app pages point back to `https://eurosetu.trade`.
+Route `app.eurosetu.trade` to the tunnel in the **eurosetu.trade zone**. Verify the resulting record name and tunnel ID; a `cloudflared` origin certificate for another account can silently append the wrong zone. The intended CNAME target is the EuroSetu tunnel ID followed by `.cfargotunnel.com`. Configure the app's production environment, signed bearer-token secret, allowed host, proxy secret, and private database path. Start with `docker-compose.production.yml` and confirm `/health/ready` locally before opening the tunnel. The backend must reject unexpected hosts and keep privileged APIs bearer-gated. Set `EUROSETU_ENV=production`, `EUROSETU_SPLIT_HOSTS=1`, `EUROSETU_APP_HOST=app.eurosetu.trade`, a single `EUROSETU_DEPLOYMENT_TENANT`, `EUROSETU_JWT_SECRET`, `EUROSETU_PUBLIC_PROXY_SECRET`, and `EUROSETU_RECURRING_SAAS_ENABLED=0`. Docker publishes port 8000 on loopback only. The synthetic `/api/dossiers/demo` workflow requires a contributor bearer key and never opens the recurring SaaS gate. Public links from app pages point back to `https://eurosetu.trade`.
 
 The email key worker in `workers/` sends recipients to `https://app.eurosetu.trade/pilot`. Its signing secret must match the app's pilot-key secret. If using the admin queue, open `https://app.eurosetu.trade/admin` with an administrator token; do not expose that page on the public Pages deployment.
 
@@ -46,7 +46,7 @@ The email key worker in `workers/` sends recipients to `https://app.eurosetu.tra
 4. Complete an authenticated app journey: secure dossier workflow (also reached from `/pilot`), document upload, evidence review, blocker remediation, decision replay, and audit traceback. Verify that no anonymous visitor can access client data.
 5. Only then move the apex/root DNS from the old tunnel to Pages. Preserve the old DNS and deployment settings for rollback. Keep temporary redirects for old `/pilot`, `/admin`, and document-workflow bookmarks. Monitor 404s, form failures, auth failures, and API errors after the switch.
 
-DNS cutover follows the preview and app-host gates; preserve the existing tunnel and prior DNS settings for rollback.
+For R2, use the S3 endpoint origin without `/backup-eurosetu`, bucket `backup-eurosetu`, region `auto`, and omit the S3 `ServerSideEncryption` request header. Save a consistent online SQLite backup and its manifest; upload both, download both, and run `scripts/sqlite_backup.py restore` to a fresh path. R2 OAuth CLI access is adequate for a manual drill, but scheduled app recovery needs scoped S3 credentials. DNS cutover follows the preview and app-host gates; preserve the existing tunnel and prior DNS settings for rollback.
 
 ## Rollback and failure response
 

@@ -6,6 +6,7 @@ customer evidence is never auto-approved. READY here is a demonstration state.
 from __future__ import annotations
 
 import hashlib
+import os
 import json
 import re
 import sqlite3
@@ -19,7 +20,7 @@ from . import db
 from .cbam_engine import calculate_actual_steel
 from .pdf_observations import _locate, _geometry
 
-FIXTURES = Path(__file__).resolve().parents[1] / "data" / "demo_dossier"
+FIXTURES = Path(os.getenv("EUROSETU_DEMO_FIXTURES_PATH") or (Path(__file__).resolve().parents[1] / "data" / "demo_dossier"))
 ROLES = ("INVOICE", "PACKING_LIST", "SHIPPING_BILL", "BILL_OF_LADING", "MTC", "SAD", "CBAM_INSTALLATION")
 INITIAL = {"INVOICE":"invoice_initial.pdf","PACKING_LIST":"packing_initial.pdf",
            "SHIPPING_BILL":"shipping_initial.pdf","BILL_OF_LADING":"bl_initial.pdf",

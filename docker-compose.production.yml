@@ -9,6 +9,7 @@ services:
       EUROSETU_DB_PATH: /app/data/eurosetu.db
       EUROSETU_DEPLOYMENT_TENANT: ${EUROSETU_DEPLOYMENT_TENANT:?Set the sole tenant ID for this isolated deployment}
       EUROSETU_BACKUP_BUCKET: ${EUROSETU_BACKUP_BUCKET:-}
+      EUROSETU_BACKUP_S3_ENDPOINT: ${EUROSETU_BACKUP_S3_ENDPOINT:-}
       EUROSETU_RECURRING_SAAS_ENABLED: ${EUROSETU_RECURRING_SAAS_ENABLED:-0}
       EUROSETU_JWT_SECRET: ${EUROSETU_JWT_SECRET:?Set a production authentication secret}
       EUROSETU_INGEST_LLM_BASE_URL: ${EUROSETU_INGEST_LLM_BASE_URL:-http://172.17.0.1:8787/api/v1}
@@ -17,6 +18,6 @@ services:
     volumes:
       - eurosetu_data:/app/data
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
 volumes:
   eurosetu_data:

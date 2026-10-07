@@ -25,3 +25,23 @@ data/sources
 *.tmp
 .DS_Store
 docs/**/*.png
+
+# Never include tenant documents, generated evidence, or local model checkout.
+third_party/
+docs/
+tests/
+dist/
+benchmark_artifacts/
+data/client_data/
+data/evidence/
+data/public_trade_evidence/
+data/public_corpus/
+data/*.pdf
+data/*.docx
+**/*.db
+**/*.db-*
+**/*.sqlite
+**/*.sqlite3
+**/*.key
+**/*.pem
+**/.env*
