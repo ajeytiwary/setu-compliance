@@ -137,7 +137,7 @@ def build(out: Path) -> None:
     _write(out / "robots.txt", "User-agent: *\nAllow: /\nSitemap: https://eurosetu.trade/sitemap.xml\n")
     _write(out / "sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{PUBLIC_HOST}{route}</loc></url>\n" for route in sorted(routes)) + "</urlset>\n")
     _write(out / "_headers", "/api/*\n  Cache-Control: no-store\n/benchmarks/*\n  Cache-Control: public, max-age=3600\n/benchmarks/*/cases/*\n  Cache-Control: public, max-age=31536000, immutable\n")
-    _write(out / "_redirects", "/pilot https://app.eurosetu.trade/pilot 302\n/admin https://app.eurosetu.trade/admin 302\n/workflow-run https://app.eurosetu.trade/workflow-run 302\n/real-dossier https://app.eurosetu.trade/real-dossier 302\n/dossier-demo https://app.eurosetu.trade/dossier-demo 302\n")
+    _write(out / "_redirects", "/pilot https://app.eurosetu.trade/pilot 302\n/admin https://app.eurosetu.trade/admin 302\n/workflow-run https://app.eurosetu.trade/workflow-run 302\n/real-dossier https://app.eurosetu.trade/real-dossier 302\n/dossier-demo https://app.eurosetu.trade/dossier-demo 302\n/case-study-run https://app.eurosetu.trade/case-study-run 302\n")
 
 
 if __name__ == "__main__":
