@@ -19,6 +19,18 @@ describe("public Pages API boundary", () => {
     expect((await onRequest(context("/api/contact", "POST", "x".repeat(128 * 1024 + 1)))).status).toBe(413);
   });
 
+  it("reports a clear service failure when the app origin is unavailable", async () => {
+    const previous = globalThis.fetch;
+    globalThis.fetch = async () => new Response("error code: 1016", { status: 530 });
+    try {
+      const response = await onRequest(context("/api/contact"));
+      expect(response.status).toBe(503);
+      expect((await response.json()).code).toBe("UPSTREAM_UNAVAILABLE");
+    } finally {
+      globalThis.fetch = previous;
+    }
+  });
+
   it("sends only the allowed contact request with a private backend header", async () => {
     const previous = globalThis.fetch;
     let seen: Request | undefined;

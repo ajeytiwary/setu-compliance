@@ -62,6 +62,14 @@ export async function onRequest(context) {
   } catch (_) {
     return new Response("Public service temporarily unavailable", { status: 502 });
   }
+  // Cloudflare can return an HTTP 530/1016 for an unresolved app hostname.
+  // Keep origin details out of the public response and make failure actionable.
+  if (upstream.status >= 500) {
+    return new Response(JSON.stringify({ code: "UPSTREAM_UNAVAILABLE", message: "The service is temporarily unavailable. Please try again later." }), {
+      status: 503,
+      headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" },
+    });
+  }
   // Never forward set-cookie, WWW-Authenticate, origin details or other app headers.
   const responseBody = await upstream.arrayBuffer();
   return new Response(responseBody, {
