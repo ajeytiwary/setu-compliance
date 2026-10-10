@@ -4,7 +4,7 @@
   "authority": "MIRROR",
   "legal_authority": false,
   "source": "https://raw.githubusercontent.com/USEPA/CompTox-IUCLIDTools/dev/entity_models/article_6_8/models",
-  "retrieved_at": "2026-10-09T11:23:57+00:00",
+  "retrieved_at": "2026-10-10T10:41:18+00:00",
   "sha256": "3dcde4920cde5210cd7832489089189f8212c53e7c606d32dbb56106a1345437",
   "content_type": "text/x-python",
   "parser_version": "setu-source-sync-0.9",
