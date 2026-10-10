@@ -1,20 +1,23 @@
 services:
-  db:
-    image: postgres:17
-    environment:
-      POSTGRES_DB: eurosetu
-      POSTGRES_USER: eurosetu
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    volumes:
-      - eurosetu_pg:/var/lib/postgresql/data
   app:
     build: .
     environment:
-      DATABASE_URL: postgresql+psycopg://eurosetu:${POSTGRES_PASSWORD}@db:5432/eurosetu
       EUROSETU_ENV: production
-    depends_on:
-      - db
+      EUROSETU_SPLIT_HOSTS: ${EUROSETU_SPLIT_HOSTS:-0}
+      EUROSETU_APP_HOST: ${EUROSETU_APP_HOST:-app.eurosetu.trade}
+      EUROSETU_PUBLIC_PROXY_SECRET: ${EUROSETU_PUBLIC_PROXY_SECRET:-}
+      EUROSETU_DB_PATH: /app/data/eurosetu.db
+      EUROSETU_DEPLOYMENT_TENANT: ${EUROSETU_DEPLOYMENT_TENANT:?Set the sole tenant ID for this isolated deployment}
+      EUROSETU_BACKUP_BUCKET: ${EUROSETU_BACKUP_BUCKET:-}
+      EUROSETU_BACKUP_S3_ENDPOINT: ${EUROSETU_BACKUP_S3_ENDPOINT:-}
+      EUROSETU_RECURRING_SAAS_ENABLED: ${EUROSETU_RECURRING_SAAS_ENABLED:-0}
+      EUROSETU_JWT_SECRET: ${EUROSETU_JWT_SECRET:?Set a production authentication secret}
+      EUROSETU_INGEST_LLM_BASE_URL: ${EUROSETU_INGEST_LLM_BASE_URL:-http://172.17.0.1:8787/api/v1}
+      EUROSETU_INGEST_LLM_MODEL: ${EUROSETU_INGEST_LLM_MODEL:-deepseek/deepseek-v4-flash}
+      EUROSETU_INGEST_LLM_API_KEY: ${EUROSETU_INGEST_LLM_API_KEY:-}
+    volumes:
+      - eurosetu_data:/app/data
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
 volumes:
-  eurosetu_pg:
+  eurosetu_data:

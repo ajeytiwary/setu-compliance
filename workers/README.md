@@ -8,10 +8,10 @@ source of truth; the Worker is a WebCrypto port). Both keep the manual step:
 
 1. Founder mints a personal admin key once:
    `EUROSETU_JWT_SECRET=<prod-secret> python scripts/mint_pilot_token.py --tenant tenant-a --roles admin --days 90`
-2. Open `https://eurosetu.trade/admin`, paste the admin key (Unlock).
+2. Open `https://app.eurosetu.trade/admin`, paste the admin key (Unlock).
 3. Newest contact enquiries + demo leads appear. Click **Mint key**, copy the
    token, send it manually from Gmail with the tenant name.
-4. Requester opens `https://eurosetu.trade/pilot`, pastes the key + tenant.
+4. Requester opens `https://app.eurosetu.trade/pilot`, pastes the key + tenant.
 
 Endpoints (both require the `admin` role):
 - `GET /api/admin/requests` — contacts + leads, newest first (200 max each).

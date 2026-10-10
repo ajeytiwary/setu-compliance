@@ -12,7 +12,7 @@ from __future__ import annotations
 
 SITE_NAME = "EuroSetu"
 TAGLINE = "Market-access control plane for industrial exporters"
-CONTACT_EMAIL = "hello@eusetu.trade"
+CONTACT_EMAIL = "hello@eurosetu.trade"
 REVIEWED = "2026-10-02"
 RULES_BASIS = (
     "Regulation (EU) 2023/956 + Implementing Regulations 2025/2547 (methodology), "
@@ -50,7 +50,7 @@ SECTORS = [
 ]
 
 TOOLS = [
-    ("Workflow run", "/workflow-run", "Upload PDFs/CSVs/Excel: parse, map to steps, run the engines."),
+    ("Workflow run", "https://app.eurosetu.trade/workflow-run", "Upload PDFs/CSVs/Excel: parse, map to steps, run the engines."),
     ("Liability preview", "/liability-preview", "Price an import ledger line by line on real defaults."),
     ("Threshold checker", "/threshold-checker", "EU 50 t declarant test + UK £50k note, instant read."),
     ("Carbon price relief", "/carbon-price-relief", "Article 9 deduction: what counts and what evidence."),

@@ -1,173 +1,55 @@
-# Deploy EuroSetu as a public website on Cloudflare (recommended path)
+# Deploy EuroSetu's public site and hosted app
 
-This is the easiest way to put the EuroSetu landing site and demo online.
-You keep the app running on **your own machine or server** and Cloudflare
-publishes it to the public internet through a secure tunnel. No open ports,
-no firewall rules, no static IP.
+The deployment uses two hosts. `eurosetu.trade` serves the public, static marketing site through Cloudflare Pages. `app.eurosetu.trade` serves the interactive FastAPI app through Cloudflare Tunnel. The public build must never include client documents, the application database, bearer tokens, or app-only HTML and JavaScript.
 
-**What you get:** `https://eurosetu.example.com` (or any domain you own)
-serving the landing page (`/`), trust page (`/trust`), case study
-(`/case-study`), and the gated demo (`/demo`).
+## Prerequisites
 
-**What you need:**
-- A Cloudflare account (free tier is enough) and a domain whose DNS is on Cloudflare.
-- Docker on the machine that will run the app (any laptop, VM, or office server).
-- About 20 minutes.
+- A Cloudflare account with `eurosetu.trade` DNS and Pages access, and a connected hosted Git repository.
+- A running FastAPI app at `127.0.0.1:8000`, a persistent private database volume, and a named Cloudflare Tunnel on the app machine.
+- A private, approved backup destination with a tested restore procedure before real client records are accepted.
+- A public proxy secret shared between Pages Functions and the app; store it as a Cloudflare secret and an app environment variable. Do not commit its value.
 
----
+## Build and preview the public site
 
-## 1. Build and start the app locally
+From the repository root:
 
 ```bash
-cd /home/plasmion/git/eurosetu-market-access-mvp-production
-
-# Build the image (uses Dockerfile at the repo root)
-docker build -t eurosetu:latest .
-
-# Run it with a persistent database volume
-docker run -d --name eurosetu \
-  --restart unless-stopped \
-  -p 127.0.0.1:8000:8000 \
-  -v eurosetu-data:/app/data \
-  -e EUROSETU_DB_PATH=/app/data/eurosetu.db \
-  eurosetu:latest
-
-# Sanity check (should print 200)
-curl -o /dev/null -s -w "%{http_code}\n" http://127.0.0.1:8000/
-curl -o /dev/null -s -w "%{http_code}\n" http://127.0.0.1:8000/trust
-curl -o /dev/null -s -w "%{http_code}\n" http://127.0.0.1:8000/demo
+.venv/bin/python scripts/build_public_site.py dist/public
 ```
 
-The `-v eurosetu-data:/app/data` volume keeps the SQLite database
-(`EUROSETU_DB_PATH=/app/data/eurosetu.db`) across container restarts.
-Without it, demo leads and contact submissions vanish on every restart.
+The build copies an allowlist of public HTML, CSS, JavaScript, and immutable benchmark artifacts. It generates public guides and legal pages. Inspect `dist/public` before uploading; it must contain no client PDFs, SQLite files, app-only pages, or credentials. The public `/demo` and `/case-study` pages are informational. Their interactive counterparts run on the app host.
 
-## 2. Install `cloudflared` on the same machine
+Connect the repository to Cloudflare Pages. Set the production branch to the reviewed release branch, the build command to `python3 scripts/build_public_site.py dist/public`, and the output directory to `dist/public`. Configure `APP_ORIGIN=https://app.eurosetu.trade` and the secret `PUBLIC_PROXY_SECRET` for the Pages Functions. Confirm the Cloudflare Pages GitHub App is installed for `ajeytiwary/setu-compliance`, then push a preview branch and verify that the deployment source is `github:push`. A successful API-triggered Git build does not prove automatic deploys. Pull requests should receive Pages preview URLs; run the route and link audit there before merging.
 
-```bash
-# Debian / Ubuntu
-curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
-echo "deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared $(lsb_release -cs) main" \
-  | sudo tee /etc/apt/sources.list.d/cloudflared.list
-sudo apt update && sudo apt install -y cloudflared
+Pages Functions proxy only the explicitly allowed public contact and calculator endpoints. The app must verify `PUBLIC_PROXY_SECRET` on these proxied requests. Apply Cloudflare WAF rate limits to `/api/contact` and `/api/tools/*`. The supplier CSV is static; all customer uploads and dossier APIs remain on the app host.
 
-# macOS
-brew install cloudflared
-```
+## Publish the app through Cloudflare Tunnel
 
-## 3. Create the tunnel
-
-```bash
-# Log in to Cloudflare (opens a browser window once)
-cloudflared tunnel login
-
-# Create a named tunnel
-cloudflared tunnel create eurosetu
-
-# Note the tunnel ID it prints, e.g. 6f9a…-… - you need it below.
-```
-
-## 4. Route your domain to the tunnel
-
-Create a DNS record in the Cloudflare dashboard
-(**Websites → your domain → DNS → Add record**):
-
-| Type  | Name     | Target                          | Proxy |
-|-------|----------|---------------------------------|-------|
-| CNAME | eurosetu | `<TUNNEL-ID>.cfargotunnel.com`  | ON (orange cloud) |
-
-Or from the CLI:
-
-```bash
-cloudflared tunnel route dns eurosetu eurosetu.example.com
-```
-
-## 5. Point the tunnel at the app
-
-Create `/etc/cloudflared/config.yml` (or `~/.cloudflared/config.yml`):
+Create or reuse a named tunnel with an ingress rule for the app host. During a parallel pilot deployment, the app may use a separate localhost port such as `8002`; keep the root ingress unchanged until cutover:
 
 ```yaml
-tunnel: <TUNNEL-ID>
-credentials-file: /root/.cloudflared/<TUNNEL-ID>.json
-
 ingress:
-  - hostname: eurosetu.example.com
+  - hostname: app.eurosetu.trade
     service: http://127.0.0.1:8000
-    originRequest:
-      noTLSVerify: false
   - service: http_status:404
 ```
 
-Start the tunnel:
+Route `app.eurosetu.trade` to the tunnel in the **eurosetu.trade zone**. Verify the resulting record name and tunnel ID; a `cloudflared` origin certificate for another account can silently append the wrong zone. The intended CNAME target is the EuroSetu tunnel ID followed by `.cfargotunnel.com`. Configure the app's production environment, signed bearer-token secret, allowed host, proxy secret, and private database path. Start with `docker-compose.production.yml` and confirm `/health/ready` locally before opening the tunnel. The backend must reject unexpected hosts and keep privileged APIs bearer-gated. Set `EUROSETU_ENV=production`, `EUROSETU_SPLIT_HOSTS=1`, `EUROSETU_APP_HOST=app.eurosetu.trade`, a single `EUROSETU_DEPLOYMENT_TENANT`, `EUROSETU_JWT_SECRET`, `EUROSETU_PUBLIC_PROXY_SECRET`, and `EUROSETU_RECURRING_SAAS_ENABLED=0`. Docker publishes port 8000 on loopback only. The synthetic `/api/dossiers/demo` workflow requires a contributor bearer key and never opens the recurring SaaS gate. Public links from app pages point back to `https://eurosetu.trade`.
 
-```bash
-# Foreground (good for a first test)
-cloudflared tunnel --config /etc/cloudflared/config.yml run eurosetu
+The email key worker in `workers/` sends recipients to `https://app.eurosetu.trade/pilot`. Its signing secret must match the app's pilot-key secret. If using the admin queue, open `https://app.eurosetu.trade/admin` with an administrator token; do not expose that page on the public Pages deployment.
 
-# Background as a service (recommended for production)
-sudo cloudflared service install
-sudo systemctl enable --now cloudflared
-```
+## Cutover gates
 
-Visit `https://eurosetu.example.com` - you should see the landing page.
-Click a card: the "Contact now" button appears, opens the contact dialog,
-and submits to `POST /api/contact` through the tunnel.
+1. Crawl the Pages preview navigation, footer, sitemap, guides, legal pages, calculator pages, `/demo`, `/case-study`, and `/benchmarks`. Every linked page and benchmark artifact must load. Check the canonical host and contact address.
+2. Inspect the complete `dist/public` artifact for client data, secrets, private code, and app-only assets. Treat any unexpected file as a failed build.
+3. Submit a test contact request through Pages and verify persistence and delivery. Exercise all public calculators through the Pages Functions, including rejected inputs and upstream failures.
+4. Complete an authenticated app journey: secure dossier workflow (also reached from `/pilot`), document upload, evidence review, blocker remediation, decision replay, and audit traceback. Verify that no anonymous visitor can access client data.
+5. Only then move the apex/root DNS from the old tunnel to Pages. Preserve the old DNS and deployment settings for rollback. Keep temporary redirects for old `/pilot`, `/admin`, and document-workflow bookmarks. Monitor 404s, form failures, auth failures, and API errors after the switch.
 
-## 5b. Pilot key issuance (manual, founder-sent)
+For R2, use the S3 endpoint origin without `/backup-eurosetu`, bucket `backup-eurosetu`, region `auto`, and omit the S3 `ServerSideEncryption` request header. Save a consistent online SQLite backup and its manifest; upload both, download both, and run `scripts/sqlite_backup.py restore` to a fresh path. R2 OAuth CLI access is adequate for a manual drill, but scheduled app recovery needs scoped S3 credentials. DNS cutover follows the preview and app-host gates; preserve the existing tunnel and prior DNS settings for rollback.
 
-Pilot access stays bearer-gated, but issuance is manual: the founder sends
-each key from Gmail. Two paths mint the **same** HS256 key
-(`app/pilot_keys.py` is the source of truth):
+## Rollback and failure response
 
-- **/admin queue (daily driver):** open `https://eurosetu.trade/admin`,
-  unlock with your admin key, click **Mint key** on any contact/lead, copy
-  the token into Gmail. Endpoints `GET /api/admin/requests` and
-  `POST /api/admin/mint` both require the `admin` role.
-- **Email Worker (email-first requesters):** deploy `workers/` so mail to
-  `request@eurosetu.trade` mints a key and forwards to
-  `pilot@eurosetu.trade` (Gmail) with the key in `X-EuroSetu-Pilot-Key`.
-  Full steps in `workers/README.md`. Email Workers cannot rewrite the
-  forwarded body - only attach headers - which is why /admin stays the
-  easier copy-paste UI.
+If public routes fail, restore the prior root DNS target while leaving the app tunnel intact; retain the previous deployment until the incident is closed. If leads fail, stop acknowledging success and inspect Pages Function and app logs using request IDs. If app auth or upload fails, stop new pilot intake, preserve the data volume, and restore the previous app image. If a private file appears in `dist/public`, halt the Pages deployment and rotate any exposed secret.
 
-Set the app secret once (same value the Worker uses):
-`docker run ... -e EUROSETU_JWT_SECRET=<long-random> ...`
-Mint your own admin key with `scripts/mint_pilot_token.py --roles admin`.
-
-## 6. Harden it (recommended before sharing the link)
-
-1. **HTTPS is automatic.** Cloudflare terminates TLS at the edge; the
-   tunnel itself is encrypted end-to-end. Leave "SSL/TLS → Full (strict)".
-2. **Lock down the demo gate.** The `/demo` page is behind a lead form
-   (`require_lead`), but rotate nothing secret - there are no static
-   credentials in this build. If you add any, put them in environment
-   variables (`-e NAME=value`), never in the image.
-3. **Back up the database volume** on a schedule:
-   ```bash
-   docker run --rm -v eurosetu-data:/data -v "$PWD":/backup \
-     alpine tar czf /backup/eurosetu-data-$(date +%F).tgz -C /data .
-   ```
-4. **Updates:** rebuild and swap the container; the volume keeps your data:
-   ```bash
-   docker build -t eurosetu:latest . \
-     && docker stop eurosetu && docker rm eurosetu \
-     && docker run -d --name eurosetu --restart unless-stopped \
-          -p 127.0.0.1:8000:8000 -v eurosetu-data:/app/data \
-          -e EUROSETU_DB_PATH=/app/data/eurosetu.db eurosetu:latest
-   ```
-
-## Troubleshooting
-
-| Symptom | Fix |
-|---|---|
-| `502 Bad Gateway` from Cloudflare | App container is down or not on port 8000: `docker logs eurosetu`, `curl http://127.0.0.1:8000/robots.txt`. |
-| Tunnel shows "inactive" | `cloudflared tunnel list`; re-run with the right `--config` path and tunnel name. |
-| Contact form returns 500 | Check `docker logs eurosetu` - usually the DB volume is unwritable; ensure `/app/data` is owned by uid 10001 (the image handles this by default). |
-| CSS/JS not loading | They are served by the app itself (`/public.css`, `/public.js`); if `/` loads, they load. Hard-refresh (`Ctrl+Shift+R`). |
-
-## When to move off this path
-
-Cloudflare Tunnel is ideal for pilots and demos. If you need autoscaling,
-zero-downtime deploys, or a managed database, move to
-[Google Cloud Run](DEPLOY_GOOGLE_CLOUD.md) or [AWS App Runner / ECS](DEPLOY_AWS.md)
-- the same Docker image works on all three without changes.
+Do not use the old single-host Tunnel instructions for the root domain. The public site is released through Pages; Tunnel publishes only the hosted app.

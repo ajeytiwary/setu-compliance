@@ -315,7 +315,8 @@ def sync_dataset(dataset: str, as_of: str | None = None, url: str | None = None,
         min_records=spec["min_records"], filename=spec["filename"],
         latest_records=latest_records)
     bridge_to_engines(dataset, manifest)
-    return {"dataset": dataset, "status": "SYNCED", "manifest": manifest}
+    feed = manifest.pop("feed")
+    return {"dataset": dataset, "status": "SYNCED", "manifest": manifest, "feed": feed}
 
 
 def bridge_to_engines(dataset: str, manifest: dict) -> None:

@@ -1,0 +1,25 @@
+# Real dossier release protocol
+
+The `/real-dossier` app and authenticated `/api/real-dossiers` endpoints store source documents, extracted observations, candidate links and hash-linked review events by tenant. Upload and source review alone cannot produce `READY`.
+
+## Final release packet
+
+A contributor submits `POST /api/real-dossiers/{id}/release-packets` with `{"packet": {...}}`. The packet maps **exactly one document** to each of these roles: `INVOICE`, `PACKING_LIST`, `SHIPPING_BILL`, `BILL_OF_LADING`, `MTC`, `IMPORT_DECLARATION`, `CBAM_INSTALLATION`, and `VERIFICATION_OPINION`. It must declare `source_kind: REAL_CLIENT_SHIPMENT` and provide a substantive source attestation. This is a human assertion, not a machine authenticity test.
+
+The `facts` list must cite invoice number, eight-digit EU CN, heat, net weight, invoice value and currency, Indian origin, EU destination, container, B/L, shipping bill, import declaration, installation, specific embedded emissions and verified opinion status, production route and reporting year. PDF facts need the exact page, a source quote and the value's bounding box; the server checks all three against the stored PDF text and word geometry. XLSX facts need a sheet and cell whose value matches. The packet's `links` refer to fact indices in separate documents with equal shipment identifiers. All eight document nodes must be connected. The invoice number and weight must be independently present in at least two documents; CN, weight, origin and destination must appear in specified role pairs. Conflicting values for any required fact, including reporting year, production route, identifiers and verification status, or candidate graph edges block submission.
+
+The release calculation currently covers **shipment embedded emissions and an estimated CBAM certificate obligation**. It uses `net_weight_kg / 1000 × verified specific embedded emissions (tCO₂e/t)`, then the versioned 2026+ benchmark, CBAM factor and CSCF tables for the free-allocation adjustment. Reporting year and production route require source citations. Missing official benchmark or CSCF data blocks release. It makes no unevidenced carbon-price reduction; certificate price and registry acceptance remain external. Customs duty is a separate decision.
+
+`POST /api/real-dossiers/{id}/release-packets/{packet_id}/review` requires an independent `verifier` or `admin` identity, `approve: true|false`, and a written reason. The reviewer must differ from the packet submitter and every source uploader. Approval revalidates the source citations and calculation, stores a decision hash and appends a hash-linked event. Simultaneous reviewers compete for one pending packet; only the winning update writes a decision event. Any later document or link change invalidates the evidence fingerprint and returns the dossier to `BLOCKED`. Altered packet JSON or decision hashes also revoke READY on read.
+
+The browser panel displays the packet, calculation, fingerprint, decision hash and audit events. It accepts a source-cited packet JSON and a separate reviewer decision. The packet authoring experience still needs a field-by-field guided UI before a self-serve customer release flow.
+
+## Current validation boundary
+
+The automated positive test uses generated **synthetic PDFs** to prove the policy mechanics. The available public documents do not constitute one genuine same-shipment India-to-EU steel dossier. No actual client shipment has yet reached READY. Do not use synthetic READY as commercial evidence. The current public corpus also lacks the `scribd-916073792.pdf` Chandan MTC expected by the optional gold-score test; a separate three-PDF public upload/review/conflict test passes against `data/client_data`.
+
+## Customer-origin signoff for recurring SaaS
+
+A `READY` dossier alone no longer opens the commercial gate. A principal with the `customer_signatory` role submits `POST /api/real-dossiers/{id}/source-signoffs` as multipart form data: `customer_name`, `shipment_reference`, a substantive `reason`, and a signed `consent_pdf`. A separate administrator who did not upload, submit or review the release packet approves it at `POST /api/real-dossiers/{id}/source-signoffs/{signoff_id}/review` with a reason. Before approval, the administrator retrieves the source through the admin-only `GET /api/real-dossiers/{id}/source-signoffs/{signoff_id}/consent` endpoint and inspects it. The signoff stores the PDF bytes and SHA-256, packet ID, dossier evidence fingerprint, actors, decision hash and hash-linked events. A changed source, packet, consent PDF or approval timestamp invalidates it. Release packets approved before the timestamp-binding change must be resubmitted and independently reviewed; there is no silent migration of old approvals. A restore drill must follow the signoff.
+
+This records accountable human verification; it cannot mechanically prove the person or shipment is genuine. Confirm customer identity, document ownership and consent outside the application before approval. The synthetic policy test exercises the gate without constituting a real customer signoff.

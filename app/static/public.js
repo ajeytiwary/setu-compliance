@@ -140,7 +140,7 @@
         return;
       }
       return res.json().catch(function () { return {}; }).then(function (body) {
-        throw new Error(typeof body.detail === "string" ? body.detail : "Request failed");
+        throw new Error(typeof body.detail === "string" ? body.detail : (typeof body.message === "string" ? body.message : "Request failed"));
       });
     }).catch(function (err) {
       btn.disabled = false;
@@ -206,6 +206,12 @@
     var t = e.target;
     if (!t || !t.closest) return;
 
+    var contactLink = t.closest("[data-contact]");
+    if (contactLink) {
+      e.preventDefault();
+      openModal(contactLink.getAttribute("data-topic"));
+      return;
+    }
     var cta = t.closest(".contact-now");
     if (cta) {
       e.preventDefault();

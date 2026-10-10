@@ -61,6 +61,23 @@ def principal(request:Request)->Principal:
     tenant=requested_tenant or claims.get("tenant_id")
     if not tenant or tenant not in memberships:
         raise HTTPException(403,"No membership in requested tenant")
+    deployment_tenant=os.getenv("EUROSETU_DEPLOYMENT_TENANT")
+    if os.getenv("EUROSETU_ENV")=="production" and (not deployment_tenant or tenant!=deployment_tenant):
+        raise HTTPException(403,"Tenant is not hosted by this deployment")
+    if os.getenv("EUROSETU_ENV")=="production":
+        try:
+            issued=int(claims["iat"])
+            expires=int(claims["exp"])
+            now=int(time.time())
+            if issued>now+60 or expires<=now or expires<=issued:
+                raise ValueError("token timing")
+        except (KeyError, TypeError, ValueError):
+            raise HTTPException(401,"Production bearer token requires valid issue and expiry times")
+        from .db import connect
+        with connect() as conn:
+            revoked=conn.execute("SELECT revoked_before FROM principal_revocations WHERE tenant_id=? AND subject=?", (tenant,subject)).fetchone()
+        if revoked and issued<=revoked[0]:
+            raise HTTPException(401,"Bearer token has been revoked")
     roles=memberships.get(tenant) or []
     if isinstance(roles,str): roles=[roles]
     return Principal(subject,tenant,frozenset(str(x) for x in roles))

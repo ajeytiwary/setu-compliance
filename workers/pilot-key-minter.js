@@ -110,7 +110,7 @@ Tenant: ${tenant}
 Roles: ${roles.join(", ")}
 Days: ${days}
 
-PILOT KEY (paste on https://eurosetu.trade/pilot):
+PILOT KEY (paste on https://app.eurosetu.trade/pilot):
 ${token}
 
 Forward this key to ${requester} from Gmail manually.
@@ -121,7 +121,7 @@ Nothing was auto-sent to the requester.`;
 `<li><b>Tenant:</b> ${esc(tenant)}</li>` +
 `<li><b>Roles:</b> ${esc(roles.join(", "))}</li>` +
 `<li><b>Days:</b> ${esc(String(days))}</li></ul>` +
-`<p><b>PILOT KEY</b> (paste on https://eurosetu.trade/pilot):</p>` +
+`<p><b>PILOT KEY</b> (paste on https://app.eurosetu.trade/pilot):</p>` +
 `<pre style="word-break:break-all;background:#0b1f18;color:#d7f0d8;padding:12px;border-radius:8px">${esc(token)}</pre>` +
 `<p>Forward this key to ${esc(requester)} from Gmail manually. Nothing was auto-sent to the requester.</p>`;
   return { text, html };

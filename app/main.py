@@ -4,7 +4,7 @@ from datetime import datetime,timezone
 from pathlib import Path
 from uuid import uuid4
 from fastapi import FastAPI,HTTPException,Request,Response
-from fastapi.responses import FileResponse,HTMLResponse
+from fastapi.responses import FileResponse,HTMLResponse,RedirectResponse
 from pydantic import BaseModel,Field
 from .db import init_db,connect,rows,row,audit
 from .metrics import shipment_score,portfolio_metrics
@@ -15,6 +15,51 @@ app=FastAPI(title="EuroSetu EU Market Access OS",version="0.2.0")
 app.include_router(v1_router)
 app.include_router(internal_router)
 STATIC=Path(__file__).parent/"static"
+PUBLIC_PAGE_PATHS={"/trust","/benchmarks","/product","/workflow","/pricing","/brokers","/liability-preview","/threshold-checker","/carbon-price-relief","/cbam-rate","/guides","/worked-example","/supplier-data-template","/security","/privacy","/dpa","/terms","/faq","/sectors","/account","/changelog"}
+# Keep legacy shipment APIs closed. The synthetic /api/dossiers workflow and
+# real evidence API both enforce tenant ownership and role checks.
+@app.middleware("http")
+async def production_api_boundary(request:Request,call_next):
+ if os.getenv("EUROSETU_ENV")=="production" and os.getenv("EUROSETU_SPLIT_HOSTS")=="1":
+  host=request.headers.get("host","").split(":",1)[0].lower().rstrip(".")
+  expected=os.getenv("EUROSETU_APP_HOST","app.eurosetu.trade").lower().rstrip(".")
+  if host!=expected:return Response(status_code=421,content="Wrong application host")
+  path=request.url.path
+  if path=="/case-study":return RedirectResponse("https://eurosetu.trade/case-study",status_code=302)
+  if path.startswith("/api/benchmarks/releases"):return Response(status_code=404)
+  if path in PUBLIC_PAGE_PATHS or path.startswith("/guides/") or path in {"/benchmarks.js","/robots.txt","/sitemap.xml"}:return Response(status_code=404)
+  if path in {"/api/leads","/api/leads/verify"}:return Response(status_code=404)
+  if path.startswith("/api/tools/") or path=="/api/contact":
+   proxy_secret=os.getenv("EUROSETU_PUBLIC_PROXY_SECRET","")
+   given=request.headers.get("x-eurosetu-public-proxy-secret","")
+   if not proxy_secret:return Response(status_code=503,content="Public proxy unconfigured")
+   if not secrets.compare_digest(given,proxy_secret):return Response(status_code=403)
+ if os.getenv("EUROSETU_ENV")=="production" and request.url.path.startswith(("/v1/","/internal/")):
+  return Response(status_code=404)
+ if os.getenv("EUROSETU_ENV")=="production" and request.url.path=="/admin" and os.getenv("EUROSETU_SPLIT_HOSTS")!="1":return Response(status_code=404)
+ if os.getenv("EUROSETU_ENV")=="production" and request.url.path.startswith("/api/"):
+  path=request.url.path
+  allowed=(path == "/api/dossiers/demo" or
+           path.startswith("/api/dossiers/") or
+           path.startswith("/api/real-dossiers") or
+           path.startswith("/api/regulatory-feed") or
+           path == "/api/commercial/readiness" or
+           path == "/api/admin/revoke-principal" or
+           (os.getenv("EUROSETU_SPLIT_HOSTS")=="1" and path in ("/api/admin/requests","/api/admin/mint")) or
+           path.startswith("/api/benchmarks/releases") or
+           path.startswith("/api/tools/") or
+           path in ("/api/leads","/api/leads/verify","/api/contact"))
+  if not allowed:return Response(status_code=404)
+  if (os.getenv("EUROSETU_RECURRING_SAAS_ENABLED")=="1"
+      and path.startswith("/api/real-dossiers")
+      and request.method in {"POST","PUT","PATCH","DELETE"}):
+   from .commercial_gate import assess
+   try:
+    if not assess(os.environ["EUROSETU_DEPLOYMENT_TENANT"],quick=True)["ready_for_recurring_saas"]:
+     return Response(status_code=503,content="Commercial release gate closed")
+   except Exception:
+    return Response(status_code=503,content="Commercial release gate closed")
+ return await call_next(request)
 class ShipmentIn(BaseModel):
  shipment_no:str; exporter:str="Indian steel exporter"; facility:str; importer:str; destination_country:str; product:str="Hot Rolled Coil"; cn_code:str="7208"; tonnes:float=Field(gt=0); value_eur:float=Field(gt=0); emissions_method:str="actual"; embedded_emissions_tco2e_per_t:float|None=None; supplier_required:int=0; supplier_complete:int=0; manual_hours:float=0
 class EvidenceIn(BaseModel):
@@ -34,6 +79,10 @@ class SupplierEvidenceSubmitIn(BaseModel):evidence_type:str; content:str; issuer
 class SupplierEvidenceVerifyIn(BaseModel):verifier:str
 class RemediationSimulationIn(BaseModel):requirement_code:str; estimated_cost_eur:float=Field(default=0,ge=0)
 class ActiveEntitlementIn(BaseModel):payload:dict
+class RegulatoryWatchIn(BaseModel):
+ cn_code:str; origin_country:str; label:str=""
+class RegulatoryFeedReviewIn(BaseModel):
+ disposition:str; reason:str
 class CBAMVerificationReportIn(BaseModel):payload:dict
 class PublicDataImportIn(BaseModel):csv_content:str; as_of:str|None=None
 class PublicDataSyncIn(BaseModel):url:str; as_of:str|None=None
@@ -63,7 +112,36 @@ def require_lead(request:Request):
  if not hit:raise HTTPException(403,"Invalid demo access token")
  return token
 @app.on_event("startup")
-def startup():init_db();seed_if_empty()
+def startup():
+ if os.getenv("EUROSETU_ENV")=="production":
+  if not os.getenv("EUROSETU_DEPLOYMENT_TENANT"):
+   raise RuntimeError("Production requires EUROSETU_DEPLOYMENT_TENANT")
+  if not (os.getenv("EUROSETU_JWT_SECRET") or os.getenv("EUROSETU_OIDC_JWKS_URL")):
+   raise RuntimeError("Production requires authentication configuration")
+  if os.getenv("DATABASE_URL"):
+   raise RuntimeError("DATABASE_URL is unsupported by this SQLite deployment; use EUROSETU_DB_PATH on a persistent volume")
+ init_db()
+ if os.getenv("EUROSETU_ENV")=="production":
+  from .production_storage import validate_single_tenant_storage
+  validate_single_tenant_storage(os.environ["EUROSETU_DEPLOYMENT_TENANT"])
+  if os.getenv("EUROSETU_RECURRING_SAAS_ENABLED")=="1":
+   from .commercial_gate import assess
+   gate=assess(os.environ["EUROSETU_DEPLOYMENT_TENANT"])
+   if not gate["ready_for_recurring_saas"]:raise RuntimeError("Recurring SaaS release gate closed: "+", ".join(gate["blockers"]))
+ else:seed_if_empty()
+
+@app.get("/health/ready")
+def readiness():
+ try:
+  with connect() as conn:
+   result=conn.execute("PRAGMA quick_check").fetchone()[0]
+   if result!="ok":raise RuntimeError(result)
+  if os.getenv("EUROSETU_ENV")=="production" and os.getenv("EUROSETU_RECURRING_SAAS_ENABLED")=="1":
+   from .commercial_gate import assess
+   if not assess(os.environ["EUROSETU_DEPLOYMENT_TENANT"],quick=True)["ready_for_recurring_saas"]:
+    raise RuntimeError("Commercial release gate closed")
+ except Exception:raise HTTPException(503,"Operational database is not ready")
+ return {"status":"ready"}
 def find_shipment(conn,ref):
  s=row(conn,"SELECT * FROM shipments WHERE id=? OR shipment_no=?",(ref,ref))
  if not s:raise HTTPException(404,"shipment not found")
@@ -74,12 +152,17 @@ def detailed(conn,s):
  return {**s,"requirements":req,"public_sources":rows(conn,"SELECT * FROM public_sources WHERE shipment_id=? ORDER BY id",(s["id"],)),"verification":ver,"verification_cycle_days":round(cycle,1) if cycle is not None else None,"score":shipment_score(s,req,ver)}
 @app.get("/",response_class=HTMLResponse)
 def home():
+ if os.getenv("EUROSETU_ENV")=="production" and os.getenv("EUROSETU_SPLIT_HOSTS")=="1":return RedirectResponse("/pilot",status_code=302)
  p=STATIC/"index.html"
  return FileResponse(p) if p.exists() else HTMLResponse("<h1>EuroSetu</h1>")
 @app.get("/trust",response_class=HTMLResponse)
 def trust():return FileResponse(STATIC/"trust.html")
 @app.get("/case-study",response_class=HTMLResponse)
 def case_study():return FileResponse(STATIC/"case-study.html")
+@app.get("/case-study-run",response_class=HTMLResponse)
+def case_study_run():
+ if os.getenv("EUROSETU_ENV")=="production":return RedirectResponse("/real-dossier",status_code=302)
+ return FileResponse(STATIC/"case-study-run.html")
 @app.get("/benchmarks",response_class=HTMLResponse)
 def benchmarks_page():return FileResponse(STATIC/"benchmarks.html",headers={"Cache-Control":"no-cache, no-store, must-revalidate"})
 @app.get("/benchmarks.js")
@@ -110,6 +193,7 @@ def benchmark_release_case(commit:str,suite_id:str,case_id:str):
  raise HTTPException(404,"case not in this release")
 @app.get("/demo",response_class=HTMLResponse)
 def demo():
+ if os.getenv("EUROSETU_ENV")=="production" and os.getenv("EUROSETU_SPLIT_HOSTS")=="1":return RedirectResponse("/real-dossier",status_code=302)
  p=STATIC/"demo.html"
  return FileResponse(p) if p.exists() else FileResponse(STATIC/"dashboard.html")
 @app.get("/demo.js")
@@ -197,6 +281,7 @@ def admin_mint(x:AdminMintIn,request:Request):
  return {"email":email,"tenant":tenant,"roles":roles,"days":days,"token":token}
 @app.get("/pilot",response_class=HTMLResponse)
 def pilot():
+ if os.getenv("EUROSETU_ENV")=="production" and os.getenv("EUROSETU_SPLIT_HOSTS")=="1":return RedirectResponse("/real-dossier",status_code=302)
  # Public shell: the HTML loads for everyone so we can show a friendly
  # "Pilot access required - contact us" popup. The data APIs below stay
  # bearer-gated, so no pilot data leaks without a token.
@@ -377,23 +462,95 @@ def workflow_run():
  from .content_hub import shell as _shell
  from .content_pages import workflow_run_page
  t,d,b,x=workflow_run_page(); return HTMLResponse(_shell(t,d,b,x))
+@app.get("/api/workflow-run/model-config")
+def workflow_run_model_config():
+ from .llm_document_ingest import settings
+ config=settings()
+ return {"default_model":config["default_model"],
+         "base_url":config["base_url"], "key_configured":config["api_key_configured"],
+         "auth_required":True, "pdf_only":True}
+
 @app.post("/api/workflow-run/parse")
 async def workflow_run_parse(request:Request):
+ from fastapi.concurrency import run_in_threadpool
  from .content_pages import api_workflow_run_parse
  form=await request.form()
+ use_llm=str(form.get("use_llm") or "").lower() in ("1","true","on","yes")
+ if use_llm:
+  from .security import require_request
+  require_request(request,"pilot_contributor","admin")
  files: list[tuple[str, bytes]] = []
  for v in form.getlist("files"):
   fn = getattr(v, "filename", None)
   if fn is not None:
    files.append((fn or "upload", await v.read()))
  pasted=str(form.get("pasted_csv") or ""); doc_url=str(form.get("doc_url") or "")
- from .content_pages import api_workflow_run_parse as _p
- return _p(files, pasted, doc_url)
-class WorkflowRunCompileIn(BaseModel):lines:list=[]; importer_cbam_mass_ytd_t:float=0; seed_demo_taric:bool=True; demo_cbam_pack:bool=False; authorised_cbam_declarant:bool=True; cbam_emissions_verified:bool=True
+ if use_llm and sum(name.lower().endswith(".pdf") for name,_ in files)>3:
+  raise HTTPException(413,"At most three PDFs per model-assisted request")
+ compare_ocr=str(form.get("compare_ocr") or "").lower() in ("1","true","on","yes")
+ result=await run_in_threadpool(api_workflow_run_parse,files,pasted,doc_url,compare_ocr)
+ if use_llm:
+  from .llm_document_ingest import propose_pdf_lines
+  model=str(form.get("model_id") or "").strip() or None
+  for (name,data),doc in zip(files,result["documents"]):
+   if not name.lower().endswith(".pdf") or not doc.get("ok"):
+    continue
+   proposal=await propose_pdf_lines(data,name,model)
+   doc["llm_proposal"]=proposal
+   if proposal.get("lines"):
+    doc["candidates"]=proposal["lines"]
+    doc["structured_ingestion"]=proposal
+ return result
+class WorkflowRunCompileIn(BaseModel):lines:list=[]; source_conflicts:list=[]; importer_cbam_mass_ytd_t:float=0; seed_demo_taric:bool=True; demo_cbam_pack:bool=False; authorised_cbam_declarant:bool=True; cbam_emissions_verified:bool=True
 @app.post("/api/workflow-run/compile")
 def workflow_run_compile(x:WorkflowRunCompileIn):
  from .content_pages import api_workflow_run_compile
  return api_workflow_run_compile(x.model_dump())
+@app.get("/dossier-demo",response_class=HTMLResponse)
+def dossier_demo_page():
+ return FileResponse(STATIC/"dossier-demo.html")
+@app.post("/api/dossiers/demo",status_code=201)
+def dossier_demo_create(request:Request):
+ from .security import require_request
+ from .pilot_dossier import create_demo,get_dossier
+ p=require_request(request,"pilot_contributor","admin")
+ dossier_id=create_demo(p.tenant_id,p.subject)
+ return get_dossier(dossier_id,p.tenant_id)
+@app.get("/api/dossiers/{dossier_id}")
+def dossier_get(dossier_id:str,request:Request):
+ from .security import require_request
+ from .pilot_dossier import get_dossier
+ p=require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ try:return get_dossier(dossier_id,p.tenant_id)
+ except KeyError:raise HTTPException(404,"Dossier not found")
+class DossierReviewIn(BaseModel):
+ approve:bool
+ reason:str
+@app.post("/api/dossiers/{dossier_id}/documents/{document_id}/review")
+def dossier_review(dossier_id:str,document_id:str,x:DossierReviewIn,request:Request):
+ from .security import require_request
+ from .pilot_dossier import review_document
+ p=require_request(request,"verifier","admin")
+ try:return review_document(dossier_id,p.tenant_id,document_id,p.subject,x.approve,x.reason)
+ except KeyError:raise HTTPException(404,"Dossier or document not found")
+ except ValueError as exc:raise HTTPException(409,str(exc))
+@app.post("/api/dossiers/{dossier_id}/remediate/{role}")
+def dossier_remediate(dossier_id:str,role:str,request:Request):
+ from .security import require_request
+ from .pilot_dossier import remediate
+ p=require_request(request,"pilot_contributor","admin")
+ try:return remediate(dossier_id,p.tenant_id,role,p.subject)
+ except KeyError:raise HTTPException(404,"Dossier not found")
+ except ValueError as exc:raise HTTPException(400,str(exc))
+@app.get("/api/dossiers/{dossier_id}/documents/{document_id}/pdf")
+def dossier_pdf(dossier_id:str,document_id:str,request:Request):
+ from .security import require_request
+ from .pilot_dossier import document_pdf
+ p=require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ try:data,name=document_pdf(dossier_id,p.tenant_id,document_id)
+ except KeyError:raise HTTPException(404,"Dossier or document not found")
+ except ValueError as exc:raise HTTPException(409,str(exc))
+ return Response(data,media_type="application/pdf",headers={"Content-Disposition":f'inline; filename="{name}"',"Cache-Control":"no-store"})
 @app.get("/app.js")
 def js():return FileResponse(STATIC/"app.js",media_type="application/javascript")
 @app.get("/styles.css")
@@ -613,6 +770,63 @@ def regulatory_change_impact(request:Request,status:str|None=None):
  require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
  from .regulatory_impact import queue
  return {"impacts":queue(status),"model":"source hash change -> affected shipment -> rule family -> review queue"}
+@app.get("/api/regulatory-feed/watches")
+def regulatory_feed_watches(request:Request):
+ from .security import require_request
+ from .regulatory_feed import watches
+ p=require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ return {"watches":watches(p.tenant_id)}
+
+@app.post("/api/regulatory-feed/watches")
+def regulatory_feed_add_watch(request:Request,x:RegulatoryWatchIn):
+ from .security import require_request
+ from .regulatory_feed import add_watch
+ p=require_request(request,"pilot_contributor","admin")
+ try:return add_watch(p.tenant_id,x.cn_code,x.origin_country,x.label)
+ except ValueError as e:raise HTTPException(422,str(e))
+
+@app.delete("/api/regulatory-feed/watches/{watch_id}")
+def regulatory_feed_remove_watch(request:Request,watch_id:str):
+ from .security import require_request
+ from .regulatory_feed import remove_watch
+ p=require_request(request,"pilot_contributor","admin")
+ if not remove_watch(p.tenant_id,watch_id):raise HTTPException(404,"Watch not found")
+ return {"deleted":True}
+
+@app.get("/api/regulatory-feed/events")
+def regulatory_feed_events(request:Request,as_of:str|None=None,since:str|None=None,limit:int=100):
+ from .security import require_request
+ from .regulatory_feed import events
+ p=require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ try:return {"events":events(p.tenant_id,as_of=as_of,since=since,limit=limit),
+             "scope":"TARIC normalized measure changes matching tenant CN/origin watchlists"}
+ except ValueError:raise HTTPException(422,"as_of and since must be YYYY-MM-DD")
+
+@app.post("/api/regulatory-feed/events/{event_id}/reviews")
+def regulatory_feed_review(request:Request,event_id:str,x:RegulatoryFeedReviewIn):
+ from .security import require_request
+ from .regulatory_feed import review_event
+ p=require_request(request,"pilot_contributor","admin")
+ try:return review_event(p.tenant_id,event_id,p.subject,x.disposition,x.reason)
+ except KeyError:raise HTTPException(404,"Event not found")
+ except ValueError as e:raise HTTPException(422,str(e))
+
+@app.get("/api/regulatory-feed/events.csv")
+def regulatory_feed_csv(request:Request,as_of:str|None=None,since:str|None=None):
+ from .security import require_request
+ from .regulatory_feed import csv_export
+ p=require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ try:body=csv_export(p.tenant_id,as_of,since)
+ except ValueError:raise HTTPException(422,"as_of must be YYYY-MM-DD")
+ return Response(content=body,media_type="text/csv",headers={"Content-Disposition":"attachment; filename=regulatory-changes.csv"})
+
+@app.get("/api/regulatory-feed/status")
+def regulatory_feed_status(request:Request):
+ from .security import require_request
+ from .regulatory_feed import refresh_status
+ require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ return refresh_status()
+
 @app.get("/api/regulatory/registry")
 def regulatory_registry(as_of:str|None=None):
  from .regulatory_registry import registry
@@ -713,3 +927,168 @@ def data_source_manifest(dataset:str):
  man=latest_manifest(dataset)
  if not man:raise HTTPException(404,"No manifest yet -- POST /api/data-sources/"+dataset+"/sync first")
  return man
+
+class RealDossierCreateIn(BaseModel):
+ name:str=Field(min_length=1,max_length=160)
+
+@app.get("/real-dossier",response_class=HTMLResponse)
+def real_dossier_page():
+ return FileResponse(STATIC/"real-dossier.html")
+
+@app.post("/api/real-dossiers",status_code=201)
+def real_dossier_create(x:RealDossierCreateIn,request:Request):
+ from .security import require_request
+ from .real_evidence import create,get
+ p=require_request(request,"pilot_contributor","admin")
+ return get(create(p.tenant_id,p.subject,x.name),p.tenant_id)
+
+@app.post("/api/real-dossiers/{dossier_id}/documents",status_code=201)
+async def real_dossier_upload(dossier_id:str,request:Request):
+ from fastapi.concurrency import run_in_threadpool
+ from .security import require_request
+ from .real_evidence import add_document,get
+ p=require_request(request,"pilot_contributor","admin")
+ form=await request.form()
+ file=form.get("file")
+ if not file or not getattr(file,"filename",None):raise HTTPException(400,"File required")
+ data=await file.read(8*1024*1024+1)
+ try:
+  await run_in_threadpool(add_document,dossier_id,p.tenant_id,p.subject,file.filename,data)
+  return await run_in_threadpool(get,dossier_id,p.tenant_id)
+ except KeyError:raise HTTPException(404,"Dossier not found")
+ except ValueError as exc:raise HTTPException(400,str(exc))
+
+@app.get("/api/real-dossiers/{dossier_id}")
+def real_dossier_get(dossier_id:str,request:Request):
+ from .security import require_request
+ from .real_evidence import get
+ p=require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ try:return get(dossier_id,p.tenant_id)
+ except KeyError:raise HTTPException(404,"Dossier not found")
+
+@app.post("/api/real-dossiers/{dossier_id}/documents/{document_id}/review")
+def real_dossier_review(dossier_id:str,document_id:str,x:DossierReviewIn,request:Request):
+ from .security import require_request
+ from .real_evidence import review_document,get
+ p=require_request(request,"verifier","admin")
+ try:
+  review_document(dossier_id,p.tenant_id,document_id,p.subject,x.approve,x.reason)
+  return get(dossier_id,p.tenant_id)
+ except KeyError:raise HTTPException(404,"Dossier or document not found")
+ except ValueError as exc:raise HTTPException(409,str(exc))
+
+@app.get("/api/real-dossiers/{dossier_id}/documents/{document_id}/file")
+def real_dossier_file(dossier_id:str,document_id:str,request:Request):
+ from .security import require_request
+ from .real_evidence import document_bytes
+ p=require_request(request,"pilot_viewer","pilot_contributor","verifier","admin")
+ try:data,name=document_bytes(dossier_id,p.tenant_id,document_id)
+ except KeyError:raise HTTPException(404,"Dossier or document not found")
+ except ValueError as exc:raise HTTPException(409,str(exc))
+ media="application/pdf" if name.lower().endswith(".pdf") else "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+ return Response(data,media_type=media,headers={"Content-Disposition":f'attachment; filename="{name}"',"Cache-Control":"no-store"})
+
+@app.post("/api/real-dossiers/{dossier_id}/links/{edge_id}/review")
+def real_dossier_link_review(dossier_id:str,edge_id:str,x:DossierReviewIn,request:Request):
+ from .security import require_request
+ from .real_evidence import review_link,get
+ p=require_request(request,"verifier","admin")
+ try:
+  review_link(dossier_id,p.tenant_id,edge_id,p.subject,x.approve,x.reason)
+  return get(dossier_id,p.tenant_id)
+ except KeyError:raise HTTPException(404,"Dossier or link not found")
+ except ValueError as exc:raise HTTPException(409,str(exc))
+
+class RealReleasePacketIn(BaseModel):
+ packet:dict
+
+@app.post('/api/real-dossiers/{dossier_id}/release-packets',status_code=201)
+def real_release_submit(dossier_id:str,x:RealReleasePacketIn,request:Request):
+ from .security import require_request
+ from .real_release import submit
+ from .real_evidence import get
+ p=require_request(request,'pilot_contributor','admin')
+ try:
+  packet_id=submit(dossier_id,p.tenant_id,p.subject,x.packet)
+  return {'packet_id':packet_id,'state':get(dossier_id,p.tenant_id)}
+ except KeyError:raise HTTPException(404,'Dossier not found')
+ except ValueError as exc:raise HTTPException(409,str(exc))
+
+@app.post('/api/real-dossiers/{dossier_id}/release-packets/{packet_id}/review')
+def real_release_review(dossier_id:str,packet_id:str,x:DossierReviewIn,request:Request):
+ from .security import require_request
+ from .real_release import decide
+ from .real_evidence import get
+ p=require_request(request,'verifier','admin')
+ try:
+  decide(dossier_id,p.tenant_id,packet_id,p.subject,x.approve,x.reason)
+  return get(dossier_id,p.tenant_id)
+ except KeyError:raise HTTPException(404,'Dossier or packet not found')
+ except ValueError as exc:raise HTTPException(409,str(exc))
+
+@app.get('/api/commercial/readiness')
+def commercial_readiness(request:Request):
+ from .security import require_request
+ from .commercial_gate import assess
+ p=require_request(request,'admin')
+ return assess(p.tenant_id)
+
+
+class RevokePrincipalIn(BaseModel):
+ subject:str
+ reason:str
+
+@app.post('/api/admin/revoke-principal')
+def revoke_principal(x:RevokePrincipalIn,request:Request):
+ from .security import require_request
+ import time
+ p=require_request(request,'admin')
+ subject=x.subject.strip()
+ reason=x.reason.strip()
+ if not subject or len(subject)>320 or not reason or len(reason)>1000:
+  raise HTTPException(422,'Subject and substantive reason required')
+ cutoff=int(time.time())
+ with connect() as conn:
+  conn.execute('INSERT INTO principal_revocations(tenant_id,subject,revoked_before,actor,reason,updated_at) VALUES(?,?,?,?,?,?) ON CONFLICT(tenant_id,subject) DO UPDATE SET revoked_before=MAX(principal_revocations.revoked_before,excluded.revoked_before),actor=excluded.actor,reason=excluded.reason,updated_at=excluded.updated_at',
+               (p.tenant_id,subject,cutoff,p.subject,reason,datetime.now(timezone.utc).isoformat()))
+ return {'tenant_id':p.tenant_id,'subject':subject,'revoked_before':cutoff}
+
+
+@app.post('/api/real-dossiers/{dossier_id}/source-signoffs',status_code=201)
+async def customer_source_submit(dossier_id:str,request:Request):
+ from .security import require_request
+ from .customer_source import submit
+ p=require_request(request,'customer_signatory')
+ form=await request.form()
+ consent=form.get('consent_pdf')
+ if not consent or not getattr(consent,'filename',None):
+  raise HTTPException(400,'Signed consent PDF required')
+ data=await consent.read(8*1024*1024+1)
+ try:
+  signoff_id=submit(dossier_id,p.tenant_id,p.subject,str(form.get('customer_name') or ''),
+                    str(form.get('shipment_reference') or ''),str(form.get('reason') or ''),data)
+  return {'signoff_id':signoff_id}
+ except KeyError:raise HTTPException(404,'Dossier not found')
+ except ValueError as exc:raise HTTPException(409,str(exc))
+
+@app.post('/api/real-dossiers/{dossier_id}/source-signoffs/{signoff_id}/review')
+def customer_source_review(dossier_id:str,signoff_id:str,x:DossierReviewIn,request:Request):
+ from .security import require_request
+ from .customer_source import decide
+ p=require_request(request,'admin')
+ try:
+  decide(dossier_id,p.tenant_id,signoff_id,p.subject,x.approve,x.reason)
+  return {'status':'APPROVED' if x.approve else 'REJECTED'}
+ except KeyError:raise HTTPException(404,'Dossier or signoff not found')
+ except ValueError as exc:raise HTTPException(409,str(exc))
+
+@app.get('/api/real-dossiers/{dossier_id}/source-signoffs/{signoff_id}/consent')
+def customer_source_consent(dossier_id:str,signoff_id:str,request:Request):
+ from .security import require_request
+ from .customer_source import consent_bytes
+ p=require_request(request,'admin')
+ try:
+  data=consent_bytes(dossier_id,p.tenant_id,signoff_id)
+  return Response(content=data,media_type='application/pdf',headers={'Cache-Control':'no-store','Content-Disposition':'attachment; filename="customer-consent.pdf"'})
+ except KeyError:raise HTTPException(404,'Dossier or signoff not found')
+ except ValueError as exc:raise HTTPException(409,str(exc))
